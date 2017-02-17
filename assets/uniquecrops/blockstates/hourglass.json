@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "uniquecrops:hourglass",
+	"textures": {
+		"particle": "blocks/gold_block"
+	}
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

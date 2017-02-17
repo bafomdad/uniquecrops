@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/cinderbella1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/cinderbella1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/cinderbella2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/cinderbella2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/cinderbella3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/cinderbella3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/cinderbella4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/cinderbella4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/cinderbella5"}}
+        }
+    }
+}

@@ -1,0 +1,126 @@
+# CREATIVE TAB
+itemGroup.tabUniqueCrops=Unique Crops
+
+# ITEMS
+item.uniquecrops.generic.guidebook.name=Guide to Unique Crops
+item.uniquecrops.generic.discountbook.name=Discount Book
+item.uniquecrops.generic.dirigibleplum.name=Dirigible Plum
+item.uniquecrops.generic.cinderleaf.name=Cinder Leaf
+item.uniquecrops.generic.timedust.name=Time Dust
+item.uniquecrops.generic.lilytwine.name=Enderlily Twine
+item.uniquecrops.generic.goldenrods.name=Golden Rods
+item.uniquecrops.generic.prenugget.name=Precision Nugget
+item.uniquecrops.generic.pregem.name=Precision Gem
+item.uniquecrops.generic.essence.name=Essence of Savagery
+item.uniquecrops.generic.timemeal.name=Time Meal
+item.uniquecrops.generic.potionreversesplash.name=Splash Potion of Reversing Effects
+item.uniquecrops.generic.invisitwine.name=Invisibilia Twine
+item.uniquecrops.generic.invisifeather.name=Invisibilia Feather
+item.uniquecrops.generic.slipperglass.name=Glass Slipper
+item.uniquecrops.generic.weepingtear.name=Weeping Tear
+item.uniquecrops.generic.weepingeye.name=Weeping Eye
+item.uniquecrops.generic.millenniumeye.name=Millennium Eye
+item.uniquecrops.generic.upgradebook.name=Upgrade Book
+item.uniquecrops.generic.eggupgrade.name=Egg Upgrade
+item.uniquecrops.generic.easybadge.name=Easy Badge
+item.uniquecrops.generic.dogresidue.name=Dog Residue
+item.uniquecrops.genericfood.largeplum.name=Large Dirible Plum
+item.uniquecrops.genericfood.teriyaki.name=Chicken Teriyaki Bowl
+item.uniquecrops.genericfood.heart.name=Heart of Steve
+item.uniquecrops.genericfood.reversepotion.name=Potion of Reversing Effects
+item.uniquecrops.genericfood.goldenbread.name=Golden Bread
+item.uniquecrops.precision.axe.name=Precision Axe
+item.uniquecrops.precision.pick.name=Precision Pick
+item.uniquecrops.precision.shovel.name=Precision Shovel
+item.uniquecrops.3dglasses.name=3D Glasses
+item.uniquecrops.poncho.name=Comfy Poncho
+item.uniquecrops.slippers.name=Glass Slippers
+item.uniquecrops.endersnooker.name=Ender Snooker
+item.uniquecrops.gravring.name=Gravelty Ring
+item.uniquecrops.seednormal.name=Normie Seeds
+item.uniquecrops.seedprecision.name=Precision Seeds
+item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
+item.uniquecrops.seedweepingbells.name=Weeping Bell Stalk
+item.uniquecrops.seedknowledge.name=Scientia Seeds
+item.uniquecrops.seedenderlily.name=Ender Lily Seeds
+item.uniquecrops.seedmillennium.name=Millennium Seeds
+item.uniquecrops.seedmerlinia.name=Merlinia Seeds
+item.uniquecrops.seedinvisibilia.name=Invisibilia Seeds
+item.uniquecrops.seedcollis.name=Collis Seeds
+item.uniquecrops.seedmaryjane.name=Mary Jane Seeds
+item.uniquecrops.seedmusica.name=Musical Plant Seeds
+item.uniquecrops.seedcinderbella.name=Cinderbella Shoot
+item.uniquecrops.seedmerlinia.name=Merlinia Seeds
+item.uniquecrops.seedferoxia.name=Feroxia Spores
+
+# BLOCKS
+tile.uniquecrops.cropnormal.name=Normie Plant
+tile.uniquecrops.cropprecision.name=Accuratio Plant
+tile.uniquecrops.cropdirigible.name=Dirigible Plum
+tile.uniquecrops.cropweepingbells.name=Weeping Bells
+tile.uniquecrops.cropknowledge.name=Scientia Plant
+tile.uniquecrops.cropenderlily.name=Ender Lily
+tile.uniquecrops.cropmillennium.name=Millennium Plant
+tile.uniquecrops.cropmerlinia.name=Merlinia Plant
+tile.uniquecrops.cropinvisibilia.name=Invisibilia Plant
+tile.uniquecrops.cropcollis.name=Collis Plant
+tile.uniquecrops.cropmaryjane.name=Mary Jane Weed
+tile.uniquecrops.cropmusica.name=Musical Essence
+tile.uniquecrops.cropcinderbella.name=Cinderbella
+tile.uniquecrops.cropmerlinia.name=Merlinia
+tile.uniquecrops.cropferoxia.name=Feroxia Crop
+tile.uniquecrops.oldgrass.name=Ancient Grass
+tile.uniquecrops.oldgravel.name=Ancient Gravel
+tile.uniquecrops.oldcobble.name=Ancient Cobblestone
+tile.uniquecrops.oldcobblemoss.name=Ancient Mossy Cobblestone
+tile.uniquecrops.oldbrick.name=Ancient Brick
+tile.uniquecrops.hourglass.name=Hourglass of Nostalgia
+tile.uniquecrops.totemhead.name=Totem of Sneaky Mobs
+tile.uniquecrops.lavalily.name=Lava Lily
+
+# BOOK TEXT
+uniquecrops.book.pageintro=Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.
+uniquecrops.book.pagenormal=Normalish crops. They can be grown like any other vanilla crops. Aside from being one of the ingredients used to craft this book, there is nothing special about them. Randomly drops vanilla crops when harvested.
+uniquecrops.book.pagecinderbella=Based on the old folktale, these crops are quite magical: They must be planted between midnight and dawn, while surrounded on all 4 sides by pumpkins. If it is not planted in this fashion or harvested before midnight, it withers away.
+uniquecrops.book.pagecollis=These crops likes being planted in high places, usually on mountains. Also, the higher up they're planted, the faster they can grow when receiving growth ticks.
+uniquecrops.book.pagedirigible=These dirigible plums seems to be filled with helium, that would explain why some fully grown plums keep flying away! Best to pick up the plums when they drop as soon as possible.
+uniquecrops.book.pageenderlily=These ender lilies just love to have nearby empty farmland to teleport to. Sometimes they'll even swap places with other kinds of crops. Not crops of the same type as them, though...
+uniquecrops.book.pageferoxia=Much like breaking in wild horses, these savage plants all have different ways of being grown. Once planted or harvested manually, this book will keep a record of their current demands for each stage of crop growth on the next page. These growth stages seem to be locked to individual players, so one may not be able to help another player growing the same crop. Additionally, these steps are randomized again once a fully grown crop is harvested.
+uniquecrops.book.pageinvisibilia=Once planted, these sneaky crops will be completely invisible to anyone that doesn't happen to be wearing a certain kind of eyewear. They can be harvested normally once you can see them.
+uniquecrops.book.pageknowledge=Their thirst for knowledge knows no bounds, these crops will search for nearby bookshelves around them in a small radius, then look into any chest inventory above them for written books to eat letters from. It's good to note that they don't seem to like book copies, and won't eat from the same book twice.
+uniquecrops.book.pagemaryjane=Blazing plants! These prefer the hellish environment of the Nether. Not much to say about their looks other than that they can emit a small amount of light, being at its brightest when fully grown.
+uniquecrops.book.pagemerlinia=Like the classic book written by T.H. White, this crop appears to move backwards through time, starting at appearing fully planted, and working backwards to the youngest stage. This only happens when they're given a special kind of bonemeal.
+uniquecrops.book.pagemillennium=This crop takes a very long time to grow; quite literally a millennia! I'm not even sure what they'll drop. Growth accelerators from other mods are a must.
+uniquecrops.book.pagemusica=These crops will grow by dancing to the beat, note block songs, specifically. What kind of songs they'll like is completely up to you. Drops a random music disc.
+uniquecrops.book.pageprecision=These bright sparkers are quite precise! So precise, that there is only a small window where they can be successfully harvested to drop anything useful. Take cues from the growth visuals.
+uniquecrops.book.pageweepingbell=They're quite shy, but quite in need of your attentions. Weeping bells will only grow when you're looking directly at them. Once fully grown, do not take your eyes off of them, lest you face their wrath from your attentions being divided elsewhere.
+
+# TOOLTIPS
+uniquecrops.tooltip.guidebook=The Guide
+uniquecrops.tooltip.discountbook=Craft with any tool or armor. Makes subsequent repairs cheaper.
+uniquecrops.tooltip.eggupgrade=Stuff this in a chicken to make it lay eggs faster.
+uniquecrops.tooltip.upgradebook=Combine with tools and armor that can be upgraded in an anvil.
+uniquecrops.tooltip.slipperglass=Go hunt for mobs wearing boots with this in your inventory.
+uniquecrops.tooltip.easybadge=Keep in hotbar. Makes some mobs easier to deal with.
+
+# CONDITIONS
+uniquecrops.condition.fullmoon=Needs a full moon.
+uniquecrops.condition.burningplayer=Player must be on fire.
+uniquecrops.condition.dryfarmland=Farm soil must be dry.
+uniquecrops.condition.hastorch=Player must be holding a torch.
+uniquecrops.condition.hellworld=Must be grown in the nether.
+uniquecrops.condition.darkness=Must grow in darkness.
+uniquecrops.condition.likesheights=Must grow above 126y.
+uniquecrops.condition.underfarmland=Farmland must be directly above it.
+uniquecrops.condition.likeslilypads=Surround with lilypads.
+uniquecrops.condition.hungryplant=Leave some food on top of it.
+uniquecrops.condition.thirstyplant=Leave a water bucket on top of it.
+uniquecrops.condition.likeschicken=Keep some chickens near it.
+uniquecrops.condition.redstone=Requires redstone signal next to it.
+uniquecrops.condition.vampire=Does not like direct sunlight.
+uniquecrops.condition.fullbrightness=Likes to have a lot of light.
+uniquecrops.condition.likeswarts=Likes a filled in circle of nether warts around it.
+uniquecrops.condition.likescooking=Likes to have nearby furnaces smelting stuff.
+uniquecrops.condition.likesbrewing=Likes to have nearby brewing stands brewing stuff.
+uniquecrops.condition.likescheckers=Likes a checker pattern of its buddies around it.
+uniquecrops.condition.selfsacrifice=Wait for demands to sacrifice yourself
