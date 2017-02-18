@@ -31,7 +31,8 @@ public class PageImage extends Page {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GlStateManager.color(1F, 1F, 1F, 1F);
-		gui.drawTexturedModalRect(gui.bookXStart + 5, 5, 0, 0, gui.WIDTH, gui.HEIGHT);
+		int k = (gui.width - gui.WIDTH) / 2;
+		gui.drawTexturedModalRect(k + 5, 5, 0, 0, gui.WIDTH, gui.HEIGHT);
 		gui.drawCenteredString(mc.fontRendererObj, text, drawX + 60, drawY + 150, Color.gray.getRGB());
 		GlStateManager.disableBlend();
 	}

@@ -1,5 +1,7 @@
 package com.bafomdad.uniquecrops.crops;
 
+import java.util.Random;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +32,11 @@ public class Invisibilia extends BlockCropsBase {
 		
 		return UCItems.generic;
 	}
+	
+    public int quantityDropped(Random random) {
+        
+    	return random.nextInt(2) + 1;
+    }
 	
 	@Override
 	public int damageDropped(IBlockState state) {

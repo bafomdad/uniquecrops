@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -61,7 +62,7 @@ public class Knowledge extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.getAge(state) >= getMaxAge())
+		if (this.getAge(state) >= getMaxAge() || world.isRemote)
 			return;
 		
 		Iterable<BlockPos> getBox = BlockPos.getAllInBox(pos.add(-4, -2, -4), pos.add(4, 2, 4));
@@ -105,11 +106,13 @@ public class Knowledge extends BlockCropsBase {
 								tag.setTag("pages", taglist);
 								tag.setBoolean("UC_tagRead", true);
 								
-								int addAge = taglist.tagCount();
-								if (getAge(state) + addAge >= ((BlockCrops)state.getBlock()).getMaxAge())
-									world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(((BlockCrops)state.getBlock()).getMaxAge()), 2);
-								else
-									world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(getAge(state) + addAge), 2);
+								if (found) {
+									int addAge = taglist.tagCount();
+									if (getAge(state) + addAge >= ((BlockCrops)state.getBlock()).getMaxAge())
+										world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(((BlockCrops)state.getBlock()).getMaxAge()), 2);
+									else
+										world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(getAge(state) + addAge), 2);
+								}
 								return;
 							}
 						}

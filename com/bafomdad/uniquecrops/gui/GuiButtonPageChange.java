@@ -30,7 +30,7 @@ public class GuiButtonPageChange extends GuiButton {
 			if (previous) {
 				u += 17;
 			}
-			drawTexturedModalRect(xPosition, yPosition, u, v, width, height);
+			drawTexturedModalRect(this.xPosition, this.yPosition, u, v, 16, 16);
 		}
 	}
 }

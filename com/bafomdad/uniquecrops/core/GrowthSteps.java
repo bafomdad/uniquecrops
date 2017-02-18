@@ -208,7 +208,7 @@ public class GrowthSteps {
 		@Override
 		public boolean canAdvance(World world, BlockPos pos, IBlockState state) {
 
-			return pos.getY() > 126;
+			return pos.getY() > 100;
 		}
 	}
 	

@@ -24,7 +24,7 @@ public class GuiBackButton extends GuiButton {
 			if (!mouseOver) {
 				u += 16;
 			}
-			drawTexturedModalRect(xPosition, yPosition, u, v, width, height);
+			drawTexturedModalRect(xPosition, yPosition, u, v, 16, 16);
 		}
 	}
 }

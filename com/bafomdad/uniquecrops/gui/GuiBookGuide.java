@@ -1,31 +1,22 @@
 package com.bafomdad.uniquecrops.gui;
 
-import io.netty.buffer.Unpooled;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
-import com.bafomdad.uniquecrops.core.UCUtils;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.client.CPacketCustomPayload;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBookGuide extends GuiScreen {
 
@@ -35,15 +26,8 @@ public class GuiBookGuide extends GuiScreen {
 	private final ItemStack book;
 	private String[] cats = UCStrings.CROPCATS;
 	
-	private static final int BUTTON_NEXT = 0;
-	private static final int BUTTON_PREV = 1;
-	private static final int CATEGORY = 2;
-	private static final int BACK_BUTTON = 3;
-	
 	public int WIDTH = 175;
 	public int HEIGHT = 228;
-	int left = width / 2 - WIDTH / 2;
-	int top = height / 2 - HEIGHT / 2;
 	
 	private GuiButton next;
 	private GuiButton prev;
@@ -54,7 +38,7 @@ public class GuiBookGuide extends GuiScreen {
 	private int savedIndex;
 	private Page currentPage;
 	
-	public int bookXStart;
+//	public int bookXStart;
 	
 	public GuiBookGuide(EntityPlayer player, ItemStack heldBook) {
 
@@ -71,12 +55,12 @@ public class GuiBookGuide extends GuiScreen {
 		super.initGui();
 		Page.loadPages(this);
 		this.buttonList.clear();
-		bookXStart = (width - WIDTH) / 2;
+		int k = (this.width - this.WIDTH) / 2;
 		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
-		buttonList.add(next = new GuiButtonPageChange(BUTTON_NEXT, bookXStart + WIDTH - 26, 210, false));
-		buttonList.add(prev = new GuiButtonPageChange(BUTTON_PREV, bookXStart + 10, 210, true));
-		buttonList.add(category = new GuiButtonLink(this, CATEGORY, bookXStart + 15, 35, 100, 168, cats));
-		buttonList.add(backbutton = new GuiBackButton(BACK_BUTTON, bookXStart + 80, 210));
+		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, 210, false));
+		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, 210, true));
+		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, 35, 100, 168, cats));
+		buttonList.add(this.backbutton = new GuiBackButton(3, k + 80, 210));
 		updateButtons();
 	}
 	
@@ -85,10 +69,10 @@ public class GuiBookGuide extends GuiScreen {
 		
 		int catsize = ((GuiButtonLink)category).selectedOption;
 		switch (button.id) {
-			case BUTTON_NEXT: pageIndex++; break;
-			case BUTTON_PREV: --pageIndex; break;
-			case CATEGORY: pageIndex = catsize + (pageIndex + catsize + 1); break;
-			case BACK_BUTTON: pageIndex = 2; break;
+			case 0: pageIndex++; break;
+			case 1: --pageIndex; break;
+			case 2: pageIndex = catsize + (pageIndex + catsize + 1); break;
+			case 3: pageIndex = 2; break;
 		}
 		this.savedIndex = pageIndex;
 		NBTUtils.setInt(book, "savedIndex", savedIndex);
@@ -107,8 +91,14 @@ public class GuiBookGuide extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
        
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		drawBackground();
-		drawForeground();
+		mc.renderEngine.bindTexture(texture);
+		int k = (this.width - this.WIDTH) / 2;
+		int b0 = (this.height - this.HEIGHT) / 2; 
+		drawTexturedModalRect(k, b0, 0, 0, WIDTH, HEIGHT);
+		
+		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
+		if (this.currentPage != null)
+			this.currentPage.draw();
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -125,18 +115,23 @@ public class GuiBookGuide extends GuiScreen {
 		
 		if (key == Keyboard.KEY_ESCAPE)
 			mc.displayGuiScreen(null);
-	}
-	
-	protected void drawBackground() {
-		
-		mc.renderEngine.bindTexture(texture);
-		drawTexturedModalRect(bookXStart, 5, 0, 0, WIDTH, HEIGHT);
-	}
-	
-	public void drawForeground() {
-		
-		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
-		if (this.currentPage != null)
-			this.currentPage.draw();
+		if (key == Keyboard.KEY_RIGHT && this.next.visible) {
+			this.pageIndex++;
+			this.savedIndex = pageIndex;
+			NBTUtils.setInt(book, "savedIndex", savedIndex);
+			updateButtons();
+		}
+		if (key == Keyboard.KEY_LEFT && this.prev.visible) {
+			this.pageIndex--;
+			this.savedIndex = pageIndex;
+			NBTUtils.setInt(book, "savedIndex", savedIndex);
+			updateButtons();
+		}
+		if (key == Keyboard.KEY_UP && this.backbutton.visible) {
+			this.pageIndex = 2;
+			this.savedIndex = pageIndex;
+			NBTUtils.setInt(book, "savedIndex", savedIndex);
+			updateButtons();
+		}
 	}
 }

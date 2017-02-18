@@ -33,6 +33,8 @@ public class UCUtils {
 	public static NBTTagList getServerTaglist(int id) {
 		
 		MinecraftServer ms = FMLCommonHandler.instance().getMinecraftServerInstance();
+		if (ms == null)
+			return null;
 		EntityPlayer player = (EntityPlayer)ms.getEntityWorld().getEntityByID(id);
 		if (player != null) {
 			NBTTagCompound tag = player.getEntityData();

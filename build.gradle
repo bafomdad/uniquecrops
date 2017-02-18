@@ -22,7 +22,7 @@ sourceSets
 	}
 }
 
-version = "1.10.2-0.0.9"
+version = "1.10.2-0.0.94"
 group = "com.bafomdad.uniquecrops"
 archivesBaseName = "uniquecrops"
 

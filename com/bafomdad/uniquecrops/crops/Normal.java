@@ -24,6 +24,11 @@ public class Normal extends BlockCropsBase {
 		return UCItems.seedsNormal;
 	}
 	
+    public int quantityDropped(Random random) {
+        
+    	return random.nextInt(3) + 1;
+    }
+	
 	@Override
 	protected Item getCrop() {
 		
