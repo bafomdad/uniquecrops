@@ -346,7 +346,7 @@ public class GrowthSteps {
 	
 	public static class LikesWarts implements Condition {
 
-		int range = 6;
+		int range = 1;
 		
 		@Override
 		public boolean canAdvance(World world, BlockPos pos, IBlockState state) {
@@ -356,13 +356,11 @@ public class GrowthSteps {
 			Iterator posit = poslist.iterator();
 			while (posit.hasNext()) {
 				BlockPos looppos = (BlockPos)posit.next();
-				if (pos.distanceSq(looppos) <= range * range) {
-					if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == Blocks.NETHER_WART) {
-						warts++;
-					}
+				if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == Blocks.NETHER_WART) {
+					warts++;
 				}
 			}
-			return warts == 68;
+			return warts == 8;
 		}
 	}
 	

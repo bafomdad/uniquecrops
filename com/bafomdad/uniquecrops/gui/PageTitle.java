@@ -37,7 +37,7 @@ public class PageTitle extends Page {
 			int k = (gui.width - gui.WIDTH) / 2;
 			gui.drawTexturedModalRect(k, 5, 0, 0, gui.WIDTH, gui.HEIGHT);
 			drawSplitStringWithShadow(I18n.format(this.title), drawX + 10, drawY + 140, this.wordWrap, Color.gray.getRGB());
-			gui.drawString(mc.fontRendererObj, "-by " + gui.reader.getName(), drawX + 30, drawY + 155, Color.lightGray.getRGB());
+			gui.drawCenteredString(mc.fontRendererObj, "-by " + gui.reader.getName(), drawX + 60, drawY + 155, Color.lightGray.getRGB());
 			GlStateManager.disableBlend();
 		}
 	}

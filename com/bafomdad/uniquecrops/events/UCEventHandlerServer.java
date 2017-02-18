@@ -359,12 +359,15 @@ public class UCEventHandlerServer {
     	EntityPlayer player = event.getPlayer();
     	if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionPick) {
     		if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10) {
-    			event.setCanceled(true);
-    			event.getWorld().setBlockToAir(event.getPos());
-    			EntityItem ei = new EntityItem(event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, new ItemStack(event.getState().getBlock()));
-    			if (!event.getWorld().isRemote)
-    				event.getWorld().spawnEntityInWorld(ei);
-    			player.getHeldItemMainhand().attemptDamageItem(1, event.getWorld().rand);
+    			if (event.getState().getBlock() == Blocks.MONSTER_EGG) {
+        			event.setCanceled(true);
+        			event.getWorld().setBlockToAir(event.getPos());
+        			EntityItem ei = new EntityItem(event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, new ItemStack(event.getState().getBlock()));
+        			if (!event.getWorld().isRemote)
+        				event.getWorld().spawnEntityInWorld(ei);
+        			player.getHeldItemMainhand().attemptDamageItem(1, event.getWorld().rand);
+        			return;
+    			}
     		}
     	}
     }

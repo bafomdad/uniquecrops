@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.IBookUpgradeable;
 import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.crops.Merlinia;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityItemPlum;
@@ -34,6 +36,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -160,6 +163,17 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 
 		if (stack.getItemDamage() == 0 && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
+			if (!world.isRemote) {
+				NBTTagList taglist = UCUtils.getServerTaglist(player.getEntityId());
+				if (taglist != null) {
+					if (!stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))
+						stack.getTagCompound().setTag(GrowthSteps.TAG_GROWTHSTAGES, taglist);
+					else {
+						stack.getTagCompound().removeTag(GrowthSteps.TAG_GROWTHSTAGES);
+						stack.getTagCompound().setTag(GrowthSteps.TAG_GROWTHSTAGES, taglist);
+					}
+				}
+			}
 			player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}

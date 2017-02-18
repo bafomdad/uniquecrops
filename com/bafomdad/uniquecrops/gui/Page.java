@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -68,7 +69,7 @@ public abstract class Page {
 		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE13));
 		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.FEROXIA, "Feroxia"));
 		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE14));
-		if (gui.reader != null && UCUtils.getServerTaglist(gui.reader.getEntityId()) != null)
+		if (gui.reader != null && gui.book.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))
 			GuiBookGuide.pageList.add(new PageGrowthList(screen));
 	}
 }

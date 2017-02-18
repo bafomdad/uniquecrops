@@ -33,14 +33,11 @@ public class EntityCustomPotion extends EntityPotion {
     protected void onImpact(RayTraceResult result) {
     	
 		if (!worldObj.isRemote) {
-			BlockPos pos = new BlockPos(result.hitVec).offset(result.sideHit);
-			
-			List<Entity> entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB(pos.add(-10, -5, -10), pos.add(10, 5, 10)));
-			for (Entity ent : entities) {
-				if (!ent.isDead && ent instanceof EntityPlayer) 
-				{
+			BlockPos pos = new BlockPos(result.hitVec);
+			if (result.typeOfHit == RayTraceResult.Type.ENTITY) {
+				Entity ent = result.entityHit;
+				if (!ent.isDead && ent instanceof EntityPlayer)
 					PotionBehavior.reverseEffects((EntityPlayer)ent);
-				}
 			}
 			UCPacketHandler.sendToNearbyPlayers(worldObj, pos, new PacketUCEffect(EnumParticleTypes.SPELL, pos.getX() - 0.5D, pos.getY() - 0.5D, pos.getZ() - 0.5D, 5));
 		}

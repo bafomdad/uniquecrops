@@ -30,7 +30,8 @@ public class PageGrowthList extends Page {
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(1F, 1F, 1F);
 		List<GrowthSteps> list = Feroxia.steps;
-		NBTTagList taglist = UCUtils.getServerTaglist(gui.reader.getEntityId());
+//		NBTTagList taglist = UCUtils.getServerTaglist(gui.reader.getEntityId());
+		NBTTagList taglist = gui.book.getTagCompound().getTagList(GrowthSteps.TAG_GROWTHSTAGES, 10);
 		for (int i = 0; i < taglist.tagCount(); i++) {
 			NBTTagCompound tag = taglist.getCompoundTagAt(i);
 			int stage = tag.getInteger("stage" + i);

@@ -23,7 +23,7 @@ public class GuiBookGuide extends GuiScreen {
 	public static ResourceLocation texture = new ResourceLocation(UniqueCrops.MOD_ID, "textures/gui/bookguide.png");
 	public static List<Page> pageList = new ArrayList<Page>();
 	public final EntityPlayer reader;
-	private final ItemStack book;
+	public final ItemStack book;
 	private String[] cats = UCStrings.CROPCATS;
 	
 	public int WIDTH = 175;

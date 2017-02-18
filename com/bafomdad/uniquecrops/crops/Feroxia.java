@@ -75,6 +75,11 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		return UCItems.generic;
 	}
 	
+    public int quantityDropped(Random random) {
+        
+    	return random.nextInt(4) + 2;
+    }
+	
 	@Override
 	public int damageDropped(IBlockState state) {
 		
@@ -113,7 +118,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 			return;
 		
 		TileFeroxia te = (TileFeroxia)tile;
-		if (te.getOwner() == null)
+		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null))
 			return;
 		
 		NBTTagList taglist = UCUtils.getServerTaglist(UCUtils.getPlayerFromUUID(te.getOwner().toString()).getEntityId());
