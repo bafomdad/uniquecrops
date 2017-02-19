@@ -3,22 +3,9 @@ package com.bafomdad.uniquecrops.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.GrowthSteps;
-import com.bafomdad.uniquecrops.core.IBookUpgradeable;
-import com.bafomdad.uniquecrops.core.UCStrings;
-import com.bafomdad.uniquecrops.core.UCUtils;
-import com.bafomdad.uniquecrops.crops.Merlinia;
-import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
-import com.bafomdad.uniquecrops.entities.EntityItemPlum;
-import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
-import com.bafomdad.uniquecrops.init.UCBlocks;
-import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.network.PacketUCEffect;
-import com.bafomdad.uniquecrops.network.UCPacketHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -30,14 +17,12 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -54,6 +39,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.GrowthSteps;
+import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.crops.Merlinia;
+import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
+import com.bafomdad.uniquecrops.entities.EntityItemPlum;
+import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
+import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.network.PacketUCEffect;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class ItemGeneric extends Item implements IFuelHandler {
 	
@@ -150,6 +147,8 @@ public class ItemGeneric extends Item implements IFuelHandler {
 					world.setBlockState(pos, ((BlockCrops)crops).withAge(0), 2);
 				else if (crops == UCBlocks.cropMerlinia)
 					((Merlinia)crops).merliniaGrowth(world, pos, world.rand.nextInt(1) + 1);
+				else if (crops instanceof BlockNetherWart)
+					((BlockNetherWart)crops).updateTick(world, pos, world.getBlockState(pos), world.rand);
 				if (!player.capabilities.isCreativeMode && !player.worldObj.isRemote)
 					stack.stackSize--;
 				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() - 0.5D, pos.getY(), pos.getZ() - 0.5D, 6));
@@ -163,17 +162,8 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 
 		if (stack.getItemDamage() == 0 && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
-			if (!world.isRemote) {
-				NBTTagList taglist = UCUtils.getServerTaglist(player.getEntityId());
-				if (taglist != null) {
-					if (!stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))
-						stack.getTagCompound().setTag(GrowthSteps.TAG_GROWTHSTAGES, taglist);
-					else {
-						stack.getTagCompound().removeTag(GrowthSteps.TAG_GROWTHSTAGES);
-						stack.getTagCompound().setTag(GrowthSteps.TAG_GROWTHSTAGES, taglist);
-					}
-				}
-			}
+			if (!world.isRemote && (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))))
+				UCUtils.updateBook(player);
 			player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}

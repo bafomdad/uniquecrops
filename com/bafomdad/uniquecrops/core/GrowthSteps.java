@@ -98,6 +98,7 @@ public class GrowthSteps {
 			taglist.appendTag(tag2);
 		}
 		tag.setTag(TAG_GROWTHSTAGES, taglist);
+		UCUtils.updateBook(player);
 	}
 	
 	public static TileFeroxia getTile(World world, BlockPos pos) {

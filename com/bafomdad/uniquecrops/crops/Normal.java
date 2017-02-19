@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.crops;
 
 import java.util.Random;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
@@ -24,8 +25,11 @@ public class Normal extends BlockCropsBase {
 		return UCItems.seedsNormal;
 	}
 	
-    public int quantityDropped(Random random) {
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
         
+    	if (this.getAge(state) < getMaxAge())
+    		return 1;
+    	
     	return random.nextInt(3) + 1;
     }
 	

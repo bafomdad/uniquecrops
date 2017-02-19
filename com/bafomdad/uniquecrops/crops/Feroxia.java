@@ -75,8 +75,11 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		return UCItems.generic;
 	}
 	
-    public int quantityDropped(Random random) {
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
         
+    	if (this.getAge(state) < getMaxAge())
+    		return 0;
+    	
     	return random.nextInt(4) + 2;
     }
 	
@@ -84,7 +87,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 	public int damageDropped(IBlockState state) {
 		
 		if (getAge(state) < getMaxAge())
-			return 0;
+			return 1;
 		
 		return 9;
 	}

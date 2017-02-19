@@ -2,7 +2,10 @@ package com.bafomdad.uniquecrops.core;
 
 import java.util.UUID;
 
+import com.bafomdad.uniquecrops.init.UCItems;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -44,5 +47,22 @@ public class UCUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static void updateBook(EntityPlayer player) {
+		
+		if (!player.inventory.hasItemStack(new ItemStack(UCItems.generic, 1, 0)))
+			return;
+		
+		NBTTagList taglist = UCUtils.getServerTaglist(player.getEntityId());
+		if (taglist != null) {
+			for (int i = 0; i < player.inventory.mainInventory.length; i++) {
+				ItemStack book = player.inventory.mainInventory[i];
+				if (book != null && book.getItem() == UCItems.generic && book.getItemDamage() == 0) 
+				{
+					book.setTagInfo(GrowthSteps.TAG_GROWTHSTAGES, taglist);
+				}
+			}
+		}
 	}
 }

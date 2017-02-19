@@ -71,7 +71,7 @@ public class UCRecipes {
 			case 9: return new ItemStack(Blocks.STAINED_HARDENED_CLAY, 16, EnumDyeColor.CYAN.getMetadata());
 			case 10: return new ItemStack(Items.CHORUS_FRUIT);
 			case 11: return new ItemStack(Blocks.PRISMARINE, 8, 0);
-			case 12: return new ItemStack(Items.COOKIE, 8, 0);
+			case 12: return new ItemStack(Blocks.DIRT, 3, 0);
 			case 13: return new ItemStack(Items.EMERALD);
 			case 14: return new ItemStack(Items.NETHER_WART);
 			case 15: return new ItemStack(Items.SKULL, 1, 1);

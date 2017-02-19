@@ -33,8 +33,11 @@ public class Invisibilia extends BlockCropsBase {
 		return UCItems.generic;
 	}
 	
-    public int quantityDropped(Random random) {
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
         
+    	if (this.getAge(state) < getMaxAge())
+    		return 1;
+    	
     	return random.nextInt(2) + 1;
     }
 	

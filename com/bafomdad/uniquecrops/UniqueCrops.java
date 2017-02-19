@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops;
 
 import com.bafomdad.uniquecrops.core.UCTab;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import com.bafomdad.uniquecrops.proxies.CommonProxy;
 
 import net.minecraftforge.fml.common.Loader;
@@ -17,7 +18,7 @@ public class UniqueCrops {
 
 	public static final String MOD_ID = "uniquecrops";
 	public static final String MOD_NAME = "Unique Crops";
-	public static final String VERSION = "0.1.0";
+	public static final String VERSION = "0.1.3";
 	
 	@SidedProxy(clientSide="com.bafomdad.uniquecrops.proxies.ClientProxy", serverSide="com.bafomdad.uniquecrops.proxies.CommonProxy")
 	public static CommonProxy proxy;
@@ -27,15 +28,12 @@ public class UniqueCrops {
 	
 	public static UCTab TAB = new UCTab();
 	
-	public static boolean topLoaded = Loader.isModLoaded("theoneprobe");
-	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		proxy.preInit(event);
 		proxy.initAllModels();
 		proxy.checkResource();
-		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 	}
 	
