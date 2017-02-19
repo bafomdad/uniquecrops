@@ -44,7 +44,7 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (!world.provider.isSurfaceWorld())
+		if (this.getAge(state) < getMaxAge())
 			return;
 		
 		TileEntity te = world.getTileEntity(pos);
@@ -58,6 +58,24 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 		}
 		world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
 	}
+	
+    @Override
+    public void grow(World world, BlockPos pos, IBlockState state) {
+    	
+    	TileEntity te = world.getTileEntity(pos);
+    	if (te != null && te instanceof TileCinderbella) {
+    		TileCinderbella tile = (TileCinderbella)te;
+    		if (!world.isRemote && !tile.plantedCorrect)
+    		{
+    			world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
+    			return;
+    		}
+    	}
+    	else if (te == null)
+    		world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
+    	
+    	super.grow(world, pos, state);
+    }
 	
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
