@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops;
 
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -18,7 +19,7 @@ public class UniqueCrops {
 
 	public static final String MOD_ID = "uniquecrops";
 	public static final String MOD_NAME = "Unique Crops";
-	public static final String VERSION = "0.1.4";
+	public static final String VERSION = "0.1.5";
 	
 	@SidedProxy(clientSide="com.bafomdad.uniquecrops.proxies.ClientProxy", serverSide="com.bafomdad.uniquecrops.proxies.CommonProxy")
 	public static CommonProxy proxy;
@@ -27,9 +28,13 @@ public class UniqueCrops {
 	public static UniqueCrops instance;
 	
 	public static UCTab TAB = new UCTab();
+	public static UCConfig config;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		
+		config = new UCConfig();
+		config.loadConfig(event);
 		
 		proxy.preInit(event);
 		proxy.initAllModels();
