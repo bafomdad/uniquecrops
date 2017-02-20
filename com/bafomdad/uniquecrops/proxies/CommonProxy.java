@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.entities.*;
 import com.bafomdad.uniquecrops.events.UCEventHandlerServer;
 import com.bafomdad.uniquecrops.init.*;
@@ -27,7 +28,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		
 		UCRecipes.init();
-		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), 4);
+		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), UCConfig.dropRate);
 	}
 	
 	public void postInit(FMLPostInitializationEvent event) {
