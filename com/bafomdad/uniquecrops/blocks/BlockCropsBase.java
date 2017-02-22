@@ -66,12 +66,14 @@ public abstract class BlockCropsBase extends BlockCrops {
         Random rand = world instanceof World ? ((World)world).rand : new Random();
         int count = this.quantityDropped(state, fortune, rand);
         
-        for(int i = 0; i < count; i++)
-        {
-            Item item = this.getItemDropped(state, rand, fortune);
-            if (item != null)
+        if (age >= getMaxAge()) {
+            for(int i = 0; i < count; i++)
             {
-                ret.add(new ItemStack(item, 1, this.damageDropped(state)));
+                Item item = this.getItemDropped(state, rand, fortune);
+                if (item != null)
+                {
+                    ret.add(new ItemStack(item, 1, this.damageDropped(state)));
+                }
             }
         }
         if (age >= getMaxAge() && extra)
