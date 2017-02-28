@@ -27,7 +27,10 @@ public class UCStrings {
 		"upgradebook",
 		"eggupgrade",
 		"easybadge",
-		"dogresidue"
+		"dogresidue",
+		"abstract",
+		"legalstuff",
+		"eulabook"
 	};
 	
 	// CATEGORIES
@@ -45,6 +48,10 @@ public class UCStrings {
 		"Normal",
 		"Precision",
 		"Weeping Bells",
+		"Eula",
+		"Dyeius",
+		"Cobblonia",
+		"Abstract",
 		"Feroxia"
 	};
 	
@@ -90,8 +97,16 @@ public class UCStrings {
 	public static final String PAGE12 = BOOK + ".pageprecision";
 	public static final String WEEPINGBELL = IMAGE + "weepingbellpage.png";
 	public static final String PAGE13 = BOOK + ".pageweepingbell";
+	public static final String EULA = IMAGE + "eulapage.png";
+	public static final String PAGE14 = BOOK + ".pageeula";
+	public static final String DYEIUS = IMAGE + "dyeiuspage.png";
+	public static final String PAGE15 = BOOK + ".pagedyeius";
+	public static final String COBBLONIA = IMAGE + "cobbloniapage.png";
+	public static final String PAGE16 = BOOK + ".pagecobblonia";
+	public static final String ABSTRACT = IMAGE + "abstractpage.png";
+	public static final String PAGE17 = BOOK + ".pageabstract";
 	public static final String FEROXIA = IMAGE + "feroxiapage.png";
-	public static final String PAGE14 = BOOK + ".pageferoxia";
+	public static final String PAGE18 = BOOK + ".pageferoxia";
 	
 	// CONDITIONS
 	private static final String COND = BASE + ".condition";

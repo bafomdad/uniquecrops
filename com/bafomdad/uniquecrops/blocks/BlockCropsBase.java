@@ -11,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,7 +23,7 @@ import com.bafomdad.uniquecrops.core.EnumCrops;
 public abstract class BlockCropsBase extends BlockCrops {
 	
 	private EnumCrops type;
-	private boolean extra;
+	protected boolean extra;
 
 	public BlockCropsBase(EnumCrops type, boolean extra) {
 		
@@ -58,7 +59,7 @@ public abstract class BlockCropsBase extends BlockCrops {
 	}
 	
     @Override
-    public List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	
         List<ItemStack> ret = new ArrayList<ItemStack>();
         ret.add(new ItemStack(this.getSeed(), 1, 0));

@@ -12,6 +12,7 @@ import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.entities.*;
 import com.bafomdad.uniquecrops.events.UCEventHandlerServer;
 import com.bafomdad.uniquecrops.init.*;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class CommonProxy {
 	
@@ -23,6 +24,7 @@ public class CommonProxy {
 		EntityRegistry.registerModEntity(EntityItemWeepingEye.class, UniqueCrops.MOD_ID + "weepingeye", 1, UniqueCrops.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityItemHourglass.class, UniqueCrops.MOD_ID + "hourglass", 2, UniqueCrops.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityItemPlum.class, UniqueCrops.MOD_ID + "flyingplum", 3, UniqueCrops.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityEulaBook.class, UniqueCrops.MOD_ID + "eulabook", 4, UniqueCrops.instance, 64, 1, true);
 	}
 	
 	public void init(FMLInitializationEvent event) {

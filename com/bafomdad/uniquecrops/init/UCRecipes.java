@@ -15,6 +15,9 @@ public class UCRecipes {
 
 	public static void init() {
 		
+		GameRegistry.addShapelessRecipe(new ItemStack(UCItems.dietpills), UCItems.generic.createStack("abstract"), UCItems.generic.createStack("abstract"), Items.GLASS_BOTTLE);
+		GameRegistry.addShapelessRecipe(new ItemStack(UCItems.seedsAbstract), UCItems.generic.createStack("abstract"));
+		
 		GameRegistry.addRecipe(UCItems.generic.createStack("guidebook"), " N ", "WBM", " P ", 'N', new ItemStack(UCItems.seedsNormal), 'W', Items.WHEAT_SEEDS, 'M', Items.MELON_SEEDS, 'P', Items.PUMPKIN_SEEDS, 'B', Items.BOOK);
 		GameRegistry.addRecipe(UCItems.generic.createStack("eggupgrade"), "IEI", "EME", "IEI", 'I', Items.IRON_INGOT, 'E', Items.EGG, 'M', UCItems.generic.createStack("millenniumeye"));
 		GameRegistry.addRecipe(UCItems.generic.createStack("easybadge"), "GEG", "EQE", "GEG", 'G', Items.GOLD_INGOT, 'Q', Blocks.QUARTZ_BLOCK, 'E', UCItems.generic.createStack("millenniumeye"));
@@ -35,6 +38,7 @@ public class UCRecipes {
 		GameRegistry.addRecipe(new ItemStack(UCItems.precisionShovel), " G ", " S ", " S ", 'G', UCItems.generic.createStack("pregem"), 'S', Items.STICK);
 		GameRegistry.addRecipe(new ItemStack(UCBlocks.hourglass), "DGD", "PDP", "DGD", 'G', Blocks.GOLD_BLOCK, 'P', Blocks.GLASS_PANE, 'D', UCItems.generic.createStack("timedust"));
 		GameRegistry.addRecipe(new ItemStack(UCBlocks.totemhead), "LLL", "LML", " S ", 'L', Blocks.LAPIS_BLOCK, 'M', UCItems.generic.createStack("millenniumeye"), 'S', Items.STICK);
+		GameRegistry.addRecipe(UCItems.generic.createStack("eulabook"), " L ", "LBL", " L ", 'L', UCItems.generic.createStack("legalstuff"), 'B', Items.BOOK);
 		for (EnumDyeColor dye : EnumDyeColor.values()) {
 			GameRegistry.addRecipe(getDyeCraftingResult(dye.getDyeDamage()), "FFF", "FDF", "FFF", 'D', new ItemStack(Items.DYE, 1, dye.getMetadata()), 'F', new ItemStack(UCItems.generic, 1, 9));
 		}
@@ -53,6 +57,10 @@ public class UCRecipes {
 		addSeedRecipe(UCItems.seedsMusica, Item.getItemFromBlock(Blocks.JUKEBOX), UCItems.seedsMaryjane);
 		addSeedRecipe(UCItems.seedsPrecision, UCItems.seedsInvisibilia, UCItems.seedsNormal);
 		addSeedRecipe(UCItems.seedsWeepingbells, Items.GHAST_TEAR, UCItems.seedsEnderlily);
+		addSeedRecipe(UCItems.seedsAbstract, Item.getItemFromBlock(Blocks.STAINED_HARDENED_CLAY), Items.REEDS);
+		addSeedRecipe(UCItems.seedsCobblonia, Item.getItemFromBlock(Blocks.STONEBRICK), UCItems.seedsNormal);
+		addSeedRecipe(UCItems.seedsDyeius, UCItems.seedsAbstract, Items.DYE);
+		addSeedRecipe(UCItems.seedsEula, Items.BOOK, UCItems.seedsCobblonia);
 		addSeedRecipe(UCItems.seedsFeroxia, UCItems.seedsKnowledge, UCItems.seedsWeepingbells);
 	}
 	

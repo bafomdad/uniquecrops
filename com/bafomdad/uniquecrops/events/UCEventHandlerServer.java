@@ -1,5 +1,7 @@
 package com.bafomdad.uniquecrops.events;
 
+import java.time.LocalDateTime;
+import java.time.DayOfWeek;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,11 +18,13 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -43,12 +47,15 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.IBookUpgradeable;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.crops.Feroxia;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -199,6 +206,20 @@ public class UCEventHandlerServer {
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
 		}
+		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
+			for (ItemStack stack : event.getDrops()) {
+				if (stack.getItem() == Items.DYE)
+				{
+					long time = event.getWorld().getWorldTime() % 24000L;
+					int meta = (int)(time / 1500);
+					LocalDateTime current = LocalDateTime.now();
+					if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
+						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getMetadata());
+					else
+						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getDyeDamage());
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -290,6 +311,8 @@ public class UCEventHandlerServer {
 		}
 		if (oldtag.hasKey("hasSacrificed"))
 			tag.setBoolean("hasSacrificed", oldtag.getBoolean("hasSacrificed"));
+		if (oldtag.hasKey(SeedBehavior.TAG_ABSTRACT))
+			tag.setInteger(SeedBehavior.TAG_ABSTRACT, oldtag.getInteger(SeedBehavior.TAG_ABSTRACT));
 	}
 	
 	@SubscribeEvent
@@ -381,6 +404,20 @@ public class UCEventHandlerServer {
 				if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10)
 					event.setCanceled(true);
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		
+		if (event.phase == Phase.START && event.player.worldObj.rand.nextInt(1000) == 0) {
+			if (!event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT))
+				return;
+			
+			event.player.inventory.addItemStackToInventory(UCItems.generic.createStack("abstract"));
+			if (!event.player.worldObj.isRemote)
+				SeedBehavior.setAbstractCropGrowth(event.player, false);
+			return;
 		}
 	}
 	

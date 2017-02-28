@@ -24,11 +24,15 @@ item.uniquecrops.generic.upgradebook.name=Upgrade Book
 item.uniquecrops.generic.eggupgrade.name=Egg Upgrade
 item.uniquecrops.generic.easybadge.name=Easy Badge
 item.uniquecrops.generic.dogresidue.name=Dog Residue
+item.uniquecrops.generic.abstract.name=Abstract Residue
+item.uniquecrops.generic.legalstuff.name=Legal Stuff
+item.uniquecrops.generic.eulabook.name=EULA Book
 item.uniquecrops.genericfood.largeplum.name=Large Dirible Plum
 item.uniquecrops.genericfood.teriyaki.name=Chicken Teriyaki Bowl
 item.uniquecrops.genericfood.heart.name=Heart of Steve
 item.uniquecrops.genericfood.reversepotion.name=Potion of Reversing Effects
 item.uniquecrops.genericfood.goldenbread.name=Golden Bread
+item.uniquecrops.genericfood.dietpills.name=Diet Pills
 item.uniquecrops.precision.axe.name=Precision Axe
 item.uniquecrops.precision.pick.name=Precision Pick
 item.uniquecrops.precision.shovel.name=Precision Shovel
@@ -36,7 +40,6 @@ item.uniquecrops.3dglasses.name=3D Glasses
 item.uniquecrops.poncho.name=Comfy Poncho
 item.uniquecrops.slippers.name=Glass Slippers
 item.uniquecrops.endersnooker.name=Ender Snooker
-item.uniquecrops.gravring.name=Gravelty Ring
 item.uniquecrops.seednormal.name=Normie Seeds
 item.uniquecrops.seedprecision.name=Precision Seeds
 item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
@@ -52,6 +55,10 @@ item.uniquecrops.seedmusica.name=Musical Plant Seeds
 item.uniquecrops.seedcinderbella.name=Cinderbella Shoot
 item.uniquecrops.seedmerlinia.name=Merlinia Seeds
 item.uniquecrops.seedferoxia.name=Feroxia Spores
+item.uniquecrops.seedeula.name=EULA Seeds
+item.uniquecrops.seeddyeius.name=Dyeius Seeds
+item.uniquecrops.seedcobblonia.name=Cobblonia Seeds
+item.uniquecrops.seedabstract.name=Abstract Seeds
 
 # BLOCKS
 tile.uniquecrops.cropnormal.name=Normie Plant
@@ -69,6 +76,10 @@ tile.uniquecrops.cropmusica.name=Musical Essence
 tile.uniquecrops.cropcinderbella.name=Cinderbella
 tile.uniquecrops.cropmerlinia.name=Merlinia
 tile.uniquecrops.cropferoxia.name=Feroxia Crop
+tile.uniquecrops.cropeula.name=EULA Crop
+tile.uniquecrops.cropdyeius.name=Dyeius Crop
+tile.uniquecrops.cropcobblonia.name=Cobblonia Crop
+tile.uniquecrops.cropabstract.name=Abstract Crop
 tile.uniquecrops.oldgrass.name=Ancient Grass
 tile.uniquecrops.oldgravel.name=Ancient Gravel
 tile.uniquecrops.oldcobble.name=Ancient Cobblestone
@@ -94,6 +105,10 @@ uniquecrops.book.pagemillennium=This crop takes a very long time to grow; quite 
 uniquecrops.book.pagemusica=These crops will grow by dancing to the beat, note block songs, specifically. What kind of songs they'll like is completely up to you. Drops a random music disc.
 uniquecrops.book.pageprecision=These bright sparkers are quite precise! So precise, that there is only a small window where they can be successfully harvested to drop anything useful. Take cues from the growth visuals.
 uniquecrops.book.pageweepingbell=They're quite shy, but quite in need of your attentions. Weeping bells will only grow when you're looking directly at them. Once fully grown, do not take your eyes off of them, lest you face their wrath from your attentions being divided elsewhere.
+uniquecrops.book.pageeula=They are quite possibly the most legal crops you can get. Of course, once you get past all the legal mumbo jumbo when planting every single one of them, that is.
+uniquecrops.book.pagedyeius=Dye plants! Instead of planting the respective dye plants and harvesting said plant for dyes, it is all condensed in one crop, its appearance and respective drops depending on the time of day or night.
+uniquecrops.book.pagecobblonia=Hardy plants! They may look a little rocky, but they can prove to be quite useful in some circumstances. Once fully grown, you may have water on one side of the soil it is on and lava on the opposite side for free cobble being given out at random.
+uniquecrops.book.pageabstract=I must admit, I cheated a little in order to snag a picture of one actually planted. These crops, being just an abstract concept, will not materialize into the world as a form of "crops", instead taking its concept of growth from the planter as the planter plays throughout their time on the world.
 
 # TOOLTIPS
 uniquecrops.tooltip.guidebook=The Guide
@@ -102,6 +117,7 @@ uniquecrops.tooltip.eggupgrade=Stuff this in a chicken to make it lay eggs faste
 uniquecrops.tooltip.upgradebook=Combine with tools and armor that can be upgraded in an anvil.
 uniquecrops.tooltip.slipperglass=Go hunt for mobs wearing boots with this in your inventory.
 uniquecrops.tooltip.easybadge=Keep in hotbar. Makes some mobs easier to deal with.
+uniquecrops.tooltip.eulabook=Players being disruptive in court? Throw the book at them!
 
 # CONDITIONS
 uniquecrops.condition.fullmoon=Needs a full moon.
@@ -124,3 +140,13 @@ uniquecrops.condition.likescooking=Likes to have nearby furnaces smelting stuff.
 uniquecrops.condition.likesbrewing=Likes to have nearby brewing stands brewing stuff.
 uniquecrops.condition.likescheckers=Likes a checker pattern of its buddies around it.
 uniquecrops.condition.selfsacrifice=Wait for demands to sacrifice yourself
+
+# EULA LICENSE TEXT
+uniquecrops.eula.text0=PLEASE READ THIS END-USER LICENSE AGREEMENT CAREFULLY BEFORE CLICKING THE "I AGREE" BUTTON, PLANTING OR USING THE CROPS. BY CLICKING THE "I AGREE" BUTTON, PLANTING OR USING THE CROPS, YOU ARE AGREEING TO BE BOUND BY THE TERMS AND CONDITION OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT CLICK ON THE "I AGREE" BUTTON AND DO NOT PLANT OR USE THE CROPS.
+uniquecrops.eula.text1=MY MOD GRANTS YOU A REVOCABLE, NON-EXCLUSIVE, NON-TRANSFERABLE, LIMITED LICENSE TO PLANT, GROW AND USE THE CROPS SOLELY FOR YOUR PERSONAL, NON-COMMERCIAL PURPOSES STRICTLY IN ACCORDANCE WITH THE TERMS OF THIS AGREEMENT.
+uniquecrops.eula.text2=YOU AGREE NOT TO, AND YOU WILL NOT PERMIT OTHERS TO: A) LICENSE, SELL, RENT, LEASE, ASSIGN, DISTRIBUTE, TRANSMIT, HOST, OUTSOURCE, DISCLOSE OR OTHERWISE COMMERCIALLY EXPLOIT THE CROPS OR MAKE THE CROPS AVAILABLE TO ANY THIRD PARTY.
+uniquecrops.eula.text3=MY MOD RESERVES THE RIGHT TO MODIFY, SUSPEND OR DISCONTINUE, TEMPORARILY OR PERMANENTLY, THE CROPS OR ANY SERVICE TO WHICH IT CONNECTS, WITH OR WITHOUT NOTICE AND WITHOUT LIABILITY TO YOU.
+uniquecrops.eula.text4=THIS AGREEMENT SHALL REMAIN IN EFFECT UNTIL TERMINATED BY YOU OR MY MOD. MY MOD MAY, IN ITS SOLE DISCRETION, AT ANY TIME AND FOR ANY OR NO REASON, SUSPEND OR TERMINATE THIS AGREEMENT WITH OR WITHOUT PRIOR NOTICE. THIS AGREEMENT WILL TERMINATE IMMEDIATELY, WITHOUT PRIOR NOTICE FROM MY MOD, IN THE EVENT THAT YOU FAIL TO COMPLY WITH ANY PROVISION OF THIS AGREEMENT. YOU MAY ALSO TERMINATE THIS AGREEMENT BY
+uniquecrops.eula.text5=DELETING THE MOD AND ALL COPIES THEREOF FROM YOUR MODPACK OR FROM YOUR DESKTOP. UPON TERMINATION OF THIS AGREEMENT, YOU SHALL CEASE ALL USE OF THE MOD AND REMOVE ALL INSTANCES OF THE CROPS FROM YOUR FARMS.
+uniquecrops.eula.text6=IF ANY PROVISION OF THIS AGREEMENT IS HELD TO BE UNENFORCEABLE OR INVALID, SUCH PROVISION WILL BE CHANGED AND INTERPRETED TO ACCOMPLISH THE OBJECTIVES OF SUCH PROVISION, TO THE GREATEST EXTENT POSSIBLE UNDER APPLICABLE LAW AND THE REMAINING PROVISIONS WILL CONTINUE IN FULL FORCE AND EFFECT.
+uniquecrops.eula.text7=MY MOD RESERVES THE RIGHT, AT ITS SOLE DISCRETION, TO MODIFY OR REPLACE THIS AGREEMENT AT ANY TIME. IF A REVISION IS MATERIAL WE WILL PROVIDE AT LEAST 30 DAYS' NOTICE PRIOR TO ANY NEW TERMS TAKING EFFECT. WHAT CONSTITUTES A MATERIAL CHANGE WILL BE DETERMINED AT OUR SOLE DISCRETION.

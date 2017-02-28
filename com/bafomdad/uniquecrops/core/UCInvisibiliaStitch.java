@@ -13,9 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class UCTextureStitch extends TextureAtlasSprite {
+public class UCInvisibiliaStitch extends TextureAtlasSprite {
 
-	public UCTextureStitch(String str) {
+	public UCInvisibiliaStitch(String str) {
 		
 		super(str);
 	}

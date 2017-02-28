@@ -17,7 +17,11 @@ public enum EnumCrops implements IStringSerializable {
 	SAVAGEPLANT("feroxia"),
 	CINDERBELLA("cinderbella"),
 	HIGHPLANT("collis"),
-	BLAZINGPLANT("maryjane");
+	BLAZINGPLANT("maryjane"),
+	EULA("eula"),
+	DYE("dyeius"),
+	COBBLEPLANT("cobblonia"),
+	ABSTRACT("abstract");
 	
 	final String name;
 	

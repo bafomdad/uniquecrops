@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -58,6 +59,15 @@ public class SeedBehavior {
 					cropBlock.onBlockPlacedBy(world, pos.offset(side), cropBlock.getDefaultState(), player, stack);
 					return true;
 				}
+				if (cropBlock == UCBlocks.cropEula) {
+					player.openGui(UniqueCrops.instance, 1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+				}
+				if (cropBlock == UCBlocks.cropAbstract) {
+					player.renderBrokenItemStack(stack);
+					if (!player.worldObj.isRemote)
+						setAbstractCropGrowth(player, true);
+					return true;
+				}
 				world.setBlockState(pos.offset(side), cropBlock.getDefaultState(), 3);
 				return true;
 			}
@@ -80,5 +90,27 @@ public class SeedBehavior {
 			}
 		}
 		return true;
+	}
+	
+	public static final String TAG_ABSTRACT = "UC_tagAbstractGrowth";
+	
+	public static void setAbstractCropGrowth(EntityPlayer player, boolean add) {
+		
+		NBTTagCompound tag = player.getEntityData();
+		if (!tag.hasKey(TAG_ABSTRACT) && add) {
+			tag.setInteger(TAG_ABSTRACT, 1);
+		}
+		if (add) {
+			tag.setInteger(TAG_ABSTRACT, tag.getInteger(TAG_ABSTRACT) + 1);
+		}
+		else if (!add) {
+			int value = tag.getInteger(TAG_ABSTRACT);
+			if (player.worldObj.rand.nextInt(5) == 0)
+				tag.setInteger(TAG_ABSTRACT, value - 1);
+			else
+				tag.setInteger(TAG_ABSTRACT, value - 2);
+		}
+		if (tag.getInteger(TAG_ABSTRACT) <= 0)
+			tag.removeTag(TAG_ABSTRACT);
 	}
 }

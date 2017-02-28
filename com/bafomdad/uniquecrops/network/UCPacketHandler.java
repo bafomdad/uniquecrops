@@ -14,7 +14,7 @@ public class UCPacketHandler {
 
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("UniqueCrops".toLowerCase());
 	
-	public static void init() {
+	public static void initClient() {
 		
 		INSTANCE.registerMessage(PacketUCEffect.Handler.class, PacketUCEffect.class, 0, Side.CLIENT);
 	}

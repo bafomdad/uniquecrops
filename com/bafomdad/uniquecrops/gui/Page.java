@@ -67,8 +67,16 @@ public abstract class Page {
 		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE12));
 		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.WEEPINGBELL, "Weeping Bells"));
 		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE13));
-		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.FEROXIA, "Feroxia"));
+		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.EULA, "EULA Plant"));
 		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE14));
+		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.DYEIUS, "Dyeius"));
+		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE15));
+		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.COBBLONIA, "Cobblonia"));
+		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE16));
+		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.ABSTRACT, "Abstract"));
+		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE17));
+		GuiBookGuide.pageList.add(new PageImage(screen, UCStrings.FEROXIA, "Feroxia"));
+		GuiBookGuide.pageList.add(new PageText(screen, UCStrings.PAGE18));
 		if (gui.reader != null && gui.book.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))
 			GuiBookGuide.pageList.add(new PageGrowthList(screen));
 	}

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
+import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
 import com.bafomdad.uniquecrops.entities.RenderThrowable;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
@@ -36,7 +37,7 @@ public class ClientProxy extends CommonProxy {
 		
 		UCBlocks.initModels();
 		UCItems.initModels();
-		UCPacketHandler.init();
+		UCPacketHandler.initClient();
 	}
 	
 	@Override
@@ -48,6 +49,7 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomPotion.class, new RenderThrowable(rm, UCItems.generic, 13, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemWeepingEye.class, new RenderThrowable(rm, UCItems.generic, 16, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEulaBook.class, new RenderThrowable(rm, UCItems.generic, 24, ri));
 	}
 	
 	@Override

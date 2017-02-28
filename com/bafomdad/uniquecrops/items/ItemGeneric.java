@@ -46,6 +46,7 @@ import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.crops.Merlinia;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
+import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemPlum;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -83,6 +84,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 			case 18: list.add(I18n.format(UCStrings.TOOLTIP + "upgradebook")); break;
 			case 19: list.add(I18n.format(UCStrings.TOOLTIP + "eggupgrade")); break;
 			case 20: list.add(I18n.format(UCStrings.TOOLTIP + "easybadge")); break;
+			case 24: list.add(I18n.format(UCStrings.TOOLTIP + "eulabook")); break;
 		}
 	}
 	
@@ -210,6 +212,19 @@ public class ItemGeneric extends Item implements IFuelHandler {
 					player.addChatMessage(new TextComponentString("You finished using it. An uneasy silence fills the room."));
 			}
 			return new ActionResult(EnumActionResult.SUCCESS, stack);
+		}
+		if (stack.getItemDamage() == 24) {
+	        if (!player.capabilities.isCreativeMode)
+	            --stack.stackSize;
+
+	        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+	        if (!world.isRemote)
+	        {
+	            EntityEulaBook entitybook = new EntityEulaBook(world, player, stack);
+	            entitybook.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+	            world.spawnEntityInWorld(entitybook);
+	        }
+	        return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}

@@ -60,7 +60,7 @@ public class GuiBookGuide extends GuiScreen {
 		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, 210, false));
 		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, 210, true));
 		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, 35, 100, 168, cats));
-		buttonList.add(this.backbutton = new GuiBackButton(3, k + 80, 210));
+		buttonList.add(this.backbutton = new GuiButtonBack(3, k + 80, 210));
 		updateButtons();
 	}
 	

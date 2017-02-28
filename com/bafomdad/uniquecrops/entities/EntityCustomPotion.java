@@ -40,6 +40,7 @@ public class EntityCustomPotion extends EntityPotion {
 					PotionBehavior.reverseEffects((EntityPlayer)ent);
 			}
 			UCPacketHandler.sendToNearbyPlayers(worldObj, pos, new PacketUCEffect(EnumParticleTypes.SPELL, pos.getX() - 0.5D, pos.getY() - 0.5D, pos.getZ() - 0.5D, 5));
+			this.setDead();
 		}
     }
 }

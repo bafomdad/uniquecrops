@@ -9,6 +9,9 @@ public class GuiHandler implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
+//		if (ID == 1)
+//			return new ContainerDummy();
+		
 		return null;
 	}
 
@@ -17,6 +20,8 @@ public class GuiHandler implements IGuiHandler {
 
 		if (ID == 0)
 			return new GuiBookGuide(player, player.getHeldItemMainhand());
+		if (ID == 1)
+			return new GuiBookEula(player);
 		
 		return null;
 	}

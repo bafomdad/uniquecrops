@@ -35,6 +35,10 @@ public class JEIPluginUC implements IModPlugin {
 		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropNormal));
 		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropPrecision));
 		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropWeepingbells));
+		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropEula));
+		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropCobblonia));
+		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropDyeius));
+		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropAbstract));
 	}
 
 	@Override

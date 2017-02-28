@@ -18,20 +18,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class UCItems {
 
 	// SEEDS
-	public static Item seedsNormal;
-	public static Item seedsPrecision;
-	public static Item seedsKnowledge;
-	public static Item seedsDirigible;
-	public static Item seedsMillennium;
-	public static Item seedsEnderlily;
-	public static Item seedsCollis;
-	public static Item seedsInvisibilia;
-	public static Item seedsMaryjane;
-	public static Item seedsWeepingbells;
-	public static Item seedsMusica;
-	public static Item seedsCinderbella;
-	public static Item seedsMerlinia;
-	public static Item seedsFeroxia;
+	public static Item 
+		seedsNormal,
+		seedsPrecision,
+		seedsKnowledge,
+		seedsDirigible,
+		seedsMillennium,
+		seedsEnderlily,
+		seedsCollis,
+		seedsInvisibilia,
+		seedsMaryjane,
+		seedsWeepingbells,
+		seedsMusica,
+		seedsCinderbella,
+		seedsMerlinia,
+		seedsFeroxia,
+		seedsEula,
+		seedsCobblonia,
+		seedsDyeius,
+		seedsAbstract;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -39,6 +44,7 @@ public class UCItems {
 	public static Item heart;
 	public static Item potionreverse;
 	public static Item goldenbread;
+	public static Item dietpills;
 	public static Item endersnooker;
 	
 	public static ItemArmor glasses3D;
@@ -68,6 +74,10 @@ public class UCItems {
 		seedsCinderbella = new ItemSeedsUC(UCBlocks.cropCinderbella);
 		seedsMerlinia = new ItemSeedsUC(UCBlocks.cropMerlinia);
 		seedsFeroxia = new ItemSeedsUC(UCBlocks.cropFeroxia);
+		seedsEula = new ItemSeedsUC(UCBlocks.cropEula);
+		seedsCobblonia = new ItemSeedsUC(UCBlocks.cropCobblonia);
+		seedsDyeius = new ItemSeedsUC(UCBlocks.cropDyeius);
+		seedsAbstract = new ItemSeedsUC(UCBlocks.cropAbstract);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");
@@ -75,6 +85,7 @@ public class UCItems {
 		heart = new ItemGenericFood(0, 0F, true, "heart");
 		potionreverse = new ItemGenericFood(0, 0F, true, "reversepotion");
 		goldenbread = new ItemGenericFood(4, 0.3F, false, "goldenbread");
+		dietpills = new ItemGenericFood(-4, 0, true, "dietpills");
 		endersnooker = new ItemEnderSnooker();
 		
 		glasses3D = new Item3DGlasses(glassesmaterial, 1, EntityEquipmentSlot.HEAD);
@@ -102,6 +113,10 @@ public class UCItems {
 		registerItemModel(seedsCinderbella);
 		registerItemModel(seedsMerlinia);
 		registerItemModel(seedsFeroxia);
+		registerItemModel(seedsEula);
+		registerItemModel(seedsCobblonia);
+		registerItemModel(seedsDyeius);
+		registerItemModel(seedsAbstract);
 		
 		registerItemModels(generic, generic.types);
 		registerItemModel(largeplum);
@@ -109,6 +124,7 @@ public class UCItems {
 		registerItemModel(heart);
 		registerItemModel(potionreverse);
 		registerItemModel(goldenbread);
+		registerItemModel(dietpills);
 		registerItemModel(endersnooker);
 		registerItemModel(glasses3D);
 		registerItemModel(poncho);

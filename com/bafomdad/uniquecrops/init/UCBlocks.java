@@ -28,7 +28,11 @@ public class UCBlocks {
 		cropMusica,
 		cropCinderbella,
 		cropMerlinia,
-		cropFeroxia;
+		cropFeroxia,
+		cropEula,
+		cropCobblonia,
+		cropDyeius,
+		cropAbstract;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
 	public static Block hourglass, totemhead, lavalily;
@@ -49,6 +53,10 @@ public class UCBlocks {
 		cropCinderbella = new Cinderbella();
 		cropMerlinia = new Merlinia();
 		cropFeroxia = new Feroxia();
+		cropEula = new Eula();
+		cropCobblonia = new Cobblonia();
+		cropDyeius = new Dyeius();
+		cropAbstract = new Abstract();
 		
 		oldCobble = new BlockOldStone("cobble");
 		oldCobbleMoss = new BlockOldStone("cobblemoss");

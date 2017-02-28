@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/eula-b"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/eula-b"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/eula-a"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/eula-f"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/eula-o"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/eula-m"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/eula-d"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/eula-a"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/eula-d"}}
+        }
+    }
+}

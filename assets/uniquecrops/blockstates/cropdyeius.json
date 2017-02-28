@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/dyeplant1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/dyeplant1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/dyeplant2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/dyeplant2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/dyeplant3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/dyeplant3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/dyeplant4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/dyeplant4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/dyeplant5"}}
+        }
+    }
+}
