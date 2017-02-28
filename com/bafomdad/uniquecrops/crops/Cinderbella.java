@@ -42,16 +42,22 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 	}
 	
 	@Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+	public int damageDropped(IBlockState state) {
 		
-		if (this.getAge(state) < getMaxAge())
-			return;
+		if (getAge(state) < getMaxAge())
+			return 0;
+		
+		return 14;
+	}
+	
+	@Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
 		TileEntity te = world.getTileEntity(pos);
 		if (te != null && te instanceof TileCinderbella) {
 			TileCinderbella tile = (TileCinderbella)te;
 			long time = world.getWorldTime() % 24000L;
-			if (tile.plantedCorrect && tile.timePlanted <= (time - 6000)) {
+			if (tile.plantedCorrect && tile.timePlanted >= (time - 6000)) {
 				super.updateTick(world, pos, state, rand);
 				return;
 			}
