@@ -1,5 +1,7 @@
 package com.bafomdad.uniquecrops;
 
+import org.lwjgl.input.Keyboard;
+
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
@@ -13,13 +15,15 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid=UniqueCrops.MOD_ID, name=UniqueCrops.MOD_NAME, version=UniqueCrops.VERSION)
 public class UniqueCrops {
 
 	public static final String MOD_ID = "uniquecrops";
 	public static final String MOD_NAME = "Unique Crops";
-	public static final String VERSION = "0.1.71";
+	public static final String VERSION = "0.1.8";
 	
 	@SidedProxy(clientSide="com.bafomdad.uniquecrops.proxies.ClientProxy", serverSide="com.bafomdad.uniquecrops.proxies.CommonProxy")
 	public static CommonProxy proxy;
@@ -29,6 +33,8 @@ public class UniqueCrops {
 	
 	public static UCTab TAB = new UCTab();
 	public static UCConfig config;
+	@SideOnly(Side.CLIENT)
+	public static net.minecraft.client.settings.KeyBinding pixelKey;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -40,6 +46,9 @@ public class UniqueCrops {
 		proxy.initAllModels();
 		proxy.checkResource();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		
+//		pixelKey = new KeyBinding("Pixel Shader Toggle Key", Keyboard.KEY_V, "Miscellaneous");
+//		ClientRegistry.registerKeyBinding(pixelKey);
 	}
 	
 	@Mod.EventHandler
