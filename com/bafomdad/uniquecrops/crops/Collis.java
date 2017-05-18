@@ -10,13 +10,15 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Collis extends BlockCropsBase {
 
 	public Collis() {
 		
-		super(EnumCrops.HIGHPLANT, true);
+		super(EnumCrops.HIGHPLANT, true, UCConfig.cropcollis);
 	}
 	
 	@Override
@@ -37,7 +39,7 @@ public class Collis extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 6;
+		return EnumItems.GOLDENRODS.ordinal();
 	}
 	
 	@Override

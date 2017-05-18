@@ -3,7 +3,7 @@ package com.bafomdad.uniquecrops.items;
 import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.IBookUpgradeable;
+import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.entity.player.EntityPlayer;

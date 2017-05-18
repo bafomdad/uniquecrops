@@ -17,12 +17,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -41,7 +39,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
+import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.crops.Merlinia;
@@ -55,7 +55,6 @@ import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class ItemGeneric extends Item implements IFuelHandler {
 	
-	public String[] types = UCStrings.GENERIC;
 	private static final String[] FIELD_G = new String[] { "attackCooldown", "field_188501_c", "uo" };
 	private static final String[] FUSETIME = new String[] { "fuseTime", "field_82225_f", "yp" };
 	public static String TAG_DISCOUNT = "UC_tagDiscount";
@@ -90,13 +89,13 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	
 	public String getUnlocalizedName(ItemStack stack) {
 		
-		return getUnlocalizedName() + "." + types[stack.getItemDamage()];
+		return getUnlocalizedName() + "." + EnumItems.values()[stack.getItemDamage()].getName();
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tabs, List list) {
 		
-		for (int i = 0; i < types.length; ++i)
+		for (int i = 0; i < EnumItems.values().length; ++i)
 			list.add(new ItemStack(item, 1, i));
 	}
 	
@@ -109,19 +108,14 @@ public class ItemGeneric extends Item implements IFuelHandler {
 		return false;
 	}
 	
-	public ItemStack createStack(String stackname, int stacksize) {
+	public ItemStack createStack(EnumItems item, int stacksize) {
 		
-		for (int i = 0; i < this.types.length; ++i) {
-			String str = types[i];
-			if (str.equals(stackname))
-				return new ItemStack(this, stacksize, i);
-		}
-		return new ItemStack(Items.BEETROOT);
+		return new ItemStack(this, stacksize, item.ordinal());
 	}
 	
-	public ItemStack createStack(String stackname) {
+	public ItemStack createStack(EnumItems item) {
 		
-		return createStack(stackname, 1);
+		return createStack(item, 1);
 	}
 	
 	@Override
@@ -157,19 +151,24 @@ public class ItemGeneric extends Item implements IFuelHandler {
 				return EnumActionResult.SUCCESS;
 			}
 		}
+		if (stack.getItemDamage() == 25 && player.canPlayerEdit(pos, facing, stack)) {
+			if (!player.capabilities.isCreativeMode && !player.worldObj.isRemote)
+				stack.stackSize--;
+			world.setBlockState(pos.offset(facing), UCBlocks.redtorch.getDefaultState());
+		}
 		return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 
-		if (stack.getItemDamage() == 0 && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
+		if (stack.getItemDamage() == EnumItems.GUIDE.ordinal() && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
 			if (!world.isRemote && (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))))
 				UCUtils.updateBook(player);
 			player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
-		if (stack.getItemDamage() == 13) {
+		if (stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) {
 	        if (!player.capabilities.isCreativeMode)
 	            --stack.stackSize;
 
@@ -182,7 +181,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	        }
 	        return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
-		if (stack.getItemDamage() == 16) {
+		if (stack.getItemDamage() == EnumItems.WEEPINGEYE.ordinal()) {
 	        if (!player.capabilities.isCreativeMode)
 	            --stack.stackSize;
 
@@ -195,7 +194,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	        }
 	        return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
-		if (stack.getItemDamage() == 21) {
+		if (stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal()) {
 			boolean canFill = false;
 			for (int i = 0; i < player.inventory.getSizeInventory() - player.inventory.armorInventory.length; i++) {
 				ItemStack loopstack = player.inventory.getStackInSlot(i);
@@ -213,7 +212,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 			}
 			return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
-		if (stack.getItemDamage() == 24) {
+		if (stack.getItemDamage() == EnumItems.EULA.ordinal()) {
 	        if (!player.capabilities.isCreativeMode)
 	            --stack.stackSize;
 
@@ -226,6 +225,19 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	        }
 	        return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
+//		if (stack.getItemDamage() == EnumItems.PIXELS.ordinal() && hand == EnumHand.MAIN_HAND) {
+//			boolean flag = NBTUtils.getBoolean(stack, "isActive", false);
+//			if (!world.isRemote) {
+//				NBTUtils.setBoolean(stack, "isActive", !stack.getTagCompound().getBoolean("isActive"));
+//			}
+//			if (world.isRemote) {
+//				if (flag)
+//					UniqueCrops.proxy.enableBitsShader();
+//				else
+//					UniqueCrops.proxy.disableBitsShader();
+//			}
+//			return new ActionResult(EnumActionResult.SUCCESS, stack);
+//		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}
 	
@@ -292,7 +304,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	@Override
 	public int getBurnTime(ItemStack fuel) {
 		
-		if (fuel.getItemDamage() == 3)
+		if (fuel.getItem() == this && fuel.getItemDamage() == 3)
 			return 16000;
 		
 		return 0;

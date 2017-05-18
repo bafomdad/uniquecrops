@@ -1,6 +1,8 @@
 package com.bafomdad.uniquecrops.proxies;
 
+import net.minecraft.client.particle.Particle;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -44,5 +46,11 @@ public class CommonProxy {
 	
 	public void checkResource() {}
 	
+	public void flareFX(World world, double x, double y, double z, float mx, float my, float mz, float r, float g, float b, float scale, int age) {}
+	
 	public boolean invisiTrace() { return true; }
+	
+	public void enableBitsShader() {}
+	
+	public void disableBitsShader() {}
 }

@@ -36,4 +36,9 @@ public class PageImage extends Page {
 		gui.drawCenteredString(mc.fontRendererObj, text, drawX + 60, drawY + 150, Color.gray.getRGB());
 		GlStateManager.disableBlend();
 	}
+	
+	public String getText() {
+		
+		return text;
+	}
 }

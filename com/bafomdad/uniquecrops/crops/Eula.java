@@ -5,13 +5,15 @@ import net.minecraft.item.Item;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Eula extends BlockCropsBase {
 
 	public Eula() {
 		
-		super(EnumCrops.EULA, false);
+		super(EnumCrops.EULA, false, UCConfig.cropEula);
 	}
 	
 	@Override
@@ -32,6 +34,6 @@ public class Eula extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 23;
+		return EnumItems.LEGALSTUFF.ordinal();
 	}
 }

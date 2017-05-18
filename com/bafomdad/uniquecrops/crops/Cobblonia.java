@@ -13,13 +13,15 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Cobblonia extends BlockCropsBase {
 
 	public Cobblonia() {
 		
-		super(EnumCrops.COBBLEPLANT, false);
+		super(EnumCrops.COBBLEPLANT, false, UCConfig.cropCobblonia);
+		this.clickHarvest = false;
 	}
 	
 	@Override

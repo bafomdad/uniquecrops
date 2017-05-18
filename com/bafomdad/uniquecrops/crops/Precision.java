@@ -14,13 +14,15 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Precision extends BlockCropsBase {
 
 	public Precision() {
 		
-		super(EnumCrops.PRECISION, false);
+		super(EnumCrops.PRECISION, false, UCConfig.cropprecision);
 	}
 	
 	@Override
@@ -39,7 +41,7 @@ public class Precision extends BlockCropsBase {
 	public int damageDropped(IBlockState state) {
 		
 		if (this.getAge(state) == 6)
-			return 7;
+			return EnumItems.PRENUGGET.ordinal();
 		
 		return 0;
 	}

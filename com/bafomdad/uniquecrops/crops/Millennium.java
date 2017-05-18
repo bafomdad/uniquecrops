@@ -11,13 +11,15 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Millennium extends BlockCropsBase {
 
 	public Millennium() {
 		
-		super(EnumCrops.FOREVERPLANT, true);
+		super(EnumCrops.FOREVERPLANT, true, UCConfig.cropmillennium);
 	}
 	
 	@Override
@@ -38,7 +40,7 @@ public class Millennium extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 17;
+		return EnumItems.MILLENNIUMEYE.ordinal();
 	}
 	
 	@Override

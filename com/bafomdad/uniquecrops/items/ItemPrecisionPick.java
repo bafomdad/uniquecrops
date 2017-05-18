@@ -4,22 +4,26 @@ import java.util.List;
 import java.util.Set;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.IBookUpgradeable;
+import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.google.common.collect.Sets;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
 	
@@ -54,11 +58,13 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
     }
 	
 	@Override
-    public void onCreated(ItemStack stack, World world, EntityPlayer player) {
-		
-		stack.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
-		super.onCreated(stack, world, player);
-	}
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
+    	
+		ItemStack precision = new ItemStack(item);
+		precision.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
+		list.add(precision);
+    }
 	
     public boolean canHarvestBlock(IBlockState blockIn)
     {

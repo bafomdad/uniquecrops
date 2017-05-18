@@ -21,17 +21,11 @@ public class FakePlayerUC extends FakePlayer {
 	}
 	
     @Override
-    protected void onNewPotionEffect(PotionEffect p_70670_1_)
-    {
-    }
+    protected void onNewPotionEffect(PotionEffect p_70670_1_) {}
 
     @Override
-    protected void onChangedPotionEffect(PotionEffect effect, boolean p_70695_2_)
-    {
-    }
+    protected void onChangedPotionEffect(PotionEffect effect, boolean p_70695_2_) {}
 
     @Override
-    protected void onFinishedPotionEffect(PotionEffect effect)
-    {
-    }
+    protected void onFinishedPotionEffect(PotionEffect effect) {}
 }

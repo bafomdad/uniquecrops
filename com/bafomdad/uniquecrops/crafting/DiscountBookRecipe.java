@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops.crafting;
 
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
@@ -21,7 +22,7 @@ public class DiscountBookRecipe implements IRecipe {
 		for (int i = 0; i < ic.getSizeInventory(); i++) {
 			ItemStack stack = ic.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == UCItems.generic.createStack("discountbook").getItem())
+				if (stack.getItem() == UCItems.generic.createStack(EnumItems.DISCOUNT).getItem())
 					foundDiscountBook = true;
 				else if (!foundItem && !(NBTUtils.detectNBT(stack) && NBTUtils.getBoolean(stack, ItemGeneric.TAG_DISCOUNT, false)) && !stack.getItem().hasContainerItem(stack) && isStackValid(stack))
 					foundItem = true;
@@ -38,7 +39,7 @@ public class DiscountBookRecipe implements IRecipe {
 		
 		for (int i = 0; i < ic.getSizeInventory(); i++) {
 			ItemStack stack = ic.getStackInSlot(i);
-			if (stack != null && stack.getItem() != UCItems.generic.createStack("discountbook").getItem())
+			if (stack != null && stack.getItem() != UCItems.generic.createStack(EnumItems.DISCOUNT).getItem())
 				item = stack;
 		}
 		ItemStack copy = item.copy();

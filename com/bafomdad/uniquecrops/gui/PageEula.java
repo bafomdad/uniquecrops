@@ -17,7 +17,7 @@ public abstract class PageEula {
 		
 		this.gui = screen;
 		this.drawX = (screen.width - screen.WIDTH) / 2 + 25;
-		this.drawY = (screen.HEIGHT - screen.HEIGHT) / 2 + 15;
+		this.drawY = (screen.height - screen.HEIGHT) / 2 + 15;
 		this.wordWrap = this.gui.WIDTH - 40;
 	}
 	

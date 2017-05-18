@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops.init;
 
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.items.*;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +38,11 @@ public class UCItems {
 		seedsEula,
 		seedsCobblonia,
 		seedsDyeius,
-		seedsAbstract;
+		seedsAbstract,
+		seedsWafflonia,
+		seedsDevilsnare,
+		seedsPixelsius,
+		seedsArtisia;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -45,16 +51,19 @@ public class UCItems {
 	public static Item potionreverse;
 	public static Item goldenbread;
 	public static Item dietpills;
+	public static Item waffle;
 	public static Item endersnooker;
 	
 	public static ItemArmor glasses3D;
 	public static ItemArmor poncho;
 	public static ItemArmor slippers;
+	public static ItemArmor pixelglasses;
 	public static ItemTool precisionPick;
 	public static ItemTool precisionAxe;
 	public static ItemTool precisionShovel;
 	
 	public static final ItemArmor.ArmorMaterial glassesmaterial = EnumHelper.addArmorMaterial("3dglasses", "uniquecrops:3dglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
+	public static final ItemArmor.ArmorMaterial pixelmaterial = EnumHelper.addArmorMaterial("pixelglasses", "uniquecrops:pixelglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
 	public static final ItemArmor.ArmorMaterial ponchomaterial = EnumHelper.addArmorMaterial("poncho", "uniquecrops:poncho", 112, new int[] { 1, 2, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	public static final ItemArmor.ArmorMaterial slippermaterial = EnumHelper.addArmorMaterial("slippers", "uniquecrops:slippers", 90, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0F);
 	
@@ -78,6 +87,10 @@ public class UCItems {
 		seedsCobblonia = new ItemSeedsUC(UCBlocks.cropCobblonia);
 		seedsDyeius = new ItemSeedsUC(UCBlocks.cropDyeius);
 		seedsAbstract = new ItemSeedsUC(UCBlocks.cropAbstract);
+		seedsWafflonia = new ItemSeedsUC(UCBlocks.cropWafflonia);
+		seedsDevilsnare = new ItemSeedsUC(UCBlocks.cropDevilsnare);
+		seedsPixelsius = new ItemSeedsUC(UCBlocks.cropPixelsius);
+		seedsArtisia = new ItemSeedsUC(UCBlocks.cropArtisia);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");
@@ -86,9 +99,11 @@ public class UCItems {
 		potionreverse = new ItemGenericFood(0, 0F, true, "reversepotion");
 		goldenbread = new ItemGenericFood(4, 0.3F, false, "goldenbread");
 		dietpills = new ItemGenericFood(-4, 0, true, "dietpills");
+		waffle = new ItemGenericFood(8, 1.0F, true, "waffle");
 		endersnooker = new ItemEnderSnooker();
 		
 		glasses3D = new Item3DGlasses(glassesmaterial, 1, EntityEquipmentSlot.HEAD);
+		pixelglasses = new ItemPixelGlasses(pixelmaterial, 1, EntityEquipmentSlot.HEAD);
 		poncho = new ItemPoncho(ponchomaterial, 1, EntityEquipmentSlot.CHEST);
 		slippers = new ItemGlassSlippers(slippermaterial, 2, EntityEquipmentSlot.FEET);
 		precisionPick = new ItemPrecisionPick();
@@ -117,18 +132,26 @@ public class UCItems {
 		registerItemModel(seedsCobblonia);
 		registerItemModel(seedsDyeius);
 		registerItemModel(seedsAbstract);
+		registerItemModel(seedsWafflonia);
+		registerItemModel(seedsDevilsnare);
+		registerItemModel(seedsPixelsius);
+		registerItemModel(seedsArtisia);
 		
-		registerItemModels(generic, generic.types);
+		for (int i = 0; i < EnumItems.values().length; ++i)
+			ModelLoader.setCustomModelResourceLocation(generic, i, new ModelResourceLocation(generic.getRegistryName() + "." + EnumItems.values()[i].getName(), "inventory"));
+			
 		registerItemModel(largeplum);
 		registerItemModel(teriyaki);
 		registerItemModel(heart);
 		registerItemModel(potionreverse);
 		registerItemModel(goldenbread);
 		registerItemModel(dietpills);
+		registerItemModel(waffle);
 		registerItemModel(endersnooker);
 		registerItemModel(glasses3D);
 		registerItemModel(poncho);
 		registerItemModel(slippers);
+		registerItemModel(pixelglasses);
 		registerItemModel(precisionPick);
 		registerItemModel(precisionAxe);
 		registerItemModel(precisionShovel);
@@ -137,12 +160,5 @@ public class UCItems {
 	private static void registerItemModel(Item item) {
 		
 		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-	}
-	
-	private static void registerItemModels(Item item, String[] types) {
-		
-		for (int i = 0; i < types.length; i++) {
-			ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName() + "." + types[i], "inventory"));
-		}
 	}
 }

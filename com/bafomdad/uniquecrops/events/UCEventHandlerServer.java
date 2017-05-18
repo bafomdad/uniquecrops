@@ -1,10 +1,11 @@
 package com.bafomdad.uniquecrops.events;
 
-import java.time.LocalDateTime;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
 
+import mcp.mobius.waila.utils.NBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,16 +19,18 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -40,8 +43,10 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.NoteBlockEvent;
@@ -50,10 +55,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
+import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
-import com.bafomdad.uniquecrops.core.IBookUpgradeable;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.crops.Feroxia;
@@ -144,10 +150,7 @@ public class UCEventHandlerServer {
 			int upgradelevel = NBTUtils.getInt(output, ItemGeneric.TAG_UPGRADE, -1);
 			if (upgradelevel == 10) {
 				Random rand = new Random();
-				if (rand.nextInt(4) == 0) {
-					return;
-				}
-				else {
+				if (rand.nextBoolean() == false && !player.worldObj.isRemote) {
 					player.addChatMessage(new TextComponentString(TextFormatting.RED + "You attempt to refine this item, but it breaks.."));
 					output.stackSize = 0;
 				}
@@ -199,9 +202,7 @@ public class UCEventHandlerServer {
 		}
 		if (crop == UCBlocks.cropFeroxia && ((Feroxia)crop).isFullyGrown(event.getWorld(), event.getPos(), event.getState())) {
 			if (event.getHarvester() != null && !(event.getHarvester() instanceof FakePlayer))
-			{
 				GrowthSteps.generateSteps(event.getHarvester());
-			}
 			else
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
@@ -248,7 +249,7 @@ public class UCEventHandlerServer {
 	    		NBTTagCompound tag = chicken.getEntityData();
 	    		if (!chicken.isChild() && tag.hasKey(ItemGeneric.TAG_OVERCLUCK)) 
 	    		{
-	    			addDrop(event, UCItems.generic.createStack("eggupgrade"));
+	    			addDrop(event, UCItems.generic.createStack(EnumItems.EGGUPGRADE));
 	    		}
 	    	}
 		}
@@ -257,7 +258,7 @@ public class UCEventHandlerServer {
 			EntityPlayer player = (EntityPlayer)event.getSource().getSourceOfDamage();
 			EntityEquipmentSlot[] slot = new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET };
 			ItemStack boots = el.getItemStackFromSlot(slot[0]);
-			if (boots != null && player.inventory.hasItemStack(UCItems.generic.createStack("slipperglass"))) {
+			if (boots != null && player.inventory.hasItemStack(UCItems.generic.createStack(EnumItems.SLIPPER))) {
 				if (player.worldObj.rand.nextInt(5) == 0) {
 					addDrop(event, new ItemStack(UCItems.slippers));
 					for (int i = 0; i < player.inventory.mainInventory.length; i++) {
@@ -377,11 +378,15 @@ public class UCEventHandlerServer {
     	
     	if (event.getPlayer() == null)
     		return;
-    	if (event.getState().getBlock() != Blocks.MONSTER_EGG)
-    		return;
+
     	EntityPlayer player = event.getPlayer();
+    	boolean flag = player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionPick;
+    	if (!flag) return;
+    	
     	if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionPick) {
-    		if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10) {
+    		if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) < 10) 
+    			return;
+    		else {
     			if (event.getState().getBlock() == Blocks.MONSTER_EGG) {
         			event.setCanceled(true);
         			event.getWorld().setBlockToAir(event.getPos());
@@ -391,8 +396,49 @@ public class UCEventHandlerServer {
         			player.getHeldItemMainhand().attemptDamageItem(1, event.getWorld().rand);
         			return;
     			}
+    			if (event.getState().getBlock() == Blocks.MOB_SPAWNER) {
+					event.setCanceled(true);
+    				TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+    				if (tile != null && tile instanceof TileEntityMobSpawner) {
+    					ItemStack stack = new ItemStack(Blocks.MOB_SPAWNER);
+    					if (!event.getWorld().isRemote) { 
+    						NBTUtils.setCompound(stack, "Spawner", ((TileEntityMobSpawner)tile).serializeNBT());
+    						
+    						EntityItem ei = new EntityItem(event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, stack);
+    						event.getWorld().spawnEntityInWorld(ei);
+    					}
+    					event.getWorld().setBlockToAir(event.getPos());
+    					player.getHeldItemMainhand().attemptDamageItem(1, event.getWorld().rand);
+    					return;
+    				}
+    			}
     		}
     	}
+    }
+    
+    @SubscribeEvent
+    public void placeMobSpawner(BlockEvent.PlaceEvent event) {
+    	
+    	if (event.getState().getBlock() != Blocks.MOB_SPAWNER) return;
+    	
+    	ItemStack spawner = event.getItemInHand();
+    	if (spawner.hasTagCompound() && spawner.getTagCompound().hasKey("Spawner") && Block.getBlockFromItem(spawner.getItem()) == Blocks.MOB_SPAWNER) {
+    		TileEntity tile = TileEntity.func_190200_a(event.getWorld(), spawner.getTagCompound().getCompoundTag("Spawner"));
+    		event.getWorld().setTileEntity(event.getPos(), tile);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void showTooltip(ItemTooltipEvent event) {
+    	
+    	if (event.getItemStack().getItem() != Item.getItemFromBlock(Blocks.MOB_SPAWNER)) return;
+    	
+    	ItemStack tooltipper = event.getItemStack();
+    	if (!tooltipper.hasTagCompound() || (tooltipper.hasTagCompound() && !tooltipper.getTagCompound().hasKey("Spawner"))) return;
+    	
+    	NBTTagCompound tag = tooltipper.getTagCompound().getCompoundTag("Spawner");
+    	event.getToolTip().add("Mob spawner data:");
+    	event.getToolTip().add(TextFormatting.GOLD + tag.getCompoundTag("SpawnData").getString("id"));
     }
     
 	@SubscribeEvent
@@ -414,11 +460,26 @@ public class UCEventHandlerServer {
 			if (!event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT))
 				return;
 			
-			event.player.inventory.addItemStackToInventory(UCItems.generic.createStack("abstract"));
+			Random rand = new Random();
+			if (rand.nextInt(100) != 0)
+				return;
+			
+			event.player.inventory.addItemStackToInventory(UCItems.generic.createStack(EnumItems.ABSTRACT));
 			if (!event.player.worldObj.isRemote)
 				SeedBehavior.setAbstractCropGrowth(event.player, false);
 			return;
 		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerJump(LivingJumpEvent event) {
+		
+		if (!(event.getEntityLiving() instanceof EntityPlayer))
+			return;
+		
+		EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+		if (player.getActivePotionEffect(MobEffects.SLOWNESS) != null && player.getActivePotionEffect(MobEffects.SLOWNESS).getAmplifier() >= 4)
+			player.motionY = 0;
 	}
 	
     private ItemStack updateRepairOutput(ItemStack input1, ItemStack input2) {

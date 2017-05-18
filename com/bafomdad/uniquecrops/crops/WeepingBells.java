@@ -14,13 +14,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileShyPlant;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class WeepingBells extends BlockCropsBase implements ITileEntityProvider {
 
 	public WeepingBells() {
 		
-		super(EnumCrops.SHYPLANT, false);
+		super(EnumCrops.SHYPLANT, false, UCConfig.cropweepingbells);
 		GameRegistry.registerTileEntity(TileShyPlant.class, "TileShyPlant");
 	}
 	
@@ -42,7 +44,7 @@ public class WeepingBells extends BlockCropsBase implements ITileEntityProvider 
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 15;
+		return EnumItems.WEEPINGTEAR.ordinal();
 	}
 	
 	@Override

@@ -1,12 +1,5 @@
 package com.bafomdad.uniquecrops.core;
 
-import java.lang.reflect.Field;
-
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.init.UCBlocks;
-import com.bafomdad.uniquecrops.network.PacketUCEffect;
-import com.bafomdad.uniquecrops.network.UCPacketHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.network.PacketUCEffect;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
+
 public class SeedBehavior {
 
 	public static boolean canPlantCrop(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, Block cropBlock) {
@@ -26,7 +25,7 @@ public class SeedBehavior {
 		if (side != EnumFacing.UP)
 			return false;
 		
-		if (!world.isRemote && !checkCropConfig(cropBlock)) {
+		if (!world.isRemote && cropBlock instanceof BlockCropsBase && !((BlockCropsBase)cropBlock).canPlantCrop()) {
 			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.BARRIER, pos.getX(), pos.getY() + 2, pos.getZ(), 0));
 			return false;
 		}
@@ -73,23 +72,6 @@ public class SeedBehavior {
 			}
 		}
 		return false;
-	}
-	
-	private static boolean checkCropConfig(Block crop) {
-		
-		Field[] fields = UCConfig.class.getDeclaredFields();
-		for (Field f : fields) {
-			if (f.getName().equals(crop.getRegistryName().toString().substring(UniqueCrops.MOD_ID.length() + 1))) {
-				try {
-					if (!f.getBoolean(f))
-						return false;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				break;
-			}
-		}
-		return true;
 	}
 	
 	public static final String TAG_ABSTRACT = "UC_tagAbstractGrowth";

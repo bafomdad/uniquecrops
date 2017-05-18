@@ -26,6 +26,10 @@ public class UCConfig {
 	public static boolean cropDyeius;
 	public static boolean cropCobblonia;
 	public static boolean cropAbstract;
+	public static boolean cropWafflonia;
+	public static boolean cropDevilsnare;
+	public static boolean cropPixelsius;
+	public static boolean cropArtisia;
 	
 	public static void loadConfig(FMLPreInitializationEvent event) {
 		
@@ -52,6 +56,10 @@ public class UCConfig {
 		cropDyeius = config.get("plants", "canPlantDyeiusSeeds", true).getBoolean();
 		cropCobblonia = config.get("plants", "canPlantCobbloniaSeeds", true).getBoolean();
 		cropAbstract = config.get("plants", "canPlantAbstractSeeds", true).getBoolean();
+		cropWafflonia = config.get("plants", "canPlantCliqiaSeeds", true).getBoolean();
+		cropDevilsnare = config.get("plants", "canPlantDevilSnare", true).getBoolean();
+		cropPixelsius = config.get("plants", "canPlantPixelsius", true).getBoolean();
+		cropArtisia = config.get("plants", "canPlantArtisia", true).getBoolean();
 		
 		config.save();
 	}

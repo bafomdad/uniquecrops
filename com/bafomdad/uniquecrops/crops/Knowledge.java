@@ -28,14 +28,16 @@ import net.minecraftforge.items.IItemHandler;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Knowledge extends BlockCropsBase {
 
 	public Knowledge() {
 		
-		super(EnumCrops.BOOKPLANT, true);
+		super(EnumCrops.BOOKPLANT, true, UCConfig.cropknowledge);
 	}
 	
 	@Override
@@ -56,7 +58,7 @@ public class Knowledge extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 1;
+		return EnumItems.DISCOUNT.ordinal();
 	}
 	
 	@Override

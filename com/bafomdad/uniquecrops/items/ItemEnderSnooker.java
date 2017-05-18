@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class ItemEnderSnooker extends Item {
 					target.setPositionAndUpdate(playerpos.getX(), playerpos.getY(), playerpos.getZ());
 					player.setPositionAndUpdate(targetpos.getX(), targetpos.getY(), targetpos.getZ());
 					if (target instanceof EntityWolf && world.rand.nextInt(100) == 0)
-						target.entityDropItem(UCItems.generic.createStack("dogresidue"), 1);
+						target.entityDropItem(UCItems.generic.createStack(EnumItems.DOGRESIDUE), 1);
 					stack.damageItem(1, player);
 					return new ActionResult(EnumActionResult.SUCCESS, stack);
 				}

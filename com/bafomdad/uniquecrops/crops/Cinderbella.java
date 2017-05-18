@@ -19,13 +19,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileCinderbella;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 
 	public Cinderbella() {
 		
-		super(EnumCrops.CINDERBELLA, true);
+		super(EnumCrops.CINDERBELLA, true, UCConfig.cropcinderbella);
 		GameRegistry.registerTileEntity(TileCinderbella.class, "TileCinderbella");
 	}
 	
@@ -47,7 +49,7 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 14;
+		return EnumItems.SLIPPER.ordinal();
 	}
 	
 	@Override

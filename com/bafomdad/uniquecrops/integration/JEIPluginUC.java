@@ -1,16 +1,21 @@
 package com.bafomdad.uniquecrops.integration;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.crafting.UCrafting;
 import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.init.UCItems;
+import com.bafomdad.uniquecrops.integration.craftyplants.*;
 
-import mezz.jei.api.IItemBlacklist;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 
 @JEIPlugin
@@ -20,25 +25,35 @@ public class JEIPluginUC implements IModPlugin {
 	public void register(IModRegistry registry) {
 		
 		IJeiHelpers helpers = registry.getJeiHelpers();
-		IItemBlacklist blacklist = helpers.getItemBlacklist();
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropCinderbella));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropCollis));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropDirigible));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropEnderlily));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropFeroxia));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropInvisibilia));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropKnowledge));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropMaryjane));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropMerlinia));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropMillennium));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropMusica));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropNormal));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropPrecision));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropWeepingbells));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropEula));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropCobblonia));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropDyeius));
-		blacklist.addItemToBlacklist(new ItemStack(UCBlocks.cropAbstract));
+		registry.addRecipeCategories(new UCRecipeCategory(helpers.getGuiHelper()));
+		registry.addRecipeHandlers(new UCRecipeHandler());
+		
+		registry.addRecipes(UCrafting.recipes);
+		registry.addRecipeCategoryCraftingItem(UCItems.generic.createStack(EnumItems.DUMMYITEM), UCRecipeCategory.NAME);
+		
+		IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropCinderbella));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropCollis));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropDirigible));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropEnderlily));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropFeroxia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropInvisibilia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropKnowledge));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropMaryjane));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropMerlinia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropMillennium));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropMusica));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropNormal));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropPrecision));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropWeepingbells));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropEula));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropCobblonia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropDyeius));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropAbstract));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropWafflonia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropPixelsius));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropArtisia));
+		blacklist.addIngredientToBlacklist(UCItems.generic.createStack(EnumItems.DUMMYITEM));
 	}
 
 	@Override

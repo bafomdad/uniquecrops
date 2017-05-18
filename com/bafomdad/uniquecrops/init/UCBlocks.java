@@ -1,13 +1,16 @@
 package com.bafomdad.uniquecrops.init;
 
 import com.bafomdad.uniquecrops.blocks.*;
+import com.bafomdad.uniquecrops.blocks.tiles.TileArtisia;
 import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.crops.*;
+import com.bafomdad.uniquecrops.entities.RenderCraftItem;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,10 +35,14 @@ public class UCBlocks {
 		cropEula,
 		cropCobblonia,
 		cropDyeius,
-		cropAbstract;
+		cropAbstract,
+		cropWafflonia,
+		cropDevilsnare,
+		cropPixelsius,
+		cropArtisia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
-	public static Block hourglass, totemhead, lavalily;
+	public static Block hourglass, totemhead, lavalily, redtorch;
 	
 	public static void init() {
 		
@@ -57,6 +64,10 @@ public class UCBlocks {
 		cropCobblonia = new Cobblonia();
 		cropDyeius = new Dyeius();
 		cropAbstract = new Abstract();
+		cropWafflonia = new Wafflonia();
+		cropDevilsnare = new DevilSnare();
+		cropPixelsius = new Pixelsius();
+		cropArtisia = new Artisia();
 		
 		oldCobble = new BlockOldStone("cobble");
 		oldCobbleMoss = new BlockOldStone("cobblemoss");
@@ -79,6 +90,8 @@ public class UCBlocks {
 		registerBlockModel(hourglass);
 		registerBlockModel(totemhead);
 		registerBlockModel(lavalily);
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileArtisia.class, new RenderCraftItem());
 	}
 	
 	private static void registerBlockModel(Block block) {

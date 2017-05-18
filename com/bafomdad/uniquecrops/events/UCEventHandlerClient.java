@@ -2,14 +2,21 @@ package com.bafomdad.uniquecrops.events;
 
 import java.util.Map;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.UCDyePlantStitch;
 import com.bafomdad.uniquecrops.core.UCInvisibiliaStitch;
+import com.bafomdad.uniquecrops.init.UCItems;
 
 public class UCEventHandlerClient {
 	
@@ -25,6 +32,23 @@ public class UCEventHandlerClient {
 			mapRegisteredSprites.put("uniquecrops:blocks/dyeplant5", new UCDyePlantStitch("uniquecrops:blocks/dyeplant5"));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+//	@SubscribeEvent
+	public void handleKeyPressed(InputEvent.KeyInputEvent event) {
+		
+		if (UniqueCrops.pixelKey.isPressed()) {
+			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+			if (player instanceof FakePlayer) return;
+			if (player.inventory.armorItemInSlot(3) == null) return;
+			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelglasses) return;
+			
+			EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
+			if (renderer.getShaderGroup() != null) {
+				UniqueCrops.proxy.disableBitsShader();
+			}
+			UniqueCrops.proxy.enableBitsShader();
 		}
 	}
 }

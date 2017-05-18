@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Normal extends BlockCropsBase {
@@ -16,7 +17,7 @@ public class Normal extends BlockCropsBase {
 
 	public Normal() {
 		
-		super(EnumCrops.NORMAL, true);
+		super(EnumCrops.NORMAL, true, UCConfig.cropnormal);
 	}
 	
 	@Override

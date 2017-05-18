@@ -14,13 +14,15 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Merlinia extends BlockCropsBase {
 	
 	public Merlinia() {
 		
-		super(EnumCrops.BACKWARDSPLANT, true);
+		super(EnumCrops.BACKWARDSPLANT, true, UCConfig.cropmerlinia);
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ public class Merlinia extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 4;
+		return EnumItems.TIMEDUST.ordinal();
 	}
 	
 	@Override

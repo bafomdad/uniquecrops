@@ -23,7 +23,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileFeroxia;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -34,7 +36,8 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 
 	public Feroxia() {
 		
-		super(EnumCrops.SAVAGEPLANT, false);
+		super(EnumCrops.SAVAGEPLANT, false, UCConfig.cropferoxia);
+		this.clickHarvest = false;
 		GameRegistry.registerTileEntity(TileFeroxia.class, "TileFeroxia");
 		init();
 	}
@@ -89,7 +92,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		if (getAge(state) < getMaxAge())
 			return 1;
 		
-		return 9;
+		return EnumItems.ESSENCE.ordinal();
 	}
 	
 	public boolean isFullyGrown(World world, BlockPos pos, IBlockState state) {

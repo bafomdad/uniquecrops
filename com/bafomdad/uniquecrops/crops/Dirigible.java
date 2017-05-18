@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -19,7 +21,7 @@ public class Dirigible extends BlockCropsBase {
 
 	public Dirigible() {
 		
-		super(EnumCrops.FLYINGPLANT, false);
+		super(EnumCrops.FLYINGPLANT, false, UCConfig.cropdirigible);
 	}
 	
 	@Override
@@ -40,7 +42,7 @@ public class Dirigible extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 2;
+		return EnumItems.PLUM.ordinal();
 	}
 	
 	@Override
@@ -49,7 +51,7 @@ public class Dirigible extends BlockCropsBase {
 		if (world.getLightFromNeighbors(pos.up()) >= 9) {
 			if ((this.getAge(state) + 1) >= getMaxAge())
 			{
-				EntityItem ei = new EntityItem(world, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, UCItems.generic.createStack("dirigibleplum"));
+				EntityItem ei = new EntityItem(world, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, UCItems.generic.createStack(EnumItems.PLUM));
 				if (!world.isRemote)
 					world.spawnEntityInWorld(ei);
 				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, pos.getX(), pos.getY(), pos.getZ(), 4));

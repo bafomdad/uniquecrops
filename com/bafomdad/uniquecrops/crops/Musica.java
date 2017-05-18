@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Musica extends BlockCropsBase implements ITileEntityProvider {
@@ -25,7 +26,7 @@ public class Musica extends BlockCropsBase implements ITileEntityProvider {
 
 	public Musica() {
 		
-		super(EnumCrops.MUSICAPLANT, false);
+		super(EnumCrops.MUSICAPLANT, false, UCConfig.cropmusica);
 		GameRegistry.registerTileEntity(TileMusicaPlant.class, "TileMusicaPlant");
 	}
 	
@@ -43,10 +44,7 @@ public class Musica extends BlockCropsBase implements ITileEntityProvider {
 	}
 	
 	@Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		
-		return;
-	}
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {}
 	
 	public boolean canDance(IBlockState state) {
 		

@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -24,6 +27,7 @@ import com.bafomdad.uniquecrops.network.UCPacketHandler;
 public class ClientProxy extends CommonProxy {
 	
 	public static boolean flag = false;
+	private final ResourceLocation shader = new ResourceLocation("minecraft", "shaders/post/bits.json");
 	
 	@Override
 	public void init(FMLInitializationEvent event) {
@@ -77,5 +81,28 @@ public class ClientProxy extends CommonProxy {
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public void enableBitsShader() {
+		
+		if (OpenGlHelper.shadersSupported) {
+			Minecraft mc = Minecraft.getMinecraft();
+			EntityRenderer renderer = mc.entityRenderer;
+			if (renderer.getShaderGroup() != null)
+				renderer.getShaderGroup().deleteShaderGroup();
+			
+			renderer.loadShader(this.shader);
+		}
+	}
+	
+	@Override
+	public void disableBitsShader() {
+		
+		if (OpenGlHelper.shadersSupported) {
+			EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
+			if (renderer.getShaderGroup() != null)
+				renderer.getShaderGroup().deleteShaderGroup();
+		}
 	}
 }

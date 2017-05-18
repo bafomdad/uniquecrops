@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -25,7 +27,8 @@ public class Enderlily extends BlockCropsBase {
 
 	public Enderlily() {
 		
-		super(EnumCrops.TELEPLANT, false);
+		super(EnumCrops.TELEPLANT, false, UCConfig.cropenderlily);
+		this.clickHarvest = false;
 	}
 	
 	@Override
@@ -46,8 +49,17 @@ public class Enderlily extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 5;
+		return EnumItems.LILYTWINE.ordinal();
 	}
+	
+	@Override
+    public int quantityDropped(IBlockState state, int fortune, Random random) {
+        
+    	if (this.getAge(state) < getMaxAge())
+    		return 0;
+    	
+    	return random.nextInt(3) + 2;
+    }
 	
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {

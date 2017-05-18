@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -29,7 +31,8 @@ public class MaryJane extends BlockCropsBase {
 
 	public MaryJane() {
 		
-		super(EnumCrops.BLAZINGPLANT, true);
+		super(EnumCrops.BLAZINGPLANT, true, UCConfig.cropmaryjane);
+		this.clickHarvest = false;
 	}
 	
 	@Override
@@ -50,7 +53,7 @@ public class MaryJane extends BlockCropsBase {
 		if (getAge(state) < getMaxAge())
 			return 0;
 		
-		return 3;
+		return EnumItems.CINDERLEAF.ordinal();
 	}
 	
 	@Override
@@ -74,13 +77,14 @@ public class MaryJane extends BlockCropsBase {
 		if (this.getAge(state) >= getMaxAge())
 			return false;
 		
-		if (!world.isRemote && player != null && player.getHeldItemMainhand() != null) {
+		if (player != null && player.getHeldItemMainhand() != null) {
 			ItemStack stack = player.getHeldItemMainhand();
-			if (stack.getItem() == Items.BLAZE_POWDER)
-			{
-				world.setBlockState(pos, this.withAge(this.getAge(state) + 1), 2);
-				if (!player.capabilities.isCreativeMode)
-					stack.stackSize--;
+			if (stack.getItem() == Items.BLAZE_POWDER) {
+				if (!world.isRemote) { 
+					world.setBlockState(pos, this.withAge(this.getAge(state) + 1), 2);
+					if (!player.capabilities.isCreativeMode)
+						stack.stackSize--;
+				}
 				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() - 0.5D, pos.getY(), pos.getZ() - 0.5D, 6));
 				return true;
 			}

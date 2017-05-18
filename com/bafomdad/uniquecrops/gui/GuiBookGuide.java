@@ -1,6 +1,7 @@
 package com.bafomdad.uniquecrops.gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiButton;
@@ -24,7 +25,6 @@ public class GuiBookGuide extends GuiScreen {
 	public static List<Page> pageList = new ArrayList<Page>();
 	public final EntityPlayer reader;
 	public final ItemStack book;
-	private String[] cats = UCStrings.CROPCATS;
 	
 	public int WIDTH = 175;
 	public int HEIGHT = 228;
@@ -32,6 +32,7 @@ public class GuiBookGuide extends GuiScreen {
 	private GuiButton next;
 	private GuiButton prev;
 	private GuiButton category;
+	private GuiButton category2;
 	private GuiButton backbutton;
 	
 	private int pageIndex;
@@ -59,8 +60,20 @@ public class GuiBookGuide extends GuiScreen {
 		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
 		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, 210, false));
 		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, 210, true));
-		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, 35, 100, 168, cats));
-		buttonList.add(this.backbutton = new GuiButtonBack(3, k + 80, 210));
+		List<String> stringlist = new ArrayList();
+		for (Page page : pageList) {
+			if (page instanceof PageImage)
+				stringlist.add(((PageImage)page).getText());
+		}
+		String[] arrays = new String[stringlist.size()];
+		for (int i = 0; i < arrays.length; i++) {
+			arrays[i] = stringlist.get(i);
+		}
+		String[] firstCat = (String[]) Arrays.copyOfRange(arrays, 0, arrays.length / 2);
+		String[] secondCat = (String[]) Arrays.copyOfRange(arrays, (arrays.length / 2), arrays.length);
+ 		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, 35, 100, 168, firstCat));
+		buttonList.add(this.category2 = new GuiButtonLink(this, 3, k + 15, 35, 100, 168, secondCat));
+		buttonList.add(this.backbutton = new GuiButtonBack(4, k + 80, 210));
 		updateButtons();
 	}
 	
@@ -68,11 +81,13 @@ public class GuiBookGuide extends GuiScreen {
 	protected void actionPerformed(GuiButton button) {
 		
 		int catsize = ((GuiButtonLink)category).selectedOption;
+		int catsize2 = ((GuiButtonLink)category2).selectedOption;
 		switch (button.id) {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
-			case 2: pageIndex = catsize + (pageIndex + catsize + 1); break;
-			case 3: pageIndex = 2; break;
+			case 2: pageIndex = catsize + (pageIndex + catsize + 2); break;
+			case 3: pageIndex = catsize2 + (pageIndex + catsize2 + 22 + 1); break;
+			case 4: pageIndex = 2; break;
 		}
 		this.savedIndex = pageIndex;
 		NBTUtils.setInt(book, "savedIndex", savedIndex);
@@ -84,7 +99,8 @@ public class GuiBookGuide extends GuiScreen {
 		this.next.visible = (this.pageIndex < this.pageList.size() - 1);
 		this.prev.visible = this.pageIndex > 0;
 		this.category.visible = this.pageIndex == 2;
-		this.backbutton.visible = this.pageIndex > 2;
+		this.category2.visible = this.pageIndex == 3;
+		this.backbutton.visible = this.pageIndex > 3;
 	}
 	
 	@Override

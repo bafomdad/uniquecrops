@@ -3,39 +3,11 @@ package com.bafomdad.uniquecrops.core;
 import com.bafomdad.uniquecrops.UniqueCrops;
 
 public class UCStrings {
-
-	// GENERIC ITEMS
-	public static String[] GENERIC = new String[] {
-		"guidebook",
-		"discountbook",
-		"dirigibleplum",
-		"cinderleaf",
-		"timedust",
-		"lilytwine",
-		"goldenrods",
-		"prenugget",
-		"pregem",
-		"essence",
-		"timemeal",
-		"invisitwine",
-		"invisifeather",
-		"potionreversesplash",
-		"slipperglass",
-		"weepingtear",
-		"weepingeye",
-		"millenniumeye",
-		"upgradebook",
-		"eggupgrade",
-		"easybadge",
-		"dogresidue",
-		"abstract",
-		"legalstuff",
-		"eulabook"
-	};
 	
 	// CATEGORIES
 	public static String[] CROPCATS = new String[] {
-		"Cinderbella",
+		"Normal",
+		"Artisia",
 		"Goldenrod",
 		"Dirigible Plums",
 		"Ender Lilies",
@@ -44,14 +16,20 @@ public class UCStrings {
 		"Maryjane",
 		"Merlinia",
 		"Millennium",
-		"Musica",
-		"Normal",
+		"Musica"
+	};
+	
+	public static String[] CROPCATS2 = new String[] {
+		"Cinderbella",
 		"Precision",
 		"Weeping Bells",
 		"Eula",
 		"Dyeius",
 		"Cobblonia",
 		"Abstract",
+		"Pixelsius",
+		"Devil's Snare",
+		"Wafflonia",
 		"Feroxia"
 	};
 	
@@ -71,42 +49,50 @@ public class UCStrings {
 	private static final String IMAGE = UniqueCrops.MOD_ID + ":" + "textures/gui/";
 	public static final String INTRO = BOOK + ".pageintro";
 	
-	public static final String CINDERBELLA = IMAGE + "cinderellapage.png";
-	public static final String PAGE1 = BOOK + ".pagecinderbella";
-	public static final String COLLIS = IMAGE + "collispage.png";
-	public static final String PAGE2 = BOOK + ".pagecollis";
-	public static final String DIRIGIBLE = IMAGE + "dirigiblepage.png";
-	public static final String PAGE3 = BOOK + ".pagedirigible";
-	public static final String ENDERLILY = IMAGE + "enderlilypage.png";
-	public static final String PAGE4 = BOOK + ".pageenderlily";
-	public static final String INVISIBILIA = IMAGE + "invisibiliapage.png";
-	public static final String PAGE5 = BOOK + ".pageinvisibilia";
-	public static final String KNOWLEDGE = IMAGE + "knowledgepage.png";
-	public static final String PAGE6 = BOOK + ".pageknowledge";
-	public static final String MARYJANE = IMAGE + "maryjanepage.png";
-	public static final String PAGE7 = BOOK + ".pagemaryjane";
-	public static final String MERLINIA = IMAGE + "merliniapage.png";
-	public static final String PAGE8 = BOOK + ".pagemerlinia";
-	public static final String MILLENNIUM = IMAGE + "millenniumpage.png";
-	public static final String PAGE9 = BOOK + ".pagemillennium";
-	public static final String MUSICA = IMAGE + "musicapage.png";
-	public static final String PAGE10 = BOOK + ".pagemusica";
 	public static final String NORMAL = IMAGE + "normalpage.png";
-	public static final String PAGE11 = BOOK + ".pagenormal";
+	public static final String PAGENORMAL = BOOK + ".pagenormal";
+	public static final String COLLIS = IMAGE + "collispage.png";
+	public static final String PAGECOLLIS = BOOK + ".pagecollis";
+	public static final String DIRIGIBLE = IMAGE + "dirigiblepage.png";
+	public static final String PAGEPLUM = BOOK + ".pagedirigible";
+	public static final String ENDERLILY = IMAGE + "enderlilypage.png";
+	public static final String PAGELILY = BOOK + ".pageenderlily";
+	public static final String INVISIBILIA = IMAGE + "invisibiliapage.png";
+	public static final String PAGEINVIS = BOOK + ".pageinvisibilia";
+	public static final String KNOWLEDGE = IMAGE + "knowledgepage.png";
+	public static final String PAGEKNOWLEDGE = BOOK + ".pageknowledge";
+	public static final String MARYJANE = IMAGE + "maryjanepage.png";
+	public static final String PAGEMARY = BOOK + ".pagemaryjane";
+	public static final String MERLINIA = IMAGE + "merliniapage.png";
+	public static final String PAGEMERLIN = BOOK + ".pagemerlinia";
+	public static final String MILLENNIUM = IMAGE + "millenniumpage.png";
+	public static final String PAGEMILL = BOOK + ".pagemillennium";
+	public static final String MUSICA = IMAGE + "musicapage.png";
+	public static final String PAGEMUSIC = BOOK + ".pagemusica";
+	public static final String CINDERBELLA = IMAGE + "cinderellapage.png";
+	public static final String PAGECINDER = BOOK + ".pagecinderbella";
 	public static final String PRECISION = IMAGE + "precisionpage.png";
-	public static final String PAGE12 = BOOK + ".pageprecision";
+	public static final String PAGEPRECISE = BOOK + ".pageprecision";
 	public static final String WEEPINGBELL = IMAGE + "weepingbellpage.png";
-	public static final String PAGE13 = BOOK + ".pageweepingbell";
+	public static final String PAGEWEEP = BOOK + ".pageweepingbell";
 	public static final String EULA = IMAGE + "eulapage.png";
-	public static final String PAGE14 = BOOK + ".pageeula";
+	public static final String PAGELEGAL = BOOK + ".pageeula";
 	public static final String DYEIUS = IMAGE + "dyeiuspage.png";
-	public static final String PAGE15 = BOOK + ".pagedyeius";
+	public static final String PAGEDYE = BOOK + ".pagedyeius";
 	public static final String COBBLONIA = IMAGE + "cobbloniapage.png";
-	public static final String PAGE16 = BOOK + ".pagecobblonia";
+	public static final String PAGECOBBLE = BOOK + ".pagecobblonia";
 	public static final String ABSTRACT = IMAGE + "abstractpage.png";
-	public static final String PAGE17 = BOOK + ".pageabstract";
+	public static final String PAGEABSTRACT = BOOK + ".pageabstract";
+	public static final String CRAFTER = IMAGE + "artisiapage.png";
+	public static final String PAGECRAFT = BOOK + ".pageartisia";
+	public static final String WAFFLES = IMAGE + "waffloniapage.png";
+	public static final String PAGEWAFFLE = BOOK + ".pagewafflonia";
+	public static final String DEVILSNARE = IMAGE + "devilsnarepage.png";
+	public static final String PAGESNARE = BOOK + ".pagedevilsnare";
+	public static final String PIXELSIUS = IMAGE + "pixelsiuspage.png";
+	public static final String PAGEPIXEL = BOOK + ".pagepixelsius";
 	public static final String FEROXIA = IMAGE + "feroxiapage.png";
-	public static final String PAGE18 = BOOK + ".pageferoxia";
+	public static final String PAGESAVAGE = BOOK + ".pageferoxia";
 	
 	// CONDITIONS
 	private static final String COND = BASE + ".condition";

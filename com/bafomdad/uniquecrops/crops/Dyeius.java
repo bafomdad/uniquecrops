@@ -19,13 +19,14 @@ import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Dyeius extends BlockCropsBase {
 
 	public Dyeius() {
 		
-		super(EnumCrops.DYE, true);
+		super(EnumCrops.DYE, true, UCConfig.cropDyeius);
 	}
 	
 	@Override

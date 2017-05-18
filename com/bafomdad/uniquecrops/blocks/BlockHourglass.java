@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.entities.EntityItemHourglass;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,6 +21,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.entities.EntityItemHourglass;
+
 public class BlockHourglass extends Block {
 	
 	protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.25F, 0.0F, 0.25F, 0.75F, 1F, 0.75F);
@@ -36,6 +36,7 @@ public class BlockHourglass extends Block {
 		setCreativeTab(UniqueCrops.TAB);
 		setSoundType(SoundType.GLASS);
 		setHardness(1.0F);
+		setTickRandomly(true);
 		GameRegistry.register(this);
 		GameRegistry.register(new ItemBlockHourglass(this), getRegistryName());
 	}

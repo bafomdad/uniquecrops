@@ -21,7 +21,11 @@ public enum EnumCrops implements IStringSerializable {
 	EULA("eula"),
 	DYE("dyeius"),
 	COBBLEPLANT("cobblonia"),
-	ABSTRACT("abstract");
+	ABSTRACT("abstract"),
+	DEVILSNARE("devilsnare"),
+	WAFFLE("wafflonia"),
+	PIXELS("pixelsius"),
+	CRAFTER("artisia");
 	
 	final String name;
 	
