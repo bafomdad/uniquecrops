@@ -8,14 +8,14 @@
     "variants": {
         "inventory": [{}],
         "age":{
-            0:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            1:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            2:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            3:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            4:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            5:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            6:{"textures": {"crop":"uniquecrops:blocks/weepingbell3"}},
-            7:{"textures": {"crop":"uniquecrops:blocks/weepingbell4"}}
+            0:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/weepingbell2"}}
         }
     }
 }
