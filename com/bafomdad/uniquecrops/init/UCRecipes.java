@@ -44,7 +44,7 @@ public class UCRecipes {
 		GameRegistry.addRecipe(new ItemStack(UCItems.poncho), "P P", "PPP", "PPP", 'P', UCItems.generic.createStack(EnumItems.INVISIFEATHER));
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.INVISIFEATHER), "TTT", "TFT", "TTT", 'T', UCItems.generic.createStack(EnumItems.INVISITWINE), 'F', Items.FEATHER);
 		GameRegistry.addRecipe(new ItemStack(UCItems.glasses3D), "I I", "I I", "BWR", 'I', Items.IRON_INGOT, 'R', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, EnumDyeColor.RED.getMetadata()), 'W', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.getMetadata()), 'B', new ItemStack(Blocks.STAINED_GLASS_PANE, 1, EnumDyeColor.BLUE.getMetadata()));
-		GameRegistry.addRecipe(new ItemStack(UCItems.pixelglasses), "PPP", "PGP", "PP", 'G', UCItems.glasses3D, 'P', UCItems.generic.createStack(EnumItems.PIXELS));
+		GameRegistry.addRecipe(new ItemStack(UCItems.pixelglasses), "PPP", "PGP", "PPP", 'G', UCItems.glasses3D, 'P', UCItems.generic.createStack(EnumItems.PIXELS));
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.TIMEMEAL, 3), " B ", "BCB", " B ", 'B', new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()), 'C', Items.CLOCK);
 		GameRegistry.addRecipe(new ItemStack(UCItems.endersnooker), "EPE", "PSP", "EPE", 'E', UCItems.generic.createStack(EnumItems.LILYTWINE), 'S', Items.STICK, 'P', Items.ENDER_PEARL);
 		GameRegistry.addRecipe(new ItemStack(Items.ENDER_PEARL), "EEE", "ESE", "EEE", 'E', UCItems.generic.createStack(EnumItems.LILYTWINE), 'S', Items.SNOWBALL);

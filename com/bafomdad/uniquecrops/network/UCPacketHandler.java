@@ -19,6 +19,11 @@ public class UCPacketHandler {
 		INSTANCE.registerMessage(PacketUCEffect.Handler.class, PacketUCEffect.class, 0, Side.CLIENT);
 	}
 	
+	public static void initServer() {
+		
+		INSTANCE.registerMessage(PacketSendKey.Handler.class, PacketSendKey.class, 1, Side.SERVER);
+	}
+	
 	public static void sendToNearbyPlayers(World world, BlockPos pos, IMessage toSend) {
 		
 		if (world instanceof WorldServer) {

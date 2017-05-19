@@ -54,7 +54,9 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.relauncher.Side;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
@@ -455,6 +457,18 @@ public class UCEventHandlerServer {
 	
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		
+		if (event.player.inventory.armorInventory[3] != null && event.player.inventory.armorInventory[3].getItem() == UCItems.pixelglasses) {
+			boolean flag = NBTUtils.getBoolean(event.player.inventory.armorInventory[3], "isActive", false);
+			if (event.side == Side.CLIENT) {
+				if (flag)
+					UniqueCrops.proxy.enableBitsShader();
+				else
+					UniqueCrops.proxy.disableBitsShader();
+			}
+		}
+		else
+			UniqueCrops.proxy.disableBitsShader();
 		
 		if (event.phase == Phase.START && event.player.worldObj.rand.nextInt(1000) == 0) {
 			if (!event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT))

@@ -32,6 +32,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		
 		UCRecipes.init();
+		UCPacketHandler.initServer();
 		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), UCConfig.dropRate);
 	}
 	

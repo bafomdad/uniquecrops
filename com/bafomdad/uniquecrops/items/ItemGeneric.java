@@ -41,7 +41,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
-import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.crops.Merlinia;
@@ -225,19 +224,6 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	        }
 	        return new ActionResult(EnumActionResult.SUCCESS, stack);
 		}
-//		if (stack.getItemDamage() == EnumItems.PIXELS.ordinal() && hand == EnumHand.MAIN_HAND) {
-//			boolean flag = NBTUtils.getBoolean(stack, "isActive", false);
-//			if (!world.isRemote) {
-//				NBTUtils.setBoolean(stack, "isActive", !stack.getTagCompound().getBoolean("isActive"));
-//			}
-//			if (world.isRemote) {
-//				if (flag)
-//					UniqueCrops.proxy.enableBitsShader();
-//				else
-//					UniqueCrops.proxy.disableBitsShader();
-//			}
-//			return new ActionResult(EnumActionResult.SUCCESS, stack);
-//		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}
 	

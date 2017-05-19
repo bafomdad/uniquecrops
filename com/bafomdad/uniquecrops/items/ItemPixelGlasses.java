@@ -2,6 +2,8 @@ package com.bafomdad.uniquecrops.items;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
@@ -10,6 +12,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.init.UCKeys;
 
 public class ItemPixelGlasses extends ItemArmor {
 
@@ -26,7 +29,7 @@ public class ItemPixelGlasses extends ItemArmor {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean whatisthis) {
 		
-		list.add(TextFormatting.RED + "(WIP)");
+		list.add(TextFormatting.GOLD + "Press Key " + Keyboard.getKeyName(UCKeys.pixelKey.getKeyCode()) + " to toggle.");
 	}
 	
 	@Override

@@ -17,6 +17,9 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.UCDyePlantStitch;
 import com.bafomdad.uniquecrops.core.UCInvisibiliaStitch;
 import com.bafomdad.uniquecrops.init.UCItems;
+import com.bafomdad.uniquecrops.init.UCKeys;
+import com.bafomdad.uniquecrops.network.PacketSendKey;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class UCEventHandlerClient {
 	
@@ -35,20 +38,16 @@ public class UCEventHandlerClient {
 		}
 	}
 	
-//	@SubscribeEvent
+	@SubscribeEvent
 	public void handleKeyPressed(InputEvent.KeyInputEvent event) {
 		
-		if (UniqueCrops.pixelKey.isPressed()) {
+		if (UCKeys.pixelKey.isPressed()) {
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			if (player instanceof FakePlayer) return;
 			if (player.inventory.armorItemInSlot(3) == null) return;
 			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelglasses) return;
 			
-			EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
-			if (renderer.getShaderGroup() != null) {
-				UniqueCrops.proxy.disableBitsShader();
-			}
-			UniqueCrops.proxy.enableBitsShader();
+			UCPacketHandler.INSTANCE.sendToServer(new PacketSendKey());
 		}
 	}
 }

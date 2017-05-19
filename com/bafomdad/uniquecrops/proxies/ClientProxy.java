@@ -22,6 +22,7 @@ import com.bafomdad.uniquecrops.entities.RenderThrowable;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
+import com.bafomdad.uniquecrops.init.UCKeys;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class ClientProxy extends CommonProxy {
@@ -33,6 +34,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		
 		super.init(event);
+		UCKeys.init();
 		MinecraftForge.EVENT_BUS.register(new UCEventHandlerClient());
 	}
 	
@@ -101,7 +103,7 @@ public class ClientProxy extends CommonProxy {
 		
 		if (OpenGlHelper.shadersSupported) {
 			EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
-			if (renderer.getShaderGroup() != null)
+			if (renderer.getShaderGroup() != null && renderer.getShaderGroup().getShaderGroupName().contains("bits.json"))
 				renderer.getShaderGroup().deleteShaderGroup();
 		}
 	}

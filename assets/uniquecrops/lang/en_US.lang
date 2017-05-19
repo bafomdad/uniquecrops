@@ -168,3 +168,7 @@ uniquecrops.eula.text7=MY MOD RESERVES THE RIGHT, AT ITS SOLE DISCRETION, TO MOD
 
 # JEI CONTAINER
 container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
+
+# KEYBINDINGS
+key.categories.miscellaneous=Miscellaneous
+key.uniquecrops=Toggle Pixel Glasses
