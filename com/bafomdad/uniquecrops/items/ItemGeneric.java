@@ -135,7 +135,7 @@ public class ItemGeneric extends Item implements IFuelHandler {
 	
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if (stack.getItemDamage() == 10 && player.canPlayerEdit(pos, facing, stack)) {
+		if (stack.getItemDamage() == EnumItems.TIMEMEAL.ordinal() && player.canPlayerEdit(pos, facing, stack)) {
 			Block crops = world.getBlockState(pos).getBlock();
 			if (crops != null && crops instanceof BlockCrops) {
 				if (crops != UCBlocks.cropMerlinia)
@@ -149,11 +149,6 @@ public class ItemGeneric extends Item implements IFuelHandler {
 				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() - 0.5D, pos.getY(), pos.getZ() - 0.5D, 6));
 				return EnumActionResult.SUCCESS;
 			}
-		}
-		if (stack.getItemDamage() == 25 && player.canPlayerEdit(pos, facing, stack)) {
-			if (!player.capabilities.isCreativeMode && !player.worldObj.isRemote)
-				stack.stackSize--;
-			world.setBlockState(pos.offset(facing), UCBlocks.redtorch.getDefaultState());
 		}
 		return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
 	}

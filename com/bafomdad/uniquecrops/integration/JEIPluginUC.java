@@ -53,6 +53,7 @@ public class JEIPluginUC implements IModPlugin {
 		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropWafflonia));
 		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropPixelsius));
 		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropArtisia));
+		blacklist.addIngredientToBlacklist(new ItemStack(UCBlocks.cropDevilsnare));
 		blacklist.addIngredientToBlacklist(UCItems.generic.createStack(EnumItems.DUMMYITEM));
 	}
 

@@ -4,35 +4,6 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 
 public class UCStrings {
 	
-	// CATEGORIES
-	public static String[] CROPCATS = new String[] {
-		"Normal",
-		"Artisia",
-		"Goldenrod",
-		"Dirigible Plums",
-		"Ender Lilies",
-		"Invisibilia",
-		"Knowledge Plant",
-		"Maryjane",
-		"Merlinia",
-		"Millennium",
-		"Musica"
-	};
-	
-	public static String[] CROPCATS2 = new String[] {
-		"Cinderbella",
-		"Precision",
-		"Weeping Bells",
-		"Eula",
-		"Dyeius",
-		"Cobblonia",
-		"Abstract",
-		"Pixelsius",
-		"Devil's Snare",
-		"Wafflonia",
-		"Feroxia"
-	};
-	
 	private static final String BASE = UniqueCrops.MOD_ID;
 	public static final String TOOLTIP = BASE + ".tooltip.";
 	

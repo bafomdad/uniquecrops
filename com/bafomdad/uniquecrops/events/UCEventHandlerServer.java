@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
 
-import mcp.mobius.waila.utils.NBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -250,9 +249,7 @@ public class UCEventHandlerServer {
 	    		EntityChicken chicken = (EntityChicken)event.getEntityLiving();
 	    		NBTTagCompound tag = chicken.getEntityData();
 	    		if (!chicken.isChild() && tag.hasKey(ItemGeneric.TAG_OVERCLUCK)) 
-	    		{
 	    			addDrop(event, UCItems.generic.createStack(EnumItems.EGGUPGRADE));
-	    		}
 	    	}
 		}
 		else if (event.getEntityLiving() != null && !(event.getEntityLiving() instanceof EntityPlayer) && event.getSource().getSourceOfDamage() instanceof EntityPlayer) {
@@ -265,8 +262,7 @@ public class UCEventHandlerServer {
 					addDrop(event, new ItemStack(UCItems.slippers));
 					for (int i = 0; i < player.inventory.mainInventory.length; i++) {
 						ItemStack oneboot = player.inventory.getStackInSlot(i);
-						if (oneboot != null && oneboot.getItem() == UCItems.generic && oneboot.getItemDamage() == 14)
-						{
+						if (oneboot != null && oneboot.getItem() == UCItems.generic && oneboot.getItemDamage() == 14) {
 							player.inventory.setInventorySlotContents(i, null);
 							break;
 						}
@@ -277,8 +273,7 @@ public class UCEventHandlerServer {
 				if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10) {
 					Random rand = el.worldObj.rand;
 					int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
-					if (rand.nextInt(15) <= 2 + looting)
-					{
+					if (rand.nextInt(15) <= 2 + looting) {
 						if (el instanceof EntitySkeleton)
 							addDrop(event, new ItemStack(Items.SKULL, 1, ((EntitySkeleton)el).func_189771_df().ordinal()));
 						if (el instanceof EntityZombie)

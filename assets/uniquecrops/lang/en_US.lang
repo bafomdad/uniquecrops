@@ -99,6 +99,7 @@ tile.uniquecrops.oldbrick.name=Ancient Brick
 tile.uniquecrops.hourglass.name=Hourglass of Nostalgia
 tile.uniquecrops.totemhead.name=Totem of Sneaky Mobs
 tile.uniquecrops.lavalily.name=Lava Lily
+tile.uniquecrops.darkblock.name=Dark Block
 
 # BOOK TEXT
 uniquecrops.book.pageintro=Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.
@@ -170,5 +171,5 @@ uniquecrops.eula.text7=MY MOD RESERVES THE RIGHT, AT ITS SOLE DISCRETION, TO MOD
 container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
 
 # KEYBINDINGS
-key.categories.miscellaneous=Miscellaneous
-key.uniquecrops=Toggle Pixel Glasses
+key.categories.uniquecrops=Unique Crops
+key.uniquecrops.pixelglasses=Toggle Pixel Glasses

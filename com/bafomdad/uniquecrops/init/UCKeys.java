@@ -14,7 +14,7 @@ public class UCKeys {
 	
 	public static void init() {
 		
-		pixelKey = new KeyBinding("key.uniquecrops", Keyboard.KEY_V, "key.categories.miscellaneous");
+		pixelKey = new KeyBinding("key.uniquecrops.pixelglasses", Keyboard.KEY_V, "key.categories.uniquecrops");
 		ClientRegistry.registerKeyBinding(pixelKey);
 	}
 }

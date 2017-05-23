@@ -2,12 +2,12 @@ package com.bafomdad.uniquecrops.integration.craftyplants;
 
 import java.util.List;
 
-import com.bafomdad.realfilingcabinet.helpers.TextHelper;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.crafting.UCrafting;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import mezz.jei.api.IGuiHelper;
@@ -39,7 +39,7 @@ public class UCRecipeCategory extends BlankRecipeCategory<UCRecipeWrapper> {
 	@Override
 	public String getTitle() {
 
-		return TextHelper.localize("container.jei." + NAME + ".name");
+		return I18n.format("container.jei." + NAME + ".name");
 	}
 
 	@Override

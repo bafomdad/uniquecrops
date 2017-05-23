@@ -42,7 +42,7 @@ public class UCBlocks {
 		cropArtisia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
-	public static Block hourglass, totemhead, lavalily, redtorch;
+	public static Block hourglass, totemhead, lavalily, darkBlock;
 	
 	public static void init() {
 		
@@ -77,6 +77,7 @@ public class UCBlocks {
 		hourglass = new BlockHourglass();
 		totemhead = new BlockTotemhead();
 		lavalily = new BlockLavaLily();
+		darkBlock = new BlockDarkBlock();
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -90,6 +91,7 @@ public class UCBlocks {
 		registerBlockModel(hourglass);
 		registerBlockModel(totemhead);
 		registerBlockModel(lavalily);
+		registerBlockModel(darkBlock);
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArtisia.class, new RenderCraftItem());
 	}

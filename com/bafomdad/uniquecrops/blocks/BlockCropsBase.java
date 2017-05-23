@@ -66,7 +66,7 @@ public abstract class BlockCropsBase extends BlockCrops {
 		
 		if (type == EnumCrops.BLAZINGPLANT && !world.provider.doesWaterVaporize())
 			return false;
-		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.SAVAGEPLANT || type == EnumCrops.MUSICAPLANT)
+		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.SAVAGEPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE)
 			return false;
 		if (type == EnumCrops.HIGHPLANT && pos.getY() <= 100)
 			return false;
