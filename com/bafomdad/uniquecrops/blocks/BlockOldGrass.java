@@ -7,6 +7,7 @@ import com.bafomdad.uniquecrops.init.UCBlocks;
 
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -21,6 +22,7 @@ public class BlockOldGrass extends BlockGrass {
 		setRegistryName("oldgrass");
 		setUnlocalizedName(UniqueCrops.MOD_ID + ".oldgrass");
 		setCreativeTab(UniqueCrops.TAB);
+		setSoundType(SoundType.PLANT);
 		setHardness(0.6F);
 		setTickRandomly(true);
 		GameRegistry.register(this);
