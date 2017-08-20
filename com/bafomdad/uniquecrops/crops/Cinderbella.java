@@ -27,7 +27,7 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 
 	public Cinderbella() {
 		
-		super(EnumCrops.CINDERBELLA, true, UCConfig.cropcinderbella);
+		super(EnumCrops.CINDERBELLA, true, UCConfig.cropCinderbella);
 		GameRegistry.registerTileEntity(TileCinderbella.class, "TileCinderbella");
 	}
 	

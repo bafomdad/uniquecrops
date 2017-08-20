@@ -67,7 +67,7 @@ public class EntityItemHourglass extends EntityItem {
 		}
 	}
 	
-	private void setOldBlock(World world, BlockPos pos, Block block) {
+	public static void setOldBlock(World world, BlockPos pos, Block block) {
 		
 		world.setBlockState(pos, block.getDefaultState(), 2);
 		UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, pos.getX() + 0.5D, pos.getY() + 1, pos.getZ() + 0.5D, 3));

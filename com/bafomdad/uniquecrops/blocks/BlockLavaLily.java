@@ -64,6 +64,12 @@ public class BlockLavaLily extends BlockBush {
     }
 	
 	@Override
+	public boolean canSustainBush(IBlockState state) {
+		
+		return state.getBlock() == Blocks.LAVA;
+	}
+	
+	@Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
     	
 		Material material = world.getBlockState(pos).getMaterial();

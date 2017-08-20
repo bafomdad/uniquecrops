@@ -24,21 +24,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockTotemhead extends Block {
+public class BlockTotemhead extends BlockBaseUC {
 	
 	protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.25F, 0.0F, 0.25F, 0.75F, 1.75F, 0.75F);
 	private int range = 12;
 
 	public BlockTotemhead() {
 		
-		super(Material.WOOD);
-		setRegistryName("totemhead");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".totemhead");
-		setCreativeTab(UniqueCrops.TAB);
+		super("totemhead", Material.WOOD);
 		setHardness(2.0F);
 		setResistance(20.0F);
 		setTickRandomly(true);
-		GameRegistry.register(this);
 		GameRegistry.register(new ItemBlock(this), getRegistryName());
 	}
 	

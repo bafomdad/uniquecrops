@@ -29,7 +29,7 @@ public class TileMusicaPlant extends TileBaseUC implements ITickable {
 		if (state == null || (state != null && state.getBlock() != UCBlocks.cropMusica))
 			return;
 		
-		if (getBlockType() != null && ((Musica)getBlockType()).canDance(state))
+		if (getBlockType() != null && !((Musica)getBlockType()).canDance(state))
 			return;
 		
 		if (this.worldObj.isRemote || (beats.isEmpty() || beats.size() == 0))
@@ -48,8 +48,8 @@ public class TileMusicaPlant extends TileBaseUC implements ITickable {
 			if (!timelist.isEmpty() && !beats.isEmpty()) {
 				if (worldObj.getTotalWorldTime() % 10 == 0 && lastBeat > 0) {
 					int randomtick = (worldObj.rand.nextInt(100) + 5) - timelist.size();
-					if (randomtick < this.getPercussion().getTimeElapsed(worldObj.getTotalWorldTime(), lastBeat))
-					{
+					if (randomtick < this.getPercussion().getTimeElapsed(worldObj.getTotalWorldTime(), lastBeat)) {
+						
 						((Musica)this.blockType).addAge(worldObj, getPos(), state, 1);
 						return;
 					}

@@ -7,39 +7,35 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockDarkBlock extends Block {
+public class BlockDarkBlock extends BlockBaseUC {
 
 	public BlockDarkBlock() {
 		
-		super(Material.ROCK);
-		setRegistryName("darkblock");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".darkblock");
-		setCreativeTab(UniqueCrops.TAB);
+		super("darkblock", Material.ROCK);
 		setSoundType(SoundType.STONE);
-		setBlockUnbreakable();
+		setHardness(10.0F);
+		setResistance(6000000.0F);
 		EntityEnderman.setCarriable(this, true);
-		GameRegistry.register(this);
-		GameRegistry.register(new ItemDarkBlock(this), getRegistryName());
+		GameRegistry.register(new ItemBlock(this), getRegistryName());
 	}
 	
-	public class ItemDarkBlock extends ItemBlock {
-
-		public ItemDarkBlock(Block block) {
-			
-			super(block);
-		}
+	@Override
+    public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
 		
-		@Override
-		public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean whatisthis) {
-			
-			list.add(TextFormatting.RED + "(WIP)");
-		}
+		if (pos.getY() >= 10)
+			return ForgeHooks.blockStrength(state, player, world, pos);
+		
+		return -1.0F;
 	}
 }

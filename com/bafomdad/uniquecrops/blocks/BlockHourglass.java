@@ -1,6 +1,8 @@
 package com.bafomdad.uniquecrops.blocks;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -10,6 +12,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -23,21 +26,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.entities.EntityItemHourglass;
+import com.bafomdad.uniquecrops.init.UCBlocks;
 
-public class BlockHourglass extends Block {
+public class BlockHourglass extends BlockBaseUC {
 	
 	protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.25F, 0.0F, 0.25F, 0.75F, 1F, 0.75F);
+	private int range = 3;
 
 	public BlockHourglass() {
 		
-		super(Material.IRON);
-		setRegistryName("hourglass");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".hourglass");
-		setCreativeTab(UniqueCrops.TAB);
+		super("hourglass", Material.IRON);
 		setSoundType(SoundType.GLASS);
 		setHardness(1.0F);
 		setTickRandomly(true);
-		GameRegistry.register(this);
 		GameRegistry.register(new ItemBlockHourglass(this), getRegistryName());
 	}
 	
@@ -71,6 +72,37 @@ public class BlockHourglass extends Block {
 		
 		return false;
 	}
+	
+	@Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+    	
+		if (world.isBlockIndirectlyGettingPowered(pos) > 0) {
+			Iterable<BlockPos> poslist = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range));
+			Iterator it = poslist.iterator();
+			while (it.hasNext()) {
+				BlockPos posit = (BlockPos)it.next();
+				if (!world.isRemote && !world.isAirBlock(posit)) {
+					Block loopblock = world.getBlockState(posit).getBlock();
+					boolean flag = rand.nextInt(10) == 0;
+					if (loopblock == Blocks.GRASS && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldGrass); break;
+					}
+					if (loopblock == Blocks.COBBLESTONE && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldCobble); break;
+					}
+					if (loopblock == Blocks.MOSSY_COBBLESTONE && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldCobbleMoss); break;
+					}
+					if (loopblock == Blocks.BRICK_BLOCK && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldBrick); break;
+					}
+					if (loopblock == Blocks.GRAVEL && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldGravel); break;
+					}
+				}
+			}
+		}
+    }
 	
 	public static class ItemBlockHourglass extends ItemBlock {
 
