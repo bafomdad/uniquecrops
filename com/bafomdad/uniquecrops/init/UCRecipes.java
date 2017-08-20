@@ -1,13 +1,9 @@
 package com.bafomdad.uniquecrops.init;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.bafomdad.uniquecrops.core.EnumItems;
-import com.bafomdad.uniquecrops.crafting.*;
-
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -16,9 +12,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.crafting.DiscountBookRecipe;
+import com.bafomdad.uniquecrops.crafting.UCrafting;
+
 public class UCRecipes {
+	
+	public static Map<ItemStack, ItemStack> edibleMetals = new HashMap<>();
 
 	public static void init() {
+		
+		initEdibleMetals();
+		UCBaubles.initRecipes();
 		
 		ItemStack precisionAxe = new ItemStack(UCItems.precisionAxe);
 		precisionAxe.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
@@ -37,7 +42,7 @@ public class UCRecipes {
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.EGGUPGRADE), "IEI", "EME", "IEI", 'I', Items.IRON_INGOT, 'E', Items.EGG, 'M', UCItems.generic.createStack(EnumItems.MILLENNIUMEYE));
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.EASYBADGE), "GEG", "EQE", "GEG", 'G', Items.GOLD_INGOT, 'Q', Blocks.QUARTZ_BLOCK, 'E', UCItems.generic.createStack(EnumItems.MILLENNIUMEYE));
 		GameRegistry.addRecipe(new ItemStack(UCBlocks.lavalily), " C ", "CLC", " C ", 'C', UCItems.generic.createStack(EnumItems.CINDERLEAF), 'L', Blocks.WATERLILY);
-		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.UPGRADE), "FFF", "FBF", "FFF", 'F', UCItems.generic.createStack(EnumItems.INVISIFEATHER), 'B', UCItems.generic.createStack(EnumItems.DISCOUNT));
+		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.UPGRADE), " F ", "FBF", " F ", 'F', UCItems.generic.createStack(EnumItems.INVISIFEATHER), 'B', UCItems.generic.createStack(EnumItems.DISCOUNT));
 		GameRegistry.addRecipe(new ItemStack(UCItems.largeplum), "PPP", "PPP", "PPP", 'P', UCItems.generic.createStack(EnumItems.PLUM));
 		GameRegistry.addRecipe(new ItemStack(UCItems.goldenbread), "RRR", 'R', UCItems.generic.createStack(EnumItems.GOLDENRODS));
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.WEEPINGEYE), "TTT", "TET", "TTT", 'T', UCItems.generic.createStack(EnumItems.WEEPINGTEAR), 'E', Items.ENDER_EYE);
@@ -53,33 +58,36 @@ public class UCRecipes {
 		GameRegistry.addRecipe(new ItemStack(UCBlocks.totemhead), "LLL", "LML", " S ", 'L', Blocks.LAPIS_BLOCK, 'M', UCItems.generic.createStack(EnumItems.MILLENNIUMEYE), 'S', Items.STICK);
 		GameRegistry.addRecipe(UCItems.generic.createStack(EnumItems.EULA), " L ", "LBL", " L ", 'L', UCItems.generic.createStack(EnumItems.LEGALSTUFF), 'B', Items.BOOK);
 		GameRegistry.addRecipe(new ItemStack(UCItems.seedsArtisia), " S ", "SCS", " S ", 'S', UCItems.seedsNormal, 'C', Blocks.CRAFTING_TABLE);
-		for (EnumDyeColor dye : EnumDyeColor.values()) {
-			GameRegistry.addRecipe(getDyeCraftingResult(dye.getDyeDamage()), "FFF", "FDF", "FFF", 'D', new ItemStack(Items.DYE, 1, dye.getMetadata()), 'F', new ItemStack(UCItems.generic, 1, 9));
-		}
+
 		GameRegistry.addRecipe(new DiscountBookRecipe());
 		BrewingRecipeRegistry.addRecipe(BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART)), UCItems.generic.createStack(EnumItems.TIMEDUST), new ItemStack(UCItems.potionreverse));
 		BrewingRecipeRegistry.addRecipe(new ItemStack(UCItems.potionreverse), new ItemStack(Items.GUNPOWDER), UCItems.generic.createStack(EnumItems.POTIONSPLASH));
 		
-		addSeedRecipe(UCItems.seedsCinderbella, new ItemStack(Items.SUGAR), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(UCItems.seedsNormal));
-		addSeedRecipe(UCItems.seedsCollis, new ItemStack(Items.SUGAR), new ItemStack(UCItems.seedsNormal), new ItemStack(UCItems.seedsCinderbella));
-		addSeedRecipe(UCItems.seedsDirigible, new ItemStack(Items.SUGAR), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(UCItems.seedsCollis));
-		addSeedRecipe(UCItems.seedsEnderlily, new ItemStack(Items.ENDER_EYE), new ItemStack(Items.ENDER_PEARL), new ItemStack(UCItems.seedsDirigible));
-		addSeedRecipe(UCItems.seedsInvisibilia, new ItemStack(Items.SUGAR), new ItemStack(Blocks.GLASS), new ItemStack(UCItems.seedsCinderbella));
-		addSeedRecipe(UCItems.seedsKnowledge, new ItemStack(Items.SUGAR), new ItemStack(Items.ENCHANTED_BOOK), new ItemStack(UCItems.seedsInvisibilia));
-		addSeedRecipe(UCItems.seedsMaryjane, new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER), new ItemStack(UCItems.seedsCollis));
-		addSeedRecipe(UCItems.seedsMerlinia, new ItemStack(Items.PUMPKIN_SEEDS), UCItems.generic.createStack(EnumItems.TIMEMEAL), new ItemStack(UCItems.seedsEnderlily));
-		addSeedRecipe(UCItems.seedsMillennium, new ItemStack(Items.CLOCK), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(UCItems.seedsMerlinia));
-		addSeedRecipe(UCItems.seedsMusica, new ItemStack(Blocks.JUKEBOX), new ItemStack(UCItems.seedsNormal), new ItemStack(UCItems.seedsMaryjane));
-		addSeedRecipe(UCItems.seedsPrecision, new ItemStack(Items.GOLD_NUGGET), new ItemStack(UCItems.seedsCollis), new ItemStack(UCItems.seedsInvisibilia));
-		addSeedRecipe(UCItems.seedsWeepingbells, new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.MELON_SEEDS), new ItemStack(UCItems.seedsEnderlily));
-		addSeedRecipe(UCItems.seedsAbstract, new ItemStack(Items.REEDS), new ItemStack(Blocks.STAINED_HARDENED_CLAY), new ItemStack(Blocks.WOOL));
-		addSeedRecipe(UCItems.seedsCobblonia, new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONEBRICK), new ItemStack(UCItems.seedsNormal));
-		addSeedRecipe(UCItems.seedsDyeius, new ItemStack(Blocks.WOOL), new ItemStack(Items.DYE), new ItemStack(UCItems.seedsAbstract));
-		addSeedRecipe(UCItems.seedsEula, new ItemStack(Items.PAPER), new ItemStack(Items.BOOK), new ItemStack(UCItems.seedsCobblonia));
-		addSeedRecipe(UCItems.seedsFeroxia, new ItemStack(Items.CLAY_BALL), new ItemStack(UCItems.seedsKnowledge), new ItemStack(UCItems.seedsWeepingbells));
-		addSeedRecipe(UCItems.seedsWafflonia, new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.BREAD), new ItemStack(Items.SUGAR));
-		addSeedRecipe(UCItems.seedsPixelsius, new ItemStack(UCItems.seedsWafflonia), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), new ItemStack(Items.PAINTING));
-		addSeedRecipe(UCItems.seedsDevilsnare, new ItemStack(UCItems.seedsPixelsius), new ItemStack(Items.STICK), new ItemStack(Blocks.LOG));
+		for (EnumDyeColor dye : EnumDyeColor.values()) {
+			addSeedRecipe(getDyeCraftingResult(dye.getDyeDamage()), new ItemStack(Items.DYE, 1, dye.getMetadata()), UCItems.generic.createStack(EnumItems.ESSENCE), UCItems.generic.createStack(EnumItems.ESSENCE));
+		}
+		addSeedRecipe(new ItemStack(UCItems.seedsCinderbella), new ItemStack(Items.SUGAR), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(UCItems.seedsNormal));
+		addSeedRecipe(new ItemStack(UCItems.seedsCollis), new ItemStack(Items.SUGAR), new ItemStack(UCItems.seedsNormal), new ItemStack(UCItems.seedsCinderbella));
+		addSeedRecipe(new ItemStack(UCItems.seedsDirigible), new ItemStack(Items.SUGAR), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(UCItems.seedsCollis));
+		addSeedRecipe(new ItemStack(UCItems.seedsEnderlily), new ItemStack(Items.ENDER_EYE), new ItemStack(Items.ENDER_PEARL), new ItemStack(UCItems.seedsDirigible));
+		addSeedRecipe(new ItemStack(UCItems.seedsInvisibilia), new ItemStack(Items.SUGAR), new ItemStack(Blocks.GLASS), new ItemStack(UCItems.seedsCinderbella));
+		addSeedRecipe(new ItemStack(UCItems.seedsKnowledge), new ItemStack(Items.SUGAR), new ItemStack(Items.ENCHANTED_BOOK), new ItemStack(UCItems.seedsInvisibilia));
+		addSeedRecipe(new ItemStack(UCItems.seedsMaryjane), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER), new ItemStack(UCItems.seedsCollis));
+		addSeedRecipe(new ItemStack(UCItems.seedsMerlinia), new ItemStack(Items.PUMPKIN_SEEDS), UCItems.generic.createStack(EnumItems.TIMEMEAL), new ItemStack(UCItems.seedsEnderlily));
+		addSeedRecipe(new ItemStack(UCItems.seedsMillennium), new ItemStack(Items.CLOCK), new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(UCItems.seedsMerlinia));
+		addSeedRecipe(new ItemStack(UCItems.seedsMusica), new ItemStack(Blocks.JUKEBOX), new ItemStack(UCItems.seedsNormal), new ItemStack(UCItems.seedsMaryjane));
+		addSeedRecipe(new ItemStack(UCItems.seedsPrecision), new ItemStack(Items.GOLD_NUGGET), new ItemStack(UCItems.seedsCollis), new ItemStack(UCItems.seedsInvisibilia));
+		addSeedRecipe(new ItemStack(UCItems.seedsWeepingbells), new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.MELON_SEEDS), new ItemStack(UCItems.seedsEnderlily));
+		addSeedRecipe(new ItemStack(UCItems.seedsAbstract), new ItemStack(Items.REEDS), new ItemStack(Blocks.STAINED_HARDENED_CLAY), new ItemStack(Blocks.WOOL));
+		addSeedRecipe(new ItemStack(UCItems.seedsCobblonia), new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONEBRICK), new ItemStack(UCItems.seedsNormal));
+		addSeedRecipe(new ItemStack(UCItems.seedsDyeius), new ItemStack(Blocks.WOOL), new ItemStack(Items.DYE), new ItemStack(UCItems.seedsAbstract));
+		addSeedRecipe(new ItemStack(UCItems.seedsEula), new ItemStack(Items.PAPER), new ItemStack(Items.BOOK), new ItemStack(UCItems.seedsCobblonia));
+		addSeedRecipe(new ItemStack(UCItems.seedsFeroxia), new ItemStack(Items.CLAY_BALL), new ItemStack(UCItems.seedsKnowledge), new ItemStack(UCItems.seedsWeepingbells));
+		addSeedRecipe(new ItemStack(UCItems.seedsWafflonia), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.BREAD), new ItemStack(Items.SUGAR));
+		addSeedRecipe(new ItemStack(UCItems.seedsPixelsius), new ItemStack(UCItems.seedsWafflonia), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), new ItemStack(Items.PAINTING));
+		addSeedRecipe(new ItemStack(UCItems.seedsDevilsnare), new ItemStack(UCItems.seedsPixelsius), new ItemStack(Items.STICK), new ItemStack(Blocks.LOG));
+		addSeedRecipe(new ItemStack(UCItems.seedsMalleatoris), new ItemStack(UCItems.seedsPrecision), new ItemStack(Blocks.ANVIL), new ItemStack(Items.IRON_INGOT));
+		addSeedRecipe(new ItemStack(UCItems.seedsPetramia), new ItemStack(UCItems.seedsCobblonia), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.COBBLESTONE));
 	}
 	
 	private static ItemStack getDyeCraftingResult(int meta) {
@@ -104,8 +112,18 @@ public class UCRecipes {
 		}
 	}
 	
-	private static void addSeedRecipe(Item result, ItemStack center, ItemStack corner, ItemStack edge) {
+	private static void addSeedRecipe(ItemStack result, ItemStack center, ItemStack corner, ItemStack edge) {
 		
-		UCrafting.addRecipe(new ItemStack(result), new ItemStack[] { corner, edge, corner, edge, center, edge, corner, edge, corner });
+		UCrafting.addRecipe(result, new ItemStack[] { corner, edge, corner, edge, center, edge, corner, edge, corner });
+	}
+	
+	private static void initEdibleMetals() {
+		
+		edibleMetals.put(new ItemStack(Items.DIAMOND), new ItemStack(UCItems.edibleDiamond));
+		edibleMetals.put(new ItemStack(Items.IRON_INGOT), new ItemStack(UCItems.edibleIngotIron));
+		edibleMetals.put(new ItemStack(Items.GOLD_INGOT), new ItemStack(UCItems.edibleIngotGold));
+		edibleMetals.put(new ItemStack(Items.GOLD_NUGGET), new ItemStack(UCItems.edibleNuggetGold));
+		edibleMetals.put(new ItemStack(Items.EMERALD), new ItemStack(UCItems.edibleEmerald));
+		edibleMetals.put(new ItemStack(Items.DYE, 1, 4), new ItemStack(UCItems.edibleLapis));
 	}
 }
