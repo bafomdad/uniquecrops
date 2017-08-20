@@ -3,7 +3,6 @@ package com.bafomdad.uniquecrops.events;
 import java.util.Map;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.UCDyePlantStitch;
 import com.bafomdad.uniquecrops.core.UCInvisibiliaStitch;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -48,6 +46,7 @@ public class UCEventHandlerClient {
 			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelglasses) return;
 			
 			UCPacketHandler.INSTANCE.sendToServer(new PacketSendKey());
+			return;
 		}
 	}
 }

@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/malleatoris1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/malleatoris1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/malleatoris2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/malleatoris2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/malleatoris3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/malleatoris3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/malleatoris4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/malleatoris4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/malleatoris5"}}
+        }
+    }
+}

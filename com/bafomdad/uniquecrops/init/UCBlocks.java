@@ -39,7 +39,9 @@ public class UCBlocks {
 		cropWafflonia,
 		cropDevilsnare,
 		cropPixelsius,
-		cropArtisia;
+		cropArtisia,
+		cropPetramia,
+		cropMalleatoris;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
 	public static Block hourglass, totemhead, lavalily, darkBlock;
@@ -68,6 +70,8 @@ public class UCBlocks {
 		cropDevilsnare = new DevilSnare();
 		cropPixelsius = new Pixelsius();
 		cropArtisia = new Artisia();
+		cropPetramia = new Petramia();
+		cropMalleatoris = new Malleatoris();
 		
 		oldCobble = new BlockOldStone("cobble");
 		oldCobbleMoss = new BlockOldStone("cobblemoss");

@@ -39,8 +39,6 @@ public class GuiBookGuide extends GuiScreen {
 	private int savedIndex;
 	private Page currentPage;
 	
-//	public int bookXStart;
-	
 	public GuiBookGuide(EntityPlayer player, ItemStack heldBook) {
 
 		this.pageIndex = 0;
@@ -57,9 +55,10 @@ public class GuiBookGuide extends GuiScreen {
 		Page.loadPages(this);
 		this.buttonList.clear();
 		int k = (this.width - this.WIDTH) / 2;
+		int l = (this.height - this.HEIGHT) / 2;
 		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
-		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, 210, false));
-		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, 210, true));
+		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, l + 210, false));
+		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, l + 210, true));
 		List<String> stringlist = new ArrayList();
 		for (Page page : pageList) {
 			if (page instanceof PageImage)
@@ -71,9 +70,9 @@ public class GuiBookGuide extends GuiScreen {
 		}
 		String[] firstCat = (String[]) Arrays.copyOfRange(arrays, 0, arrays.length / 2);
 		String[] secondCat = (String[]) Arrays.copyOfRange(arrays, (arrays.length / 2), arrays.length);
- 		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, 35, 100, 168, firstCat));
-		buttonList.add(this.category2 = new GuiButtonLink(this, 3, k + 15, 35, 100, 168, secondCat));
-		buttonList.add(this.backbutton = new GuiButtonBack(4, k + 80, 210));
+ 		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, l + 35, 100, 168, firstCat));
+		buttonList.add(this.category2 = new GuiButtonLink(this, 3, k + 15, l + 35, 100, 168, secondCat));
+		buttonList.add(this.backbutton = new GuiButtonBack(4, k + 80, l + 210));
 		updateButtons();
 	}
 	
@@ -86,7 +85,10 @@ public class GuiBookGuide extends GuiScreen {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
 			case 2: pageIndex = catsize + (pageIndex + catsize + 2); break;
-			case 3: pageIndex = catsize2 + (pageIndex + catsize2 + 22 + 1); break;
+			case 3: if (pageIndex == 3)
+				pageIndex = catsize2 + (pageIndex + catsize2 + 23 + 2);
+				else
+					pageIndex = 2; break;
 			case 4: pageIndex = 2; break;
 		}
 		this.savedIndex = pageIndex;

@@ -21,6 +21,7 @@ import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
 import com.bafomdad.uniquecrops.entities.RenderThrowable;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
 import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.init.UCEntities;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCKeys;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -43,19 +44,8 @@ public class ClientProxy extends CommonProxy {
 		
 		UCBlocks.initModels();
 		UCItems.initModels();
+		UCEntities.init();
 		UCPacketHandler.initClient();
-	}
-	
-	@Override
-	public void initEntityRender() {
-		
-		Minecraft mc = Minecraft.getMinecraft();
-		RenderManager rm = mc.getRenderManager();
-		RenderItem ri = mc.getRenderItem();
-		
-		RenderingRegistry.registerEntityRenderingHandler(EntityCustomPotion.class, new RenderThrowable(rm, UCItems.generic, 13, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityItemWeepingEye.class, new RenderThrowable(rm, UCItems.generic, 16, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityEulaBook.class, new RenderThrowable(rm, UCItems.generic, 24, ri));
 	}
 	
 	@Override

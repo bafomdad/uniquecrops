@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"particle": "minecraft:blocks/planks_oak",
+		"down": "minecraft:blocks/planks_oak",
+		"up": "minecraft:blocks/planks_oak",
+		"east": "uniquecrops:blocks/crop_fertilizer",
+		"west": "uniquecrops:blocks/crop_fertilizer",
+		"north": "uniquecrops:blocks/crop_fertilizer",
+		"south": "uniquecrops:blocks/crop_fertilizer"
+	},
+    "model": "cube"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

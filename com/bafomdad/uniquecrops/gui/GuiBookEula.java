@@ -43,11 +43,12 @@ public class GuiBookEula extends GuiScreen {
 		PageEula.loadPages(this);
 		this.buttonList.clear();
 		int  k = (this.width - this.WIDTH) / 2;
+		int l = (this.height - this.HEIGHT) / 2;
 		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
-		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, 210, false));
-		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, 210, true));
-		buttonList.add(this.agree = new GuiButtonEula(2, k + 65, 210, true));
-		buttonList.add(this.disagree = new GuiButtonEula(3, k + 95, 210, false));
+		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, l + 210, false));
+		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, l + 210, true));
+		buttonList.add(this.agree = new GuiButtonEula(2, k + 65, l + 210, true));
+		buttonList.add(this.disagree = new GuiButtonEula(3, k + 95, l + 210, false));
 		updateButtons();
 	}
 	

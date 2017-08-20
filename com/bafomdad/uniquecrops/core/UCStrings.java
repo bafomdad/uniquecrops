@@ -62,6 +62,10 @@ public class UCStrings {
 	public static final String PAGESNARE = BOOK + ".pagedevilsnare";
 	public static final String PIXELSIUS = IMAGE + "pixelsiuspage.png";
 	public static final String PAGEPIXEL = BOOK + ".pagepixelsius";
+	public static final String PETRAMIA = IMAGE + "petramiapage.png";
+	public static final String PAGEPETRAMIA = BOOK + ".pagepetramia";
+	public static final String MALLEATORIS = IMAGE + "malleatorispage.png";
+	public static final String PAGEMALLEATORIS = BOOK + ".pagemalleatoris";
 	public static final String FEROXIA = IMAGE + "feroxiapage.png";
 	public static final String PAGESAVAGE = BOOK + ".pageferoxia";
 	

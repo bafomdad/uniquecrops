@@ -67,6 +67,9 @@ public class SeedBehavior {
 						setAbstractCropGrowth(player, true);
 					return true;
 				}
+				if (cropBlock == UCBlocks.cropPetramia && pos.offset(side).getY() >= 10) {
+					return false;
+				}
 				world.setBlockState(pos.offset(side), cropBlock.getDefaultState(), 3);
 				return true;
 			}
@@ -81,6 +84,7 @@ public class SeedBehavior {
 		NBTTagCompound tag = player.getEntityData();
 		if (!tag.hasKey(TAG_ABSTRACT) && add) {
 			tag.setInteger(TAG_ABSTRACT, 1);
+			return;
 		}
 		if (add) {
 			tag.setInteger(TAG_ABSTRACT, tag.getInteger(TAG_ABSTRACT) + 1);
@@ -89,8 +93,6 @@ public class SeedBehavior {
 			int value = tag.getInteger(TAG_ABSTRACT);
 			if (player.worldObj.rand.nextInt(5) == 0)
 				tag.setInteger(TAG_ABSTRACT, value - 1);
-			else
-				tag.setInteger(TAG_ABSTRACT, value - 2);
 		}
 		if (tag.getInteger(TAG_ABSTRACT) <= 0)
 			tag.removeTag(TAG_ABSTRACT);

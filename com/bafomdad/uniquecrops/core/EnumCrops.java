@@ -25,7 +25,9 @@ public enum EnumCrops implements IStringSerializable {
 	DEVILSNARE("devilsnare"),
 	WAFFLE("wafflonia"),
 	PIXELS("pixelsius"),
-	CRAFTER("artisia");
+	CRAFTER("artisia"),
+	BEDROCKIUM("petramia"),
+	ANVILICIOUS("malleatoris");
 	
 	final String name;
 	

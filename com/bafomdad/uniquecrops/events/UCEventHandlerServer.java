@@ -54,6 +54,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
@@ -452,7 +453,7 @@ public class UCEventHandlerServer {
 	
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		
+
 		if (event.player.inventory.armorInventory[3] != null && event.player.inventory.armorInventory[3].getItem() == UCItems.pixelglasses) {
 			boolean flag = NBTUtils.getBoolean(event.player.inventory.armorInventory[3], "isActive", false);
 			if (event.side == Side.CLIENT) {
@@ -465,18 +466,15 @@ public class UCEventHandlerServer {
 		else
 			UniqueCrops.proxy.disableBitsShader();
 		
-		if (event.phase == Phase.START && event.player.worldObj.rand.nextInt(1000) == 0) {
-			if (!event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT))
-				return;
-			
-			Random rand = new Random();
-			if (rand.nextInt(100) != 0)
-				return;
-			
-			event.player.inventory.addItemStackToInventory(UCItems.generic.createStack(EnumItems.ABSTRACT));
-			if (!event.player.worldObj.isRemote)
-				SeedBehavior.setAbstractCropGrowth(event.player, false);
-			return;
+		if (event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
+			if (event.phase == Phase.START && event.player.worldObj.rand.nextInt(1000) == 0) {
+				Random rand = new Random();
+				if (rand.nextInt(10) != 0) {
+					ItemHandlerHelper.giveItemToPlayer(event.player, UCItems.generic.createStack(EnumItems.ABSTRACT));
+					if (!event.player.worldObj.isRemote)
+						SeedBehavior.setAbstractCropGrowth(event.player, false);
+				}
+			}
 		}
 	}
 	

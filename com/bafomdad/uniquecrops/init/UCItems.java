@@ -1,7 +1,10 @@
 package com.bafomdad.uniquecrops.init;
 
+import com.bafomdad.uniquecrops.core.EnumEdibleMetal;
 import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.items.*;
+import com.bafomdad.uniquecrops.items.baubles.ItemBauble;
+import com.bafomdad.uniquecrops.items.baubles.EmblemMelee;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -16,6 +19,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class UCItems {
 
@@ -42,7 +46,9 @@ public class UCItems {
 		seedsWafflonia,
 		seedsDevilsnare,
 		seedsPixelsius,
-		seedsArtisia;
+		seedsArtisia,
+		seedsPetramia,
+		seedsMalleatoris;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -53,6 +59,13 @@ public class UCItems {
 	public static Item dietpills;
 	public static Item waffle;
 	public static Item endersnooker;
+	
+	public static Item edibleDiamond;
+	public static Item edibleLapis;
+	public static Item edibleEmerald;
+	public static Item edibleIngotIron;
+	public static Item edibleIngotGold;
+	public static Item edibleNuggetGold;
 	
 	public static ItemArmor glasses3D;
 	public static ItemArmor poncho;
@@ -68,6 +81,8 @@ public class UCItems {
 	public static final ItemArmor.ArmorMaterial slippermaterial = EnumHelper.addArmorMaterial("slippers", "uniquecrops:slippers", 90, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0F);
 	
 	public static void init() {
+		
+		UCBaubles.init();
 		
 		seedsNormal = new ItemSeedsUC(UCBlocks.cropNormal);
 		seedsPrecision = new ItemSeedsUC(UCBlocks.cropPrecision);
@@ -91,6 +106,8 @@ public class UCItems {
 		seedsDevilsnare = new ItemSeedsUC(UCBlocks.cropDevilsnare);
 		seedsPixelsius = new ItemSeedsUC(UCBlocks.cropPixelsius);
 		seedsArtisia = new ItemSeedsUC(UCBlocks.cropArtisia);
+		seedsPetramia = new ItemSeedsUC(UCBlocks.cropPetramia);
+		seedsMalleatoris = new ItemSeedsUC(UCBlocks.cropMalleatoris);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");
@@ -99,8 +116,15 @@ public class UCItems {
 		potionreverse = new ItemGenericFood(0, 0F, true, "reversepotion");
 		goldenbread = new ItemGenericFood(4, 0.3F, false, "goldenbread");
 		dietpills = new ItemGenericFood(-4, 0, true, "dietpills");
-		waffle = new ItemGenericFood(8, 1.0F, true, "waffle");
+		waffle = new ItemGenericFood(8, 1.0F, false, "waffle");
 		endersnooker = new ItemEnderSnooker();
+		
+		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
+		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");
+		edibleLapis = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "lapis");
+		edibleIngotIron = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "ironingot");
+		edibleIngotGold = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "goldingot");
+		edibleNuggetGold = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "goldnugget");
 		
 		glasses3D = new Item3DGlasses(glassesmaterial, 1, EntityEquipmentSlot.HEAD);
 		pixelglasses = new ItemPixelGlasses(pixelmaterial, 1, EntityEquipmentSlot.HEAD);
@@ -109,10 +133,19 @@ public class UCItems {
 		precisionPick = new ItemPrecisionPick();
 		precisionAxe = new ItemPrecisionAxe();
 		precisionShovel = new ItemPrecisionShovel();
+		
+		OreDictionary.registerOre("gemDiamond", edibleDiamond);
+		OreDictionary.registerOre("gemEmerald", edibleEmerald);
+		OreDictionary.registerOre("gemLapis", edibleLapis);
+		OreDictionary.registerOre("ingotIron", edibleIngotIron);
+		OreDictionary.registerOre("ingotGold", edibleIngotGold);
+		OreDictionary.registerOre("nuggetGold", edibleNuggetGold);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
+		
+		UCBaubles.initModels();
 		
 		registerItemModel(seedsNormal);
 		registerItemModel(seedsPrecision);
@@ -136,6 +169,8 @@ public class UCItems {
 		registerItemModel(seedsDevilsnare);
 		registerItemModel(seedsPixelsius);
 		registerItemModel(seedsArtisia);
+		registerItemModel(seedsPetramia);
+		registerItemModel(seedsMalleatoris);
 		
 		for (int i = 0; i < EnumItems.values().length; ++i)
 			ModelLoader.setCustomModelResourceLocation(generic, i, new ModelResourceLocation(generic.getRegistryName() + "." + EnumItems.values()[i].getName(), "inventory"));
@@ -147,6 +182,14 @@ public class UCItems {
 		registerItemModel(goldenbread);
 		registerItemModel(dietpills);
 		registerItemModel(waffle);
+		
+		registerItemModel(edibleDiamond);
+		registerItemModel(edibleEmerald);
+		registerItemModel(edibleLapis);
+		registerItemModel(edibleIngotIron);
+		registerItemModel(edibleIngotGold);
+		registerItemModel(edibleNuggetGold);
+		
 		registerItemModel(endersnooker);
 		registerItemModel(glasses3D);
 		registerItemModel(poncho);
