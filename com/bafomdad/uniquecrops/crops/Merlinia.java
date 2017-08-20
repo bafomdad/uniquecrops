@@ -22,7 +22,7 @@ public class Merlinia extends BlockCropsBase {
 	
 	public Merlinia() {
 		
-		super(EnumCrops.BACKWARDSPLANT, true, UCConfig.cropmerlinia);
+		super(EnumCrops.BACKWARDSPLANT, true, UCConfig.cropMerlinia);
 	}
 	
 	@Override

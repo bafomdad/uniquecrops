@@ -26,7 +26,7 @@ public class Musica extends BlockCropsBase implements ITileEntityProvider {
 
 	public Musica() {
 		
-		super(EnumCrops.MUSICAPLANT, false, UCConfig.cropmusica);
+		super(EnumCrops.MUSICAPLANT, false, UCConfig.cropMusica);
 		GameRegistry.registerTileEntity(TileMusicaPlant.class, "TileMusicaPlant");
 	}
 	
@@ -48,7 +48,7 @@ public class Musica extends BlockCropsBase implements ITileEntityProvider {
 	
 	public boolean canDance(IBlockState state) {
 		
-		return this.getAge(state) >= getMaxAge();
+		return this.getAge(state) < getMaxAge();
 	}
 	
 	public void addAge(World world, BlockPos pos, IBlockState state, int stage) {

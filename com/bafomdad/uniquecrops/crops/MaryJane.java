@@ -31,7 +31,7 @@ public class MaryJane extends BlockCropsBase {
 
 	public MaryJane() {
 		
-		super(EnumCrops.BLAZINGPLANT, true, UCConfig.cropmaryjane);
+		super(EnumCrops.BLAZINGPLANT, true, UCConfig.cropMaryjane);
 		this.clickHarvest = false;
 	}
 	

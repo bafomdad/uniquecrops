@@ -20,7 +20,7 @@ public class Invisibilia extends BlockCropsBase {
 
 	public Invisibilia() {
 		
-		super(EnumCrops.INVISIBLEPLANT, true, UCConfig.cropinvisibilia);
+		super(EnumCrops.INVISIBLEPLANT, true, UCConfig.cropInvisibilia);
 		this.clickHarvest = false;
 	}
 	

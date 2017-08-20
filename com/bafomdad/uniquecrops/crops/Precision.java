@@ -22,7 +22,7 @@ public class Precision extends BlockCropsBase {
 
 	public Precision() {
 		
-		super(EnumCrops.PRECISION, false, UCConfig.cropprecision);
+		super(EnumCrops.PRECISION, false, UCConfig.cropPrecision);
 	}
 	
 	@Override

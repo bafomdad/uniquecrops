@@ -50,5 +50,7 @@ public class EntityEulaBook extends EntityPotion {
 				worldObj.spawnEntityInWorld(eibook);
 			this.setDead();
 		}
+		else
+			this.setDead();
     }
 }

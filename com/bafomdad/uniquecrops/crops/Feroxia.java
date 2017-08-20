@@ -36,7 +36,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 
 	public Feroxia() {
 		
-		super(EnumCrops.SAVAGEPLANT, false, UCConfig.cropferoxia);
+		super(EnumCrops.SAVAGEPLANT, false, UCConfig.cropFeroxia);
 		this.clickHarvest = false;
 		GameRegistry.registerTileEntity(TileFeroxia.class, "TileFeroxia");
 		init();
@@ -138,14 +138,10 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		}
         int i = this.getAge(state);
 
-        if (i < this.getMaxAge())
-        {
+        if (i < this.getMaxAge()) {
             float f = getGrowthChance(this, world, pos);
-
             if (rand.nextInt((int)(25.0F / f) + 1) == 0)
-            {
-                world.setBlockState(pos, this.withAge(i + 1), 2);
-            }
+            	world.setBlockState(pos, this.withAge(i + 1), 2);
         }
 	}
 	

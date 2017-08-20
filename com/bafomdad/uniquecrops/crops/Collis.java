@@ -18,7 +18,7 @@ public class Collis extends BlockCropsBase {
 
 	public Collis() {
 		
-		super(EnumCrops.HIGHPLANT, true, UCConfig.cropcollis);
+		super(EnumCrops.HIGHPLANT, true, UCConfig.cropCollis);
 	}
 	
 	@Override

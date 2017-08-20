@@ -21,7 +21,7 @@ public class Dirigible extends BlockCropsBase {
 
 	public Dirigible() {
 		
-		super(EnumCrops.FLYINGPLANT, false, UCConfig.cropdirigible);
+		super(EnumCrops.FLYINGPLANT, false, UCConfig.cropDirigible);
 	}
 	
 	@Override

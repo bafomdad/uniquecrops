@@ -27,7 +27,7 @@ public class Enderlily extends BlockCropsBase {
 
 	public Enderlily() {
 		
-		super(EnumCrops.TELEPLANT, false, UCConfig.cropenderlily);
+		super(EnumCrops.TELEPLANT, false, UCConfig.cropEnderlily);
 		this.clickHarvest = false;
 	}
 	

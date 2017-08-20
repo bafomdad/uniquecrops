@@ -37,7 +37,7 @@ public class Knowledge extends BlockCropsBase {
 
 	public Knowledge() {
 		
-		super(EnumCrops.BOOKPLANT, true, UCConfig.cropknowledge);
+		super(EnumCrops.BOOKPLANT, true, UCConfig.cropKnowledge);
 	}
 	
 	@Override
