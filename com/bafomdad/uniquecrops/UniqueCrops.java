@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops;
 
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -17,7 +18,7 @@ public class UniqueCrops {
 
 	public static final String MOD_ID = "uniquecrops";
 	public static final String MOD_NAME = "Unique Crops";
-	public static final String VERSION = "0.1.91";
+	public static final String VERSION = "0.2.0";
 	
 	@SidedProxy(clientSide="com.bafomdad.uniquecrops.proxies.ClientProxy", serverSide="com.bafomdad.uniquecrops.proxies.CommonProxy")
 	public static CommonProxy proxy;
@@ -27,6 +28,8 @@ public class UniqueCrops {
 	
 	public static UCTab TAB = new UCTab();
 	public static UCConfig config;
+	
+	public static boolean baublesLoaded = Loader.isModLoaded("Baubles");
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -44,7 +47,6 @@ public class UniqueCrops {
 	public void init(FMLInitializationEvent event) {
 		
 		proxy.init(event);
-		proxy.initEntityRender();
 	}
 	
 	@Mod.EventHandler
