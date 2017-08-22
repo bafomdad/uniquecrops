@@ -20,7 +20,9 @@ import baubles.api.IBauble;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.Optional;
 
+@Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles", striprefs = true)
 public abstract class ItemBauble extends Item implements IBauble {
 	
 	private static final String HASHCODE = "playerHashcode";
