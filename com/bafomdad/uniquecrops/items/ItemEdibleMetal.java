@@ -78,7 +78,7 @@ public class ItemEdibleMetal extends ItemFood {
 		String oreName = OreDictionary.getOreName(oreIDs[0]);
 		ItemStack converted = OreDictionary.getOres(oreName).get(0);
 		if (converted != null)
-			return new ItemStack(converted.getItem(), stack.stackSize);
+			return new ItemStack(converted.getItem(), stack.stackSize, converted.getItemDamage());
 		
 		return stack;
 	}
