@@ -18,7 +18,7 @@ public class UniqueCrops {
 
 	public static final String MOD_ID = "uniquecrops";
 	public static final String MOD_NAME = "Unique Crops";
-	public static final String VERSION = "0.2.01";
+	public static final String VERSION = "0.2.02";
 	
 	@SidedProxy(clientSide="com.bafomdad.uniquecrops.proxies.ClientProxy", serverSide="com.bafomdad.uniquecrops.proxies.CommonProxy")
 	public static CommonProxy proxy;
