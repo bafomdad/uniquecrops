@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "uniquecrops:seedabstract"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:generic",
+      "data": 22
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

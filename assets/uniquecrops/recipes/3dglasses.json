@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "uniquecrops:3dglasses"
+  },
+  "pattern": [
+    "I I",
+    "I I",
+    "BWR"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:stained_glass_pane",
+      "data": 14
+    },
+    "B": {
+      "item": "minecraft:stained_glass_pane",
+      "data": 11
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 0
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

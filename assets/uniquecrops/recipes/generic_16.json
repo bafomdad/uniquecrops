@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 16
+  },
+  "pattern": [
+    "TTT",
+    "TET",
+    "TTT"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "uniquecrops:generic",
+      "data": 15
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  }
+}

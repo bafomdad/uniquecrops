@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/wafflonia1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/wafflonia1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/wafflonia2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/wafflonia2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/wafflonia3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/wafflonia3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/wafflonia4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/wafflonia4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/wafflonia5"}}
+        }
+    }
+}

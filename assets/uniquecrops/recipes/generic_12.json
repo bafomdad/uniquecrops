@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 12
+  },
+  "pattern": [
+    "TTT",
+    "TFT",
+    "TTT"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "uniquecrops:generic",
+      "data": 11
+    },
+    "F": {
+      "item": "minecraft:feather"
+    }
+  }
+}

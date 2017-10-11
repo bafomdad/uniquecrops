@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "uniquecrops:poncho"
+  },
+  "pattern": [
+    "P P",
+    "PPP",
+    "PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:generic",
+      "data": 12
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "uniquecrops:genericfood.largeplum"
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:generic",
+      "data": 2
+    }
+  }
+}

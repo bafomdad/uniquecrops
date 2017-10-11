@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 18
+  },
+  "pattern": [
+    " F ",
+    "FBF",
+    " F "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "uniquecrops:generic",
+      "data": 1
+    },
+    "F": {
+      "item": "uniquecrops:generic",
+      "data": 12
+    }
+  }
+}

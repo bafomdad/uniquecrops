@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "uniquecrops:genericfood.dietpills"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:generic",
+      "data": 22
+    },
+    {
+      "item": "uniquecrops:generic",
+      "data": 22
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

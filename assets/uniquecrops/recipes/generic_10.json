@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 10,
+    "count": 3
+  },
+  "pattern": [
+    " B ",
+    "BCB",
+    " B "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:dye",
+      "data": 15
+    },
+    "C": {
+      "item": "minecraft:clock"
+    }
+  }
+}

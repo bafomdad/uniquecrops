@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 19
+  },
+  "pattern": [
+    "IEI",
+    "EME",
+    "IEI"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "M": {
+      "item": "uniquecrops:generic",
+      "data": 17
+    }
+  }
+}

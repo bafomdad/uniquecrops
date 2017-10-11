@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "uniquecrops:genericfood.goldenbread"
+  },
+  "pattern": [
+    "RRR"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "uniquecrops:generic",
+      "data": 6
+    }
+  }
+}

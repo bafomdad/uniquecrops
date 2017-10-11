@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "uniquecrops:seedartisia"
+  },
+  "pattern": [
+    " S ",
+    "SCS",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "uniquecrops:seednormal"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    }
+  }
+}

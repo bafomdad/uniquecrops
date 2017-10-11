@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 20
+  },
+  "pattern": [
+    "GEG",
+    "EQE",
+    "GEG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz_block",
+      "data": 0
+    },
+    "E": {
+      "item": "uniquecrops:generic",
+      "data": 17
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  }
+}

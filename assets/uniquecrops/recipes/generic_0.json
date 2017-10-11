@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 0
+  },
+  "pattern": [
+    " N ",
+    "WBM",
+    " P "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:pumpkin_seeds"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "W": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "M": {
+      "item": "minecraft:melon_seeds"
+    },
+    "N": {
+      "item": "uniquecrops:seednormal"
+    }
+  }
+}

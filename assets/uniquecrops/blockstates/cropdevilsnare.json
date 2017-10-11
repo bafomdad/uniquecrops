@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/devilsnare1"},
+        "model":"crop",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/devilsnare1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/devilsnare2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/devilsnare2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/devilsnare3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/devilsnare3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/devilsnare4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/devilsnare4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/devilsnare5"}}
+        }
+    }
+}

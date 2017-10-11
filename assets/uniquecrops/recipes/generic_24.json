@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 24
+  },
+  "pattern": [
+    " L ",
+    "LBL",
+    " L "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "L": {
+      "item": "uniquecrops:generic",
+      "data": 23
+    }
+  }
+}

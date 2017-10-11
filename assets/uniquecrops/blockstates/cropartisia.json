@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/artisia1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/artisia1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/artisia2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/artisia2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/artisia3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/artisia3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/artisia4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/artisia4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/artisia5"}}
+        }
+    }
+}

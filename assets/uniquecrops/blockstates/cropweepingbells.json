@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/weepingbell1"},
+        "model":"crop",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/weepingbell1"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/weepingbell2"}}
+        }
+    }
+}

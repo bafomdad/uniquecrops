@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "uniquecrops:lavalily"
+  },
+  "pattern": [
+    " C ",
+    "CLC",
+    " C "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "uniquecrops:generic",
+      "data": 3
+    },
+    "L": {
+      "item": "minecraft:waterlily"
+    }
+  }
+}

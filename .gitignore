@@ -1,0 +1,4 @@
+build/
+gradle.properties
+build.gradle
+pack.mcmeta

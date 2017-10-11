@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/musica1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/musica1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/musica2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/musica2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/musica3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/musica3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/musica4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/musica4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/musica5"}}
+        }
+    }
+}

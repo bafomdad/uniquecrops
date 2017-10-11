@@ -1,0 +1,41 @@
+{
+  "conditions": [
+    {
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.pacifism"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:emblem.defense"
+    },
+    {
+      "item": "uniquecrops:emblem.food"
+    },
+    {
+      "item": "uniquecrops:emblem.ironstomach"
+    },
+	{
+      "item": "uniquecrops:emblem.leaf"
+    },
+	{
+      "item": "uniquecrops:emblem.melee"
+    },
+	{
+      "item": "uniquecrops:emblem.powerfist"
+    },
+	{
+      "item": "uniquecrops:emblem.rainbow"
+    },
+	{
+      "item": "uniquecrops:emblem.scarab"
+    },
+	{
+      "item": "uniquecrops:emblem.transformation"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

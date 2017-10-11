@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/feroxia1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/feroxia0"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/feroxia1"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/feroxia2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/feroxia3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/feroxia4"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/feroxia5"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/feroxia6"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/feroxia7"}}
+        }
+    }
+}

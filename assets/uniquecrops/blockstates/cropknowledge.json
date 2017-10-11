@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/knowledge1"},
+        "model":"crop",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/knowledge1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/knowledge2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/knowledge2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/knowledge3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/knowledge3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/knowledge4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/knowledge4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/knowledge5"}}
+        }
+    }
+}

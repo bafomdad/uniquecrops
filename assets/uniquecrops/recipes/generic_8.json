@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 8
+  },
+  "pattern": [
+    " N ",
+    "NDN",
+    " N "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "N": {
+      "item": "uniquecrops:generic",
+      "data": 7
+    }
+  }
+}

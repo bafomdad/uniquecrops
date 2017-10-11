@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/enderlily1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/enderlily1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/enderlily2"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/enderlily2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/enderlily3"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/enderlily3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/enderlily4"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/enderlily4"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/enderlily5"}}
+        }
+    }
+}

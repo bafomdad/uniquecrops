@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "uniquecrops:pixelglasses"
+  },
+  "pattern": [
+    "PPP",
+    "PGP",
+    "PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:generic",
+      "data": 26
+    },
+    "G": {
+      "item": "uniquecrops:3dglasses"
+    }
+  }
+}

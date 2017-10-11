@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "uniquecrops:totemhead"
+  },
+  "pattern": [
+    "LLL",
+    "LML",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "M": {
+      "item": "uniquecrops:generic",
+      "data": 17
+    }
+  }
+}
