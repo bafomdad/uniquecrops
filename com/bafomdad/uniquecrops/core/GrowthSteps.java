@@ -78,7 +78,7 @@ public class GrowthSteps {
 			
 			NBTTagList taglist = new NBTTagList();
 			NBTTagCompound tag2 = new NBTTagCompound();
-			tag2.setInteger("stage0", 19);
+			tag2.setInteger("stage0", 20);
 			taglist.appendTag(tag2);
 			tag.setTag(TAG_GROWTHSTAGES, taglist);
 			return;
@@ -160,8 +160,8 @@ public class GrowthSteps {
 
 		@Override
 		public boolean canAdvance(World world, BlockPos pos, IBlockState state) {
-
-			return world.getBlockState(pos.down()).getBlock() == Blocks.FARMLAND && ((BlockFarmland)world.getBlockState(pos.down()).getBlock()).getMetaFromState(world.getBlockState(pos.down())) == 0;
+			
+			return world.getBlockState(pos.down()).getBlock() == Blocks.FARMLAND && world.getBlockState(pos.down()).getValue(BlockFarmland.MOISTURE) < 7;
 		}
 	}
 	
@@ -422,6 +422,15 @@ public class GrowthSteps {
 					crops--;
 			}
 			return crops == 4;
+		}
+	}
+	
+	public static class DontBonemeal implements Condition {
+
+		@Override
+		public boolean canAdvance(World world, BlockPos pos, IBlockState state) {
+
+			return true;
 		}
 	}
 	

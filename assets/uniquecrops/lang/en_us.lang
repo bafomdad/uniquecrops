@@ -194,6 +194,7 @@ uniquecrops.condition.likeswarts=Likes to be completely surrounded by nether war
 uniquecrops.condition.likescooking=Likes to have nearby furnaces smelting stuff.
 uniquecrops.condition.likesbrewing=Likes to have nearby brewing stands brewing stuff.
 uniquecrops.condition.likescheckers=Likes a checker pattern of its buddies around it.
+uniquecrops.condition.dontbonemeal=Don't bonemeal the crop at this stage.
 uniquecrops.condition.selfsacrifice=Wait for demands to sacrifice yourself
 
 # EULA LICENSE TEXT

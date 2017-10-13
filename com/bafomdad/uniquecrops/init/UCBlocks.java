@@ -68,7 +68,6 @@ public class UCBlocks {
 		cropMusica = new Musica();
 		cropCinderbella = new Cinderbella();
 		cropMerlinia = new Merlinia();
-		cropFeroxia = new Feroxia();
 		cropEula = new Eula();
 		cropCobblonia = new Cobblonia();
 		cropDyeius = new Dyeius();
@@ -79,6 +78,7 @@ public class UCBlocks {
 		cropPetramia = new Petramia();
 		cropMalleatoris = new Malleatoris();
 		cropImperia = new Imperia();
+		cropFeroxia = new Feroxia();
 		
 		oldCobble = new BlockOldStone("cobble");
 		oldCobbleMoss = new BlockOldStone("cobblemoss");

@@ -62,7 +62,8 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		steps.add(new GrowthSteps(UCStrings.LIKESCOOKING, new GrowthSteps.LikesCooking(), 16));
 		steps.add(new GrowthSteps(UCStrings.LIKESBREWING, new GrowthSteps.LikesBrewing(), 17));
 		steps.add(new GrowthSteps(UCStrings.LIKESCHECKERS, new GrowthSteps.CheckerBoard(), 18));
-		steps.add(new GrowthSteps(UCStrings.SELFSACRIFICE, new GrowthSteps.SacrificeSelf(), 19));
+		steps.add(new GrowthSteps(UCStrings.DONTBONEMEAL, new GrowthSteps.DontBonemeal(), 19));
+		steps.add(new GrowthSteps(UCStrings.SELFSACRIFICE, new GrowthSteps.SacrificeSelf(), 20));
 	}
 	
 	@Override
@@ -118,34 +119,13 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 			world.setBlockToAir(pos);
 			return;
 		}
-		TileEntity tile = world.getTileEntity(pos);
-		if (tile == null || (tile != null && !(tile instanceof TileFeroxia)))
-			return;
-		
-		TileFeroxia te = (TileFeroxia)tile;
-		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null))
-			return;
-		
-		NBTTagList taglist = UCUtils.getServerTaglist(UCUtils.getPlayerFromUUID(te.getOwner().toString()).getEntityId());
-		if (taglist == null)
-			return;
-		NBTTagCompound tag = taglist.getCompoundTagAt(this.getAge(state));
-		int stage = tag.getInteger("stage" + this.getAge(state));
+		int stage = getStage(world, pos, state);
 		
 		if (!steps.get(stage).getCondition().canAdvance(world, pos, state))
 			return;
 		
-        int i = this.getAge(state);
-
-        if (i < this.getMaxAge())
-        {
-            float f = getGrowthChance(this, world, pos);
-
-            if (rand.nextInt((int)(25.0F / f) + 1) == 0)
-            {
-                world.setBlockState(pos, this.withAge(i + 1), 2);
-            }
-        }
+		if (rand.nextInt(3) == 0)
+			world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
 	}
 	
     @Override
@@ -154,14 +134,45 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
     	world.setBlockState(pos, state.getBlock().getDefaultState(), 2);
     	TileEntity te = world.getTileEntity(pos);
     	if (te != null && te instanceof TileFeroxia) {
-    		if (placer instanceof EntityPlayer && !(placer instanceof FakePlayer))
-    		{
+    		if (placer instanceof EntityPlayer && !(placer instanceof FakePlayer)) {
         		((TileFeroxia)te).setOwner(placer.getUniqueID());
         		if (!world.isRemote && !placer.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES)) {
         			GrowthSteps.generateSteps((EntityPlayer)placer);
         		}
     		}
     	}
+    }
+    
+    @Override
+    public void grow(World world, BlockPos pos, IBlockState state) {
+    	
+    	if (getAge(state) >= getMaxAge()) return;
+    	
+    	int stage = getStage(world, pos, state);
+    	if (stage != -1 && steps.get(stage).getIndex() == 19) {
+    		if (!world.isRemote)
+    			world.setBlockState(pos, this.withAge(0), 3);
+    		return;
+    	}
+    	else if (stage != -1 && steps.get(stage).getCondition().canAdvance(world, pos, state)) {
+    		if (!world.isRemote)
+    			world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+    	}
+    }
+    
+    private int getStage(World world, BlockPos pos, IBlockState state) {
+    	
+		TileEntity tile = world.getTileEntity(pos);
+		if (!(tile instanceof TileFeroxia)) return -1;
+		
+		TileFeroxia te = (TileFeroxia)tile;
+		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null)) return - 1;
+		
+		NBTTagList taglist = UCUtils.getServerTaglist(UCUtils.getPlayerFromUUID(te.getOwner().toString()).getEntityId());
+		if (taglist == null) return -1;
+		
+		NBTTagCompound tag = taglist.getCompoundTagAt(this.getAge(state));
+		return tag.getInteger("stage" + this.getAge(state));
     }
 
 	@Override
