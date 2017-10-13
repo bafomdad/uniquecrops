@@ -1,0 +1,16 @@
+[
+{
+  "modid": "uniquecrops",
+  "name": "Unique Crops",
+  "description": "Unique crops, unique growth, unique drops",
+  "version": "0.1.41",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["bafomdad"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
