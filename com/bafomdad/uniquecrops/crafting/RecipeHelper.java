@@ -45,43 +45,43 @@ import net.minecraftforge.registries.GameData;
 
 public class RecipeHelper {
 
-	private static void addShapedOreRecipe(ItemStack output, Object... input) {
-		
-		ResourceLocation location = getNameForRecipe(output);
-		ShapedOreRecipe recipe = new ShapedOreRecipe(location, output, input);
-		recipe.setRegistryName(location);
-		GameData.register_impl(recipe);
-	}
-	
-	private static void addShapedRecipe(ItemStack output, Object... input) {
-		
-		ResourceLocation location = getNameForRecipe(output);
-		CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(input);
-		ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
-		recipe.setRegistryName(location);
-		GameData.register_impl(recipe);
-	}
-	
-	private static void addShapelessOreRecipe(ItemStack output, Object... input) {
-		
-		ResourceLocation location = getNameForRecipe(output);
-		ShapelessOreRecipe recipe = new ShapelessOreRecipe(location, output, input);
-		recipe.setRegistryName(location);
-		GameData.register_impl(recipe);
-	}
-	
-	private static void addShapelessRecipe(ItemStack output, Object... input) {
-		
-		ResourceLocation location = getNameForRecipe(output);
-		ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, buildInput(input));
-		recipe.setRegistryName(location);
-		GameData.register_impl(recipe);
-	}
-	
-	private static void addCustomRecipe(IRecipe recipe) {
-		
-		GameData.register_impl(recipe);
-	}
+//	private static void addShapedOreRecipe(ItemStack output, Object... input) {
+//		
+//		ResourceLocation location = getNameForRecipe(output);
+//		ShapedOreRecipe recipe = new ShapedOreRecipe(location, output, input);
+//		recipe.setRegistryName(location);
+//		GameData.register_impl(recipe);
+//	}
+//	
+//	private static void addShapedRecipe(ItemStack output, Object... input) {
+//		
+//		ResourceLocation location = getNameForRecipe(output);
+//		CraftingHelper.ShapedPrimer primer = CraftingHelper.parseShaped(input);
+//		ShapedRecipes recipe = new ShapedRecipes(output.getItem().getRegistryName().toString(), primer.width, primer.height, primer.input, output);
+//		recipe.setRegistryName(location);
+//		GameData.register_impl(recipe);
+//	}
+//	
+//	private static void addShapelessOreRecipe(ItemStack output, Object... input) {
+//		
+//		ResourceLocation location = getNameForRecipe(output);
+//		ShapelessOreRecipe recipe = new ShapelessOreRecipe(location, output, input);
+//		recipe.setRegistryName(location);
+//		GameData.register_impl(recipe);
+//	}
+//	
+//	private static void addShapelessRecipe(ItemStack output, Object... input) {
+//		
+//		ResourceLocation location = getNameForRecipe(output);
+//		ShapelessRecipes recipe = new ShapelessRecipes(location.getResourceDomain(), output, buildInput(input));
+//		recipe.setRegistryName(location);
+//		GameData.register_impl(recipe);
+//	}
+//	
+//	private static void addCustomRecipe(IRecipe recipe) {
+//		
+//		GameData.register_impl(recipe);
+//	}
 	
 	public static ResourceLocation getNameForRecipe(ItemStack output) {
 		
@@ -96,20 +96,20 @@ public class RecipeHelper {
 		return recipeLoc;
 	}
 	
-	private static NonNullList<Ingredient> buildInput(Object[] input) {
-		
-		NonNullList<Ingredient> list = NonNullList.create();
-		for (Object obj : input) {
-			if (obj instanceof Ingredient)
-				list.add((Ingredient)obj);
-			else {
-				Ingredient ingredient = CraftingHelper.getIngredient(obj);
-				if (ingredient == null)
-					ingredient = Ingredient.EMPTY;
-				
-				list.add(ingredient);
-			}
-		}
-		return list;
-	}
+//	private static NonNullList<Ingredient> buildInput(Object[] input) {
+//		
+//		NonNullList<Ingredient> list = NonNullList.create();
+//		for (Object obj : input) {
+//			if (obj instanceof Ingredient)
+//				list.add((Ingredient)obj);
+//			else {
+//				Ingredient ingredient = CraftingHelper.getIngredient(obj);
+//				if (ingredient == null)
+//					ingredient = Ingredient.EMPTY;
+//				
+//				list.add(ingredient);
+//			}
+//		}
+//		return list;
+//	}
 }

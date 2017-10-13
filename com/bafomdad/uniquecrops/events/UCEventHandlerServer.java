@@ -484,14 +484,14 @@ public class UCEventHandlerServer {
 		
 		if (!event.player.inventory.armorInventory.get(3).isEmpty() && event.player.inventory.armorInventory.get(3).getItem() == UCItems.pixelglasses) {
 			boolean flag = NBTUtils.getBoolean(event.player.inventory.armorInventory.get(3), "isActive", false);
-			if (event.side == Side.CLIENT && FMLClientHandler.instance().getClientPlayerEntity().getCommandSenderEntity().equals(event.player)) {
+			if (event.side == Side.CLIENT) {
 				if (flag)
 					UniqueCrops.proxy.enableBitsShader();
 				else
 					UniqueCrops.proxy.disableBitsShader();
 			}
 		}
-		else if (event.side == Side.CLIENT)
+		else if ((event.player.inventory.armorInventory.get(3).isEmpty() || !event.player.inventory.armorInventory.get(3).isEmpty() && event.player.inventory.armorInventory.get(3).getItem() != UCItems.pixelglasses) && event.side == Side.CLIENT)
 			UniqueCrops.proxy.disableBitsShader();
 		
 		if (event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
@@ -532,8 +532,10 @@ public class UCEventHandlerServer {
 		if (event.getResult() == Event.Result.ALLOW) return;
 		
 		ChunkPos cPos = new ChunkPos(event.getEntityLiving().getPosition());
-		if (event.getEntityLiving().isCreatureType(EnumCreatureType.MONSTER, false) && UCDataHandler.getInstance().getChunkInfo(event.getWorld().provider.getDimension()).contains(cPos))
+		if (event.getEntityLiving().isCreatureType(EnumCreatureType.MONSTER, false) && UCDataHandler.getInstance().getChunkInfo(event.getWorld().provider.getDimension()).contains(cPos)) {
+//			System.out.println("Prevented spawning of entity " + event.getEntityLiving().getName() + " in chunk " + cPos);
 			event.setResult(Event.Result.DENY);
+		}
 	}
 	
     private ItemStack updateRepairOutput(ItemStack input1, ItemStack input2) {

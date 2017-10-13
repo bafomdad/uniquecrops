@@ -30,6 +30,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
@@ -57,6 +59,15 @@ public class Imperia extends BlockCropsBase {
 	public Item getCrop() {
 		
 		return Item.getItemFromBlock(Blocks.AIR);
+	}
+	
+	@Override
+    public int getLightValue(IBlockState state) {
+		
+		if (getAge(state) >= getMaxAge())
+			return 15;
+		
+		return 0;
 	}
 	
 	@Override
@@ -111,4 +122,10 @@ public class Imperia extends BlockCropsBase {
 		UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.CLOUD, pos.getX(), pos.getY(), pos.getZ(), 6));
 		world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
 	}
+	
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+    	
+    	this.createParticles(state, world, pos, rand, EnumParticleTypes.END_ROD, 0);
+    }
 }

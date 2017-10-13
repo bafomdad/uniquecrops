@@ -29,6 +29,7 @@ public class UCDataHandler {
 		if (saveInfo.get(dimId) == null) {
 			Set<ChunkPos> save = new HashSet<>();
 			saveInfo.put(dimId, save);
+			saveInfo.get(dimId).add(new ChunkPos(0, 0));
 		}
 		return saveInfo.get(dimId);
 	}
@@ -66,7 +67,7 @@ public class UCDataHandler {
 	
 	public void clearQueue(int dimId) {
 		
-		saveInfo.get(dimId).clear();
+		getChunkInfo(dimId).clear();
 	}
 	
 	public Set<Integer> getUnsavedDims() {

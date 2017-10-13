@@ -40,9 +40,8 @@ public class TileArtisia extends TileBaseUC {
 		for (int i = 0; i < GRIDPOS.length; i++) {
 			BlockPos looppos = getPos().add(GRIDPOS[i]);
 			TileEntity te = getWorld().getTileEntity(looppos);
-			if (te != null && te instanceof TileArtisia) {
-				continue;
-			}
+			if (te instanceof TileArtisia) continue;
+
 			else {
 				foundGrid = false;
 				break;

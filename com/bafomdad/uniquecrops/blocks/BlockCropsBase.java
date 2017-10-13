@@ -66,7 +66,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		
 		if (type == EnumCrops.BLAZINGPLANT && !world.provider.doesWaterVaporize())
 			return false;
-		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.SAVAGEPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE || type == EnumCrops.ANVILICIOUS || type == EnumCrops.IMPERIA)
+		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE || type == EnumCrops.ANVILICIOUS || type == EnumCrops.IMPERIA)
 			return false;
 		if (type == EnumCrops.HIGHPLANT && pos.getY() <= 100)
 			return false;
@@ -80,7 +80,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if (clickHarvest) {
-			if (!player.getHeldItemMainhand().isEmpty()) return false;
+//			if (!player.getHeldItemMainhand().isEmpty()) return false;
 			if (getAge(state) >= getMaxAge() && !world.isRemote) {
 				world.setBlockState(pos, this.withAge(0), 3);
 				int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
@@ -112,9 +112,9 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
         }
         if (age >= getMaxAge() && extra)
         {
-            int k = 3 + fortune;
+            int k = 2 + fortune;
 
-            for (int i = 0; i < 3 + fortune; ++i)
+            for (int i = 0; i < k; ++i)
             {
                 if (rand.nextInt(2 * getMaxAge()) <= age)
                 {

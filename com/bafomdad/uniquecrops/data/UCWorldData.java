@@ -34,7 +34,7 @@ public class UCWorldData extends WorldSavedData {
 			for (int i = 0; i < savedList.tagCount(); i++) {
 				NBTTagCompound saveTag = savedList.getCompoundTagAt(i);
 				ChunkPos cPos = new ChunkPos(saveTag.getInteger("chunkX"), saveTag.getInteger("chunkZ"));
-				System.out.println("UCWorldData: " + cPos);
+//				System.out.println("UCWorldData: " + cPos);
 				UCDataHandler.getInstance().addChunk(dimId, cPos, false);
 			}
 		}

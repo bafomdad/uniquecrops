@@ -17,57 +17,7 @@ public class UCStrings {
 	
 	// BOOK
 	private static final String BOOK = BASE + ".book";
-	private static final String IMAGE = UniqueCrops.MOD_ID + ":" + "textures/gui/";
 	public static final String INTRO = BOOK + ".pageintro";
-	
-	public static final String NORMAL = IMAGE + "normalpage.png";
-	public static final String PAGENORMAL = BOOK + ".pagenormal";
-	public static final String COLLIS = IMAGE + "collispage.png";
-	public static final String PAGECOLLIS = BOOK + ".pagecollis";
-	public static final String DIRIGIBLE = IMAGE + "dirigiblepage.png";
-	public static final String PAGEPLUM = BOOK + ".pagedirigible";
-	public static final String ENDERLILY = IMAGE + "enderlilypage.png";
-	public static final String PAGELILY = BOOK + ".pageenderlily";
-	public static final String INVISIBILIA = IMAGE + "invisibiliapage.png";
-	public static final String PAGEINVIS = BOOK + ".pageinvisibilia";
-	public static final String KNOWLEDGE = IMAGE + "knowledgepage.png";
-	public static final String PAGEKNOWLEDGE = BOOK + ".pageknowledge";
-	public static final String MARYJANE = IMAGE + "maryjanepage.png";
-	public static final String PAGEMARY = BOOK + ".pagemaryjane";
-	public static final String MERLINIA = IMAGE + "merliniapage.png";
-	public static final String PAGEMERLIN = BOOK + ".pagemerlinia";
-	public static final String MILLENNIUM = IMAGE + "millenniumpage.png";
-	public static final String PAGEMILL = BOOK + ".pagemillennium";
-	public static final String MUSICA = IMAGE + "musicapage.png";
-	public static final String PAGEMUSIC = BOOK + ".pagemusica";
-	public static final String CINDERBELLA = IMAGE + "cinderellapage.png";
-	public static final String PAGECINDER = BOOK + ".pagecinderbella";
-	public static final String PRECISION = IMAGE + "precisionpage.png";
-	public static final String PAGEPRECISE = BOOK + ".pageprecision";
-	public static final String WEEPINGBELL = IMAGE + "weepingbellpage.png";
-	public static final String PAGEWEEP = BOOK + ".pageweepingbell";
-	public static final String EULA = IMAGE + "eulapage.png";
-	public static final String PAGELEGAL = BOOK + ".pageeula";
-	public static final String DYEIUS = IMAGE + "dyeiuspage.png";
-	public static final String PAGEDYE = BOOK + ".pagedyeius";
-	public static final String COBBLONIA = IMAGE + "cobbloniapage.png";
-	public static final String PAGECOBBLE = BOOK + ".pagecobblonia";
-	public static final String ABSTRACT = IMAGE + "abstractpage.png";
-	public static final String PAGEABSTRACT = BOOK + ".pageabstract";
-	public static final String CRAFTER = IMAGE + "artisiapage.png";
-	public static final String PAGECRAFT = BOOK + ".pageartisia";
-	public static final String WAFFLES = IMAGE + "waffloniapage.png";
-	public static final String PAGEWAFFLE = BOOK + ".pagewafflonia";
-	public static final String DEVILSNARE = IMAGE + "devilsnarepage.png";
-	public static final String PAGESNARE = BOOK + ".pagedevilsnare";
-	public static final String PIXELSIUS = IMAGE + "pixelsiuspage.png";
-	public static final String PAGEPIXEL = BOOK + ".pagepixelsius";
-	public static final String PETRAMIA = IMAGE + "petramiapage.png";
-	public static final String PAGEPETRAMIA = BOOK + ".pagepetramia";
-	public static final String MALLEATORIS = IMAGE + "malleatorispage.png";
-	public static final String PAGEMALLEATORIS = BOOK + ".pagemalleatoris";
-	public static final String FEROXIA = IMAGE + "feroxiapage.png";
-	public static final String PAGESAVAGE = BOOK + ".pageferoxia";
 	
 	// CONDITIONS
 	private static final String COND = BASE + ".condition";
@@ -90,14 +40,15 @@ public class UCStrings {
 	public static final String LIKESCOOKING = COND + ".likescooking";
 	public static final String LIKESBREWING = COND + ".likesbrewing";
 	public static final String LIKESCHECKERS = COND + ".likescheckers";
+	public static final String DONTBONEMEAL = COND + ".dontbonemeal";
 	public static final String SELFSACRIFICE = COND + ".selfsacrifice";
 	
 	// Test MD5
 	public static String[] MD5 = new String[] {
-		"F860A278CA7BAC76F492DBD6C8F36163".toLowerCase(),
-		"CF63C9912EBF9A888B25D7BF0C0854AF".toLowerCase(),
-		"F8E4529942FEEDC6FC84BE4DDB28C404".toLowerCase(),
-		"F5B40BA19AEE796647C30C31376D3DF8".toLowerCase(),
-		"51B8884D1B4565EFDC6DF440310D00F3".toLowerCase()
+		"FA7C27A064D1697162FDE479C389E57D".toLowerCase(),
+		"8C958A33F39EEB1D4CBA8882640F83C3".toLowerCase(),
+		"4A991BEB80CB60883BB9E440D81ED1B7".toLowerCase(),
+		"B3B847DF6200864E7766F0FACBDDA8C8".toLowerCase(),
+		"930E44CD55FD29745EDF84B068282F28".toLowerCase()
 	};
 }
