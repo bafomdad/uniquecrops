@@ -1,0 +1,13 @@
+{
+  "result": {
+    "item": "uniquecrops:seeddirigible",
+	"count": 2
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:genericfood.largeplum",
+      "data": 0
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}
