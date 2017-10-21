@@ -36,9 +36,12 @@ public class UCRecipes {
 		precisionShovel.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
 		ItemStack precisionPick = new ItemStack(UCItems.precisionPick);
 		precisionPick.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
+		ItemStack precisionSword = new ItemStack(UCItems.precisionSword);
+		precisionSword.addEnchantment(Enchantment.getEnchantmentByID(21), 1);
 		GameRegistry.addShapedRecipe(precisionAxe.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionAxe), precisionAxe, "GG ", "GS ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
 		GameRegistry.addShapedRecipe(precisionPick.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionPick), precisionPick, "GGG", " S ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
 		GameRegistry.addShapedRecipe(precisionShovel.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionShovel), precisionShovel, " G ", " S ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
+		GameRegistry.addShapedRecipe(precisionSword.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionSword), precisionSword, " G ", " G ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
 
 		ItemStack awkwardpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("awkward"));
 		if (!awkwardpotion.isEmpty()) {
