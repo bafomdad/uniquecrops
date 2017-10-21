@@ -56,7 +56,7 @@ public class EmblemIronstomach extends ItemBauble {
 
 		if (stack == null || (stack != null && stack.getItem() instanceof ItemEdibleMetal)) return;
 		for (Map.Entry<ItemStack, ItemStack> entry : UCRecipes.edibleMetals.entrySet()) {
-			if (entry.getKey().getItem() == stack.getItem()) {
+			if (entry.getKey().getItem() == stack.getItem() && entry.getKey().getItemDamage() == stack.getItemDamage()) {
 				player.setHeldItem(hand, new ItemStack(entry.getValue().getItem(), stack.getCount()));
 				return;
 			}
