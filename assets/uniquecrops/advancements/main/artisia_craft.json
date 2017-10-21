@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedartisia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingArtisia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingArtisia.desc"
+    }
+  },
+  "parent": "uniquecrops:main/seed_pickup",
+  "criteria": {
+    "pool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedartisia"
+          }
+        ]
+      }
+    }
+  }
+}
