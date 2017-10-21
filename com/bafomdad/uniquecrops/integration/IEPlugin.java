@@ -47,8 +47,7 @@ public class IEPlugin {
 		if (!rFactory.init())
 			throw new Exception("No valid BellJarHandler class to hook into.");
 		
-		//System.out.println(rFactory.registerCrop.toString() + " / " + rFactory.registerCrop.getDefaultValue() + " / " + rFactory.registerCrop.getModifiers());
-		rFactory.registerCrop.setAccessible(true);
-		rFactory.registerCrop.invoke(rFactory.anonymousClass.newInstance(), new ItemStack(UCItems.seedsPetramia), new ItemStack[]{new ItemStack(Blocks.OBSIDIAN), new ItemStack(UCItems.seedsPetramia)}, new ItemStack(Blocks.DIRT), UCBlocks.cropPetramia.getDefaultState());
+		blusunrize.immersiveengineering.api.tool.BelljarHandler bellHandler = new blusunrize.immersiveengineering.api.tool.BelljarHandler();
+		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsPetramia), new ItemStack[]{new ItemStack(Blocks.OBSIDIAN), new ItemStack(UCItems.seedsPetramia)}, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropPetramia.getDefaultState()});
 	}
 }

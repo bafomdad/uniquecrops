@@ -34,17 +34,17 @@ public class CommonProxy {
 		
 		UCPacketHandler.initServer();
 		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), UCConfig.dropRate);
-//		if (UniqueCrops.ieLoaded)
-//			try {
-//				IEPlugin.init();
-//			} catch (Throwable t) {
-//				t.printStackTrace();
-//			}
 	}
 	
 	public void postInit(FMLPostInitializationEvent event) {
 		
 		MinecraftForge.EVENT_BUS.register(new UCEventHandlerServer());
+		if (UniqueCrops.ieLoaded)
+			try {
+				IEPlugin.init();
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
 	}
 	
 	public void initAllModels() {}
