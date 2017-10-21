@@ -15,6 +15,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
@@ -76,6 +77,7 @@ public class UCItems {
 	public static ItemTool precisionPick;
 	public static ItemTool precisionAxe;
 	public static ItemTool precisionShovel;
+	public static ItemSword precisionSword;
 	
 	public static final ItemArmor.ArmorMaterial glassesmaterial = EnumHelper.addArmorMaterial("3dglasses", "uniquecrops:3dglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
 	public static final ItemArmor.ArmorMaterial pixelmaterial = EnumHelper.addArmorMaterial("pixelglasses", "uniquecrops:pixelglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
@@ -137,5 +139,6 @@ public class UCItems {
 		precisionPick = new ItemPrecisionPick();
 		precisionAxe = new ItemPrecisionAxe();
 		precisionShovel = new ItemPrecisionShovel();
+		precisionSword = new ItemPrecisionSword();
 	}
 }

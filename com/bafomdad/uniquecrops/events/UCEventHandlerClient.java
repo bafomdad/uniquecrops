@@ -98,76 +98,12 @@ public class UCEventHandlerClient {
 		registerBlockModel(UCBlocks.hourglass);
 		registerBlockModel(UCBlocks.totemhead);
 		registerBlockModel(UCBlocks.lavalily);
+		registerBlockModel(UCBlocks.icelily);
 		registerBlockModel(UCBlocks.darkBlock);
 		
 		// ITEMS
 		for (Item item : UCItems.items)
 			registerItemModel(item);
-		
-//		for (int i = 0; i < EnumItems.values().length; ++i)
-//			ModelLoader.setCustomModelResourceLocation(UCItems.generic, i, new ModelResourceLocation(UCItems.generic.getRegistryName() + "." + EnumItems.values()[i].getName(), "inventory"));
-//		
-//		registerItemModel(UCItems.largeplum);
-//		registerItemModel(UCItems.teriyaki);
-//		registerItemModel(UCItems.heart);
-//		registerItemModel(UCItems.potionreverse);
-//		registerItemModel(UCItems.goldenbread);
-//		registerItemModel(UCItems.dietpills);
-//		registerItemModel(UCItems.waffle);
-//		registerItemModel(UCItems.endersnooker);
-//		registerItemModel(UCItems.glasses3D);
-//		registerItemModel(UCItems.poncho);
-//		registerItemModel(UCItems.slippers);
-//		registerItemModel(UCItems.pixelglasses);
-//		registerItemModel(UCItems.precisionPick);
-//		registerItemModel(UCItems.precisionAxe);
-//		registerItemModel(UCItems.precisionShovel);
-//		registerItemModel(UCItems.edibleDiamond);
-//		registerItemModel(UCItems.edibleEmerald);
-//		registerItemModel(UCItems.edibleIngotGold);
-//		registerItemModel(UCItems.edibleIngotIron);
-//		registerItemModel(UCItems.edibleLapis);
-//		registerItemModel(UCItems.edibleNuggetGold);
-//		
-//		if (UniqueCrops.baublesLoaded) {
-//			registerItemModel(UCBaubles.emblemDefense);
-//			registerItemModel(UCBaubles.emblemFood);
-//			registerItemModel(UCBaubles.emblemIronstomach);
-//			registerItemModel(UCBaubles.emblemLeaf);
-//			registerItemModel(UCBaubles.emblemMelee);
-//			registerItemModel(UCBaubles.emblemPacifism);
-//			registerItemModel(UCBaubles.emblemPowerfist);
-//			registerItemModel(UCBaubles.emblemRainbow);
-//			registerItemModel(UCBaubles.emblemScarab);
-//			registerItemModel(UCBaubles.emblemTransformation);
-//		}
-//		
-//		// SEEDS
-//		registerItemModel(UCItems.seedsNormal);
-//		registerItemModel(UCItems.seedsPrecision);
-//		registerItemModel(UCItems.seedsKnowledge);
-//		registerItemModel(UCItems.seedsDirigible);
-//		registerItemModel(UCItems.seedsMillennium);
-//		registerItemModel(UCItems.seedsEnderlily);
-//		registerItemModel(UCItems.seedsCollis);
-//		registerItemModel(UCItems.seedsInvisibilia);
-//		registerItemModel(UCItems.seedsMaryjane);
-//		registerItemModel(UCItems.seedsWeepingbells);
-//		registerItemModel(UCItems.seedsMusica);
-//		registerItemModel(UCItems.seedsCinderbella);
-//		registerItemModel(UCItems.seedsMerlinia);
-//		registerItemModel(UCItems.seedsFeroxia);
-//		registerItemModel(UCItems.seedsEula);
-//		registerItemModel(UCItems.seedsCobblonia);
-//		registerItemModel(UCItems.seedsDyeius);
-//		registerItemModel(UCItems.seedsAbstract);
-//		registerItemModel(UCItems.seedsWafflonia);
-//		registerItemModel(UCItems.seedsDevilsnare);
-//		registerItemModel(UCItems.seedsPixelsius);
-//		registerItemModel(UCItems.seedsArtisia);
-//		registerItemModel(UCItems.seedsMalleatoris);
-//		registerItemModel(UCItems.seedsPetramia);
-//		registerItemModel(UCItems.seedsImperia);
 	}
 	
 	private void registerBlockModel(Block block) {

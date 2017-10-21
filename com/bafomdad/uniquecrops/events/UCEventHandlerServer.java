@@ -117,15 +117,16 @@ public class UCEventHandlerServer {
 			ItemStack output = (left.getItem() instanceof IBookUpgradeable) ? left.copy(): right.copy();
 			if (!output.isEmpty()) {
 				ItemStack newcopy = output.copy();
-				if (NBTUtils.getInt(newcopy, ItemGeneric.TAG_UPGRADE, -1) >= 10)
+				IBookUpgradeable upgrade = ((IBookUpgradeable)newcopy.getItem());
+				if (upgrade.getLevel(newcopy) >= 10)
 					return;
 				
-				if (!newcopy.hasTagCompound() || (newcopy.hasTagCompound() && !newcopy.getTagCompound().hasKey(ItemGeneric.TAG_UPGRADE))) {
-					NBTUtils.setInt(newcopy, ItemGeneric.TAG_UPGRADE, 1);
+				if (upgrade.getLevel(newcopy) <= 0) {
+					upgrade.setLevel(newcopy, 1);
 				}
 				else {
-					int upgradelevel = newcopy.getTagCompound().getInteger(ItemGeneric.TAG_UPGRADE);
-					NBTUtils.setInt(newcopy, ItemGeneric.TAG_UPGRADE, ++upgradelevel);
+					int upgradelevel = upgrade.getLevel(newcopy);
+					upgrade.setLevel(newcopy, upgradelevel + 1);
 				}
 				event.setOutput(newcopy);
 				event.setCost(5);
@@ -164,7 +165,7 @@ public class UCEventHandlerServer {
 			return;
 		
 		if (output.getItem() instanceof IBookUpgradeable) {
-			int upgradelevel = NBTUtils.getInt(output, ItemGeneric.TAG_UPGRADE, -1);
+			int upgradelevel = ((IBookUpgradeable)output.getItem()).getLevel(output);
 			if (upgradelevel == 10) {
 				Random rand = new Random();
 				if (rand.nextBoolean()) {
@@ -227,24 +228,24 @@ public class UCEventHandlerServer {
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
 		}
-		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
-			for (ItemStack stack : event.getDrops()) {
-				if (stack.getItem() == Items.DYE) {
-					long time = event.getWorld().getWorldTime() % 24000L;
-					int meta = (int)(time / 1500);
-					if (EnumDyeColor.byMetadata(meta) == EnumDyeColor.BLUE) {
-						event.getDrops().remove(stack);
-						event.getDrops().add(new ItemStack(UCItems.generic, 1, EnumItems.BLUEDYE.ordinal()));
-						return;
-					}
-					LocalDateTime current = LocalDateTime.now();
-					if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
-						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getMetadata());
-					else
-						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getDyeDamage());
-				}
-			}
-		}
+//		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
+//			for (ItemStack stack : event.getDrops()) {
+//				if (stack.getItem() == Items.DYE) {
+//					long time = event.getWorld().getWorldTime() % 24000L;
+//					int meta = (int)(time / 1500);
+//					if (EnumDyeColor.byMetadata(meta) == EnumDyeColor.BLUE) {
+//						event.getDrops().remove(stack);
+//						event.getDrops().add(new ItemStack(UCItems.generic, 1, EnumItems.BLUEDYE.ordinal()));
+//						return;
+//					}
+//					LocalDateTime current = LocalDateTime.now();
+//					if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
+//						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getMetadata());
+//					else
+//						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getDyeDamage());
+//				}
+//			}
+//		}
 	}
 	
 	@SubscribeEvent
@@ -307,7 +308,7 @@ public class UCEventHandlerServer {
 				}
 			}
 			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionAxe) {
-				if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10) {
+				if (((IBookUpgradeable)player.getHeldItemMainhand().getItem()).getLevel(player.getHeldItemMainhand()) == 10) {
 					Random rand = el.world.rand;
 					int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
 					if (rand.nextInt(15) <= 2 + looting) {
@@ -365,9 +366,8 @@ public class UCEventHandlerServer {
 		
 		EntityPlayer player = (EntityPlayer)event.getTarget();
 		EntityLiving ent = (EntityLiving)event.getEntity();
-		boolean flag = !player.inventory.armorInventory.get(2).isEmpty() && player.inventory.armorInventory.get(2).getItem() == UCItems.poncho && NBTUtils.getInt(player.inventory.armorInventory.get(2), ItemGeneric.TAG_UPGRADE, -1) == 10;
-		if (flag && ent.isNonBoss() && !(ent instanceof EntityGuardian || ent instanceof EntityShulker))
-		{
+		boolean flag = !player.inventory.armorInventory.get(2).isEmpty() && player.inventory.armorInventory.get(2).getItem() == UCItems.poncho && ((IBookUpgradeable)player.inventory.armorInventory.get(2).getItem()).getLevel(player.inventory.armorInventory.get(2)) == 10;
+		if (flag && ent.isNonBoss() && !(ent instanceof EntityGuardian || ent instanceof EntityShulker)) {
 			ent.setAttackTarget(null);
 			ent.setRevengeTarget(null);
 		}
@@ -421,7 +421,7 @@ public class UCEventHandlerServer {
     	if (!flag) return;
     	
     	if (!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == UCItems.precisionPick) {
-    		if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) < 10)
+    		if (((IBookUpgradeable)player.getHeldItemMainhand().getItem()).getLevel(player.getHeldItemMainhand()) < 10)
     			return;
     		else {
     			if (event.getState().getBlock() == Blocks.MONSTER_EGG) {
@@ -473,7 +473,7 @@ public class UCEventHandlerServer {
 		if (event.getEntity() instanceof EntityFallingBlock) {
 			EntityPlayer player = event.getEntity().world.getClosestPlayerToEntity(event.getEntity(), range);
 			if (player != null && !player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == UCItems.precisionShovel) {
-				if (NBTUtils.getInt(player.getHeldItemMainhand(), ItemGeneric.TAG_UPGRADE, -1) == 10)
+				if (((IBookUpgradeable)player.getHeldItemMainhand().getItem()).getLevel(player.getHeldItemMainhand()) == 10)
 					event.setCanceled(true);
 			}
 		}

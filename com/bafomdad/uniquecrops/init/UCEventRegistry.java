@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.init;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.blocks.BlockIceLily;
 import com.bafomdad.uniquecrops.blocks.BlockLavaLily;
 import com.bafomdad.uniquecrops.blocks.tiles.TileArtisia;
 import com.bafomdad.uniquecrops.core.EnumItems;
@@ -42,6 +43,7 @@ public class UCEventRegistry {
 
 		// ITEMBLOCKS
 		event.getRegistry().register(new BlockLavaLily.ItemLavaLily(UCBlocks.lavalily).setRegistryName(UCBlocks.lavalily.getRegistryName()));
+		event.getRegistry().register(new BlockIceLily.ItemIceLily(UCBlocks.icelily).setRegistryName(UCBlocks.icelily.getRegistryName()));
 		event.getRegistry().register(new ItemBlock(UCBlocks.hourglass).setRegistryName(UCBlocks.hourglass.getRegistryName()));
 		event.getRegistry().register(new ItemBlock(UCBlocks.oldBrick).setRegistryName(UCBlocks.oldBrick.getRegistryName()));
 		event.getRegistry().register(new ItemBlock(UCBlocks.oldCobble).setRegistryName(UCBlocks.oldCobble.getRegistryName()));

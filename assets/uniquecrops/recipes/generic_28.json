@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 28
+  },
+  "pattern": [
+    "EI ",
+    "IE ",
+    "EI "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "uniquecrops:generic",
+	  "data": 5
+    },
+    "I": {
+      "item": "uniquecrops:generic",
+      "data": 11
+    }
+  }
+}

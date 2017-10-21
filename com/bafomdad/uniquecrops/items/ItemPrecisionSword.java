@@ -4,34 +4,25 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class Item3DGlasses extends ItemArmor implements IBookUpgradeable {
+public class ItemPrecisionSword extends ItemSword implements IBookUpgradeable {
 
-	public Item3DGlasses(ItemArmor.ArmorMaterial material, int renderindex, EntityEquipmentSlot slot) {
+	public ItemPrecisionSword() {
 		
-		super(material, renderindex, slot);
-		setRegistryName("3dglasses");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".3dglasses");
+		super(ToolMaterial.DIAMOND);
+		setRegistryName("precision.sword");
+		setUnlocalizedName(UniqueCrops.MOD_ID + ".precision.sword");
 		setCreativeTab(UniqueCrops.TAB);
-		setMaxDamage(200);
 		UCItems.items.add(this);
 	}
 	
@@ -48,27 +39,24 @@ public class Item3DGlasses extends ItemArmor implements IBookUpgradeable {
 	}
 	
 	@Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-    	
-		if (world.isRemote)
-			return;
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		
-		int upgradelevel = getLevel(itemStack);
-		if (upgradelevel != 10)
-			return;
-		
-		int sunlight = world.getLightFor(EnumSkyBlock.SKY, player.getPosition().add(0, player.getEyeHeight(), 0));
-		if (sunlight <= 3) {
-			player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 30));
+		if (!target.world.isRemote && target.hurtResistantTime > 0) {
+			int upgradelevel = getLevel(stack);
+			if (upgradelevel == 10)
+				target.hurtResistantTime = 0;
 		}
-    }
+		return super.hitEntity(stack, target, attacker);
+	}
 	
 	@Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		
-		return false;
-	}
-
+    	
+		boolean sametool = toRepair.getItem() == repair.getItem();
+		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == EnumItems.PREGEM.ordinal();
+		return sametool || flag;
+    }
+	
 	@Override
 	public int getLevel(ItemStack stack) {
 

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
+import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.google.common.collect.Sets;
 
@@ -39,8 +40,8 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
 	public void addInformation(ItemStack stack, World player, List<String> list, ITooltipFlag whatisthis) {
 		
 		super.addInformation(stack, player, list, whatisthis);
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ItemGeneric.TAG_UPGRADE)) {
-			int upgradelevel = stack.getTagCompound().getInteger(ItemGeneric.TAG_UPGRADE);
+		if (getLevel(stack) > -1) {
+			int upgradelevel = getLevel(stack);
 			list.add(TextFormatting.GOLD + "+" + upgradelevel);
 		}
 		else
@@ -55,63 +56,58 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
 		return sametool || flag;
     }
 	
-    public boolean canHarvestBlock(IBlockState blockIn)
-    {
-        Block block = blockIn.getBlock();
-
+	// note: copied from vanilla code
+	@Override
+    public boolean canHarvestBlock(IBlockState blockIn) {
+       
+		Block block = blockIn.getBlock();
         if (block == Blocks.OBSIDIAN)
-        {
             return this.toolMaterial.getHarvestLevel() == 3;
-        }
-        else if (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE)
-        {
-            if (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK)
-            {
-                if (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE)
-                {
-                    if (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE)
-                    {
-                        if (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE)
-                        {
-                            if (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE)
-                            {
+
+        else if (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE) {
+            if (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK) {
+                if (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE) {
+                    if (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE) {
+                        if (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE) {
+                            if (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE) {
                                 Material material = blockIn.getMaterial();
                                 return material == Material.ROCK ? true : (material == Material.IRON ? true : material == Material.ANVIL);
                             }
                             else
-                            {
                                 return this.toolMaterial.getHarvestLevel() >= 2;
-                            }
                         }
                         else
-                        {
                             return this.toolMaterial.getHarvestLevel() >= 1;
-                        }
                     }
                     else
-                    {
                         return this.toolMaterial.getHarvestLevel() >= 1;
-                    }
                 }
                 else
-                {
                     return this.toolMaterial.getHarvestLevel() >= 2;
-                }
             }
             else
-            {
                 return this.toolMaterial.getHarvestLevel() >= 2;
-            }
         }
         else
-        {
             return this.toolMaterial.getHarvestLevel() >= 2;
-        }
     }
 
-    public float getStrVsBlock(ItemStack stack, IBlockState state)
-    {
+    @Override
+    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+    	
         Material material = state.getMaterial();
         return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
     }
+    
+	@Override
+	public int getLevel(ItemStack stack) {
+
+		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
+	}
+
+	@Override
+	public void setLevel(ItemStack stack, int level) {
+
+		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
+	}
 }

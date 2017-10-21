@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
+import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -32,8 +33,8 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
 	public void addInformation(ItemStack stack, World player, List<String> list, ITooltipFlag whatisthis) {
 		
 		super.addInformation(stack, player, list, whatisthis);
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ItemGeneric.TAG_UPGRADE)) {
-			int upgradelevel = stack.getTagCompound().getInteger(ItemGeneric.TAG_UPGRADE);
+		if (getLevel(stack) > -1) {
+			int upgradelevel = getLevel(stack);
 			list.add(TextFormatting.GOLD + "+" + upgradelevel);
 		}
 		else
@@ -56,5 +57,17 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
 		
 		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 12;
 		return toRepair.getItem() == this && flag;
+	}
+
+	@Override
+	public int getLevel(ItemStack stack) {
+
+		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
+	}
+
+	@Override
+	public void setLevel(ItemStack stack, int level) {
+
+		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
 	}
 }

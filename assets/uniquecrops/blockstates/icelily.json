@@ -1,0 +1,18 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"texture": "uniquecrops:blocks/icelily",
+			"particle": "uniquecrops:blocks/icelily"
+		},
+		"model": "uniquecrops:padcustom"
+	},
+	"variants": {
+        "normal": [
+            { "model": "uniquecrops:padcustom" },
+            { "model": "uniquecrops:padcustom", "y": 90 },
+            { "model": "uniquecrops:padcustom", "y": 180 },
+            { "model": "uniquecrops:padcustom", "y": 270 }
+        ]
+    }
+}

@@ -50,7 +50,7 @@ public class UCBlocks {
 		cropImperia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
-	public static Block hourglass, totemhead, lavalily, darkBlock;
+	public static Block hourglass, totemhead, lavalily, icelily, darkBlock;
 	
 	public static void init() {
 		
@@ -88,6 +88,7 @@ public class UCBlocks {
 		hourglass = new BlockHourglass();
 		totemhead = new BlockTotemhead();
 		lavalily = new BlockLavaLily();
+		icelily = new BlockIceLily();
 		darkBlock = new BlockDarkBlock();
 	}
 	
