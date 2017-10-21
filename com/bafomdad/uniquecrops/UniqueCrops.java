@@ -30,6 +30,7 @@ public class UniqueCrops {
 	public static UCTab TAB = new UCTab();
 	
 	public static boolean baublesLoaded = Loader.isModLoaded("baubles");
+	public static boolean ieLoaded = Loader.isModLoaded("immersiveengineering");
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

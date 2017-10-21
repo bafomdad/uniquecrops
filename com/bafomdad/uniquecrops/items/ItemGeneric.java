@@ -86,9 +86,11 @@ public class ItemGeneric extends Item {
 			case 19: list.add(I18n.format(UCStrings.TOOLTIP + "eggupgrade")); break;
 			case 20: list.add(I18n.format(UCStrings.TOOLTIP + "easybadge")); break;
 			case 24: list.add(I18n.format(UCStrings.TOOLTIP + "eulabook")); break;
+			case 28: list.add(I18n.format(UCStrings.TOOLTIP + "escaperope")); break;
 		}
 	}
 	
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		
 		return getUnlocalizedName() + "." + EnumItems.values()[stack.getItemDamage()].getName();
@@ -108,7 +110,7 @@ public class ItemGeneric extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		
-		if (stack.getItemDamage() == 1 || stack.getItemDamage() == 13)
+		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal())
 			return true;
 		
 		return false;
@@ -165,71 +167,79 @@ public class ItemGeneric extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		ItemStack stack = player.getHeldItemMainhand();
-		
-		if (stack.getItemDamage() == 0 && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
-			if (!world.isRemote && (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))))
-				UCUtils.updateBook(player);
-			player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-			return new ActionResult(EnumActionResult.SUCCESS, stack);
-		}
-		if (stack.getItemDamage() == 13) {
-	        if (!player.capabilities.isCreativeMode)
-	            stack.shrink(1);
+		ItemStack stack = player.getHeldItem(hand);
+		if (!stack.isEmpty() && stack.getItem() == this) {
+			if (stack.getItemDamage() == EnumItems.GUIDE.ordinal() && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
+				if (!world.isRemote && (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))))
+					UCUtils.updateBook(player);
+				player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+				return new ActionResult(EnumActionResult.SUCCESS, stack);
+			}
+			if (stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) {
+		        if (!player.capabilities.isCreativeMode)
+		            stack.shrink(1);
 
-	        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-	        if (!world.isRemote)
-	        {
-	            EntityCustomPotion entitypotion = new EntityCustomPotion(world, player, stack);
-	            entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
-	            world.spawnEntity(entitypotion);
-	        }
-	        return new ActionResult(EnumActionResult.SUCCESS, stack);
-		}
-		if (stack.getItemDamage() == 16) {
-	        if (!player.capabilities.isCreativeMode)
-	            stack.shrink(1);
+		        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		        if (!world.isRemote)
+		        {
+		            EntityCustomPotion entitypotion = new EntityCustomPotion(world, player, stack);
+		            entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            world.spawnEntity(entitypotion);
+		        }
+		        return new ActionResult(EnumActionResult.SUCCESS, stack);
+			}
+			if (stack.getItemDamage() == EnumItems.WEEPINGEYE.ordinal()) {
+		        if (!player.capabilities.isCreativeMode)
+		            stack.shrink(1);
 
-	        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-	        if (!world.isRemote)
-	        {
-	            EntityItemWeepingEye eye = new EntityItemWeepingEye(world, player.posX, player.posY + 1.5D, player.posZ);
-	            eye.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-	            world.spawnEntity(eye);
-	        }
-	        return new ActionResult(EnumActionResult.SUCCESS, stack);
-		}
-		if (stack.getItemDamage() == 21) {
-			boolean canFill = false;
-			for (int i = 0; i < player.inventory.getSizeInventory() - player.inventory.armorInventory.size(); i++) {
-				ItemStack loopstack = player.inventory.getStackInSlot(i);
-				if (loopstack.isEmpty()) {
-					player.inventory.setInventorySlotContents(i, new ItemStack(this, 1, 21));
-					canFill = true;
+		        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		        if (!world.isRemote)
+		        {
+		            EntityItemWeepingEye eye = new EntityItemWeepingEye(world, player.posX, player.posY + 1.5D, player.posZ);
+		            eye.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+		            world.spawnEntity(eye);
+		        }
+		        return new ActionResult(EnumActionResult.SUCCESS, stack);
+			}
+			if (stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal()) {
+				boolean canFill = false;
+				for (int i = 0; i < player.inventory.getSizeInventory() - player.inventory.armorInventory.size(); i++) {
+					ItemStack loopstack = player.inventory.getStackInSlot(i);
+					if (loopstack.isEmpty()) {
+						player.inventory.setInventorySlotContents(i, new ItemStack(this, 1, 21));
+						canFill = true;
+					}
 				}
+				if (!world.isRemote) {
+					if (canFill)
+						player.sendMessage(new TextComponentString("The rest of your inventory filled up with dog residue."));
+					else
+						player.sendMessage(new TextComponentString("You finished using it. An uneasy silence fills the room."));
+				}
+				return new ActionResult(EnumActionResult.SUCCESS, stack);
 			}
-			if (!world.isRemote)
-			{
-				if (canFill)
-					player.sendMessage(new TextComponentString("The rest of your inventory filled up with dog residue."));
-				else
-					player.sendMessage(new TextComponentString("You finished using it. An uneasy silence fills the room."));
-			}
-			return new ActionResult(EnumActionResult.SUCCESS, stack);
-		}
-		if (stack.getItemDamage() == 24) {
-	        if (!player.capabilities.isCreativeMode)
-	            stack.shrink(1);
+			if (stack.getItemDamage() == EnumItems.EULA.ordinal()) {
+		        if (!player.capabilities.isCreativeMode)
+		            stack.shrink(1);
 
-	        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-	        if (!world.isRemote)
-	        {
-	            EntityEulaBook entitybook = new EntityEulaBook(world, player, stack);
-	            entitybook.setPosition(player.posX, player.posY + player.getEyeHeight() + 0.5, player.posZ);
-	            entitybook.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
-	            world.spawnEntity(entitybook);
-	        }
-	        return new ActionResult(EnumActionResult.SUCCESS, stack);
+		        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		        if (!world.isRemote) {
+		            EntityEulaBook entitybook = new EntityEulaBook(world, player, stack);
+		            entitybook.setPosition(player.posX, player.posY + player.getEyeHeight() + 0.5, player.posZ);
+		            entitybook.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            world.spawnEntity(entitybook);
+		        }
+		        return new ActionResult(EnumActionResult.SUCCESS, stack);
+			}
+			if (stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal() && !world.provider.doesWaterVaporize()) {
+				BlockPos highestPos = world.getHeight(player.getPosition());
+				if (!player.capabilities.isCreativeMode)
+					stack.shrink(1);
+				if (!world.isRemote) {
+					player.setPositionAndUpdate(highestPos.getX() + 0.5, highestPos.getY() + 1, highestPos.getZ() + 0.5);
+				}
+				return new ActionResult(EnumActionResult.SUCCESS, stack);
+			}
 		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}
@@ -239,8 +249,7 @@ public class ItemGeneric extends Item {
 		
 		if (stack.getItemDamage() == 19 && elb instanceof EntityChicken) {
 			NBTTagCompound tag = elb.getEntityData();
-			if (!elb.isChild() && !tag.hasKey(TAG_OVERCLUCK))
-			{
+			if (!elb.isChild() && !tag.hasKey(TAG_OVERCLUCK)) {
 				tag.setInteger(TAG_OVERCLUCK, elb.world.rand.nextInt(60) + 900);
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
@@ -288,7 +297,7 @@ public class ItemGeneric extends Item {
 	@Override
     public int getItemStackLimit(ItemStack stack) {
     	
-		if (stack.getUnlocalizedName().contains("book") || stack.getItemDamage() == 21)
+		if (stack.getUnlocalizedName().contains("book") || stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal() || stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal())
 			return 1;
 		
 		return super.getItemStackLimit(stack);

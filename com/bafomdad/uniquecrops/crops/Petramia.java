@@ -56,7 +56,9 @@ public class Petramia extends BlockCropsBase {
 			if (!player.getHeldItemMainhand().isEmpty()) return false;
 			if (getAge(state) >= getMaxAge()) {
 				boolean flag = world.getGameRules().getBoolean(PICKUP);
-				ItemStack stacky = (flag) ? new ItemStack(Blocks.OBSIDIAN) : new ItemStack(UCBlocks.darkBlock); 
+				ItemStack stacky = (flag) ? new ItemStack(Blocks.OBSIDIAN) : new ItemStack(UCBlocks.darkBlock);
+				if (stacky.getItem() == Item.getItemFromBlock(UCBlocks.darkBlock) && world.rand.nextInt(5) != 0)
+					stacky = new ItemStack(Blocks.OBSIDIAN);
 				InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, stacky);
 				world.setBlockState(pos, this.withAge(0), 3);
 				return true;

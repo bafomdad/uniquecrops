@@ -79,6 +79,8 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
+		if (getAge(state) < getMaxAge()) return false;
+		
 		if (clickHarvest) {
 //			if (!player.getHeldItemMainhand().isEmpty()) return false;
 			if (getAge(state) >= getMaxAge() && !world.isRemote) {
