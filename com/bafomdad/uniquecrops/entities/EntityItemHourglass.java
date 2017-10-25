@@ -33,6 +33,7 @@ public class EntityItemHourglass extends EntityItem {
 		this.lifespan = oldEntity.lifespan;
 		this.setItem(stack);
 		this.setDefaultPickupDelay();
+		this.setNoDespawn();
 	}
 	
 	@Override

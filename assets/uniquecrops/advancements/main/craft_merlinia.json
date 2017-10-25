@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedmerlinia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingMerlinia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingMerlinia.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_enderlily",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedmerlinia"
+          }
+        ]
+      }
+    }
+  }
+}

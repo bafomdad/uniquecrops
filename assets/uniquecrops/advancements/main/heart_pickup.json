@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:genericfood.heart"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:heartPickup"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:heartPickup.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_feroxia",
+  "criteria": {
+    "heart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:genericfood.heart"
+          }
+        ]
+      }
+    }
+  }
+}

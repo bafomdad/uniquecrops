@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedpixelsius"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingPixelsius"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingPixelsius.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_wafflonia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedpixelsius"
+          }
+        ]
+      }
+    }
+  }
+}

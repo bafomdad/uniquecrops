@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.blocks.*;
 import com.bafomdad.uniquecrops.blocks.tiles.TileArtisia;
+import com.bafomdad.uniquecrops.blocks.tiles.TileSundial;
 import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.crops.*;
 import com.bafomdad.uniquecrops.entities.RenderCraftItem;
+import com.bafomdad.uniquecrops.render.RenderSundial;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -50,7 +52,7 @@ public class UCBlocks {
 		cropImperia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
-	public static Block hourglass, totemhead, lavalily, icelily, darkBlock;
+	public static Block hourglass, totemhead, lavalily, icelily, darkBlock, sundial;
 	
 	public static void init() {
 		
@@ -90,11 +92,13 @@ public class UCBlocks {
 		lavalily = new BlockLavaLily();
 		icelily = new BlockIceLily();
 		darkBlock = new BlockDarkBlock();
+		sundial = new BlockSundial();
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArtisia.class, new RenderCraftItem());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileSundial.class, new RenderSundial());
 	}
 }

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedmalleatoris"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingMalleatoris"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingMalleatoris.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_precision",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedmalleatoris"
+          }
+        ]
+      }
+    }
+  }
+}

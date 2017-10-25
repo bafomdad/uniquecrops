@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedcobblonia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingCobblonia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingCobblonia.desc"
+    }
+  },
+  "parent": "uniquecrops:main/artisia_craft",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedcobblonia"
+          }
+        ]
+      }
+    }
+  }
+}

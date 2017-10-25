@@ -1,0 +1,11 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": { "all": "minecraft:blocks/cobblestone" },
+    "model": "cube_all"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

@@ -96,8 +96,8 @@ public class BlockIceLily extends BlockBush {
 		
 		if (entity instanceof EntityItem) {
 			EntityItem ei = (EntityItem)entity;
-			if (!ei.isDead && ei.age >= 105)
-				ei.age = 105;
+			if (!ei.isDead)
+				ei.setNoDespawn();
 		}
     }
 	

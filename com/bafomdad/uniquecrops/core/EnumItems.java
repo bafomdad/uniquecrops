@@ -32,7 +32,8 @@ public enum EnumItems implements IStringSerializable {
 	DUMMYITEM("dummy"),
 	PIXELS("pixels"),
 	BLUEDYE("bluedye"),
-	ESCAPEROPE("escaperope");
+	ESCAPEROPE("escaperope"),
+	SUNDIAL("sundial");
 
 	final String name;
 	

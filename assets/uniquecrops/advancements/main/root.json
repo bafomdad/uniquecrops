@@ -2,7 +2,7 @@
   "display": {
     "icon": {
       "item": "uniquecrops:generic",
-	  "data": 0
+	  "data": 9
     },
     "title": {
       "translate": "itemGroup.uniquecrops"

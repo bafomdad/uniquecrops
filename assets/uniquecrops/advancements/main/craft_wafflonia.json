@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedwafflonia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingWafflonia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingWafflonia.desc"
+    }
+  },
+  "parent": "uniquecrops:main/artisia_craft",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedwafflonia"
+          }
+        ]
+      }
+    }
+  }
+}

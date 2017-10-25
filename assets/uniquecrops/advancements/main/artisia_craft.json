@@ -10,9 +10,9 @@
       "translate": "advancement.uniquecrops:craftingArtisia.desc"
     }
   },
-  "parent": "uniquecrops:main/seed_pickup",
+  "parent": "uniquecrops:main/guidebook_craft",
   "criteria": {
-    "pool": {
+    "seed": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

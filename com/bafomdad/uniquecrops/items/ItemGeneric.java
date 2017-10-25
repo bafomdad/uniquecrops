@@ -87,6 +87,7 @@ public class ItemGeneric extends Item {
 			case 20: list.add(I18n.format(UCStrings.TOOLTIP + "easybadge")); break;
 			case 24: list.add(I18n.format(UCStrings.TOOLTIP + "eulabook")); break;
 			case 28: list.add(I18n.format(UCStrings.TOOLTIP + "escaperope")); break;
+			case 29: list.add(I18n.format(UCStrings.TOOLTIP + "sundial")); break;
 		}
 	}
 	
@@ -144,7 +145,7 @@ public class ItemGeneric extends Item {
 	
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getHeldItem(hand);
 		
 		if (stack.getItemDamage() == EnumItems.TIMEMEAL.ordinal() && player.canPlayerEdit(pos, facing, stack)) {
 			Block crops = world.getBlockState(pos).getBlock();
@@ -160,6 +161,14 @@ public class ItemGeneric extends Item {
 				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() - 0.5D, pos.getY(), pos.getZ() - 0.5D, 6));
 				return EnumActionResult.SUCCESS;
 			}
+		}
+		if (stack.getItemDamage() == EnumItems.SUNDIAL.ordinal() && player.canPlayerEdit(pos, facing, stack)) {
+			if (!world.isRemote) {
+				world.setBlockState(pos.offset(facing), UCBlocks.sundial.getDefaultState(), 2);
+				if (!player.capabilities.isCreativeMode)
+					stack.shrink(1);
+			}
+			return EnumActionResult.SUCCESS;
 		}
 		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 	}
@@ -236,7 +245,7 @@ public class ItemGeneric extends Item {
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
 				if (!world.isRemote) {
-					player.setPositionAndUpdate(highestPos.getX() + 0.5, highestPos.getY() + 1, highestPos.getZ() + 0.5);
+					player.setPositionAndUpdate(highestPos.getX() + 0.5, highestPos.getY(), highestPos.getZ() + 0.5);
 				}
 				return new ActionResult(EnumActionResult.SUCCESS, stack);
 			}

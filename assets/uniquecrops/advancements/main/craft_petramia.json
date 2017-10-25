@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedpetramia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingPetramia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingPetramia.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_cobblonia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedpetramia"
+          }
+        ]
+      }
+    }
+  }
+}
