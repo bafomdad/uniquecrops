@@ -215,8 +215,7 @@ public class UCEventHandlerServer {
 			return;
 		
 		if (crop == UCBlocks.cropInvisibilia) {
-			if (event.getHarvester() == null) 
-			{
+			if (event.getHarvester() == null) {
 				event.getDrops().clear();
 				event.setResult(Result.DEFAULT);
 			}
@@ -227,6 +226,18 @@ public class UCEventHandlerServer {
 			else
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
+		}
+		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
+			for (ItemStack stack : event.getDrops()) {
+				if (stack.getItem() == Items.DYE) {
+					int meta = stack.getItemDamage();
+					if (EnumDyeColor.byDyeDamage(meta) == EnumDyeColor.BLUE) {
+						event.getDrops().remove(stack);
+						event.getDrops().add(UCItems.generic.createStack(EnumItems.BLUEDYE));
+						return;
+					}
+				}
+			}
 		}
 //		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
 //			for (ItemStack stack : event.getDrops()) {
