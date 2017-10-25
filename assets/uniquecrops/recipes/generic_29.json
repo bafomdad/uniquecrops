@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+    "data": 29
+  },
+  "pattern": [
+    "   ",
+    "RCR",
+    "CCC"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+	  "item": "minecraft:cobblestone"
+    }
+  }
+}
