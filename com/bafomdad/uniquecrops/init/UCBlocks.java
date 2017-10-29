@@ -52,7 +52,7 @@ public class UCBlocks {
 		cropImperia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
-	public static Block hourglass, totemhead, lavalily, icelily, darkBlock, sundial;
+	public static Block hourglass, totemhead, lavalily, icelily, darkBlock, sundial, barrel;
 	
 	public static void init() {
 		
@@ -93,6 +93,7 @@ public class UCBlocks {
 		icelily = new BlockIceLily();
 		darkBlock = new BlockDarkBlock();
 		sundial = new BlockSundial();
+		barrel = new BlockBarrel();
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -52,6 +52,7 @@ public class UCEventRegistry {
 		event.getRegistry().register(new ItemBlock(UCBlocks.oldGravel).setRegistryName(UCBlocks.oldGravel.getRegistryName()));
 		event.getRegistry().register(new ItemBlock(UCBlocks.totemhead).setRegistryName(UCBlocks.totemhead.getRegistryName()));
 		event.getRegistry().register(new ItemBlock(UCBlocks.darkBlock).setRegistryName(UCBlocks.darkBlock.getRegistryName()));
+		event.getRegistry().register(rib(UCBlocks.barrel));
 	}
 	
 	@SubscribeEvent
@@ -68,5 +69,10 @@ public class UCEventRegistry {
 		OreDictionary.registerOre("nuggetGold", UCItems.edibleNuggetGold);
 		
 		OreDictionary.registerOre("dyeBlue", new ItemStack(UCItems.generic, 1, EnumItems.BLUEDYE.ordinal()));
+	}
+	
+	public Item rib(Block block) {
+		
+		return new ItemBlock(block).setRegistryName(block.getRegistryName());
 	}
 }

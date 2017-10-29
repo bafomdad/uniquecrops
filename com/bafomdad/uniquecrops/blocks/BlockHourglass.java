@@ -36,7 +36,6 @@ public class BlockHourglass extends BlockBaseUC {
 	public BlockHourglass() {
 		
 		super("hourglass", Material.IRON);
-		setCreativeTab(UniqueCrops.TAB);
 		setSoundType(SoundType.GLASS);
 		setTickRandomly(true);
 		setHardness(1.0F);

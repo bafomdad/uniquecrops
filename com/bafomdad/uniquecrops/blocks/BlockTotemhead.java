@@ -32,7 +32,6 @@ public class BlockTotemhead extends BlockBaseUC {
 	public BlockTotemhead() {
 		
 		super("totemhead", Material.WOOD);
-		setCreativeTab(UniqueCrops.TAB);
 		setHardness(2.0F);
 		setResistance(20.0F);
 		setTickRandomly(true);

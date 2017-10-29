@@ -100,6 +100,7 @@ public class UCEventHandlerClient {
 		registerBlockModel(UCBlocks.lavalily);
 		registerBlockModel(UCBlocks.icelily);
 		registerBlockModel(UCBlocks.darkBlock);
+		registerBlockModel(UCBlocks.barrel);
 		
 		// ITEMS
 		for (Item item : UCItems.items)

@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:abstractbarrel"
+  },
+  "pattern": [
+    "AAA",
+    "ACA",
+    "AAA"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "chest"
+    },
+    "A": {
+      "item": "uniquecrops:generic",
+      "data": 22
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "modid": "uniquecrops",
   "name": "Unique Crops",
   "description": "Unique crops, unique growth, unique drops",
-  "version": "0.1.45",
+  "version": "0.1.46",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",

@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "uniquecrops:abstractbarrel",
+	"textures": {
+		"particle": "uniquecrops:blocks/rosewood"
+	}
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}
