@@ -51,7 +51,8 @@ public class UCItems {
 		seedsArtisia,
 		seedsPetramia,
 		seedsMalleatoris,
-		seedsImperia;
+		seedsImperia,
+		seedsLacusia;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -114,6 +115,7 @@ public class UCItems {
 		seedsPetramia = new ItemSeedsUC(UCBlocks.cropPetramia);
 		seedsMalleatoris = new ItemSeedsUC(UCBlocks.cropMalleatoris);
 		seedsImperia = new ItemSeedsUC(UCBlocks.cropImperia);
+		seedsLacusia = new ItemSeedsUC(UCBlocks.cropLacusia);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");

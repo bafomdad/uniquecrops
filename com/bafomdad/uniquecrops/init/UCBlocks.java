@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.blocks.*;
 import com.bafomdad.uniquecrops.blocks.tiles.TileArtisia;
+import com.bafomdad.uniquecrops.blocks.tiles.TileLacusia;
 import com.bafomdad.uniquecrops.blocks.tiles.TileSundial;
 import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.crops.*;
@@ -49,7 +50,8 @@ public class UCBlocks {
 		cropArtisia,
 		cropPetramia,
 		cropMalleatoris,
-		cropImperia;
+		cropImperia,
+		cropLacusia;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
 	public static Block hourglass, totemhead, lavalily, icelily, darkBlock, sundial, barrel;
@@ -80,6 +82,7 @@ public class UCBlocks {
 		cropPetramia = new Petramia();
 		cropMalleatoris = new Malleatoris();
 		cropImperia = new Imperia();
+		cropLacusia = new Lacusia();
 		cropFeroxia = new Feroxia();
 		
 		oldCobble = new BlockOldStone("cobble");
@@ -99,7 +102,8 @@ public class UCBlocks {
 	@SideOnly(Side.CLIENT)
 	public static void initModels() {
 		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileArtisia.class, new RenderCraftItem());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileArtisia.class, new RenderCraftItem.Artisia());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileLacusia.class, new RenderCraftItem.Lacusia());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSundial.class, new RenderSundial());
 	}
 }

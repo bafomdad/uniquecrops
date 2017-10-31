@@ -82,6 +82,7 @@ item.uniquecrops.seedartisia.name=Artisia Seeds
 item.uniquecrops.seedpetramia.name=Petramia Shoot
 item.uniquecrops.seedmalleatoris.name=Malleatoris Seed
 item.uniquecrops.seedimperia.name=Imperia Seed
+item.uniquecrops.seedlacusia.name=Lacusia Seed
 
 # EMBLEMS
 item.uniquecrops.emblemmelee.name=Melee Emblem
@@ -122,6 +123,7 @@ tile.uniquecrops.croppetramia.name=Petramia
 tile.uniquecrops.cropmalleatoris.name=Malleatoris
 tile.uniquecrops.cropdevilsnare.name=Devil's Snare
 tile.uniquecrops.cropimperia.name=Imperia
+tile.uniquecrops.croplacusia.name=Lacusia
 tile.uniquecrops.oldgrass.name=Ancient Grass
 tile.uniquecrops.oldgravel.name=Ancient Gravel
 tile.uniquecrops.oldcobble.name=Ancient Cobblestone

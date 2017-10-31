@@ -110,7 +110,7 @@ public class Artisia extends BlockCropsBase implements ITileEntityProvider {
     	super.grow(world, pos, state);
     	if (!world.isRemote) {
     		TileEntity te = world.getTileEntity(pos);
-    		if (te != null && te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ORIGIN))
+    		if (te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ORIGIN))
     			((TileArtisia)te).findCore();
     	}
     }
