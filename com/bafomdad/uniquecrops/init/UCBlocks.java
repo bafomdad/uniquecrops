@@ -51,7 +51,8 @@ public class UCBlocks {
 		cropPetramia,
 		cropMalleatoris,
 		cropImperia,
-		cropLacusia;
+		cropLacusia,
+		cropHexis;
 	
 	public static Block oldCobble, oldCobbleMoss, oldGravel, oldGrass, oldBrick;
 	public static Block hourglass, totemhead, lavalily, icelily, darkBlock, sundial, barrel;
@@ -83,6 +84,7 @@ public class UCBlocks {
 		cropMalleatoris = new Malleatoris();
 		cropImperia = new Imperia();
 		cropLacusia = new Lacusia();
+		cropHexis = new Hexis();
 		cropFeroxia = new Feroxia();
 		
 		oldCobble = new BlockOldStone("cobble");

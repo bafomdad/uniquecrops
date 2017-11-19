@@ -1,13 +1,10 @@
 package com.bafomdad.uniquecrops.events;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
@@ -36,7 +33,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -50,15 +46,12 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -76,7 +69,6 @@ import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.crops.Enderlily;
 import com.bafomdad.uniquecrops.crops.Feroxia;
 import com.bafomdad.uniquecrops.crops.Imperia;
-import com.bafomdad.uniquecrops.data.UCDataHandler;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
@@ -493,16 +485,17 @@ public class UCEventHandlerServer {
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		
-		if (!event.player.inventory.armorInventory.get(3).isEmpty() && event.player.inventory.armorInventory.get(3).getItem() == UCItems.pixelglasses) {
-			boolean flag = NBTUtils.getBoolean(event.player.inventory.armorInventory.get(3), "isActive", false);
-			if (event.side == Side.CLIENT) {
+		EntityPlayer player = event.player;
+		if (!player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() == UCItems.pixelglasses) {
+			boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
+			if (event.side.isClient() && FMLClientHandler.instance().getClientPlayerEntity().getName().equals(player.getName())) {
 				if (flag)
 					UniqueCrops.proxy.enableBitsShader();
 				else
 					UniqueCrops.proxy.disableBitsShader();
 			}
 		}
-		else if ((event.player.inventory.armorInventory.get(3).isEmpty() || !event.player.inventory.armorInventory.get(3).isEmpty() && event.player.inventory.armorInventory.get(3).getItem() != UCItems.pixelglasses) && event.side == Side.CLIENT)
+		else if ((player.inventory.armorInventory.get(3).isEmpty() || !player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() != UCItems.pixelglasses) && event.side.isClient())
 			UniqueCrops.proxy.disableBitsShader();
 		
 		if (event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
@@ -534,18 +527,6 @@ public class UCEventHandlerServer {
 					break;
 				}
 			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void imperiaDenySpawn(LivingSpawnEvent.CheckSpawn event) {
-		
-		if (event.getResult() == Event.Result.ALLOW) return;
-		
-		ChunkPos cPos = new ChunkPos(event.getEntityLiving().getPosition());
-		if (event.getEntityLiving().isCreatureType(EnumCreatureType.MONSTER, false) && UCDataHandler.getInstance().getChunkInfo(event.getWorld().provider.getDimension()).contains(cPos)) {
-//			System.out.println("Prevented spawning of entity " + event.getEntityLiving().getName() + " in chunk " + cPos);
-			event.setResult(Event.Result.DENY);
 		}
 	}
 	

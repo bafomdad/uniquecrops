@@ -45,7 +45,7 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
 		
 		player.jumpMovementFactor = (0.025F + 1 * 0.02F);
-		if (player.motionY < -0.175F && !player.onGround && !player.capabilities.isFlying) {
+		if (player.motionY < -0.175F && !player.onGround && !player.capabilities.isFlying && !player.isSneaking()) {
 			float fallVel = -0.175F;
 			player.motionY = fallVel;
 			player.fallDistance = 0;

@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:precision.axe",
+    "nbt": "{ench:[{id:33,lvl:1}]}"
+  },
+  "pattern": [
+    "PP ",
+    "PS ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "uniquecrops:generic",
+	  "data": 8
+    }
+  }
+}

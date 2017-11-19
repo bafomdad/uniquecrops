@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": [
+      {
+        "item": "uniquecrops:generic",
+        "data": 3
+      }
+    ]
+  },
+  "result": {
+    "item": "minecraft:torch",
+    "count": 16
+  }
+}

@@ -29,7 +29,7 @@ public class TileMusicaPlant extends TileBaseUC implements ITickable {
 		if (state == null || (state != null && state.getBlock() != UCBlocks.cropMusica))
 			return;
 		
-		if (getBlockType() != null && ((Musica)getBlockType()).canDance(state))
+		if (getBlockType() != null && ((Musica)getBlockType()).isMaxAge(state))
 			return;
 		
 		if (this.world.isRemote || (beats.isEmpty() || beats.size() == 0))

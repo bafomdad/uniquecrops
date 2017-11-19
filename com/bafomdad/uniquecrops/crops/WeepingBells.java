@@ -54,11 +54,6 @@ public class WeepingBells extends BlockCropsBase implements ITileEntityProvider 
 			super.updateTick(world, pos, state, rand);
 		}
 	}
-	
-	public boolean isWeepingCropGrown(IBlockState state) {
-		
-		return this.getAge(state) >= this.getMaxAge();
-	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {

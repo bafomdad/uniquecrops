@@ -52,7 +52,8 @@ public class UCItems {
 		seedsPetramia,
 		seedsMalleatoris,
 		seedsImperia,
-		seedsLacusia;
+		seedsLacusia,
+		seedsHexis;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -63,6 +64,7 @@ public class UCItems {
 	public static Item dietpills;
 	public static Item waffle;
 	public static Item endersnooker;
+	public static Item handmirror;
 	
 	public static Item edibleDiamond;
 	public static Item edibleLapis;
@@ -116,6 +118,7 @@ public class UCItems {
 		seedsMalleatoris = new ItemSeedsUC(UCBlocks.cropMalleatoris);
 		seedsImperia = new ItemSeedsUC(UCBlocks.cropImperia);
 		seedsLacusia = new ItemSeedsUC(UCBlocks.cropLacusia);
+		seedsHexis = new ItemSeedsUC(UCBlocks.cropHexis);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");
@@ -126,6 +129,7 @@ public class UCItems {
 		dietpills = new ItemGenericFood(-4, 0, true, "dietpills");
 		waffle = new ItemGenericFood(8, 1.0F, true, "waffle");
 		endersnooker = new ItemEnderSnooker();
+		handmirror = new ItemHandMirror();
 		
 		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
 		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");

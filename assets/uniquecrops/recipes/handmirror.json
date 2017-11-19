@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "uniquecrops:handmirror"
+  },
+  "pattern": [
+    "  E",
+    " G ",
+    "S  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "E": {
+      "item": "uniquecrops:generic",
+      "data": 17
+    }
+  }
+}

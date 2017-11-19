@@ -21,11 +21,15 @@ public class TileLacusia extends TileBaseUC {
 
 	private ItemStackHandler inv = new ItemStackHandler(1);
 	private int dir;
+	private int waitTime = 10;
+	private int waitTimeStuck = 20;
+	private static EnumFacing[] REVERSE = new EnumFacing[] { EnumFacing.EAST, EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.SOUTH };
 	
 	public void updateStuff() {
 		
+		boolean hasPower = world.isBlockPowered(getPos());
 		if (!world.isRemote) {
-			if (this.canAdd()) {
+			if (this.canAdd() && hasPower) {
 				TileEntity tileInv = null;
 				for (EnumFacing face : EnumFacing.HORIZONTALS) {
 					BlockPos looppos = getPos().offset(face);
@@ -37,7 +41,7 @@ public class TileLacusia extends TileBaseUC {
 					}
 				}
 				if (tileInv != null) {
-					if (!directionMatches(EnumFacing.getHorizontal(dir))) {
+//					if (!directionMatches(EnumFacing.getHorizontal(dir))) {
 						IItemHandler cap = tileInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.getHorizontal(dir));
 						for (int i = 0; i < cap.getSlots(); i++) {
 							ItemStack extract = cap.getStackInSlot(i);
@@ -48,13 +52,12 @@ public class TileLacusia extends TileBaseUC {
 								break;
 							}
 						}
-					}
+//					}
 				}
-				world.scheduleUpdate(getPos(), UCBlocks.cropLacusia, 20);
 			}
-			else {
+			else if (!canAdd()) {
 				boolean schedule = false;
-				for (EnumFacing face : EnumFacing.HORIZONTALS) {
+				for (EnumFacing face : hasPower ? REVERSE : EnumFacing.HORIZONTALS) {
 					if (directionMatches(face)) continue;
 					
 					BlockPos looppos = getPos().offset(face);
@@ -68,8 +71,12 @@ public class TileLacusia extends TileBaseUC {
 							this.markBlockForUpdate();
 							dir = face.getIndex();
 							lacusia.dir = face.getOpposite().getIndex();
-							world.scheduleUpdate(looppos, UCBlocks.cropLacusia, 15);
+							world.scheduleUpdate(looppos, UCBlocks.cropLacusia, waitTime);
 							break;
+						}
+						else {
+							dir = face.getIndex();
+							world.scheduleUpdate(getPos(), UCBlocks.cropLacusia, waitTimeStuck);
 						}
 					}
 					if (tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face)) {
@@ -85,13 +92,15 @@ public class TileLacusia extends TileBaseUC {
 							this.markBlockForUpdate();
 							dir = face.getIndex();
 							if (!getItem().isEmpty())
-								schedule = true;
+								world.scheduleUpdate(getPos(), UCBlocks.cropLacusia, waitTime);
 							break;
 						}
+						else if (available <= 0) {
+							dir = face.getIndex();
+							world.scheduleUpdate(getPos(), UCBlocks.cropLacusia, waitTimeStuck);
+						}
 					}
-				}
-				if (schedule)
-					world.scheduleUpdate(getPos(), UCBlocks.cropLacusia, 10);
+				}	
 			}
 		}
 	}

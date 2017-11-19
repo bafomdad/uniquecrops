@@ -1,6 +1,5 @@
 {
-  "variants": {
-	"snowy=false": { "model": "uniquecrops:grass" },
-	"snowy=true": { "model": "uniquecrops:grass_snow" }
-  }
+    "variants": {
+        "normal": { "model": "uniquecrops:oldgrass" }
+    }
 }

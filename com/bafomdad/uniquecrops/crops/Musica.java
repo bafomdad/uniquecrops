@@ -22,7 +22,7 @@ import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Musica extends BlockCropsBase implements ITileEntityProvider {
 	
-	private Item[] recordlist = new Item[] { Items.RECORD_BLOCKS, Items.RECORD_CAT, Items.RECORD_CHIRP, Items.RECORD_FAR, Items.RECORD_MALL, Items.RECORD_MELLOHI, Items.RECORD_STAL, Items.RECORD_STRAD, Items.RECORD_WAIT, Items.RECORD_WARD };
+	private Item[] recordlist = new Item[] { Items.RECORD_BLOCKS, Items.RECORD_CAT, Items.RECORD_CHIRP, Items.RECORD_FAR, Items.RECORD_MALL, Items.RECORD_MELLOHI, Items.RECORD_STAL, Items.RECORD_STRAD, Items.RECORD_WAIT, Items.RECORD_WARD, Items.RECORD_11, Items.RECORD_13 };
 
 	public Musica() {
 		
@@ -47,11 +47,6 @@ public class Musica extends BlockCropsBase implements ITileEntityProvider {
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
 		return;
-	}
-	
-	public boolean canDance(IBlockState state) {
-		
-		return this.getAge(state) >= getMaxAge();
 	}
 	
 	public void addAge(World world, BlockPos pos, IBlockState state, int stage) {

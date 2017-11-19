@@ -29,7 +29,8 @@ public enum EnumCrops implements IStringSerializable {
 	BEDROCKIUM("petramia"),
 	ANVILICIOUS("malleatoris"),
 	IMPERIA("imperia"),
-	LACUSIA("lacusia");
+	LACUSIA("lacusia"),
+	HEXIS("hexis");
 	
 	final String name;
 	

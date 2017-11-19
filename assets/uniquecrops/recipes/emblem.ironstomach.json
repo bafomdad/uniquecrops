@@ -1,0 +1,46 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.ironstomach"
+  },
+  "pattern": [
+    "SgP",
+    "iDe",
+    "RdC"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:cooked_rabbit"
+    },
+    "C": {
+      "item": "minecraft:cooked_chicken"
+    },
+    "S": {
+      "item": "minecraft:cooked_beef"
+    },
+	"P": {
+	  "item": "minecraft:cooked_porkchop"
+	},
+	"g": {
+	  "item": "minecraft:gold_ingot"
+	},
+	"i": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"d": {
+	  "item": "minecraft:diamond"
+	},
+	"e": {
+	  "item": "minecraft:emerald"
+	},
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}

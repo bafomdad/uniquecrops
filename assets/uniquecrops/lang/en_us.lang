@@ -56,6 +56,7 @@ item.uniquecrops.poncho.name=Comfy Poncho
 item.uniquecrops.slippers.name=Glass Slippers
 item.uniquecrops.pixelglasses.name=Pixel Glasses
 item.uniquecrops.endersnooker.name=Ender Snooker
+item.uniquecrops.handmirror.name=Hand Mirror
 item.uniquecrops.seednormal.name=Normie Seeds
 item.uniquecrops.seedprecision.name=Precision Seeds
 item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
@@ -83,6 +84,7 @@ item.uniquecrops.seedpetramia.name=Petramia Shoot
 item.uniquecrops.seedmalleatoris.name=Malleatoris Seed
 item.uniquecrops.seedimperia.name=Imperia Seed
 item.uniquecrops.seedlacusia.name=Lacusia Seed
+item.uniquecrops.seedhexis.name=Hexis Seed
 
 # EMBLEMS
 item.uniquecrops.emblemmelee.name=Melee Emblem
@@ -124,6 +126,7 @@ tile.uniquecrops.cropmalleatoris.name=Malleatoris
 tile.uniquecrops.cropdevilsnare.name=Devil's Snare
 tile.uniquecrops.cropimperia.name=Imperia
 tile.uniquecrops.croplacusia.name=Lacusia
+tile.uniquecrops.crophexis.name=Hexis
 tile.uniquecrops.oldgrass.name=Ancient Grass
 tile.uniquecrops.oldgravel.name=Ancient Gravel
 tile.uniquecrops.oldcobble.name=Ancient Cobblestone
@@ -161,9 +164,11 @@ uniquecrops.book.pageartisia=These plants are pretty crafty! They're the next st
 uniquecrops.book.pagewafflonia=These crops like to grow together with other crops of their type, in groups of even numbers. Any crop with an odd-numbered of friends, including themselves, will fail to grow. Harvesting them will yield waffles, part of a delicious breakfast diet.
 uniquecrops.book.pagedevilsnare=Thorny plants that grows well in darkness, they will shrink away from bright light sources. Additionally, they will try to spread to adjacent dirt/farmland once fully grown. Fully matured crops will snare and slow down any players that walk through them.
 uniquecrops.book.pagepixelsius=Pixelly, pixelly pixel plants. Starting from the default 16x16 textures, these crops will gradually get more and more high definition as they grow.
-uniquecrops.book.pagepetramia=Very bedrocky crops, these can only be planted and grown at below 10y. Once fully grown, they will gradually transform all bedrock around and below them into Dark Blocks, which can initially only be picked up by Endermen. If mobGriefing gamemode is off, then the crops will instead yield the Dark blocks when rightclicked. The dark blocks have potential use for recipes, and are also very good witherproof blocks once placed above 10y.
+uniquecrops.book.pagepetramia=Very bedrocky crops, these can only be planted and grown at below 10y. Once fully grown, they will gradually transform all bedrock around and below them into Dark Blocks, which can be picked up by shift-rightclicking them with a Ender Snooker. If mobGriefing gamemode is off, then the crops will instead yield the Dark blocks when rightclicked. The dark blocks have potential use for recipes, and are also very good witherproof blocks.
 uniquecrops.book.pagemalleatoris=Crafted using anvils as part of the seed recipe, these are the renewable versions of anvils. To grow, they must have items with durability nearby. The higher the durability of these items, the better the chance they'll advance a stage. This process will consume 10%% of that item's durability. Once fully grown, right clicking it with any repairable item will restore 50%% of that item's max durability.
 uniquecrops.book.pageimperia=These imperius crops are known for their strong anti mob spawning policies. Growing them up requires killing the random mobs they spawn, though. Once fully grown, they will prevent mobs from spawning in a 3x3 chunk area around them.
+uniquecrops.book.pagelacusia=Lacusia crops will transport items from a to b, only along a very flat surface. When a crop next to an inventory is given a redstone signal, it will extract any items from that inventory if available, then transport it along until it finds an available inventory to insert into. When it reaches a junction, it will loop through the directions (S-W-N-E) for the first valid crop/inventory to insert into first. If the junction is given a redstone signal, it will reverse the direction to search in.
+uniquecrops.book.pagehexis=Experience crops are fairly straightforward; they will not grow at all unless given experience orbs. Once grown, glass bottles can be used to collect the experience with a right-click. By doing this, there is a 50/50 chance the crop's growth will be reset.
 
 # TOOLTIPS
 uniquecrops.tooltip.guidebook=The Guide
@@ -239,6 +244,10 @@ advancement.uniquecrops:craftingWafflonia=Part of every balanced diet
 advancement.uniquecrops:craftingWafflonia.desc=Obtain Wafflonia seeds.
 advancement.uniquecrops:craftingWeepingbells=Don't look away
 advancement.uniquecrops:craftingWeepingbells.desc=Obtain Weeping Bells stalks.
+advancement.uniquecrops:craftingHexis=Skilled Farming
+advancement.uniquecrops:craftingHexis.desc=Obtain Hexis seeds.
+advancement.uniquecrops:craftingLacusia=From point A to point B
+advancement.uniquecrops:craftingLacusia.desc=Obtain Lacusia seeds.
 advancement.uniquecrops:heartPickup=Self-sacrifice
 advancement.uniquecrops:heartPickup.desc=Obtain a Heart of Steve.
 advancement.uniquecrops:teriyakiPickup=Saturating chicken dinner
@@ -282,4 +291,4 @@ container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
 
 # KEYBINDINGS
 key.categories.uniquecrops=Unique Crops
-key.uniquecrops.pixelglasses=Toggle Pixel Glasses
+key.pixelglasses=Toggle Pixel Glasses

@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class ItemEnderSnooker extends Item {
 
@@ -39,22 +43,40 @@ public class ItemEnderSnooker extends Item {
 	}
 	
 	@Override
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        
+		if (player.isSneaking()) {
+			IBlockState state = world.getBlockState(pos);
+			if (state.getBlock() == UCBlocks.darkBlock) {
+				if (!world.isRemote)
+					world.setBlockToAir(pos);
+				
+				ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(UCBlocks.darkBlock));
+				return EnumActionResult.SUCCESS;
+			}
+		}
+		return EnumActionResult.PASS;
+    }
+	
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getHeldItem(hand);
 		
-		List<EntityLivingBase> elb = acquireAllLookTargets(player, 32, 3);
-		for (EntityLivingBase target : elb) {
-			if (target.canEntityBeSeen(player) && !(target instanceof EntityPlayer) && target.isNonBoss()) {
-				BlockPos targetpos = target.getPosition();
-				BlockPos playerpos = player.getPosition();
-				if (!world.isRemote) {
-					target.setPositionAndUpdate(playerpos.getX(), playerpos.getY(), playerpos.getZ());
-					player.setPositionAndUpdate(targetpos.getX(), targetpos.getY(), targetpos.getZ());
-					if (target instanceof EntityWolf && world.rand.nextInt(100) == 0)
-						target.entityDropItem(UCItems.generic.createStack(EnumItems.DOGRESIDUE), 1);
-					stack.damageItem(1, player);
-					return new ActionResult(EnumActionResult.SUCCESS, stack);
+		if (!stack.isEmpty() && stack.getItem() == this) {
+			List<EntityLivingBase> elb = acquireAllLookTargets(player, 32, 3);
+			for (EntityLivingBase target : elb) {
+				if (target.canEntityBeSeen(player) && !(target instanceof EntityPlayer) && target.isNonBoss()) {
+					BlockPos targetpos = target.getPosition();
+					BlockPos playerpos = player.getPosition();
+					if (!world.isRemote) {
+						target.setPositionAndUpdate(playerpos.getX(), playerpos.getY(), playerpos.getZ());
+						player.setPositionAndUpdate(targetpos.getX(), targetpos.getY(), targetpos.getZ());
+						if (target instanceof EntityWolf && world.rand.nextInt(100) == 0)
+							target.entityDropItem(UCItems.generic.createStack(EnumItems.DOGRESIDUE), 1);
+						stack.damageItem(1, player);
+						return new ActionResult(EnumActionResult.SUCCESS, stack);
+					}
 				}
 			}
 		}

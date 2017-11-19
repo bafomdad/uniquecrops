@@ -66,7 +66,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		
 		if (type == EnumCrops.BLAZINGPLANT && !world.provider.doesWaterVaporize())
 			return false;
-		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE || type == EnumCrops.ANVILICIOUS || type == EnumCrops.IMPERIA)
+		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE || type == EnumCrops.ANVILICIOUS || type == EnumCrops.IMPERIA || type == EnumCrops.HEXIS)
 			return false;
 		if (type == EnumCrops.HIGHPLANT && pos.getY() <= 100)
 			return false;
@@ -159,11 +159,5 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	public String getBookDescription() {
 		
 		return UniqueCrops.MOD_ID + ".book.page" + type.getName();
-	}
-	
-	@Override
-	public String getPageImage() {
-		
-		return UniqueCrops.MOD_ID + ":textures/gui/" + type.getName() + "page.png";
 	}
 }

@@ -1,0 +1,54 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.rainbow"
+  },
+  "pattern": [
+    "ABC",
+    "EDF",
+    "GHI"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "minecraft:diamond_sword",
+	  "data": 0
+    },
+    "B": {
+      "item": "minecraft:diamond_sword",
+	  "data": 1
+    },
+    "C": {
+      "item": "minecraft:diamond_sword",
+	  "data": 2
+    },
+    "E": {
+      "item": "minecraft:diamond_sword",
+	  "data": 3
+    },
+    "F": {
+      "item": "minecraft:diamond_sword",
+	  "data": 4
+    },
+    "G": {
+      "item": "minecraft:diamond_sword",
+	  "data": 5
+    },
+    "H": {
+      "item": "minecraft:diamond_sword",
+	  "data": 6
+    },
+    "I": {
+      "item": "minecraft:diamond_sword",
+	  "data": 7
+    },
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}

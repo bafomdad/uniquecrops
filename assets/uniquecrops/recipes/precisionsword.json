@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:precision.sword",
+    "nbt": "{ench:[{id:21,lvl:1}]}"
+  },
+  "pattern": [
+    " P ",
+    " P ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "uniquecrops:generic",
+	  "data": 8
+    }
+  }
+}

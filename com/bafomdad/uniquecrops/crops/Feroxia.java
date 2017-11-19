@@ -120,6 +120,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 			return;
 		}
 		int stage = getStage(world, pos, state);
+		if (stage == -1) return;
 		
 		if (!steps.get(stage).getCondition().canAdvance(world, pos, state))
 			return;
@@ -166,7 +167,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		if (!(tile instanceof TileFeroxia)) return -1;
 		
 		TileFeroxia te = (TileFeroxia)tile;
-		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null)) return - 1;
+		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null)) return -1;
 		
 		NBTTagList taglist = UCUtils.getServerTaglist(UCUtils.getPlayerFromUUID(te.getOwner().toString()).getEntityId());
 		if (taglist == null) return -1;

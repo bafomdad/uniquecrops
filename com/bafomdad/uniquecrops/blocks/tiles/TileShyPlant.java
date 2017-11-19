@@ -55,7 +55,7 @@ public class TileShyPlant extends TileBaseUC implements ITickable {
 				looker = true;
 				break;
 			}
-			if (!wasLooking && ((WeepingBells)world.getBlockState(getPos()).getBlock()).isWeepingCropGrown(world.getBlockState(getPos())) && !player.capabilities.isCreativeMode) {
+			if (!wasLooking && ((WeepingBells)world.getBlockState(getPos()).getBlock()).isMaxAge(world.getBlockState(getPos())) && !player.capabilities.isCreativeMode) {
 				if (getTarget(world, getPos()).canEntityBeSeen(player)) {
 					player.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1.0F);
 				}

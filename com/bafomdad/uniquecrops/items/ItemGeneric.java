@@ -179,7 +179,7 @@ public class ItemGeneric extends Item {
 		ItemStack stack = player.getHeldItem(hand);
 		if (!stack.isEmpty() && stack.getItem() == this) {
 			if (stack.getItemDamage() == EnumItems.GUIDE.ordinal() && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
-				if (!world.isRemote && (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES))))
+				if (!world.isRemote && (!stack.hasTagCompound()) || (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && (stack.hasTagCompound() && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES)))))
 					UCUtils.updateBook(player);
 				player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 				return new ActionResult(EnumActionResult.SUCCESS, stack);

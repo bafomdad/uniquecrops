@@ -90,4 +90,7 @@ public class UCConfig {
 	
 	@Comment({"Can plant Lacusia seeds"})
 	public static boolean cropLacusia = true;
+	
+	@Comment({"Can plant Hexis seeds"})
+	public static boolean cropHexis = true;
 }

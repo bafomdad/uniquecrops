@@ -26,15 +26,6 @@ public class BlockDarkBlock extends BlockBaseUC {
 		setSoundType(SoundType.STONE);
 		setHardness(10.0F);
 		setResistance(6000000.0F);
-		EntityEnderman.setCarriable(this, true);
-	}
-	
-	@Override
-    public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
-		
-		if (pos.getY() >= 10)
-			return ForgeHooks.blockStrength(state, player, world, pos);
-		
-		return -1.0F;
+		setBlockUnbreakable();
 	}
 }

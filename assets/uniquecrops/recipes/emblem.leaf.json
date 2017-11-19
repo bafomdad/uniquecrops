@@ -1,0 +1,30 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.leaf"
+  },
+  "pattern": [
+    "lLl",
+    "LDL",
+    "lLl"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "L": {
+	  "type": "forge:ore_dict",
+      "ore": "logWood"
+    },
+    "l": {
+	  "type": "forge:ore_dict",
+      "ore": "treeLeaves"
+    },
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}

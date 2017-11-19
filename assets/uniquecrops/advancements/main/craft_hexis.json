@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedhexis"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingHexis"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingHexis.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_cobblonia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedhexis"
+          }
+        ]
+      }
+    }
+  }
+}

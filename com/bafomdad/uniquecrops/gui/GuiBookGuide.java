@@ -86,10 +86,9 @@ public class GuiBookGuide extends GuiScreen {
 			case 1: --pageIndex; break;
 			case 2: pageIndex = catsize + (pageIndex + catsize + 2); break;
 			case 3: if (pageIndex == 3)
-					pageIndex = catsize2 + (pageIndex + catsize2 + 23 + 2);
+					pageIndex = catsize2 + (pageIndex + catsize2 + 27);
 				else
 					pageIndex = 2; break;
-//			case 4: pageIndex = 2; break;
 		}
 		this.savedIndex = pageIndex;
 		NBTUtils.setInt(book, "savedIndex", savedIndex);
@@ -131,25 +130,32 @@ public class GuiBookGuide extends GuiScreen {
 	@Override
 	protected void keyTyped(char character, int key) {
 		
-		if (key == Keyboard.KEY_ESCAPE)
+		boolean update = false;
+		if (key == Keyboard.KEY_ESCAPE) {
+			NBTUtils.setInt(book, "savedIndex", savedIndex);
 			mc.displayGuiScreen(null);
+		}
 		if (key == Keyboard.KEY_RIGHT && this.next.visible) {
 			this.pageIndex++;
-			this.savedIndex = pageIndex;
-			NBTUtils.setInt(book, "savedIndex", savedIndex);
-			updateButtons();
+			update = true;
 		}
 		if (key == Keyboard.KEY_LEFT && this.prev.visible) {
 			this.pageIndex--;
-			this.savedIndex = pageIndex;
-			NBTUtils.setInt(book, "savedIndex", savedIndex);
-			updateButtons();
+			update = true;
 		}
 		if (key == Keyboard.KEY_UP && this.backbutton.visible) {
 			this.pageIndex = 2;
+			update = true;
+		}
+		if (update) {
 			this.savedIndex = pageIndex;
 			NBTUtils.setInt(book, "savedIndex", savedIndex);
 			updateButtons();
 		}
+	}
+	
+	public float getZLevel() {
+		
+		return zLevel;
 	}
 }

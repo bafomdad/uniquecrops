@@ -27,22 +27,7 @@ public class UCRecipes {
 	public static void init() {
 		
 		initEdibleMetals();
-		if (UniqueCrops.baublesLoaded)
-			UCBaubles.initRecipes();
 		
-		ItemStack precisionAxe = new ItemStack(UCItems.precisionAxe);
-		precisionAxe.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
-		ItemStack precisionShovel = new ItemStack(UCItems.precisionShovel);
-		precisionShovel.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
-		ItemStack precisionPick = new ItemStack(UCItems.precisionPick);
-		precisionPick.addEnchantment(Enchantment.getEnchantmentByID(33), 1);
-		ItemStack precisionSword = new ItemStack(UCItems.precisionSword);
-		precisionSword.addEnchantment(Enchantment.getEnchantmentByID(21), 1);
-		GameRegistry.addShapedRecipe(precisionAxe.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionAxe), precisionAxe, "GG ", "GS ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
-		GameRegistry.addShapedRecipe(precisionPick.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionPick), precisionPick, "GGG", " S ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
-		GameRegistry.addShapedRecipe(precisionShovel.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionShovel), precisionShovel, " G ", " S ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
-		GameRegistry.addShapedRecipe(precisionSword.getItem().getRegistryName(), RecipeHelper.getNameForRecipe(precisionSword), precisionSword, " G ", " G ", " S ", 'G', UCItems.generic.createStack(EnumItems.PREGEM), 'S', Items.STICK);
-
 		ItemStack awkwardpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("awkward"));
 		if (!awkwardpotion.isEmpty()) {
 			BrewingRecipeRegistry.addRecipe(awkwardpotion, UCItems.generic.createStack(EnumItems.TIMEDUST), new ItemStack(UCItems.potionreverse));
@@ -75,6 +60,8 @@ public class UCRecipes {
 		addSeedRecipe(new ItemStack(UCItems.seedsMalleatoris), new ItemStack(UCItems.seedsPrecision), new ItemStack(Blocks.ANVIL), new ItemStack(Items.IRON_INGOT));
 		addSeedRecipe(new ItemStack(UCItems.seedsPetramia), new ItemStack(UCItems.seedsCobblonia), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.COBBLESTONE));
 		addSeedRecipe(new ItemStack(UCItems.seedsImperia), new ItemStack(UCItems.seedsPetramia), new ItemStack(Blocks.END_ROD), new ItemStack(Blocks.GLOWSTONE));
+		addSeedRecipe(new ItemStack(UCItems.seedsLacusia), new ItemStack(Blocks.HOPPER), new ItemStack(UCItems.seedsNormal), new ItemStack(Items.REDSTONE));
+		addSeedRecipe(new ItemStack(UCItems.seedsHexis), new ItemStack(UCItems.seedsMalleatoris), new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
 	}
 	
 	private static ItemStack getDyeCraftingResult(int meta) {

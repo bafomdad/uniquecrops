@@ -1,0 +1,28 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.scarab"
+  },
+  "pattern": [
+    "gGg",
+    "GDG",
+    "gGg"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}

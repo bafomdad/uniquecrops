@@ -1,0 +1,29 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.transformation"
+  },
+  "pattern": [
+    " p ",
+    "fDf",
+    " f "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "uniquecrops:generic",
+	  "data": 13
+    },
+    "f": {
+      "item": "minecraft:feather"
+    },
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}
