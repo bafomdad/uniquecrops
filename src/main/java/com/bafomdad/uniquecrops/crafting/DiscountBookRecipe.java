@@ -83,9 +83,9 @@ public class DiscountBookRecipe extends net.minecraftforge.registries.IForgeRegi
 		return width >= 3 && height >= 3;
 	}
 
-	@Override
+	/*@Override
 	public boolean isHidden() {
 		
 		return false;
-	}
+	}*/
 }

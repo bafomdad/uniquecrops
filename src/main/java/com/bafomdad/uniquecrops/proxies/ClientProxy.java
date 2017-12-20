@@ -128,19 +128,15 @@ public class ClientProxy extends CommonProxy {
 	public void registerColors() {
 	
 		ItemColors ic = Minecraft.getMinecraft().getItemColors();
-		ic.registerItemColorHandler(new IItemColor() 
-		{	
-			@Override
-			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-				
-				if (stack.getItem() != null) {
-					if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionreverse) {
-						if (tintIndex == 0)
-							return 0x845c28;
-					}
-				}
-				return 0xffffff;
-			}
-		}, UCItems.generic, UCItems.potionreverse);
+		ic.registerItemColorHandler((stack, tintIndex) -> {
+
+      if (stack.getItem() != null) {
+        if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionreverse) {
+          if (tintIndex == 0)
+            return 0x845c28;
+        }
+      }
+      return 0xffffff;
+    }, UCItems.generic, UCItems.potionreverse);
 	}
 }

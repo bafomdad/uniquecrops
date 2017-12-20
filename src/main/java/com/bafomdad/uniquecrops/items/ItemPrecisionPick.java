@@ -49,16 +49,16 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
 	}
 	
 	@Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     	
 		boolean sametool = toRepair.getItem() == repair.getItem();
 		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 8;
 		return sametool || flag;
-    }
+  }
 	
 	// note: copied from vanilla code
 	@Override
-    public boolean canHarvestBlock(IBlockState blockIn) {
+  public boolean canHarvestBlock(IBlockState blockIn) {
        
 		Block block = blockIn.getBlock();
         if (block == Blocks.OBSIDIAN)
@@ -90,14 +90,14 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
         }
         else
             return this.toolMaterial.getHarvestLevel() >= 2;
-    }
+  }
 
-    @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+  @Override
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
     	
-        Material material = state.getMaterial();
-        return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
-    }
+    Material material = state.getMaterial();
+    return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
+  }
     
 	@Override
 	public int getLevel(ItemStack stack) {

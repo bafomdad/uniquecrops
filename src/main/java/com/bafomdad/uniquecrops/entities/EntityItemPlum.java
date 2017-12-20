@@ -37,7 +37,7 @@ public class EntityItemPlum extends EntityItem {
 				this.setDead();
 			}
 			this.addVelocity(0, velY, 0);
-			if (this.ticksExisted % 10 == 0 && this.isCollided)
+			if (this.ticksExisted % 10 == 0 && this.collided)
 			{
 				UCPacketHandler.sendToNearbyPlayers(world, getPosition(), new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 3));
 				this.setDead();

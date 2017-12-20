@@ -192,7 +192,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote)
 		        {
 		            EntityCustomPotion entitypotion = new EntityCustomPotion(world, player, stack);
-		            entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            entitypotion.shoot(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
 		            world.spawnEntity(entitypotion);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -205,7 +205,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote)
 		        {
 		            EntityItemWeepingEye eye = new EntityItemWeepingEye(world, player.posX, player.posY + 1.5D, player.posZ);
-		            eye.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+		            eye.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 		            world.spawnEntity(eye);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -235,7 +235,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote) {
 		            EntityEulaBook entitybook = new EntityEulaBook(world, player, stack);
 		            entitybook.setPosition(player.posX, player.posY + player.getEyeHeight() + 0.5, player.posZ);
-		            entitybook.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            entitybook.shoot(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
 		            world.spawnEntity(entitybook);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);

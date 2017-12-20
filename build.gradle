@@ -1,0 +1,95 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+project.ext.mcversion = "1.12.2"
+project.ext.modversion = "0.2.01"
+project.ext.forgeversion = "14.23.1.2556"
+
+version = project.ext.mcversion + "-" + project.ext.modversion
+group = "com.bafomdad.uniquecrops"
+archivesBaseName = "uniquecrops"
+
+minecraft {
+  version = project.ext.mcversion + "-" + project.ext.forgeversion
+  mappings = "snapshot_20171003"
+  makeObfSourceJar = false
+}
+
+repositories {
+
+    maven {
+        // JEI
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+
+    maven {
+        // CraftTweaker
+        url "http://maven.blamejared.com/"
+    }
+
+    maven {
+        // Baubles
+        name = "thiakil"
+        url = "http://maven.thiakil.com"
+    }
+
+    flatDir {
+        // Immersive Engineering jar
+        dirs 'lib'
+    }
+
+}
+
+dependencies {
+    // CraftTweaker
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.0.10.+"
+    deobfCompile "CraftTweaker2:CraftTweaker2-API:4.0.10.+"
+    deobfCompile "CraftTweaker2:ZenScript:4.0.10.+"
+    deobfCompile "com.blamejared:MTLib:3.0.+"
+
+    // JEI
+    deobfCompile "mezz.jei:jei_1.12.2:4.8.0.+"
+
+    // Baubles
+    deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
+
+    // Immersive Engineering
+    compile name: "ImmersiveEngineering-0.12-67-177-deobf"
+}
+
+compileJava {
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+}
+
+processResources
+{
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
