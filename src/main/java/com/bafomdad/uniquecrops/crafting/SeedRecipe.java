@@ -51,6 +51,11 @@ public class SeedRecipe {
     return inputsMissing.isEmpty();
   }
 
+  public boolean matchesOutput(ItemStack output) {
+
+    return ItemStack.areItemStacksEqual(this.output, output);
+  }
+
   public List<Ingredient> getInputs() {
 
     return new ArrayList<>(this.inputs);

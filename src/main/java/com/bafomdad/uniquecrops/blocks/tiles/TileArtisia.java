@@ -114,7 +114,7 @@ public class TileArtisia extends TileBaseUC {
 			if (ei.getItem().getCount() <= 0) ei.setDead();
 
 			if (!getWorld().isRemote) { // only perform on the server
-				SeedRecipe recipe = UniqueCropsAPI.SEED_RECIPE_REGISTRY.findSeedRecipe(stacks);
+				SeedRecipe recipe = UniqueCropsAPI.SEED_RECIPE_REGISTRY.findRecipe(stacks);
 
 				if (recipe != null) { // found a recipe
 					clearItems();

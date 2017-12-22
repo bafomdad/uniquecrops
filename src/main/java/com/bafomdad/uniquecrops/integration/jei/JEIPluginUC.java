@@ -15,13 +15,13 @@ import java.util.ArrayList;
 @JEIPlugin
 public class JEIPluginUC implements IModPlugin {
 
-	private static final String UID_SEED_RECIPE = "jei.uniquecrops.seedrecipe";
+	public static final String UID_SEED_RECIPE = "jei.uniquecrops.seedrecipe";
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
 
 		IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
-		registry.addRecipeCategories(new UCRecipeCategory(guiHelper));
+		registry.addRecipeCategories(new UCRecipeCategory(guiHelper, UID_SEED_RECIPE));
 	}
 
 	@Override
@@ -36,13 +36,4 @@ public class JEIPluginUC implements IModPlugin {
 		IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
 		blacklist.addIngredientToBlacklist(UCItems.generic.createStack(EnumItems.DUMMYITEM));
 	}
-
-	@Override
-	public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {}
-
-	@Override
-	public void registerIngredients(IModIngredientRegistration registry) {}
-
-	@Override
-	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {}
 }

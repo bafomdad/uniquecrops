@@ -16,27 +16,27 @@ import java.util.List;
 
 public class UCRecipeCategory implements IRecipeCategory<UCRecipeWrapper> {
 
-	public static final String NAME = "uniquecrops.craftyplant";
-
 	private final IDrawable background;
+	private final String uid;
 
-	public UCRecipeCategory(IGuiHelper helper) {
+	public UCRecipeCategory(IGuiHelper helper, String uid) {
 
 		this.background = helper.createDrawable(new ResourceLocation(UniqueCrops.MOD_ID, "textures/gui/craftyplant.png"), 0, 0, 126, 64);
+		this.uid = uid;
 	}
 
 	@Nonnull
 	@Override
 	public String getUid() {
 
-		return NAME;
+		return this.uid;
 	}
 
 	@Nonnull
 	@Override
 	public String getTitle() {
 
-		return I18n.format("container.jei." + NAME + ".name");
+		return I18n.format("container.jei.uniquecrops.craftyplant.name");
 	}
 
 	@Nonnull

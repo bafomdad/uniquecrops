@@ -3,8 +3,10 @@ package com.bafomdad.uniquecrops.crafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SeedRecipeRegistry {
@@ -16,13 +18,13 @@ public class SeedRecipeRegistry {
     this.recipeList = new ArrayList<>();
   }
 
-  public void addSeedRecipe(ItemStack result, ItemStack center, ItemStack corner, ItemStack edge) {
+  public void addRecipe(ItemStack result, ItemStack center, ItemStack corner, ItemStack edge) {
 
     Ingredient ingredientCenter = Ingredient.fromStacks(center);
     Ingredient ingredientCorner = Ingredient.fromStacks(corner);
     Ingredient ingredientEdge = Ingredient.fromStacks(edge);
 
-    this.addSeedRecipe(result, ingredientCenter, ingredientCorner, ingredientEdge);
+    this.addRecipe(result, ingredientCenter, ingredientCorner, ingredientEdge);
   }
 
   public List<SeedRecipe> getRecipeList(List<SeedRecipe> result) {
@@ -31,10 +33,10 @@ public class SeedRecipeRegistry {
     return result;
   }
 
-  public void addSeedRecipe(ItemStack result, Ingredient center, Ingredient corner, Ingredient edge) {
+  public void addRecipe(ItemStack output, Ingredient center, Ingredient corner, Ingredient edge) {
 
     SeedRecipe recipe = new SeedRecipe(
-        result,
+        output,
         new Ingredient[]{
             corner, edge, corner,
             edge, center, edge,
@@ -45,8 +47,13 @@ public class SeedRecipeRegistry {
     this.recipeList.add(recipe);
   }
 
+  public void removeRecipesByOutput(ItemStack output) {
+
+    this.recipeList.removeIf(recipe -> recipe.matchesOutput(output));
+  }
+
   @Nullable
-  public SeedRecipe findSeedRecipe(List<ItemStack> inputs) {
+  public SeedRecipe findRecipe(List<ItemStack> inputs) {
 
     for (SeedRecipe recipe : this.recipeList) {
 
@@ -57,5 +64,4 @@ public class SeedRecipeRegistry {
 
     return null;
   }
-
 }
