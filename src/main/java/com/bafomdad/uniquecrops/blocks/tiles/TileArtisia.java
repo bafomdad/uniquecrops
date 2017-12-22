@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.bafomdad.uniquecrops.crafting.UCrafting;
+import com.bafomdad.uniquecrops.UniqueCropsAPI;
+import com.bafomdad.uniquecrops.crafting.SeedRecipe;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
@@ -21,7 +22,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileArtisia extends TileBaseUC {
@@ -112,15 +112,13 @@ public class TileArtisia extends TileBaseUC {
 				stacks.add(stack);
 			}
 			if (ei.getItem().getCount() <= 0) ei.setDead();
-			
-			for (UCrafting recipe : UCrafting.recipes) {
-				if (recipe.matches(stacks)) {
-					if (!getWorld().isRemote) {
-						ItemStack output = recipe.getOutput().copy();
-						clearItems();
-						this.setItem(output);
-					}
-					break;
+
+			if (!getWorld().isRemote) { // only perform on the server
+				SeedRecipe recipe = UniqueCropsAPI.SEED_RECIPE_REGISTRY.findSeedRecipe(stacks);
+
+				if (recipe != null) { // found a recipe
+					clearItems();
+					this.setItem(recipe.getOutput()); // already copied by the getOutput method
 				}
 			}
 			this.markBlockForUpdate();

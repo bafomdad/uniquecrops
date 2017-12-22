@@ -19,9 +19,10 @@ group = "com.bafomdad.uniquecrops"
 archivesBaseName = "uniquecrops"
 
 minecraft {
-  version = project.ext.mcversion + "-" + project.ext.forgeversion
-  mappings = "snapshot_20171003"
-  makeObfSourceJar = false
+    version = project.ext.mcversion + "-" + project.ext.forgeversion
+    runDir = "run"
+    mappings = "snapshot_20171003"
+    //makeObfSourceJar = false
 }
 
 repositories {

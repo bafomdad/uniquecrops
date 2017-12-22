@@ -1,34 +1,40 @@
 package com.bafomdad.uniquecrops.integration;
 
-import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.IJeiRuntime;
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.ISubtypeRegistry;
-import mezz.jei.api.JEIPlugin;
+import com.bafomdad.uniquecrops.UniqueCropsAPI;
+import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
-import net.minecraft.item.ItemStack;
 
 import com.bafomdad.uniquecrops.core.EnumItems;
-import com.bafomdad.uniquecrops.crafting.UCrafting;
-import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.crafting.SeedRecipe;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.integration.craftyplants.*;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+
+import java.rmi.server.UID;
+import java.util.ArrayList;
 
 @JEIPlugin
 public class JEIPluginUC implements IModPlugin {
-	
+
+	private static final String UID_SEED_RECIPE = "jei.uniquecrops.seedrecipe";
+
+	@Override
+	public void registerCategories(IRecipeCategoryRegistration registry) {
+
+		IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
+		registry.addRecipeCategories(new UCRecipeCategory(guiHelper));
+	}
+
 	@Override
 	public void register(IModRegistry registry) {
 		
 		IJeiHelpers helpers = registry.getJeiHelpers();
-		registry.addRecipeCategories(new UCRecipeCategory(helpers.getGuiHelper()));
-		registry.addRecipeHandlers(new UCRecipeHandler());
-		
-		registry.addRecipes(UCrafting.recipes);
-		registry.addRecipeCategoryCraftingItem(UCItems.generic.createStack(EnumItems.DUMMYITEM), UCRecipeCategory.NAME);
-		
+		registry.handleRecipes(SeedRecipe.class, UCRecipeWrapper::new, UID_SEED_RECIPE);
+
+		registry.addRecipes(UniqueCropsAPI.SEED_RECIPE_REGISTRY.getRecipeList(new ArrayList<>()), UID_SEED_RECIPE);
+		registry.addRecipeCatalyst(UCItems.generic.createStack(EnumItems.DUMMYITEM), UID_SEED_RECIPE);
+
 		IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
 		blacklist.addIngredientToBlacklist(UCItems.generic.createStack(EnumItems.DUMMYITEM));
 	}

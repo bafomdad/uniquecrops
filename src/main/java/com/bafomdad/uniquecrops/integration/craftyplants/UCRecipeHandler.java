@@ -1,32 +1,32 @@
 package com.bafomdad.uniquecrops.integration.craftyplants;
 
-import com.bafomdad.uniquecrops.crafting.UCrafting;
+import com.bafomdad.uniquecrops.crafting.SeedRecipe;
 
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-public class UCRecipeHandler implements IRecipeHandler<UCrafting> {
+public class UCRecipeHandler implements IRecipeHandler<SeedRecipe> {
 
 	@Override
 	public Class getRecipeClass() {
 
-		return UCrafting.class;
+		return SeedRecipe.class;
 	}
 
 	@Override
-	public String getRecipeCategoryUid(UCrafting recipe) {
+	public String getRecipeCategoryUid(SeedRecipe recipe) {
 
 		return UCRecipeCategory.NAME;
 	}
 
 	@Override
-	public IRecipeWrapper getRecipeWrapper(UCrafting recipe) {
+	public IRecipeWrapper getRecipeWrapper(SeedRecipe recipe) {
 
 		return new UCRecipeWrapper(recipe);
 	}
 
 	@Override
-	public boolean isRecipeValid(UCrafting recipe) {
+	public boolean isRecipeValid(SeedRecipe recipe) {
 
 		return true;
 	}
