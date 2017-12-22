@@ -1,4 +1,4 @@
-package com.bafomdad.uniquecrops.integration;
+package com.bafomdad.uniquecrops.integration.jei;
 
 import com.bafomdad.uniquecrops.UniqueCropsAPI;
 import mezz.jei.api.*;
@@ -8,10 +8,8 @@ import mezz.jei.api.ingredients.IModIngredientRegistration;
 import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.crafting.SeedRecipe;
 import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.integration.craftyplants.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 
-import java.rmi.server.UID;
 import java.util.ArrayList;
 
 @JEIPlugin

@@ -1,4 +1,4 @@
-package com.bafomdad.uniquecrops.integration;
+package com.bafomdad.uniquecrops.integration.immersiveengineering;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

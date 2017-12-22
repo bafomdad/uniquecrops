@@ -7,14 +7,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.entities.*;
 import com.bafomdad.uniquecrops.events.UCEventHandlerServer;
 import com.bafomdad.uniquecrops.init.*;
-import com.bafomdad.uniquecrops.integration.IEPlugin;
+import com.bafomdad.uniquecrops.integration.immersiveengineering.IEPlugin;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class CommonProxy {

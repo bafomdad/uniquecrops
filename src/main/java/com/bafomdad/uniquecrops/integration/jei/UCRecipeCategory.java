@@ -1,4 +1,4 @@
-package com.bafomdad.uniquecrops.integration.craftyplants;
+package com.bafomdad.uniquecrops.integration.jei;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import mezz.jei.api.IGuiHelper;
