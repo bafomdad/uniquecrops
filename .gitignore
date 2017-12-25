@@ -1,4 +1,6 @@
+.gradle/
+.idea/
 build/
-gradle.properties
-build.gradle
-pack.mcmeta
+run/
+out/
+*.iml
