@@ -1,18 +1,11 @@
 package com.bafomdad.uniquecrops.integration;
 
-import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.IJeiRuntime;
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.ISubtypeRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
-import net.minecraft.item.ItemStack;
 
 import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.crafting.UCrafting;
-import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.integration.craftyplants.*;
 

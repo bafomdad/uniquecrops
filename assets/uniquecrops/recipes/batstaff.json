@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "uniquecrops:batstaff"
+  },
+  "pattern": [
+    "LEL",
+    " S ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "E": {
+      "item": "uniquecrops:generic",
+      "data": 17
+    }
+  }
+}

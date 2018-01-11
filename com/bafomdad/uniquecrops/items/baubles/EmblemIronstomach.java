@@ -45,7 +45,7 @@ public class EmblemIronstomach extends ItemBauble {
 	public void onRightclickNonedible(RightClickItem event) {
 		
 		ItemStack emblem = BaublesApi.getBaublesHandler(event.getEntityPlayer()).getStackInSlot(6);
-		if (emblem == null || (emblem != null && emblem.getItem() != this)) return;
+		if (emblem.isEmpty() || (!emblem.isEmpty() && emblem.getItem() != this)) return;
 		
 		ItemStack stack = event.getItemStack();
 		if (!event.getWorld().isRemote)
@@ -54,7 +54,7 @@ public class EmblemIronstomach extends ItemBauble {
 	
 	private void tryConvertToFood(ItemStack stack, EntityPlayer player, EnumHand hand) {
 
-		if (stack == null || (stack != null && stack.getItem() instanceof ItemEdibleMetal)) return;
+		if (stack.isEmpty() || (!stack.isEmpty() && stack.getItem() instanceof ItemEdibleMetal)) return;
 		for (Map.Entry<ItemStack, ItemStack> entry : UCRecipes.edibleMetals.entrySet()) {
 			if (entry.getKey().getItem() == stack.getItem() && entry.getKey().getItemDamage() == stack.getItemDamage()) {
 				player.setHeldItem(hand, new ItemStack(entry.getValue().getItem(), stack.getCount()));

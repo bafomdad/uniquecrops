@@ -65,6 +65,7 @@ public class UCItems {
 	public static Item waffle;
 	public static Item endersnooker;
 	public static Item handmirror;
+	public static Item batstaff;
 	
 	public static Item edibleDiamond;
 	public static Item edibleLapis;
@@ -130,6 +131,7 @@ public class UCItems {
 		waffle = new ItemGenericFood(8, 1.0F, true, "waffle");
 		endersnooker = new ItemEnderSnooker();
 		handmirror = new ItemHandMirror();
+		batstaff = new ItemBatStaff();
 		
 		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
 		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");

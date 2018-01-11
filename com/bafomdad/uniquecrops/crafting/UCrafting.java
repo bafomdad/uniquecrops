@@ -1,9 +1,11 @@
 package com.bafomdad.uniquecrops.crafting;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class UCrafting {
 
@@ -65,5 +67,20 @@ public class UCrafting {
 		recipes.add(recipe);
 		
 		return recipe;
+	}
+	
+	public static List<UCrafting> removeRecipe(ItemStack stack) {
+		
+		List<UCrafting> list = new ArrayList();
+		Iterator<UCrafting> it = recipes.iterator();
+		while (it.hasNext()) {
+			
+			UCrafting uc = it.next();
+			if (ItemStack.areItemsEqual(uc.output, stack)) {
+				list.add(uc);
+				it.remove();
+			}
+		}
+		return list;
 	}
 }

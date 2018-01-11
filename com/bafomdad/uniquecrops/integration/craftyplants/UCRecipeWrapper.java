@@ -11,7 +11,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-public class UCRecipeWrapper extends BlankRecipeWrapper {
+public class UCRecipeWrapper implements IRecipeWrapper {
 	
 	public final UCrafting recipe;
 	

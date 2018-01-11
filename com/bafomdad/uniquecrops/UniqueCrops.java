@@ -31,6 +31,7 @@ public class UniqueCrops {
 	
 	public static boolean baublesLoaded = Loader.isModLoaded("baubles");
 	public static boolean ieLoaded = Loader.isModLoaded("immersiveengineering");
+	public static boolean ctLoaded = Loader.isModLoaded("crafttweaker");
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

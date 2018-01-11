@@ -50,6 +50,7 @@ import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemPlum;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
+import com.bafomdad.uniquecrops.entities.EntityLegalStuff;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -62,6 +63,7 @@ public class ItemGeneric extends Item {
 	public static String TAG_DISCOUNT = "UC_tagDiscount";
 	public static String TAG_UPGRADE = "UC_tagUpgrade";
 	public static String TAG_OVERCLUCK = "UC_tagEggUpgrade";
+	public static String TAG_BINDED = "UC_tagLegallyBound";
 	private int range = 5;
 
 	public ItemGeneric() {
@@ -111,7 +113,7 @@ public class ItemGeneric extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		
-		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal())
+		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal() || stack.getItemDamage() == EnumItems.CONTRACT.ordinal())
 			return true;
 		
 		return false;
@@ -256,7 +258,27 @@ public class ItemGeneric extends Item {
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase elb, EnumHand hand) {
 		
-		if (stack.getItemDamage() == 19 && elb instanceof EntityChicken) {
+		if (stack.getItemDamage() == EnumItems.CONTRACT.ordinal() && !(elb instanceof EntityPlayer)) {
+//			NBTTagCompound tag = elb.getEntityData();
+//			if (!tag.hasKey(TAG_BINDED)) {
+//				tag.setBoolean(TAG_BINDED, true);
+//				if (!player.capabilities.isCreativeMode)
+//					stack.shrink(1);
+//				return true;
+//			}
+			if (!elb.isRiding()) {
+				EntityLegalStuff els = new EntityLegalStuff(elb.world);
+				els.setPosition(elb.posX, elb.posY, elb.posZ);
+				if (!elb.world.isRemote) {
+					elb.world.spawnEntity(els);
+					elb.startRiding(els);
+				}
+				if (!player.capabilities.isCreativeMode)
+					stack.shrink(1);
+				return true;
+			}
+		}
+		if (stack.getItemDamage() == EnumItems.EGGUPGRADE.ordinal() && elb instanceof EntityChicken) {
 			NBTTagCompound tag = elb.getEntityData();
 			if (!elb.isChild() && !tag.hasKey(TAG_OVERCLUCK)) {
 				tag.setInteger(TAG_OVERCLUCK, elb.world.rand.nextInt(60) + 900);

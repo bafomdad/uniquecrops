@@ -28,6 +28,8 @@ import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
+import com.bafomdad.uniquecrops.entities.EntityLegalStuff;
+import com.bafomdad.uniquecrops.entities.RenderLegalStuff;
 import com.bafomdad.uniquecrops.entities.RenderThrowable;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -72,6 +74,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomPotion.class, new RenderThrowable(rm, UCItems.generic, 13, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemWeepingEye.class, new RenderThrowable(rm, UCItems.generic, 16, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEulaBook.class, new RenderThrowable(rm, UCItems.generic, 24, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityLegalStuff.class, new RenderLegalStuff(rm));
 	}
 	
 	@Override
@@ -133,7 +136,7 @@ public class ClientProxy extends CommonProxy {
 			@Override
 			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
 				
-				if (stack.getItem() != null) {
+				if (!stack.isEmpty()) {
 					if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionreverse) {
 						if (tintIndex == 0)
 							return 0x845c28;

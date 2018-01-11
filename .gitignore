@@ -2,3 +2,5 @@ build/
 gradle.properties
 build.gradle
 pack.mcmeta
+api/jei/
+api/baubles/
