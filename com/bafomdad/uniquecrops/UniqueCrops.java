@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
+import com.bafomdad.uniquecrops.integration.crafttweaker.CraftTweakerPlugin;
 import com.bafomdad.uniquecrops.proxies.CommonProxy;
 
 @Mod(modid=UniqueCrops.MOD_ID, name=UniqueCrops.MOD_NAME, version=UniqueCrops.VERSION, dependencies = "after:forge@[" + UniqueCrops.FORGE_VER + ",);")
@@ -55,5 +57,8 @@ public class UniqueCrops {
 	public void postInit(FMLPostInitializationEvent event) {
 		
 		proxy.postInit(event);
+		if (ctLoaded) {
+			CraftTweakerPlugin.apply();
+		}
 	}
 }
