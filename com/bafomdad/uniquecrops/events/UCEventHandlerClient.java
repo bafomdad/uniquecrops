@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -23,6 +24,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
@@ -38,6 +42,39 @@ import com.bafomdad.uniquecrops.network.UCPacketHandler;
 public class UCEventHandlerClient {
 	
 	private static final String[] FIELD = new String[] { "mapRegisteredSprites", "field_110574_e", "bwd" };
+	
+	// botania copy paste start
+	public static int ticksInGame = 0;
+	public static float partialTicks = 0;
+	public static float delta = 0;
+	public static float total = 0;
+	
+	public void calcDelta() {
+		
+		float oldTotal = total;
+		total = ticksInGame + partialTicks;
+		delta = total - oldTotal;
+	}
+	
+	@SubscribeEvent
+	public void renderTick(RenderTickEvent event) {
+		
+		if (event.phase == Phase.START)
+			partialTicks = event.renderTickTime;
+		else
+			calcDelta();
+	}
+	
+	@SubscribeEvent
+	public void clientTickEnd(ClientTickEvent event) {
+		
+		if (event.phase == Phase.END) {
+			GuiScreen gui = Minecraft.getMinecraft().currentScreen;
+			if (gui == null || !gui.doesGuiPauseGame())
+				ticksInGame++;
+		}
+	}
+	// botania copypaste end
 	
 	@SubscribeEvent
 	public void loadTextures(TextureStitchEvent.Pre event) {

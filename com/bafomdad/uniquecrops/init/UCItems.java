@@ -82,11 +82,13 @@ public class UCItems {
 	public static ItemTool precisionAxe;
 	public static ItemTool precisionShovel;
 	public static ItemSword precisionSword;
+	public static ItemArmor cactusBoots, cactusLeggings, cactusPlate, cactusHelm;
 	
 	public static final ItemArmor.ArmorMaterial glassesmaterial = EnumHelper.addArmorMaterial("3dglasses", "uniquecrops:3dglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
 	public static final ItemArmor.ArmorMaterial pixelmaterial = EnumHelper.addArmorMaterial("pixelglasses", "uniquecrops:pixelglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
 	public static final ItemArmor.ArmorMaterial ponchomaterial = EnumHelper.addArmorMaterial("poncho", "uniquecrops:poncho", 112, new int[] { 1, 2, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	public static final ItemArmor.ArmorMaterial slippermaterial = EnumHelper.addArmorMaterial("slippers", "uniquecrops:slippers", 90, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0F);
+	public static final ItemArmor.ArmorMaterial cactusmaterial = EnumHelper.addArmorMaterial("cactus", "uniquecrops:cactus", 13, new int[] { 1, 4, 5, 2 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	
 	public static void init() {
 		
@@ -148,5 +150,14 @@ public class UCItems {
 		precisionAxe = new ItemPrecisionAxe();
 		precisionShovel = new ItemPrecisionShovel();
 		precisionSword = new ItemPrecisionSword();
+		
+		cactusBoots = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.FEET).setRegistryName("cactusboots").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactusboots").setCreativeTab(UniqueCrops.TAB);
+		items.add(cactusBoots);
+		cactusLeggings = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.LEGS).setRegistryName("cactuslegs").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactuslegs").setCreativeTab(UniqueCrops.TAB);
+		items.add(cactusLeggings);
+		cactusPlate = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.CHEST).setRegistryName("cactusplate").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactusplate").setCreativeTab(UniqueCrops.TAB);
+		items.add(cactusPlate);
+		cactusHelm = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.HEAD).setRegistryName("cactushelm").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactushelm").setCreativeTab(UniqueCrops.TAB);
+		items.add(cactusHelm);
 	}
 }

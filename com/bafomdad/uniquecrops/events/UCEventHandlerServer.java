@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityItem;
@@ -379,18 +380,41 @@ public class UCEventHandlerServer {
 	@SubscribeEvent
 	public void checkSlippers(LivingAttackEvent event) {
 		
-		if (event.getSource() != DamageSource.CACTUS)
-			return;
-		
-		if (!(event.getEntityLiving() instanceof EntityPlayer))
+		if (!(event.getEntityLiving() instanceof EntityPlayer) || event.getEntityLiving().world.isRemote)
 			return;
 		
 		EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+		// cactus armor damage reflection
+		if (event.getSource().getTrueSource() instanceof EntityLiving) {
+			EntityLivingBase elb = (EntityLivingBase)event.getSource().getTrueSource();
+			for (int i = 0; i < 4; i++) {
+				if (!hasCactusArmorPiece(player, i)) {
+					return;
+				}
+			}
+			float damage = event.getAmount();
+			elb.attackEntityFrom(DamageSource.CACTUS, damage);
+		}
+		// glass slippers cactus damage cancellation
 		ItemStack boots = player.inventory.armorInventory.get(0);
 		BlockPos pos = new BlockPos(MathHelper.floor(player.posX), player.getPosition().down().getY(), MathHelper.floor(player.posZ));
 		Block cactus = player.world.getBlockState(pos).getBlock();
 		if ((cactus != null && cactus == Blocks.CACTUS) && (!boots.isEmpty() && boots.getItem() == UCItems.slippers))
 			event.setCanceled(true);
+	}
+	
+	private boolean hasCactusArmorPiece(EntityPlayer player, int i) {
+		
+		ItemStack stack = player.inventory.armorInventory.get(i);
+		if (stack.isEmpty()) return false;
+		
+		switch(i) {
+			case 3: return stack.getItem() == UCItems.cactusHelm;
+			case 2: return stack.getItem() == UCItems.cactusPlate;
+			case 1: return stack.getItem() == UCItems.cactusLeggings;
+			case 0: return stack.getItem() == UCItems.cactusBoots;
+		}
+		return false;
 	}
 	
     @SubscribeEvent
