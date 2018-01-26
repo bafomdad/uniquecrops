@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.bafomdad.uniquecrops.crafting.UCrafting;
+import com.bafomdad.uniquecrops.UniqueCropsAPI;
+import com.bafomdad.uniquecrops.crafting.SeedRecipe;
+import com.bafomdad.uniquecrops.crafting.SeedRecipeRegistry;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
@@ -113,7 +115,7 @@ public class TileArtisia extends TileBaseUC {
 			}
 			if (ei.getItem().getCount() <= 0) ei.setDead();
 			
-			for (UCrafting recipe : UCrafting.recipes) {
+			for (SeedRecipe recipe : UniqueCropsAPI.SEED_RECIPE_REGISTRY.getRecipeList(new ArrayList<>())) {
 				if (recipe.matches(stacks)) {
 					if (!getWorld().isRemote) {
 						ItemStack output = recipe.getOutput().copy();

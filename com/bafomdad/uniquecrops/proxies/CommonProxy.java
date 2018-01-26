@@ -14,7 +14,6 @@ import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.entities.*;
 import com.bafomdad.uniquecrops.events.UCEventHandlerServer;
 import com.bafomdad.uniquecrops.init.*;
-import com.bafomdad.uniquecrops.integration.CTPlugin;
 import com.bafomdad.uniquecrops.integration.IEPlugin;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
@@ -23,8 +22,6 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		MinecraftForge.EVENT_BUS.register(new UCEventRegistry());
-		if (UniqueCrops.ctLoaded)
-			CTPlugin.init();
 
 		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "reversepotion"), EntityCustomPotion.class, UniqueCrops.MOD_ID + "reversepotion", 0, UniqueCrops.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "weepingeye"), EntityItemWeepingEye.class, UniqueCrops.MOD_ID + "weepingeye", 1, UniqueCrops.instance, 64, 1, true);
