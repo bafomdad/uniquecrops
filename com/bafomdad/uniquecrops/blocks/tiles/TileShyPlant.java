@@ -116,7 +116,7 @@ public class TileShyPlant extends TileBaseUC implements ITickable {
 		float f7 = f4 * f5;
 		float f8 = f3 * f5;
 		double d3 = range;
-		Vec3d vec31 = vec3.addVector(f7 * d3, f6 * d3, f8 * d3);
+		Vec3d vec31 = vec3.add(f7 * d3, f6 * d3, f8 * d3);
 		return world.rayTraceBlocks(vec3, vec31, par3);
 	}
 	

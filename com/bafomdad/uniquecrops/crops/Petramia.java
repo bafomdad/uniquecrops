@@ -10,6 +10,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,7 @@ public class Petramia extends BlockCropsBase {
 
 	public Petramia() {
 		
-		super(EnumCrops.BEDROCKIUM, false, UCConfig.cropPetramia);
+		super(EnumCrops.BEDROCKIUM);
 	}
 	
 	@Override
@@ -46,25 +47,26 @@ public class Petramia extends BlockCropsBase {
 	@Override
 	public Item getCrop() {
 		
-		return Item.getItemFromBlock(Blocks.OBSIDIAN);
+		return Items.AIR;
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if (!world.isRemote) {
-			if (!player.getHeldItemMainhand().isEmpty()) return false;
-			if (getAge(state) >= getMaxAge()) {
-				boolean flag = world.getGameRules().getBoolean(PICKUP);
-				ItemStack stacky = (flag) ? new ItemStack(Blocks.OBSIDIAN) : new ItemStack(UCBlocks.darkBlock);
-				if (stacky.getItem() == Item.getItemFromBlock(UCBlocks.darkBlock) && world.rand.nextInt(5) != 0)
-					stacky = new ItemStack(Blocks.OBSIDIAN);
-				InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, stacky);
-				world.setBlockState(pos, this.withAge(0), 3);
-				return true;
-			}
-		}
-		return false;
+		return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+//		if (!world.isRemote) {
+//			if (!player.getHeldItemMainhand().isEmpty()) return false;
+//			if (getAge(state) >= getMaxAge()) {
+//				boolean flag = world.getGameRules().getBoolean(PICKUP);
+//				ItemStack stacky = (flag) ? new ItemStack(Blocks.OBSIDIAN) : new ItemStack(UCBlocks.darkBlock);
+//				if (stacky.getItem() == Item.getItemFromBlock(UCBlocks.darkBlock) && world.rand.nextInt(5) != 0)
+//					stacky = new ItemStack(Blocks.OBSIDIAN);
+//				InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, stacky);
+//				world.setBlockState(pos, this.withAge(0), 3);
+//				return true;
+//			}
+//		}
+//		return false;
 	}
 	
 	@Override
@@ -72,27 +74,33 @@ public class Petramia extends BlockCropsBase {
 		
 		if (pos.getY() >= 10) return;
 		
-		if (getAge(state) >= getMaxAge() && world.getGameRules().getBoolean(PICKUP)) {
+		if (getAge(state) >= getMaxAge() /*&& world.getGameRules().getBoolean(PICKUP)*/) {
 			transformBedrock(world, pos);
-			return;
 		}
 		super.updateTick(world, pos, state, rand);
 	}
 	
-	private void transformBedrock(World world, BlockPos pos) {
+	private boolean transformBedrock(World world, BlockPos pos) {
 		
 		Iterable<BlockPos> poslist = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, 0, range));
 		Iterator posit = poslist.iterator();
 		while (posit.hasNext()) {
 			BlockPos looppos = (BlockPos)posit.next();
-			if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == Blocks.BEDROCK) {
-				if (looppos.getY() <= 1) continue;
+			if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == ((UCConfig.convertObsidian) ? Blocks.OBSIDIAN: Blocks.BEDROCK)) {
+//				if (looppos.getY() <= 1) continue;
 				if (world.rand.nextBoolean()) {
 					world.setBlockState(looppos, UCBlocks.darkBlock.getDefaultState(), 2);
 					UCPacketHandler.sendToNearbyPlayers(world, looppos, new PacketUCEffect(EnumParticleTypes.CLOUD, looppos.getX(), looppos.getY(), looppos.getZ(), 6));
-					return;
+					return true;
 				}
 			}
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean canBonemeal(World world, BlockPos pos) {
+		
+		return pos.getY() < 10;
 	}
 }

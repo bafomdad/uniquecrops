@@ -36,13 +36,7 @@ public class BlockTotemhead extends BlockBaseUC {
 		setResistance(20.0F);
 		setTickRandomly(true);
 	}
-	
-	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean wat) {
-        
-    	addCollisionBoxToList(pos, BASE_AABB, collidingBoxes, BASE_AABB);
-    }
-    
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
        

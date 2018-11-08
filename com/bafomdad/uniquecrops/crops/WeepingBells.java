@@ -21,7 +21,7 @@ public class WeepingBells extends BlockCropsBase implements ITileEntityProvider 
 
 	public WeepingBells() {
 		
-		super(EnumCrops.SHYPLANT, false, UCConfig.cropWeepingbells);
+		super(EnumCrops.SHYPLANT);
 		GameRegistry.registerTileEntity(TileShyPlant.class, "TileShyPlant");
 	}
 	

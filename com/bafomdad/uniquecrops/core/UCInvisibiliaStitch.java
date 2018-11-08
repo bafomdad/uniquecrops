@@ -1,17 +1,13 @@
 package com.bafomdad.uniquecrops.core;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.init.UCItems;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.bafomdad.uniquecrops.init.UCItems;
 
 public class UCInvisibiliaStitch extends TextureAtlasSprite {
 
@@ -25,8 +21,7 @@ public class UCInvisibiliaStitch extends TextureAtlasSprite {
 	public void updateAnimation() {
 		
 		EntityPlayerSP p = Minecraft.getMinecraft().player;
-		if (p != null)
-		{
+		if (p != null) {
 			if ((!p.inventory.armorInventory.get(3).isEmpty() && p.inventory.armorInventory.get(3).getItem() == UCItems.glasses3D) || p.capabilities.isCreativeMode)
 				this.frameCounter = 0;
 			else

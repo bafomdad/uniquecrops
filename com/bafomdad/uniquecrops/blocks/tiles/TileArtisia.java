@@ -31,7 +31,7 @@ public class TileArtisia extends TileBaseUC {
 	public BlockPos core = BlockPos.ORIGIN;
 	private ItemStackHandler inv = new ItemStackHandler(1);
 	
-	private static final BlockPos[] GRIDPOS = { 
+	public static final BlockPos[] GRIDPOS = { 
 			new BlockPos(-1, 0, -1), new BlockPos(1, 0, 1), new BlockPos(-1, 0, 1), new BlockPos(1, 0, -1),
 			new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1) 
 	};

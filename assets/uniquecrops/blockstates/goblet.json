@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "filled=true":  { "model": "uniquecrops:goblet_filled" },
+        "filled=false": { "model": "uniquecrops:goblet_empty" }
+    }
+}

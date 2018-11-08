@@ -14,7 +14,7 @@ public abstract class BlockBaseUC extends Block {
 		
 		super(mat);
 		setRegistryName(name);
-		setUnlocalizedName(UniqueCrops.MOD_ID + "." + name);
+		setTranslationKey(UniqueCrops.MOD_ID + "." + name);
 		setCreativeTab(UniqueCrops.TAB);
 		UCBlocks.blocks.add(this);
 	}

@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "uniquecrops:mirror"
+  },
+  "pattern": [
+    "PGI",
+    "PGI",
+    "PGI"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "type": "forge:ore_dict",
+	  "ore": "plankWood"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

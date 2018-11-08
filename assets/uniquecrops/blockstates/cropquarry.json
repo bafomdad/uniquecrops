@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/quarry5"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+        "age":{
+            0:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            2:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            4:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            6:{"textures": {"crop":"uniquecrops:blocks/quarry5"}},
+            7:{"textures": {"crop":"uniquecrops:blocks/quarry5"}}
+        }
+    }
+}

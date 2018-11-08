@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.bafomdad.uniquecrops.UniqueCropsAPI;
+
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -23,6 +25,7 @@ public class UCRecipes {
 		initEdibleMetals();
 		
 		ItemStack awkwardpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("awkward"));
+		ItemStack healpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("healing"));
 		if (!awkwardpotion.isEmpty()) {
 			BrewingRecipeRegistry.addRecipe(awkwardpotion, UCItems.generic.createStack(EnumItems.TIMEDUST), new ItemStack(UCItems.potionreverse));
 			BrewingRecipeRegistry.addRecipe(new ItemStack(UCItems.potionreverse), new ItemStack(Items.GUNPOWDER), UCItems.generic.createStack(EnumItems.POTIONSPLASH));
@@ -56,6 +59,11 @@ public class UCRecipes {
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsImperia), new ItemStack(UCItems.seedsPetramia), new ItemStack(Blocks.END_ROD), new ItemStack(Blocks.GLOWSTONE));
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsLacusia), new ItemStack(Blocks.HOPPER), new ItemStack(UCItems.seedsNormal), new ItemStack(Items.REDSTONE));
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsHexis), new ItemStack(UCItems.seedsMalleatoris), new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsQuarry), new ItemStack(Items.DIAMOND_PICKAXE), new ItemStack(UCItems.seedsPetramia), new ItemStack(UCItems.seedsHexis));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsInstabilis), new ItemStack(UCItems.seedsPrecision), new ItemStack(Blocks.TNT), new ItemStack(Items.REDSTONE));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsIndustria), new ItemStack(UCItems.seedsInstabilis), new ItemStack(Blocks.DOUBLE_PLANT, 1, BlockDoublePlant.EnumPlantType.SUNFLOWER.ordinal()), new ItemStack(Items.POTATO));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsSucco), healpotion, new ItemStack(Items.GHAST_TEAR), new ItemStack(UCItems.seedsInvisibilia));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsDonuts), new ItemStack(Items.CAKE), new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 0));
 	}
 	
 	private static ItemStack getDyeCraftingResult(int meta) {

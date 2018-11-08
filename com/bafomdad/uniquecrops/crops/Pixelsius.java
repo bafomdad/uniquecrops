@@ -13,7 +13,7 @@ public class Pixelsius extends BlockCropsBase {
 
 	public Pixelsius() {
 		
-		super(EnumCrops.PIXELS, false, UCConfig.cropPixelsius);
+		super(EnumCrops.PIXELS);
 	}
 	
 	@Override

@@ -26,8 +26,7 @@ public class DevilSnare extends BlockCropsBase {
 
 	public DevilSnare() {
 		
-		super(EnumCrops.DEVILSNARE, false, UCConfig.cropDevilsnare);
-		this.clickHarvest = false;
+		super(EnumCrops.DEVILSNARE);
 	}
 	
 	@Override
@@ -43,7 +42,7 @@ public class DevilSnare extends BlockCropsBase {
 	}
 	
 	@Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
     	
 		if (this.getAge(state) < getMaxAge())
 			return;

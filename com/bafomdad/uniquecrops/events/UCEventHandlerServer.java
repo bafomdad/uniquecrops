@@ -1,5 +1,7 @@
 package com.bafomdad.uniquecrops.events;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -10,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -27,6 +30,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -47,6 +51,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -56,23 +61,29 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
+import com.bafomdad.uniquecrops.blocks.tiles.TileDigger;
+import com.bafomdad.uniquecrops.blocks.tiles.TileGoblet;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
 import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.SeedBehavior;
+import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.crops.Enderlily;
 import com.bafomdad.uniquecrops.crops.Feroxia;
 import com.bafomdad.uniquecrops.crops.Imperia;
+import com.bafomdad.uniquecrops.crops.Musica;
+import com.bafomdad.uniquecrops.entities.EntityItemDonk;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
+import com.bafomdad.uniquecrops.items.ItemThunderpants;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class UCEventHandlerServer {
 	
@@ -89,15 +100,12 @@ public class UCEventHandlerServer {
 		if (left.isEmpty() || right.isEmpty())
 			return;
 		
-		if ((left.getItem() == Items.ENCHANTED_BOOK && right.getItem() != Items.ENCHANTED_BOOK) || (left.getItem() != Items.ENCHANTED_BOOK && right.getItem() == Items.ENCHANTED_BOOK))
-		{
+		if ((left.getItem() == Items.ENCHANTED_BOOK && right.getItem() != Items.ENCHANTED_BOOK) || (left.getItem() != Items.ENCHANTED_BOOK && right.getItem() == Items.ENCHANTED_BOOK)) {
 			ItemStack output = updateRepairOutput(left, right);
 			ItemStack toCheck = (left.getItem() != Items.ENCHANTED_BOOK) ? left.copy() : right.copy();
-			if (!output.isEmpty() && checkNBT(toCheck))
-			{
+			if (!output.isEmpty() && checkNBT(toCheck)) {
 				int newCost = this.cost;
-				if (newCost > 5)
-				{
+				if (newCost > 5){
 					newCost = newCost - 5;
 					event.setOutput(output.copy());
 					event.setCost(newCost);
@@ -105,8 +113,7 @@ public class UCEventHandlerServer {
 			}
 			return;
 		}
-		else if ((left.getItem() == UCItems.generic && left.getItemDamage() == 18 && right.getItem() instanceof IBookUpgradeable) || (left.getItem() instanceof IBookUpgradeable && right.getItem() == UCItems.generic && right.getItemDamage() == 18))
-		{
+		else if ((left.getItem() == UCItems.generic && left.getItemDamage() == 18 && right.getItem() instanceof IBookUpgradeable) || (left.getItem() instanceof IBookUpgradeable && right.getItem() == UCItems.generic && right.getItemDamage() == 18)) {
 			ItemStack output = (left.getItem() instanceof IBookUpgradeable) ? left.copy(): right.copy();
 			if (!output.isEmpty()) {
 				ItemStack newcopy = output.copy();
@@ -149,13 +156,9 @@ public class UCEventHandlerServer {
 		
 		ItemStack output = event.getItemResult();
 		EntityPlayer player = event.getEntityPlayer();
-		if (output.isEmpty())
-			return;
-		if (player == null)
-			return;
 		
-		if (player.world.isRemote)
-			return;
+		if (output.isEmpty() || player == null) return;
+		if (player.world.isRemote) return;
 		
 		if (output.getItem() instanceof IBookUpgradeable) {
 			int upgradelevel = ((IBookUpgradeable)output.getItem()).getLevel(output);
@@ -165,8 +168,8 @@ public class UCEventHandlerServer {
 					return;
 				}
 				else {
-					player.sendMessage(new TextComponentString(TextFormatting.RED + "You attempt to refine this item, but it breaks.."));
-					output.setCount(0);
+					player.sendMessage(new TextComponentString(TextFormatting.RED + "You attempt to refine this item, but it fails.."));
+					((IBookUpgradeable)output.getItem()).setLevel(output, upgradelevel--);
 				}
 			}
 		}
@@ -184,8 +187,7 @@ public class UCEventHandlerServer {
 			TileEntity te = event.getWorld().getTileEntity(pos);
 			if (te instanceof TileMusicaPlant) {
 				TileMusicaPlant plant = (TileMusicaPlant)te;
-				if (plant.getBeats().size() > 0)
-				{
+				if (plant.getBeats().size() > 0) {
 					for (int i = 0; i < plant.getBeats().size(); i++) {
 						Beat beat = plant.getBeats().get(i);
 						if (beat.beatMatches(new Beat(event.getNote(), event.getInstrument(), event.getOctave(), event.getWorld().getTotalWorldTime()))) {
@@ -220,36 +222,36 @@ public class UCEventHandlerServer {
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
 		}
-		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
-			for (ItemStack stack : event.getDrops()) {
-				if (stack.getItem() == Items.DYE) {
-					int meta = stack.getItemDamage();
-					if (EnumDyeColor.byDyeDamage(meta) == EnumDyeColor.BLUE) {
-						event.getDrops().remove(stack);
-						event.getDrops().add(UCItems.generic.createStack(EnumItems.BLUEDYE));
-						return;
-					}
-				}
-			}
-		}
 //		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
 //			for (ItemStack stack : event.getDrops()) {
 //				if (stack.getItem() == Items.DYE) {
-//					long time = event.getWorld().getWorldTime() % 24000L;
-//					int meta = (int)(time / 1500);
-//					if (EnumDyeColor.byMetadata(meta) == EnumDyeColor.BLUE) {
+//					int meta = stack.getItemDamage();
+//					if (EnumDyeColor.byDyeDamage(meta) == EnumDyeColor.BLUE) {
 //						event.getDrops().remove(stack);
-//						event.getDrops().add(new ItemStack(UCItems.generic, 1, EnumItems.BLUEDYE.ordinal()));
+//						event.getDrops().add(UCItems.generic.createStack(EnumItems.BLUEDYE));
 //						return;
 //					}
-//					LocalDateTime current = LocalDateTime.now();
-//					if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
-//						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getMetadata());
-//					else
-//						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getDyeDamage());
 //				}
 //			}
 //		}
+		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
+			for (ItemStack stack : event.getDrops()) {
+				if (stack.getItem() == Items.DYE) {
+					long time = event.getWorld().getWorldTime() % 24000L;
+					int meta = (int)(time / 1500);
+					if (EnumDyeColor.byMetadata(meta) == EnumDyeColor.BLUE) {
+						event.getDrops().remove(stack);
+						event.getDrops().add(new ItemStack(UCItems.generic, 1, EnumItems.BLUEDYE.ordinal()));
+						return;
+					}
+					LocalDateTime current = LocalDateTime.now();
+					if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
+						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getMetadata());
+					else
+						stack.setItemDamage(EnumDyeColor.byMetadata(meta).getDyeDamage());
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -378,29 +380,58 @@ public class UCEventHandlerServer {
 	}
 	
 	@SubscribeEvent
-	public void checkSlippers(LivingAttackEvent event) {
+	public void onLivingAttack(LivingAttackEvent event) {
 		
 		if (!(event.getEntityLiving() instanceof EntityPlayer) || event.getEntityLiving().world.isRemote)
 			return;
 		
 		EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+		if (event.getSource().getImmediateSource() instanceof EntityLiving) {
+			EntityLiving el = (EntityLiving)event.getSource().getImmediateSource();
+			ItemStack pants = player.inventory.armorInventory.get(EntityEquipmentSlot.LEGS.getIndex());
+			if (!pants.isEmpty() && pants.getItem() == UCItems.thunderpantz) {
+				ItemThunderpants pantz = (ItemThunderpants)pants.getItem();
+				if (pantz.getCharge(pants) < 1F) return;
+				
+				event.setCanceled(true);
+				float toDamage = pantz.getCharge(pants);
+				player.world.addWeatherEffect(new EntityLightningBolt(el.world, el.posX, el.posY, el.posZ, true));
+				el.attackEntityFrom(DamageSource.LIGHTNING_BOLT, toDamage);
+				pantz.setCharge(pants, 0F);
+				return;
+			}
+		}
+		// glass slippers cactus damage cancellation
+		ItemStack boots = player.inventory.armorInventory.get(EntityEquipmentSlot.FEET.getIndex());
+		if (!boots.isEmpty() && boots.getItem() == UCItems.slippers) {
+			BlockPos pos = new BlockPos(MathHelper.floor(player.posX), player.getPosition().down().getY(), MathHelper.floor(player.posZ));
+			Block cactus = player.world.getBlockState(pos).getBlock();
+			if (cactus != null && cactus == Blocks.CACTUS)
+				event.setCanceled(true);
+		}
 		// cactus armor damage reflection
-		if (event.getSource().getTrueSource() instanceof EntityLiving) {
+		if (event.getSource() != DamageSource.MAGIC && event.getSource().getTrueSource() instanceof EntityLiving) {
 			EntityLivingBase elb = (EntityLivingBase)event.getSource().getTrueSource();
 			for (int i = 0; i < 4; i++) {
-				if (!hasCactusArmorPiece(player, i)) {
+				if (hasCactusArmorPiece(player, i)) {
+					float damage = event.getAmount();
+					elb.attackEntityFrom(DamageSource.CACTUS, damage);
 					return;
 				}
 			}
-			float damage = event.getAmount();
-			elb.attackEntityFrom(DamageSource.CACTUS, damage);
+			for (TileEntity tile : event.getEntityLiving().world.loadedTileEntityList) {
+				if (tile instanceof TileGoblet) {
+					EntityLivingBase tagged = ((TileGoblet)tile).getTaggedEntity();
+					if (tagged != null) {
+						event.setCanceled(true);
+						tagged.attackEntityFrom(event.getSource(), event.getAmount());
+						if (!tagged.isEntityAlive())
+							((TileGoblet)tile).eraseTaglock();
+						break;
+					}
+				}
+			}
 		}
-		// glass slippers cactus damage cancellation
-		ItemStack boots = player.inventory.armorInventory.get(0);
-		BlockPos pos = new BlockPos(MathHelper.floor(player.posX), player.getPosition().down().getY(), MathHelper.floor(player.posZ));
-		Block cactus = player.world.getBlockState(pos).getBlock();
-		if ((cactus != null && cactus == Blocks.CACTUS) && (!boots.isEmpty() && boots.getItem() == UCItems.slippers))
-			event.setCanceled(true);
 	}
 	
 	private boolean hasCactusArmorPiece(EntityPlayer player, int i) {
@@ -426,8 +457,7 @@ public class UCEventHandlerServer {
     		if (!chicken.isChild() && tag.hasKey(ItemGeneric.TAG_OVERCLUCK)) {
     			int timer = tag.getInteger(ItemGeneric.TAG_OVERCLUCK);
     			tag.setInteger(ItemGeneric.TAG_OVERCLUCK, --timer);
-    			if (--timer <= 0)
-    			{
+    			if (--timer <= 0) {
     	            chicken.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (chicken.world.rand.nextFloat() - chicken.world.rand.nextFloat()) * 0.2F + 1.0F);
     	            chicken.dropItem(Items.EGG, 1);
     	            timer = chicken.world.rand.nextInt(60) + 900;
@@ -510,6 +540,7 @@ public class UCEventHandlerServer {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		
 		EntityPlayer player = event.player;
+		
 		if (!player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() == UCItems.pixelglasses) {
 			boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
 			if (event.side.isClient() && FMLClientHandler.instance().getClientPlayerEntity().getName().equals(player.getName())) {
@@ -522,11 +553,11 @@ public class UCEventHandlerServer {
 		else if ((player.inventory.armorInventory.get(3).isEmpty() || !player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() != UCItems.pixelglasses) && event.side.isClient())
 			UniqueCrops.proxy.disableBitsShader();
 		
-		if (event.player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
+		if (player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
 			if (event.phase == Phase.START && event.player.world.rand.nextInt(1000) == 0) {
 				Random rand = new Random();
 				if (rand.nextInt(10) != 0) {
-					ItemHandlerHelper.giveItemToPlayer(event.player, UCItems.generic.createStack(EnumItems.ABSTRACT));
+					ItemHandlerHelper.giveItemToPlayer(player, UCItems.generic.createStack(EnumItems.ABSTRACT));
 					if (!event.player.world.isRemote)
 						SeedBehavior.setAbstractCropGrowth(event.player, false);
 				}
@@ -551,6 +582,47 @@ public class UCEventHandlerServer {
 					break;
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onSpawnerSpawn(LivingSpawnEvent.CheckSpawn event) {
+		
+		if (event.getSpawner() == null) return;
+		
+//		if (event.getWorld().getRedstonePowerFromNeighbors(event.getSpawner().getSpawnerPosition()) > 0) {
+//			event.setResult(Result.DENY);
+//			event.getSpawner().resetTimer();
+//			return;
+//		}
+		if (event.getWorld().provider.isNether()) {
+			if (event.getEntityLiving() instanceof EntitySkeleton && event.getWorld().rand.nextInt(4) > 1) {
+				EntityWitherSkeleton skeleton = new EntityWitherSkeleton(event.getWorld());
+				skeleton.setPosition(event.getX(), event.getY(), event.getZ());
+				skeleton.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
+				event.getWorld().spawnEntity(skeleton);
+				event.getEntity().setDead();
+//				event.setResult(Result.DENY);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onCropGrowth(BlockEvent.CropGrowEvent.Pre event) {
+		
+		if (event.getState().getBlock() != Blocks.WHEAT || event.getWorld().isRemote) return;
+		
+		TileEntity tile = UCUtils.getClosestTile(TileDigger.class, event.getWorld(), event.getPos(), 8.0D);
+		if (tile instanceof TileDigger) {
+			if (((TileDigger)tile).isJobDone()) {
+				event.setResult(Result.DEFAULT);
+				return;
+			}
+			boolean flag = ((TileDigger)tile).digBlock(event.getWorld());
+			if (flag)
+				event.setResult(Result.DENY);
+			else
+				event.setResult(Result.DEFAULT);
 		}
 	}
 	

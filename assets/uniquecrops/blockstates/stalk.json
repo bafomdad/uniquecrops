@@ -1,0 +1,17 @@
+{
+  "defaults": {
+  	"textures": {
+		"particle": "minecraft:blocks/hardened_clay_stained_green"
+	}
+  },
+  "variants": {
+		"stalk=north": { "model": "uniquecrops:benchstalk", "y": 0 },
+		"stalk=south": { "model": "uniquecrops:benchstalk", "y": 180 },
+		"stalk=east": { "model": "uniquecrops:benchstalk", "y": 90 },
+		"stalk=west": { "model": "uniquecrops:benchstalk", "y": 270 },
+		"stalk=northeast": { "model": "uniquecrops:diagstalk", "y": 90 },
+		"stalk=northwest": { "model": "uniquecrops:diagstalk", "y": 0 },
+		"stalk=southeast": { "model": "uniquecrops:diagstalk", "y": 180 },
+		"stalk=southwest": { "model": "uniquecrops:diagstalk", "y": 270 }
+  }
+}

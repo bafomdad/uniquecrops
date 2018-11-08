@@ -25,6 +25,8 @@ public class SeedBehavior {
 		if (side != EnumFacing.UP || stack.isEmpty())
 			return false;
 		
+		if (cropBlock == UCBlocks.cropSucco) return false;
+		
 		if (!world.isRemote && cropBlock instanceof BlockCropsBase && !((BlockCropsBase)cropBlock).canPlantCrop()) {
 			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.BARRIER, pos.getX(), pos.getY() + 2, pos.getZ(), 0));
 			return false;

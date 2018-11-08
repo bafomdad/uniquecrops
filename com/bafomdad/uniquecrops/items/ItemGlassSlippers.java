@@ -16,7 +16,7 @@ public class ItemGlassSlippers extends ItemArmor {
 		
 		super(material, renderindex, slot);
 		setRegistryName("slippers");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".slippers");
+		setTranslationKey(UniqueCrops.MOD_ID + ".slippers");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(90);
 		UCItems.items.add(this);

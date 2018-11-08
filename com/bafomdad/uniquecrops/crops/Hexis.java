@@ -26,8 +26,7 @@ public class Hexis extends BlockCropsBase {
 
 	public Hexis() {
 		
-		super(EnumCrops.HEXIS, true, UCConfig.cropHexis);
-		this.clickHarvest = false;
+		super(EnumCrops.HEXIS);
 	}
 	
 	@Override
@@ -67,7 +66,7 @@ public class Hexis extends BlockCropsBase {
 	}
 	
 	@Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
     	
 		if (world.isRemote || isMaxAge(state))
 			return;

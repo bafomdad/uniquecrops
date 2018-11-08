@@ -1,18 +1,23 @@
 package com.bafomdad.uniquecrops;
 
+import org.apache.logging.log4j.Logger;
+
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
+import com.bafomdad.uniquecrops.core.IMCHandler;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
 import com.bafomdad.uniquecrops.integration.crafttweaker.CraftTweakerPlugin;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import com.bafomdad.uniquecrops.proxies.CommonProxy;
 
 @Mod(modid=UniqueCrops.MOD_ID, name=UniqueCrops.MOD_NAME, version=UniqueCrops.VERSION, dependencies = "after:forge@[" + UniqueCrops.FORGE_VER + ",);")
@@ -30,6 +35,7 @@ public class UniqueCrops {
 	public static UniqueCrops instance;
 	
 	public static UCTab TAB = new UCTab();
+	public static Logger logger;
 	
 	public static boolean baublesLoaded = Loader.isModLoaded("baubles");
 	public static boolean ieLoaded = Loader.isModLoaded("immersiveengineering");
@@ -39,6 +45,8 @@ public class UniqueCrops {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		UCPacketHandler.init();
+		logger = event.getModLog();
 
 		proxy.preInit(event);
 		proxy.checkResource();
@@ -48,7 +56,6 @@ public class UniqueCrops {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		
-		proxy.registerColors();
 		proxy.init(event);
 		proxy.initEntityRender();
 	}
@@ -60,5 +67,12 @@ public class UniqueCrops {
 		if (ctLoaded) {
 			CraftTweakerPlugin.apply();
 		}
+	}
+	
+	@Mod.EventHandler
+	public void handleIMC(FMLInterModComms.IMCEvent event) {
+		
+		if (baublesLoaded)
+			IMCHandler.processMessages(event.getMessages());
 	}
 }

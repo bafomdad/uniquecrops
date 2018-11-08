@@ -12,7 +12,7 @@ public class Eula extends BlockCropsBase {
 
 	public Eula() {
 		
-		super(EnumCrops.EULA, false, UCConfig.cropEula);
+		super(EnumCrops.EULA);
 	}
 	
 	@Override

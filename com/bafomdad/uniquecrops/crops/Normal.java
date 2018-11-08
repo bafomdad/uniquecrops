@@ -17,7 +17,7 @@ public class Normal extends BlockCropsBase {
 
 	public Normal() {
 		
-		super(EnumCrops.NORMAL, true, UCConfig.cropNormal);
+		super(EnumCrops.NORMAL);
 	}
 	
 	@Override

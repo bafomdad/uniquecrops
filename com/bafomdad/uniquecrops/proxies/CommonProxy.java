@@ -1,6 +1,8 @@
 package com.bafomdad.uniquecrops.proxies;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -22,18 +24,10 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		MinecraftForge.EVENT_BUS.register(new UCEventRegistry());
-
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "reversepotion"), EntityCustomPotion.class, UniqueCrops.MOD_ID + "reversepotion", 0, UniqueCrops.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "weepingeye"), EntityItemWeepingEye.class, UniqueCrops.MOD_ID + "weepingeye", 1, UniqueCrops.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "hourglass"), EntityItemHourglass.class, UniqueCrops.MOD_ID + "hourglass", 2, UniqueCrops.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "flyingplum"), EntityItemPlum.class, UniqueCrops.MOD_ID + "flyingplum", 3, UniqueCrops.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "eulabook"), EntityEulaBook.class, UniqueCrops.MOD_ID + "eulabook", 4, UniqueCrops.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(UniqueCrops.MOD_ID, "legalstuff"), EntityLegalStuff.class, UniqueCrops.MOD_ID + "legalstuff", 5, UniqueCrops.instance, 64, 1, true);
 	}
 	
 	public void init(FMLInitializationEvent event) {
 		
-		UCPacketHandler.initServer();
 		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), UCConfig.dropRate);
 	}
 	
@@ -60,5 +54,11 @@ public class CommonProxy {
 	
 	public void disableBitsShader() {}
 	
-	public void registerColors() {}
+	public void killMirror(EntityMirror mirror) {}
+	
+	public EntityPlayer getPlayer() { return null; }
+	
+	public void openEulaBook(EntityPlayer player) {}
+	
+	public void spawnParticles(EnumParticleTypes particle, double x, double y, double z, int loopSize) {}
 }

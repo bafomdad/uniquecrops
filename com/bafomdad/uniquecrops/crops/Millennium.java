@@ -18,7 +18,7 @@ public class Millennium extends BlockCropsBase {
 
 	public Millennium() {
 		
-		super(EnumCrops.FOREVERPLANT, true, UCConfig.cropMillennium);
+		super(EnumCrops.FOREVERPLANT);
 	}
 	
 	@Override

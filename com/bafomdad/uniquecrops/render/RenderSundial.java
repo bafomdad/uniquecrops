@@ -1,15 +1,13 @@
 package com.bafomdad.uniquecrops.render;
 
-import java.awt.Color;
-
 import javax.annotation.Nonnull;
-
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.blocks.tiles.TileSundial;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.blocks.tiles.TileSundial;
 
 public class RenderSundial extends TileEntitySpecialRenderer<TileSundial> {
 

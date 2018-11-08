@@ -1,5 +1,5 @@
 {
-  "parent": "uniquecrops:block/hourglass",
+  "parent": "uniquecrops:block/blockhourglass",
       "display": {
         "gui": {
             "rotation": [ 30, 135, 0 ],
@@ -14,7 +14,7 @@
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],
 			"translation": [ 0, 1.5, -2.75 ],
-			"scale": [ 0.375, 0.375, 0.375 ]
+			"scale": [ 0.1875, 0.1875, 0.1875 ]
 		},
 		"ground": {
 			"rotation": [ 0, 90, 0 ],

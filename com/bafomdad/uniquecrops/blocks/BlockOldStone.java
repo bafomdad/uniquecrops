@@ -15,7 +15,7 @@ public class BlockOldStone extends Block {
 		
 		super(Material.ROCK);
 		setRegistryName("old" + name);
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".old" + name);
+		setTranslationKey(UniqueCrops.MOD_ID + ".old" + name);
 		setCreativeTab(UniqueCrops.TAB);
 		setHardness(1.5F);
 		setResistance(15.0F);

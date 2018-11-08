@@ -1,4 +1,4 @@
-package com.bafomdad.uniquecrops.entities;
+package com.bafomdad.uniquecrops.render;
 
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;

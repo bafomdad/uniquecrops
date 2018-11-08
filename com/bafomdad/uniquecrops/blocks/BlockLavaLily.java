@@ -45,7 +45,7 @@ public class BlockLavaLily extends BlockBush {
 		
 		super(Material.GRASS);
 		setRegistryName("lavalily");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".lavalily");
+		setTranslationKey(UniqueCrops.MOD_ID + ".lavalily");
 		setCreativeTab(UniqueCrops.TAB);
 		useNeighborBrightness = true;
 		UCBlocks.blocks.add(this);
@@ -89,7 +89,7 @@ public class BlockLavaLily extends BlockBush {
     }
 	
 	@Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
     	
 		if (world.isRemote)
 			return;

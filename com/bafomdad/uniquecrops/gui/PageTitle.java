@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class PageTitle extends Page {
 
-	final ResourceLocation resource = new ResourceLocation(UniqueCrops.MOD_ID + ":" + "textures/gui/titlepage.png");
+	final ResourceLocation TITLE = new ResourceLocation(UniqueCrops.MOD_ID, "textures/gui/titlepage.png");
 	private String title;
 	
 	public PageTitle(GuiBookGuide screen, String title) {
@@ -29,7 +29,7 @@ public class PageTitle extends Page {
 		if (this.title != null) {
 			
 			TextureManager render = mc.renderEngine;
-			render.bindTexture(resource);
+			render.bindTexture(TITLE);
 			
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

@@ -20,9 +20,8 @@ import com.bafomdad.uniquecrops.init.UCItems;
 public class Precision extends BlockCropsBase {
 
 	public Precision() {
-		
-		super(EnumCrops.PRECISION, false, UCConfig.cropPrecision);
-		this.clickHarvest = false;
+	
+		super(EnumCrops.PRECISION);
 	}
 	
 	@Override

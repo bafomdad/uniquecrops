@@ -17,7 +17,7 @@ public class ItemHandMirror extends Item {
 	public ItemHandMirror() {
 		
 		setRegistryName("handmirror");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".handmirror");
+		setTranslationKey(UniqueCrops.MOD_ID + ".handmirror");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(128);
 		setMaxStackSize(1);

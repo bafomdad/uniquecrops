@@ -39,7 +39,7 @@ public abstract class ItemBauble extends Item implements IBauble {
 		
 		this.type = type;
 		setRegistryName("emblem." + type.toString().toLowerCase());
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".emblem" + type.toString().toLowerCase());
+		setTranslationKey(UniqueCrops.MOD_ID + ".emblem" + type.toString().toLowerCase());
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxStackSize(1);
 		UCItems.items.add(this);

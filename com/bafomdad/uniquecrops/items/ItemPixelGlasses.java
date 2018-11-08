@@ -23,7 +23,7 @@ public class ItemPixelGlasses extends ItemArmor {
 		
 		super(material, renderindex, slot);
 		setRegistryName("pixelglasses");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".pixelglasses");
+		setTranslationKey(UniqueCrops.MOD_ID + ".pixelglasses");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(200);
 		UCItems.items.add(this);

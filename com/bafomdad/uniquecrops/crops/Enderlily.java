@@ -28,7 +28,7 @@ public class Enderlily extends BlockCropsBase {
 
 	public Enderlily() {
 		
-		super(EnumCrops.TELEPLANT, false, UCConfig.cropEnderlily);
+		super(EnumCrops.TELEPLANT);
 	}
 	
 	@Override
@@ -55,6 +55,7 @@ public class Enderlily extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
+		this.checkAndDropBlock(world, pos, state);
 		enderlilyTele(world, pos, state, getAge(state));
 	}
 	

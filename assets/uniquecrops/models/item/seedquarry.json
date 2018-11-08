@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "uniquecrops:items/binding_contract"
+    "layer0": "uniquecrops:items/seeds_quarry"
   }
 }

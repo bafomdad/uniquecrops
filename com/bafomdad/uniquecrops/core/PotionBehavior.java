@@ -1,6 +1,6 @@
 package com.bafomdad.uniquecrops.core;
 
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import net.minecraft.potion.PotionEffect;
 
 public class PotionBehavior {
 
-	private static Map<Potion, Potion> reverseMap = new HashMap<Potion, Potion>();
+	private static Map<Potion, Potion> reverseMap = new IdentityHashMap<Potion, Potion>();
 	
 	static {
 		reverseMap.put(MobEffects.NIGHT_VISION, MobEffects.BLINDNESS);
@@ -51,22 +51,14 @@ public class PotionBehavior {
 	private static void setReverseEffects(PotionEffect pot, EntityPlayer player) {
 		
 		if (hasMappedKey(pot.getPotion())) {
-			for (Map.Entry<Potion, Potion> entry : reverseMap.entrySet()) {
-				if (entry.getKey() == pot.getPotion()) {
-					player.addPotionEffect(new PotionEffect(entry.getValue(), pot.getDuration(), pot.getAmplifier()));
-					player.removePotionEffect(pot.getPotion());
-					return;
-				}
-			}
+			player.addPotionEffect(new PotionEffect(reverseMap.get(pot), pot.getDuration(), pot.getAmplifier()));
+			player.removePotionEffect(pot.getPotion());
+			return;
 		}
 		else if (hasMappedValue(pot.getPotion())) {
-			for (Map.Entry<Potion, Potion> entry : reverseMap.entrySet()) {
-				if (entry.getValue() == pot.getPotion()) {
-					player.addPotionEffect(new PotionEffect(entry.getKey(), pot.getDuration(), pot.getAmplifier()));
-					player.removePotionEffect(pot.getPotion());
-					return;
-				}
-			}
+			player.addPotionEffect(new PotionEffect(reverseMap.get(pot), pot.getDuration(), pot.getAmplifier()));
+			player.removePotionEffect(pot.getPotion());
+			return;
 		}
 	}
 }

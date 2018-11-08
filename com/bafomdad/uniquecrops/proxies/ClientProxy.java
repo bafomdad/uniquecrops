@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.proxies;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -13,35 +14,46 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.UCShaderUtil;
 import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.entities.EntityBattleCrop;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
 import com.bafomdad.uniquecrops.entities.EntityLegalStuff;
-import com.bafomdad.uniquecrops.entities.RenderLegalStuff;
-import com.bafomdad.uniquecrops.entities.RenderThrowable;
+import com.bafomdad.uniquecrops.entities.EntityMirror;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
+import com.bafomdad.uniquecrops.gui.GuiBookEula;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCKeys;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
+import com.bafomdad.uniquecrops.render.RenderBattleCropEntity;
+import com.bafomdad.uniquecrops.render.RenderMirrorEntity;
+import com.bafomdad.uniquecrops.render.RenderThrowable;
+import com.bafomdad.uniquecrops.render.UCBipedLayerRenderer;
+import com.bafomdad.uniquecrops.render.WorldRenderHandler;
 
 public class ClientProxy extends CommonProxy {
 	
 	public static boolean flag = false;
-	private final ResourceLocation shader = new ResourceLocation("minecraft", "shaders/post/bits.json");
+	public static final ResourceLocation SHADER = new ResourceLocation("minecraft", "shaders/post/bits.json");
 	
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
@@ -61,7 +73,6 @@ public class ClientProxy extends CommonProxy {
 	public void initAllModels() {
 		
 		UCBlocks.initModels();
-		UCPacketHandler.initClient();
 	}
 	
 	@Override
@@ -74,7 +85,12 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomPotion.class, new RenderThrowable(rm, UCItems.generic, 13, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemWeepingEye.class, new RenderThrowable(rm, UCItems.generic, 16, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEulaBook.class, new RenderThrowable(rm, UCItems.generic, 24, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityLegalStuff.class, new RenderLegalStuff(rm));
+		
+		Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+		RenderPlayer render = skinMap.get("default");
+		render.addLayer(new UCBipedLayerRenderer());
+		render = skinMap.get("slim");
+		render.addLayer(new UCBipedLayerRenderer());
 	}
 	
 	@Override
@@ -88,6 +104,12 @@ public class ClientProxy extends CommonProxy {
 					flag = true;
 				fis.close();
 			}
+			InputStream fis2 = getClass().getClassLoader().getResourceAsStream("assets/uniquecrops/textures/blocks/invisiglass.png");
+			String md5Glass = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis2);
+			if (!md5Glass.equals(UCStrings.MD5_GLASS))
+				flag = true;
+			fis2.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,43 +129,45 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void enableBitsShader() {
 		
-		if (OpenGlHelper.shadersSupported) {
-			Minecraft mc = Minecraft.getMinecraft();
-			EntityRenderer renderer = mc.entityRenderer;
-			if (renderer.getShaderGroup() != null)
-				renderer.getShaderGroup().deleteShaderGroup();
-			
-			renderer.loadShader(this.shader);
-		}
+		UCShaderUtil.enableScreenShader(SHADER);
 	}
 	
 	@Override
 	public void disableBitsShader() {
 		
-		if (OpenGlHelper.shadersSupported) {
-			EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
-			if (renderer.getShaderGroup() != null && renderer.getShaderGroup().getShaderGroupName().contains("bits.json"))
-				renderer.getShaderGroup().deleteShaderGroup();
-		}
+		UCShaderUtil.disableScreenShader(SHADER);
 	}
 	
 	@Override
-	public void registerColors() {
+	public void killMirror(EntityMirror mirror) {
+		
+		WorldRenderHandler.pendingRemoval.add(mirror);
+	}
 	
-		ItemColors ic = Minecraft.getMinecraft().getItemColors();
-		ic.registerItemColorHandler(new IItemColor() 
-		{	
-			@Override
-			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-				
-				if (!stack.isEmpty()) {
-					if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionreverse) {
-						if (tintIndex == 0)
-							return 0x845c28;
-					}
-				}
-				return 0xffffff;
-			}
-		}, UCItems.generic, UCItems.potionreverse);
+	public void openEulaBook(EntityPlayer player) {
+
+		Minecraft.getMinecraft().displayGuiScreen(new GuiBookEula(player));
+	}
+	
+	@Override
+	public EntityPlayer getPlayer() {
+		
+		return Minecraft.getMinecraft().player;
+	}
+	
+	@Override
+	public void spawnParticles(EnumParticleTypes particle, double x, double y, double z, int loopSize) {
+		
+		World world = Minecraft.getMinecraft().world;
+		x += 0.5D;
+		z += 0.5D;
+		
+		if (loopSize > 0) {
+			for (int i = 0; i < loopSize; i++)
+				world.spawnParticle(particle, x + world.rand.nextFloat(), y, z + world.rand.nextFloat(), 0, 0, 0);
+		}
+		else
+			world.spawnParticle(particle, x, y, z, 0, 0, 0);
+		
 	}
 }

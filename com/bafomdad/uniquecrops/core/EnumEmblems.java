@@ -11,5 +11,7 @@ public enum EnumEmblems {
 	LEAF,
 	FOOD,
 	RAINBOW,
-	PACIFISM;
+	PACIFISM,
+	BLACKSMITH,
+	WEIGHT;
 }

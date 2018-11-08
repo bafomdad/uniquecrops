@@ -31,7 +31,7 @@ public class ItemEdibleMetal extends ItemFood {
 		super(metal.getAmount(), metal.getSaturation(), false);
 		this.metal = metal;
 		setRegistryName("ediblemetal." + itemname);
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".ediblemetal." + itemname);
+		setTranslationKey(UniqueCrops.MOD_ID + ".ediblemetal." + itemname);
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}

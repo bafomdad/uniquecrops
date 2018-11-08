@@ -13,7 +13,7 @@ public class BlockOldGravel extends BlockGravel {
 	public BlockOldGravel() {
 		
 		setRegistryName("oldgravel");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".oldgravel");
+		setTranslationKey(UniqueCrops.MOD_ID + ".oldgravel");
 		setCreativeTab(UniqueCrops.TAB);
 		setHardness(0.6F);
 		setSoundType(SoundType.GROUND);

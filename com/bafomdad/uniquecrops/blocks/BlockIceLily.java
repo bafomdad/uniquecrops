@@ -44,7 +44,7 @@ public class BlockIceLily extends BlockBush {
 		
 		super(Material.GRASS);
 		setRegistryName("icelily");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".icelily");
+		setTranslationKey(UniqueCrops.MOD_ID + ".icelily");
 		setSoundType(SoundType.SNOW);
 		setCreativeTab(UniqueCrops.TAB);
 		useNeighborBrightness = true;
@@ -89,7 +89,7 @@ public class BlockIceLily extends BlockBush {
     }
 	
 	@Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
     	
 		if (world.isRemote)
 			return;

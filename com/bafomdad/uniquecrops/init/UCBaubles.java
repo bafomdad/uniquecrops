@@ -12,6 +12,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.EnumItems;
@@ -29,7 +30,9 @@ public class UCBaubles {
 		emblemIronstomach,
 		emblemDefense,
 		emblemLeaf,
-		emblemPacifism;
+		emblemPacifism,
+		emblemBlacksmith,
+		emblemWeight;
 	
 	public static void preInit() {
 		
@@ -43,24 +46,24 @@ public class UCBaubles {
 		emblemDefense = new EmblemDefense();
 		emblemLeaf = new EmblemLeaf();
 		emblemPacifism = new EmblemPacifism();
+		emblemBlacksmith = new EmblemBlacksmith();
+		emblemWeight = new EmblemWeight();
 	}
 	
 	public static void init(RegistryEvent.Register<Item> event) {
 		
-		event.getRegistry().register(emblemMelee);
-		event.getRegistry().register(emblemScarab);
-		event.getRegistry().register(emblemTransformation);
-		event.getRegistry().register(emblemPowerfist);
-		event.getRegistry().register(emblemRainbow);
-		event.getRegistry().register(emblemFood);
-		event.getRegistry().register(emblemIronstomach);
-		event.getRegistry().register(emblemDefense);
-		event.getRegistry().register(emblemLeaf);
-		event.getRegistry().register(emblemPacifism);
-	}
-	
-	private static void registerItemModel(Item item) {
-		
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+		IForgeRegistry<Item> r = event.getRegistry();
+		r.register(emblemMelee);
+		r.register(emblemScarab);
+		r.register(emblemTransformation);
+		r.register(emblemPowerfist);
+		r.register(emblemRainbow);
+		r.register(emblemFood);
+		r.register(emblemIronstomach);
+		r.register(emblemDefense);
+		r.register(emblemLeaf);
+		r.register(emblemPacifism);
+		r.register(emblemBlacksmith);
+		r.register(emblemWeight);
 	}
 }

@@ -11,17 +11,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.GameData;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.ICropBook;
@@ -32,17 +29,27 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	
 	private EnumCrops type;
 	private boolean extra;
-	protected boolean canPlant;
-	protected boolean clickHarvest;
+	private boolean clickHarvest;
+	private boolean bonemealable;
 
-	public BlockCropsBase(EnumCrops type, boolean extra, boolean canPlant) {
+	private BlockCropsBase(EnumCrops type, boolean extra, boolean canPlant) {
 		
 		this.type = type;
 		this.extra = extra;
-		this.canPlant = canPlant;
 		this.clickHarvest = true;
 		setRegistryName("crop" + type.getName());
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".crop" + type.getName());
+		setTranslationKey(UniqueCrops.MOD_ID + ".crop" + type.getName());
+		UCBlocks.blocks.add(this);
+	}
+	
+	public BlockCropsBase(EnumCrops type) {
+		
+		this.type = type;
+		this.extra = true;
+		this.clickHarvest = true;
+		this.bonemealable = true;
+		setRegistryName("crop" + type.getName());
+		setTranslationKey(UniqueCrops.MOD_ID + ".crop" + type.getName());
 		UCBlocks.blocks.add(this);
 	}
 	
@@ -53,27 +60,18 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	
 	public boolean canPlantCrop() {
 		
-		return canPlant;
+		return type.getConfig();
 	}
 	
     @Override
     public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
 
-    	return canBonemeal(world, state, pos);
+    	return canBonemeal(world, pos);
     }
     
-	private boolean canBonemeal(World world, IBlockState state, BlockPos pos) {
+	public boolean canBonemeal(World world, BlockPos pos) {
 		
-		if (type == EnumCrops.BLAZINGPLANT && !world.provider.doesWaterVaporize())
-			return false;
-		if (type == EnumCrops.BOOKPLANT || type == EnumCrops.PRECISION || type == EnumCrops.FOREVERPLANT || type == EnumCrops.SHYPLANT || type == EnumCrops.MUSICAPLANT || type == EnumCrops.WAFFLE || type == EnumCrops.ANVILICIOUS || type == EnumCrops.IMPERIA || type == EnumCrops.HEXIS)
-			return false;
-		if (type == EnumCrops.HIGHPLANT && pos.getY() <= 100)
-			return false;
-		if (type == EnumCrops.BEDROCKIUM && pos.getY() >= 10)
-			return false;
-		
-		return true;
+		return bonemealable;
 	}
 	
 	@Override
@@ -144,14 +142,13 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     		double y = pos.getY() + 0.5D;
     		double z = pos.getZ();
     		
-    		for (int i = 0; i < rand.nextInt(4) + 1; i++) {
-    			if (rand2 > 0) {
-    				if (rand.nextInt(rand2) == 0)
-            			world.spawnParticle(particle, x + rand.nextFloat(), y, z + rand.nextFloat(), 0, 0, 0);
-    			}
-    			else
-        			world.spawnParticle(particle, x + rand.nextFloat(), y, z + rand.nextFloat(), 0, 0, 0);
+    		if (rand2 > 0) {
+    			for (int i = 0; i < rand.nextInt(rand2) + 1; i++)
+    				world.spawnParticle(particle, x + rand.nextFloat(), y, z + rand.nextFloat(), 0, 0, 0);
+    			return;
     		}
+    		for (int i = 0; i < rand.nextInt(4) + 1; i++)
+    			world.spawnParticle(particle, x + rand.nextFloat(), y, z + rand.nextFloat(), 0, 0, 0);
 		}
 	}
 	
@@ -159,5 +156,26 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	public String getBookDescription() {
 		
 		return UniqueCrops.MOD_ID + ".book.page" + type.getName();
+	}
+	
+	// new methods here
+	public void setBonemealable(boolean flag) {
+		
+		this.bonemealable = flag;
+	}
+	
+	public void setClickHarvest(boolean flag) {
+		
+		this.clickHarvest = flag;
+	}
+	
+	public boolean getClickHarvest() {
+		
+		return clickHarvest;
+	}
+	
+	public void setExtraDrops(boolean flag) {
+		
+		this.extra = flag;
 	}
 }

@@ -23,7 +23,7 @@ public class ItemPrecisionShovel extends ItemSpade implements IBookUpgradeable {
 		
 		super(ToolMaterial.DIAMOND);
 		setRegistryName("precision.shovel");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".precision.shovel");
+		setTranslationKey(UniqueCrops.MOD_ID + ".precision.shovel");
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}

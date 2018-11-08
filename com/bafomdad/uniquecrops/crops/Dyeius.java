@@ -30,7 +30,7 @@ public class Dyeius extends BlockCropsBase {
 
 	public Dyeius() {
 		
-		super(EnumCrops.DYE, true, UCConfig.cropDyeius);
+		super(EnumCrops.DYE);
 	}
 	
 	@Override
@@ -45,22 +45,22 @@ public class Dyeius extends BlockCropsBase {
 		return Items.DYE;
 	}
 	
-	@Override
-	public int damageDropped(IBlockState state) {
-		
-		World world = FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld();
-		if (world != null) {
-			long time = world.getWorldTime() % 24000L;
-			int meta = (int)(time / 1500);
-			
-			LocalDateTime current = LocalDateTime.now();
-			if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
-				return EnumDyeColor.byMetadata(meta).getMetadata();
-			else
-				return EnumDyeColor.byMetadata(meta).getDyeDamage();
-		}
-		return 0;
-	}
+//	@Override
+//	public int damageDropped(IBlockState state) {
+//		
+//		World world = FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld();
+//		if (world != null) {
+//			long time = world.getWorldTime() % 24000L;
+//			int meta = (int)(time / 1500);
+//			
+//			LocalDateTime current = LocalDateTime.now();
+//			if (current.getDayOfWeek() == DayOfWeek.FRIDAY)
+//				return EnumDyeColor.byMetadata(meta).getMetadata();
+//			else
+//				return EnumDyeColor.byMetadata(meta).getDyeDamage();
+//		}
+//		return 0;
+//	}
 	
     public int quantityDropped(IBlockState state, int fortune, Random random) {
         

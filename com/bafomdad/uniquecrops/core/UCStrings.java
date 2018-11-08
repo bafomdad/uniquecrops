@@ -7,13 +7,17 @@ public class UCStrings {
 	private static final String BASE = UniqueCrops.MOD_ID;
 	public static final String TOOLTIP = BASE + ".tooltip.";
 	
-	// NBT TAGS
+	// MUSICA PLANT TAGS
 	public static String TAG_BEATLIST = "UC_tagBeatlist";
 	public static String TAG_BEAT = "UC_tagBeat";
 	public static String TAG_NOTE = "UC_tagNote";
 	public static String TAG_INST = "UC_tagInstrument";
 	public static String TAG_OCT = "UC_tagOctave";
 	public static String TAG_TIME = "UC_tagWorldtime";
+	
+	// MISC
+	public static String BLACKLIST_EFFECT = "blacklistPotionEffect";
+	public static String TAG_LOCK = "UC_tagLock";
 	
 	// BOOK
 	private static final String BOOK = BASE + ".book";
@@ -51,4 +55,5 @@ public class UCStrings {
 		"B3B847DF6200864E7766F0FACBDDA8C8".toLowerCase(),
 		"930E44CD55FD29745EDF84B068282F28".toLowerCase()
 	};
+	public static String MD5_GLASS = "4AED5AFD5333591CFD505049A39F4551".toLowerCase();
 }

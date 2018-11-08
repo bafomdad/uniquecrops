@@ -8,6 +8,6 @@ public class Abstract extends BlockCropsBase {
 
 	public Abstract() {
 		
-		super(EnumCrops.ABSTRACT, false, UCConfig.cropAbstract);
+		super(EnumCrops.ABSTRACT);
 	}
 }

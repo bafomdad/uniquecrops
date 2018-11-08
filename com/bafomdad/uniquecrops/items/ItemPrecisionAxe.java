@@ -23,7 +23,7 @@ public class ItemPrecisionAxe extends ItemAxe implements IBookUpgradeable {
 		
 		super(ToolMaterial.DIAMOND);
 		setRegistryName("precision.axe");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".precision.axe");
+		setTranslationKey(UniqueCrops.MOD_ID + ".precision.axe");
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}

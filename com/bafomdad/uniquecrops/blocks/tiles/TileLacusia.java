@@ -42,7 +42,7 @@ public class TileLacusia extends TileBaseUC {
 				}
 				if (tileInv != null) {
 //					if (!directionMatches(EnumFacing.getHorizontal(dir))) {
-						IItemHandler cap = tileInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.getHorizontal(dir));
+						IItemHandler cap = tileInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.byHorizontalIndex(dir));
 						for (int i = 0; i < cap.getSlots(); i++) {
 							ItemStack extract = cap.getStackInSlot(i);
 							if (!extract.isEmpty()) {

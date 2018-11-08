@@ -12,6 +12,15 @@ public class UCConfig {
 	@Comment({"Drop weight for the mod's starting seed. The higher the number, the more often it'll drop."})
 	public static int dropRate = 5;
 	
+	@Comment({"Lets the Petramia crop convert obsidian instead of bedrock. Use if there are no bedrock nearby to convert."})
+	public static boolean convertObsidian = false;
+	
+//	@Comment({"Mob spawners will not spawn mobs if a redstone signal is applied."})
+//	public static boolean redstoneSpawner = false;
+	
+	@Comment({"Skeleton spawners placed in the nether has a chance of spawning wither skeletons instead."})
+	public static boolean witherSkeletonSpawner = false;
+	
 	// CROPS
 	@Comment({"Can plant Normie seeds"})
 	public static boolean cropNormal = true;
@@ -93,4 +102,19 @@ public class UCConfig {
 	
 	@Comment({"Can plant Hexis seeds"})
 	public static boolean cropHexis = true;
+	
+	@Comment({"Can plant Industria seeds"})
+	public static boolean cropIndustria = true;
+	
+	@Comment({"Can plant Quarry seeds"})
+	public static boolean cropQuarry = true;
+	
+	@Comment({"Can plant Donut seeds"})
+	public static boolean cropDonutSteel = true;
+	
+	@Comment({"Can plant Instabilis seeds"})
+	public static boolean cropInstabilis = true;
+	
+	@Comment({"Can plant Succo seeds"})
+	public static boolean cropVampire = true;
 }

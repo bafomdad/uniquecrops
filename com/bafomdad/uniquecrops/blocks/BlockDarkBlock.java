@@ -24,7 +24,6 @@ public class BlockDarkBlock extends BlockBaseUC {
 		
 		super("darkblock", Material.ROCK);
 		setSoundType(SoundType.STONE);
-		setHardness(10.0F);
 		setResistance(6000000.0F);
 		setBlockUnbreakable();
 	}

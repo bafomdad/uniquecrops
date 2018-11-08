@@ -19,8 +19,7 @@ public class Invisibilia extends BlockCropsBase {
 
 	public Invisibilia() {
 		
-		super(EnumCrops.INVISIBLEPLANT, true, UCConfig.cropInvisibilia);
-		this.clickHarvest = false;
+		super(EnumCrops.INVISIBLEPLANT);
 	}
 	
 	@Override
@@ -55,9 +54,8 @@ public class Invisibilia extends BlockCropsBase {
 	@Override
     public RayTraceResult collisionRayTrace(IBlockState state, World world, BlockPos pos, Vec3d start, Vec3d end) {
 		
-		if (!UniqueCrops.proxy.invisiTrace()) {
-			return null;
-		}
+		if (!UniqueCrops.proxy.invisiTrace()) return null;
+
 		return super.collisionRayTrace(state, world, pos, start, end);
 	}
 }

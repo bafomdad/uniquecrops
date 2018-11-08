@@ -1,9 +1,9 @@
 package com.bafomdad.uniquecrops.network;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
+
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -52,18 +52,7 @@ public class PacketUCEffect implements IMessage {
 		@Override
 		public IMessage onMessage(PacketUCEffect message, MessageContext ctx) {
 
-			World world = Minecraft.getMinecraft().world;
-			double x = message.x + 0.5D;
-			double y = message.y;
-			double z = message.z + 0.5D;
-			
-			if (message.loopSize > 0) {
-				for (int i = 0; i < message.loopSize; i++)
-					world.spawnParticle(message.type, x + world.rand.nextFloat(), y, z + world.rand.nextFloat(), 0, 0, 0);
-			}
-			else
-				world.spawnParticle(message.type, x, y, z, 0, 0, 0);
-			
+			UniqueCrops.proxy.spawnParticles(message.type, message.x, message.y, message.z, message.loopSize);
 			return null;
 		}
 	}

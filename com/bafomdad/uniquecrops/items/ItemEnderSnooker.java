@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -35,7 +36,7 @@ public class ItemEnderSnooker extends Item {
 	public ItemEnderSnooker() {
 		
 		setRegistryName("endersnooker");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".endersnooker");
+		setTranslationKey(UniqueCrops.MOD_ID + ".endersnooker");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(16);
 		setMaxStackSize(1);
@@ -48,9 +49,11 @@ public class ItemEnderSnooker extends Item {
 		if (player.isSneaking()) {
 			IBlockState state = world.getBlockState(pos);
 			if (state.getBlock() == UCBlocks.darkBlock) {
-				if (!world.isRemote)
+				if (!world.isRemote) {
+					if (pos.getY() <= 1)
+						world.setBlockState(pos, Blocks.BEDROCK.getDefaultState(), 2);
 					world.setBlockToAir(pos);
-				
+				}
 				ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(UCBlocks.darkBlock));
 				return EnumActionResult.SUCCESS;
 			}
@@ -108,7 +111,7 @@ public class ItemEnderSnooker extends Item {
 			targetX += vec3.x;
 			targetY += vec3.y;
 			targetZ += vec3.z;
-			distanceTraveled += vec3.lengthVector();
+			distanceTraveled += vec3.length();
 			AxisAlignedBB bb = new AxisAlignedBB(targetX-radius, targetY-radius, targetZ-radius, targetX+radius, targetY+radius, targetZ+radius);
 			List<EntityLivingBase> list = seeker.world.getEntitiesWithinAABB(EntityLivingBase.class, bb);
 			for (EntityLivingBase target : list) {

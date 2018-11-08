@@ -17,7 +17,7 @@ public class Collis extends BlockCropsBase {
 
 	public Collis() {
 		
-		super(EnumCrops.HIGHPLANT, true, UCConfig.cropCollis);
+		super(EnumCrops.HIGHPLANT);
 	}
 	
 	@Override
@@ -62,5 +62,11 @@ public class Collis extends BlockCropsBase {
 				world.setBlockState(pos, ((BlockCrops)state.getBlock()).withAge(age + 1));
 			}
 		}
+	}
+	
+	@Override
+	public boolean canBonemeal(World world, BlockPos pos) {
+		
+		return pos.getY() > 100;
 	}
 }

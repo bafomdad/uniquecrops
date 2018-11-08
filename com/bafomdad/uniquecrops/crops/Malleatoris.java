@@ -31,8 +31,7 @@ public class Malleatoris extends BlockCropsBase {
 
 	public Malleatoris() {
 		
-		super(EnumCrops.ANVILICIOUS, false, UCConfig.cropMalleatoris);
-		this.clickHarvest = false;
+		super(EnumCrops.ANVILICIOUS);
 	}
 	
 	@Override

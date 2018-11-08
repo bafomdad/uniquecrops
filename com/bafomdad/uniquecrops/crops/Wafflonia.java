@@ -25,7 +25,7 @@ public class Wafflonia extends BlockCropsBase {
 
 	public Wafflonia() {
 		
-		super(EnumCrops.WAFFLE, true, UCConfig.cropWafflonia);
+		super(EnumCrops.WAFFLE);
 	}
 	
 	@Override
@@ -43,8 +43,23 @@ public class Wafflonia extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
+		this.checkAndDropBlock(world, pos, state);
+		if (!waffleAbout(world, state, pos)) return;
+		
+		super.updateTick(world, pos, state, rand);
+	}
+	
+    @Override
+    public void grow(World world, BlockPos pos, IBlockState state) {
+    	
+    	if (waffleAbout(world, state, pos))
+    		super.grow(world, pos, state);
+    }
+    
+    public boolean waffleAbout(World world, IBlockState state, BlockPos pos) {
+    	
 		if (this.getAge(state) >= getMaxAge())
-			return;
+			return false;
 		
 		int friends = 0;
 		
@@ -59,8 +74,8 @@ public class Wafflonia extends BlockCropsBase {
 			}
 		}
 		if ((friends != 0 && friends % 4 != 0) || friends == 0)
-			return;
+			return false;
 		
-		super.updateTick(world, pos, state, rand);
-	}
+		return true;
+    }
 }

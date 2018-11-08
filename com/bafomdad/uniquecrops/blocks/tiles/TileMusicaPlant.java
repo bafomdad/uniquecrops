@@ -18,7 +18,7 @@ import com.bafomdad.uniquecrops.init.UCBlocks;
 
 public class TileMusicaPlant extends TileBaseUC implements ITickable {
 	
-	private List<Beat> beats = new ArrayList<Beat>();
+	private List<Beat> beats = new ArrayList();
 	private long lastBeat = 0L;
 	private int musicStrength;
 

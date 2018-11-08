@@ -12,10 +12,10 @@ public class UCTab extends CreativeTabs {
 		
 		super("tabUniqueCrops");
 	}
-	
+
 	@Override
-	public ItemStack getTabIconItem() {
-		
+	public ItemStack createIcon() {
+
 		return new ItemStack(UCItems.generic, 1, 0);
 	}
 }

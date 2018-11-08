@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "uniquecrops:goblet"
+  },
+  "pattern": [
+    "g g",
+    "gRg",
+    " P "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+	"P": {
+	  "item": "minecraft:light_weighted_pressure_plate"
+	}
+  }
+}

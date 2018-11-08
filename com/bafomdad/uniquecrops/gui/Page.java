@@ -50,7 +50,7 @@ public abstract class Page {
 		for (Block crop : UCBlocks.blocks) {
 			if (crop instanceof ICropBook) {
 				ICropBook book = (ICropBook)crop;
-				GuiBookGuide.pageList.add(new PageImage(screen, crop, I18n.format(crop.getUnlocalizedName() + ".name")));
+				GuiBookGuide.pageList.add(new PageImage(screen, crop, I18n.format(crop.getTranslationKey() + ".name")));
 				GuiBookGuide.pageList.add(new PageText(screen, book.getBookDescription()));
 			}
 		}

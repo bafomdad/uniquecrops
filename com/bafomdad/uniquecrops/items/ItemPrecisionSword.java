@@ -21,7 +21,7 @@ public class ItemPrecisionSword extends ItemSword implements IBookUpgradeable {
 		
 		super(ToolMaterial.DIAMOND);
 		setRegistryName("precision.sword");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".precision.sword");
+		setTranslationKey(UniqueCrops.MOD_ID + ".precision.sword");
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}

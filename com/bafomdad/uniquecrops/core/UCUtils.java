@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -64,5 +67,20 @@ public class UCUtils {
 				}
 			}
 		}
+	}
+	
+	public static TileEntity getClosestTile(Class tileToFind, World world, BlockPos pos, double dist) {
+		
+		TileEntity closest = null;
+		for (TileEntity tile : world.loadedTileEntityList) {
+			if (tile.getClass() == tileToFind) {
+				double distance = tile.getPos().distanceSq(pos);
+				if (closest == null && distance <= dist) {
+					closest = tile;
+					break;
+				}
+			}
+		}
+		return closest;
 	}
 }

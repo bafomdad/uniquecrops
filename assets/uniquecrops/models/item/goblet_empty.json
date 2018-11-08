@@ -1,10 +1,10 @@
 {
-  "parent": "uniquecrops:block/totemhead",
+  "parent": "uniquecrops:block/goblet_empty",
       "display": {
         "gui": {
             "rotation": [ 30, 135, 0 ],
             "translation": [ 0, 0, 0],
-            "scale":[ 0.5, 0.5, 0.5 ]
+            "scale":[ 0.625, 0.625, 0.625 ]
         },
         "fixed": {
             "rotation": [ 0, 90, 0 ],

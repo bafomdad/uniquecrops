@@ -53,7 +53,12 @@ public class UCItems {
 		seedsMalleatoris,
 		seedsImperia,
 		seedsLacusia,
-		seedsHexis;
+		seedsHexis,
+		seedsIndustria,
+		seedsQuarry,
+		seedsDonuts,
+		seedsInstabilis,
+		seedsSucco;
 	
 	public static ItemGeneric generic;
 	public static Item largeplum;
@@ -66,6 +71,10 @@ public class UCItems {
 	public static Item endersnooker;
 	public static Item handmirror;
 	public static Item batstaff;
+	public static Item beanBattery;
+	public static Item wildwoodStaff;
+	public static Item vampiricOintment;
+	public static Item steelDonut;
 	
 	public static Item edibleDiamond;
 	public static Item edibleLapis;
@@ -78,6 +87,7 @@ public class UCItems {
 	public static ItemArmor pixelglasses;
 	public static ItemArmor poncho;
 	public static ItemArmor slippers;
+	public static ItemArmor thunderpantz;
 	public static ItemTool precisionPick;
 	public static ItemTool precisionAxe;
 	public static ItemTool precisionShovel;
@@ -89,6 +99,7 @@ public class UCItems {
 	public static final ItemArmor.ArmorMaterial ponchomaterial = EnumHelper.addArmorMaterial("poncho", "uniquecrops:poncho", 112, new int[] { 1, 2, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	public static final ItemArmor.ArmorMaterial slippermaterial = EnumHelper.addArmorMaterial("slippers", "uniquecrops:slippers", 90, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0F);
 	public static final ItemArmor.ArmorMaterial cactusmaterial = EnumHelper.addArmorMaterial("cactus", "uniquecrops:cactus", 13, new int[] { 1, 4, 5, 2 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
+	public static final ItemArmor.ArmorMaterial thundermaterial = EnumHelper.addArmorMaterial("thunder", "uniquecrops:thunderpantz", 15, new int[] { 1, 4, 5, 2 }, 6, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	
 	public static void init() {
 		
@@ -122,6 +133,11 @@ public class UCItems {
 		seedsImperia = new ItemSeedsUC(UCBlocks.cropImperia);
 		seedsLacusia = new ItemSeedsUC(UCBlocks.cropLacusia);
 		seedsHexis = new ItemSeedsUC(UCBlocks.cropHexis);
+		seedsIndustria = new ItemSeedsUC(UCBlocks.cropIndustria);
+		seedsDonuts = new ItemSeedsUC(UCBlocks.cropDonutSteel);
+		seedsInstabilis = new ItemSeedsUC(UCBlocks.cropInstabilis);
+		seedsSucco = new ItemSeedsUC(UCBlocks.cropSucco);
+		seedsQuarry = new ItemSeedsUC(UCBlocks.cropQuarry);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(1, 0.6F, true, "largeplum");
@@ -134,6 +150,10 @@ public class UCItems {
 		endersnooker = new ItemEnderSnooker();
 		handmirror = new ItemHandMirror();
 		batstaff = new ItemBatStaff();
+		beanBattery = new ItemBeanBattery();
+		wildwoodStaff = new ItemWildwoodStaff();
+		vampiricOintment = new ItemVampireOintment();
+		steelDonut = new ItemSteelDonut();
 		
 		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
 		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");
@@ -146,18 +166,19 @@ public class UCItems {
 		pixelglasses = new ItemPixelGlasses(pixelmaterial, 1, EntityEquipmentSlot.HEAD);
 		poncho = new ItemPoncho(ponchomaterial, 1, EntityEquipmentSlot.CHEST);
 		slippers = new ItemGlassSlippers(slippermaterial, 2, EntityEquipmentSlot.FEET);
+		thunderpantz = new ItemThunderpants(thundermaterial, 2, EntityEquipmentSlot.LEGS);
 		precisionPick = new ItemPrecisionPick();
 		precisionAxe = new ItemPrecisionAxe();
 		precisionShovel = new ItemPrecisionShovel();
 		precisionSword = new ItemPrecisionSword();
 		
-		cactusBoots = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.FEET).setRegistryName("cactusboots").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactusboots").setCreativeTab(UniqueCrops.TAB);
+		cactusBoots = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.FEET).setRegistryName("cactusboots").setTranslationKey(UniqueCrops.MOD_ID + ".cactusboots").setCreativeTab(UniqueCrops.TAB);
 		items.add(cactusBoots);
-		cactusLeggings = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.LEGS).setRegistryName("cactuslegs").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactuslegs").setCreativeTab(UniqueCrops.TAB);
+		cactusLeggings = (ItemArmor)new ItemArmor(cactusmaterial, 2, EntityEquipmentSlot.LEGS).setRegistryName("cactuslegs").setTranslationKey(UniqueCrops.MOD_ID + ".cactuslegs").setCreativeTab(UniqueCrops.TAB);
 		items.add(cactusLeggings);
-		cactusPlate = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.CHEST).setRegistryName("cactusplate").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactusplate").setCreativeTab(UniqueCrops.TAB);
+		cactusPlate = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.CHEST).setRegistryName("cactusplate").setTranslationKey(UniqueCrops.MOD_ID + ".cactusplate").setCreativeTab(UniqueCrops.TAB);
 		items.add(cactusPlate);
-		cactusHelm = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.HEAD).setRegistryName("cactushelm").setUnlocalizedName(UniqueCrops.MOD_ID + ".cactushelm").setCreativeTab(UniqueCrops.TAB);
+		cactusHelm = (ItemArmor)new ItemArmor(cactusmaterial, 1, EntityEquipmentSlot.HEAD).setRegistryName("cactushelm").setTranslationKey(UniqueCrops.MOD_ID + ".cactushelm").setCreativeTab(UniqueCrops.TAB);
 		items.add(cactusHelm);
 	}
 }

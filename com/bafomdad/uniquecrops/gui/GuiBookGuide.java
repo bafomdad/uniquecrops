@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
 
@@ -72,7 +73,7 @@ public class GuiBookGuide extends GuiScreen {
 		String[] secondCat = (String[]) Arrays.copyOfRange(arrays, (arrays.length / 2), arrays.length);
  		buttonList.add(this.category = new GuiButtonLink(this, 2, k + 15, l + 35, 100, 168, firstCat));
 		buttonList.add(this.category2 = new GuiButtonLink(this, 3, k + 15, l + 35, 100, 168, secondCat));
-		buttonList.add(this.backbutton = new GuiBackButton(3, k + 80, l + 210));
+		buttonList.add(this.backbutton = new GuiBackButton(4, k + 80, l + 210));
 		updateButtons();
 	}
 	
@@ -84,11 +85,9 @@ public class GuiBookGuide extends GuiScreen {
 		switch (button.id) {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
-			case 2: pageIndex = catsize + (pageIndex + catsize + 2); break;
-			case 3: if (pageIndex == 3)
-					pageIndex = catsize2 + (pageIndex + catsize2 + 27);
-				else
-					pageIndex = 2; break;
+			case 2: pageIndex = (pageIndex + catsize) * 2; break;
+			case 3: pageIndex = (pageIndex + (catsize2 + (EnumCrops.values().length / 2) - 1)) * 2; break;
+			case 4: pageIndex = 2; break;
 		}
 		this.savedIndex = pageIndex;
 		NBTUtils.setInt(book, "savedIndex", savedIndex);

@@ -30,8 +30,7 @@ public class MaryJane extends BlockCropsBase {
 
 	public MaryJane() {
 		
-		super(EnumCrops.BLAZINGPLANT, true, UCConfig.cropMaryjane);
-		this.clickHarvest = false;
+		super(EnumCrops.BLAZINGPLANT);
 	}
 	
 	@Override
@@ -107,6 +106,12 @@ public class MaryJane extends BlockCropsBase {
     	}
     	super.harvestBlock(world, player, pos, state, te, stack);
     }
+    
+    @Override
+	public boolean canBonemeal(World world, BlockPos pos) {
+		
+    	return world.provider.doesWaterVaporize();
+	}
     
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {

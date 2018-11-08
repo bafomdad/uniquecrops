@@ -1,0 +1,28 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.weight"
+  },
+  "pattern": [
+    " S ",
+    "ODO",
+    "OOO"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:snowball"
+    },
+	"O": {
+	  "item": "minecraft:obsidian"
+	},
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	}
+  }
+}

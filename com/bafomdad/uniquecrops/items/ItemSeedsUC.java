@@ -36,7 +36,7 @@ public class ItemSeedsUC extends Item implements IPlantable {
 		
 		this.cropBlock = cropBlock;
 		setRegistryName("seed" + cropBlock.getCropType());
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".seed" + cropBlock.getCropType());
+		setTranslationKey(UniqueCrops.MOD_ID + ".seed" + cropBlock.getCropType());
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}

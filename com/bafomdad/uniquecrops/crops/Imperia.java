@@ -50,8 +50,7 @@ public class Imperia extends BlockCropsBase {
 
 	public Imperia() {
 		
-		super(EnumCrops.IMPERIA, false, UCConfig.cropImperia);
-		this.clickHarvest = false;
+		super(EnumCrops.IMPERIA);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	

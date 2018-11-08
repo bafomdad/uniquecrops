@@ -10,16 +10,13 @@
   },
   "pattern": [
     "PPP",
-    "PDP",
+    "P P",
     "PPP"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
     "P": {
       "item": "minecraft:potato"
-    },
-	"D": {
-	  "item": "uniquecrops:darkblock"
-	}
+    }
   }
 }

@@ -69,7 +69,7 @@ public class ItemGeneric extends Item {
 	public ItemGeneric() {
 		
 		setRegistryName("generic");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".generic");
+		setTranslationKey(UniqueCrops.MOD_ID + ".generic");
 		setCreativeTab(UniqueCrops.TAB);
 		setHasSubtypes(true);
 		setMaxDamage(0);
@@ -94,9 +94,9 @@ public class ItemGeneric extends Item {
 	}
 	
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		
-		return getUnlocalizedName() + "." + EnumItems.values()[stack.getItemDamage()].getName();
+		return getTranslationKey() + "." + EnumItems.values()[stack.getItemDamage()].getName();
 	}
 	
 	@Override
@@ -113,7 +113,7 @@ public class ItemGeneric extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		
-		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal() || stack.getItemDamage() == EnumItems.CONTRACT.ordinal())
+		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal())
 			return true;
 		
 		return false;
@@ -194,7 +194,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote)
 		        {
 		            EntityCustomPotion entitypotion = new EntityCustomPotion(world, player, stack);
-		            entitypotion.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            entitypotion.shoot(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
 		            world.spawnEntity(entitypotion);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -207,7 +207,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote)
 		        {
 		            EntityItemWeepingEye eye = new EntityItemWeepingEye(world, player.posX, player.posY + 1.5D, player.posZ);
-		            eye.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+		            eye.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 		            world.spawnEntity(eye);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -237,7 +237,7 @@ public class ItemGeneric extends Item {
 		        if (!world.isRemote) {
 		            EntityEulaBook entitybook = new EntityEulaBook(world, player, stack);
 		            entitybook.setPosition(player.posX, player.posY + player.getEyeHeight() + 0.5, player.posZ);
-		            entitybook.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
+		            entitybook.shoot(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
 		            world.spawnEntity(entitybook);
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -258,26 +258,6 @@ public class ItemGeneric extends Item {
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase elb, EnumHand hand) {
 		
-		if (stack.getItemDamage() == EnumItems.CONTRACT.ordinal() && !(elb instanceof EntityPlayer)) {
-//			NBTTagCompound tag = elb.getEntityData();
-//			if (!tag.hasKey(TAG_BINDED)) {
-//				tag.setBoolean(TAG_BINDED, true);
-//				if (!player.capabilities.isCreativeMode)
-//					stack.shrink(1);
-//				return true;
-//			}
-			if (!elb.isRiding()) {
-				EntityLegalStuff els = new EntityLegalStuff(elb.world);
-				els.setPosition(elb.posX, elb.posY, elb.posZ);
-				if (!elb.world.isRemote) {
-					elb.world.spawnEntity(els);
-					elb.startRiding(els);
-				}
-				if (!player.capabilities.isCreativeMode)
-					stack.shrink(1);
-				return true;
-			}
-		}
 		if (stack.getItemDamage() == EnumItems.EGGUPGRADE.ordinal() && elb instanceof EntityChicken) {
 			NBTTagCompound tag = elb.getEntityData();
 			if (!elb.isChild() && !tag.hasKey(TAG_OVERCLUCK)) {
@@ -328,7 +308,7 @@ public class ItemGeneric extends Item {
 	@Override
     public int getItemStackLimit(ItemStack stack) {
     	
-		if (stack.getUnlocalizedName().contains("book") || stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal() || stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal())
+		if (stack.getTranslationKey().contains("book") || stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal() || stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal())
 			return 1;
 		
 		return super.getItemStackLimit(stack);

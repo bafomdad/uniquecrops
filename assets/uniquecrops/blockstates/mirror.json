@@ -1,0 +1,16 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "uniquecrops:mirror"
+	},
+    "variants": {
+        "facing=west,half=lower": { "model": "uniquecrops:mirror", "y": 90 },
+		"facing=west,half=upper": { "model": "uniquecrops:mirror", "y": 90 },
+        "facing=south,half=lower": { "model": "uniquecrops:mirror" },
+		"facing=south,half=upper": { "model": "uniquecrops:mirror" },
+        "facing=east,half=lower": { "model": "uniquecrops:mirror", "y": 90 },
+		"facing=east,half=upper": { "model": "uniquecrops:mirror", "y": 90 },
+        "facing=north,half=lower": { "model": "uniquecrops:mirror" },
+		"facing=north,half=upper": { "model": "uniquecrops:mirror" }
+    }
+}

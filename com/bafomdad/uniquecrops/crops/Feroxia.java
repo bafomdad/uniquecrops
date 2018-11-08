@@ -35,8 +35,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 
 	public Feroxia() {
 		
-		super(EnumCrops.SAVAGEPLANT, false, UCConfig.cropFeroxia);
-		this.clickHarvest = false;
+		super(EnumCrops.SAVAGEPLANT);
 		GameRegistry.registerTileEntity(TileFeroxia.class, "TileFeroxia");
 		init();
 	}

@@ -20,8 +20,7 @@ public class Cobblonia extends BlockCropsBase {
 
 	public Cobblonia() {
 		
-		super(EnumCrops.COBBLEPLANT, false, UCConfig.cropCobblonia);
-		this.clickHarvest = false;
+		super(EnumCrops.COBBLEPLANT);
 	}
 	
 	@Override

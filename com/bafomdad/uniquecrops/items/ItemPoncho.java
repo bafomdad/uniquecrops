@@ -23,7 +23,7 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
 		
 		super(material, renderindex, slot);
 		setRegistryName("poncho");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".poncho");
+		setTranslationKey(UniqueCrops.MOD_ID + ".poncho");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(112);
 		UCItems.items.add(this);

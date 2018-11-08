@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:invisiglass",
+	"count": 4
+  },
+  "pattern": [
+    "TGT",
+    "GTG",
+    "TGT"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "uniquecrops:generic",
+      "data": 11
+    },
+	"G": {
+	  "item": "minecraft:glass"
+	}
+  }
+}

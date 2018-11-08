@@ -33,7 +33,7 @@ public class Lacusia extends BlockCropsBase {
 
 	public Lacusia() {
 		
-		super(EnumCrops.LACUSIA, true, UCConfig.cropLacusia);
+		super(EnumCrops.LACUSIA);
 		GameRegistry.registerTileEntity(TileLacusia.class, "TileLacusia");
 	}
 	

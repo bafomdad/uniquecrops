@@ -27,7 +27,7 @@ public class ItemGenericFood extends ItemFood {
 		
 		super(amount, saturation, false);
 		setRegistryName("genericfood." + itemname);
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".genericfood." + itemname);
+		setTranslationKey(UniqueCrops.MOD_ID + ".genericfood." + itemname);
 		setCreativeTab(UniqueCrops.TAB);
 		if (always)
 			setAlwaysEdible();

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -27,11 +26,11 @@ import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 
-public class Artisia extends BlockCropsBase implements ITileEntityProvider {
+public class Artisia extends BlockCropsBase {
 
 	public Artisia() {
 		
-		super(EnumCrops.CRAFTER, false, UCConfig.cropArtisia);
+		super(EnumCrops.CRAFTER);
 		GameRegistry.registerTileEntity(TileArtisia.class, "TileArtisia");
 	}
 	
@@ -61,7 +60,7 @@ public class Artisia extends BlockCropsBase implements ITileEntityProvider {
 	}
 	
 	@Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		
 		if (!(entity instanceof EntityItem)) return;
 		if (getAge(state) < getMaxAge()) return;
@@ -78,9 +77,11 @@ public class Artisia extends BlockCropsBase implements ITileEntityProvider {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 	
+		if (this.getAge(state) < getMaxAge()) return false;
+		
 		TileEntity te = world.getTileEntity(pos);
-		if (te != null && te instanceof TileArtisia && hand == EnumHand.MAIN_HAND) {
-			if (((TileArtisia)te).getItem() != null && !world.isRemote) {
+		if (te instanceof TileArtisia && hand == EnumHand.MAIN_HAND) {
+			if (!((TileArtisia)te).getItem().isEmpty() && !world.isRemote) {
 				ItemStack tilestack = ((TileArtisia)te).getItem().copy();
 				((TileArtisia)te).setItem(ItemStack.EMPTY);
 				ItemHandlerHelper.giveItemToPlayer(player, tilestack);
@@ -116,8 +117,14 @@ public class Artisia extends BlockCropsBase implements ITileEntityProvider {
     }
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
+	public boolean hasTileEntity(IBlockState state) {
+		
+		return true;
+	}
 
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		
 		return new TileArtisia();
 	}
 }

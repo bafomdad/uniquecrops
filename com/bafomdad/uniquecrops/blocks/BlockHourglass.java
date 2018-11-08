@@ -40,13 +40,7 @@ public class BlockHourglass extends BlockBaseUC {
 		setTickRandomly(true);
 		setHardness(1.0F);
 	}
-	
-	@Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean wat) {
-        
-    	addCollisionBoxToList(pos, BASE_AABB, collidingBoxes, BASE_AABB);
-    }
-    
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
        
@@ -55,7 +49,7 @@ public class BlockHourglass extends BlockBaseUC {
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
        
 		return BlockRenderLayer.CUTOUT;
     }
@@ -75,7 +69,7 @@ public class BlockHourglass extends BlockBaseUC {
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (world.isBlockIndirectlyGettingPowered(pos) > 0) {
+		if (world.getRedstonePowerFromNeighbors(pos) > 0) {
 			Iterable<BlockPos> poslist = BlockPos.getAllInBox(pos.add(-range, -range, -range), pos.add(range, range, range));
 			Iterator it = poslist.iterator();
 			while (it.hasNext()) {

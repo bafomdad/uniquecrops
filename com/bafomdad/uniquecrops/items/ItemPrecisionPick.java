@@ -31,7 +31,7 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
 		
 		super(1.0F, -2.8F, ToolMaterial.DIAMOND, BLOCKS);
 		setRegistryName("precision.pick");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".precision.pick");
+		setTranslationKey(UniqueCrops.MOD_ID + ".precision.pick");
 		setCreativeTab(UniqueCrops.TAB);
 		UCItems.items.add(this);
 	}
@@ -93,10 +93,10 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
     	
         Material material = state.getMaterial();
-        return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
     
 	@Override

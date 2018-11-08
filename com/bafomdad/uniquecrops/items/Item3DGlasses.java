@@ -29,7 +29,7 @@ public class Item3DGlasses extends ItemArmor implements IBookUpgradeable {
 		
 		super(material, renderindex, slot);
 		setRegistryName("3dglasses");
-		setUnlocalizedName(UniqueCrops.MOD_ID + ".3dglasses");
+		setTranslationKey(UniqueCrops.MOD_ID + ".3dglasses");
 		setCreativeTab(UniqueCrops.TAB);
 		setMaxDamage(200);
 		UCItems.items.add(this);
@@ -50,8 +50,7 @@ public class Item3DGlasses extends ItemArmor implements IBookUpgradeable {
 	@Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
     	
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		
 		int upgradelevel = getLevel(itemStack);
 		if (upgradelevel != 10)

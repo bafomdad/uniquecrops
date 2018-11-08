@@ -34,7 +34,6 @@ item.uniquecrops.generic.pixels.name=Pixel Debris
 item.uniquecrops.generic.bluedye.name=Blue Dye
 item.uniquecrops.generic.escaperope.name=Escape Rope
 item.uniquecrops.generic.sundial.name=Sundial
-item.uniquecrops.generic.bindingcontract.name=Binding Contract (WIP)
 item.uniquecrops.genericfood.largeplum.name=Large Dirible Plum
 item.uniquecrops.genericfood.teriyaki.name=Chicken Teriyaki Bowl
 item.uniquecrops.genericfood.heart.name=Heart of Steve
@@ -63,6 +62,12 @@ item.uniquecrops.cactusboots.name=Cactus Boots
 item.uniquecrops.endersnooker.name=Ender Snooker
 item.uniquecrops.handmirror.name=Hand Mirror
 item.uniquecrops.batstaff.name=Bat Staff
+item.uniquecrops.thunderpantz.name=Thunder Pants
+item.uniquecrops.beanpower.name=Battery Bean
+item.uniquecrops.democord.name=Detcord
+item.uniquecrops.steeldonut.name=Steel Donut
+item.uniquecrops.wildwoodstaff.name=Wildwood Staff (WIP)
+item.uniquecrops.vampiric_ointment.name=Vampiric Ointment
 item.uniquecrops.seednormal.name=Normie Seeds
 item.uniquecrops.seedprecision.name=Precision Seeds
 item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
@@ -91,6 +96,11 @@ item.uniquecrops.seedmalleatoris.name=Malleatoris Seed
 item.uniquecrops.seedimperia.name=Imperia Seed
 item.uniquecrops.seedlacusia.name=Lacusia Seed
 item.uniquecrops.seedhexis.name=Hexis Seed
+item.uniquecrops.seedindustria.name=Power Seed
+item.uniquecrops.seedquarry.name=Fossura Seed
+item.uniquecrops.seedsucco.name=Succo Seed
+item.uniquecrops.seedinstabilis.name=Instabilis Seed
+item.uniquecrops.seeddonutsteel.name=Donut Seeds
 
 # EMBLEMS
 item.uniquecrops.emblemmelee.name=Melee Emblem
@@ -103,6 +113,8 @@ item.uniquecrops.emblemironstomach.name=Cast-Iron Stomach Emblem
 item.uniquecrops.emblemdefense.name=Emblem of the Cobalt Shield
 item.uniquecrops.emblemleaf.name=Leaf Badge
 item.uniquecrops.emblempacifism.name=The Pacifist's Emblem
+item.uniquecrops.emblemblacksmith.name=The Blacksmith's Emblem
+item.uniquecrops.emblemweight.name=Thrower's Emblem
 
 # BLOCKS
 tile.uniquecrops.cropnormal.name=Normie
@@ -133,6 +145,11 @@ tile.uniquecrops.cropdevilsnare.name=Devil's Snare
 tile.uniquecrops.cropimperia.name=Imperia
 tile.uniquecrops.croplacusia.name=Lacusia
 tile.uniquecrops.crophexis.name=Hexis
+tile.uniquecrops.cropindustria.name=Industria
+tile.uniquecrops.cropquarry.name=Fossura
+tile.uniquecrops.cropdonutsteel.name=Donut Steel
+tile.uniquecrops.cropinstabilis.name=Instabilis
+tile.uniquecrops.cropsucco.name=Succo
 tile.uniquecrops.oldgrass.name=Ancient Grass
 tile.uniquecrops.oldgravel.name=Ancient Gravel
 tile.uniquecrops.oldcobble.name=Ancient Cobblestone
@@ -145,6 +162,10 @@ tile.uniquecrops.icelily.name=Ice Lily
 tile.uniquecrops.darkblock.name=Dark Block
 tile.uniquecrops.sundial.name=Sundial
 tile.uniquecrops.abstractbarrel.name=Abstract Barrel
+tile.uniquecrops.invisiglass.name=Invisibilia Glass
+tile.uniquecrops.democord.name=Detcord
+tile.uniquecrops.mirror.name=Mirror
+tile.uniquecrops.goblet.name=Goblet
 
 # BOOK TEXT
 uniquecrops.book.pageintro=Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.
@@ -175,6 +196,11 @@ uniquecrops.book.pagemalleatoris=Crafted using anvils as part of the seed recipe
 uniquecrops.book.pageimperia=These imperius crops are known for their strong anti mob spawning policies. Growing them up requires killing the random mobs they spawn, though. Once fully grown, they will prevent mobs from spawning in a 3x3 chunk area around them.
 uniquecrops.book.pagelacusia=Lacusia crops will transport items from a to b, only along a very flat surface. When a crop next to an inventory is given a redstone signal, it will extract any items from that inventory if available, then transport it along until it finds an available inventory to insert into. When it reaches a junction, it will loop through the directions (S-W-N-E) for the first valid crop/inventory to insert into first. If the junction is given a redstone signal, it will reverse the direction to search in.
 uniquecrops.book.pagehexis=Experience crops are fairly straightforward; they will not grow at all unless given experience orbs. Once grown, glass bottles can be used to collect the experience with a right-click. By doing this, there is a 50/50 chance the crop's growth will be reset.
+uniquecrops.book.pageindustria=Their photosynthetic process allows them to store up the sun's energy as actual stored energy. A harvest of a fully grown crop will yield beans more powerful than potatoes.
+uniquecrops.book.pagequarry=This crop is so hardy, it hardly grows at all. One must mine this hard crop a few times to get it to grow. Once it is grown, it will start to mine out the chunk it is in, starting at the level it is planted on. If there is no chest above it to collect the mined blocks, it will spawn one of the blocks above it and wait until it is air. This quarry crop requires wheat crops to be planted around it, so it can then steal their attempts to grow in order to do its mining.
+uniquecrops.book.pagedonutsteel=An original crop, licensed and copyrighted by EULA crop. Original content, donut steel. May pop out of the ground and try to kill you if you harvest it. A method exists where all damage you take from trying to hit them can be redirected may exist, somewhere.
+uniquecrops.book.pageinstabilis=The metastable crops exist in a state where delicate harvesting is needed to handle them. Bring shears, lest you yield nothing when the whole crops break. They need to be surrounded by each other in order to grow.
+uniquecrops.book.pagesucco=These crops suck, but that doesn't mean they are useless. By setting up a mirror that faces a farmland plot, one can plant/harvest vampire crops by clicking on the mirror. They will only reveal themselves through the mirror's reflection, and will only grow during a new moon.
 
 # TOOLTIPS
 uniquecrops.tooltip.guidebook=The Guide
@@ -197,6 +223,11 @@ uniquecrops.tooltip.rainbow=Allows shearing sheep for wool of a random color.
 uniquecrops.tooltip.scarab=Nullifies all potion effects, good or bad.
 uniquecrops.tooltip.transformation=Has a chance of transforming a mob when hitting them.
 uniquecrops.tooltip.pacifism=Reduces all damage you give and take to 0.
+uniquecrops.tooltip.blacksmith=Any work done on an anvil will not damage the anvil.
+uniquecrops.tooltip.weight=Any thrown items will have farther distance. Some will hurt.
+uniquecrops.tooltip.ointment.empty=Rightclick on any non-player, non-boss creature.
+uniquecrops.tooltip.ointment.filled=Put in a goblet placed on the ground.
+uniquecrops.tooltip.thunderpantz=Sneak around on carpet to build up static electricity!
 
 # ADVANCEMENTS
 advancement.uniquecrops:seedPickup=REEEEE
@@ -299,3 +330,7 @@ container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
 # KEYBINDINGS
 key.categories.uniquecrops=Unique Crops
 key.pixelglasses=Toggle Pixel Glasses
+
+# ENTITY
+entity.uniquecrops:battlecrop.name=Battle Crop
+death.attack.uniquecrops:battlecrop.name=%1$s got dusted
