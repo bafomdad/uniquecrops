@@ -84,7 +84,7 @@ public class UCBlocks {
 		cropMaryjane = CropBuilder.create(new MaryJane()).setClickHarvest(false).build();
 		cropWeepingbells = CropBuilder.create(new WeepingBells()).setExtraDrops(false).setBonemealable(false).build();
 		cropMusica = CropBuilder.create(new Musica()).setExtraDrops(false).setBonemealable(false).build();
-		cropCinderbella = CropBuilder.create(new Cinderbella()).build();
+		cropCinderbella = CropBuilder.create(new Cinderbella()).setBonemealable(false).build();
 		cropMerlinia = CropBuilder.create(new Merlinia()).build();
 		cropEula = CropBuilder.create(new Eula()).setExtraDrops(false).build();
 		cropCobblonia = CropBuilder.create(new Cobblonia()).setExtraDrops(false).setClickHarvest(false).build();

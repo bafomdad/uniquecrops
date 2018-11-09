@@ -34,12 +34,6 @@ public class EmblemIronstomach extends ItemBauble {
 
 		return "ironstomach";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@SubscribeEvent
 	public void onRightclickNonedible(RightClickItem event) {

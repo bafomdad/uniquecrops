@@ -4,22 +4,15 @@ import java.util.Iterator;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.core.EnumCrops;
-import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.network.PacketUCEffect;
-import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class Wafflonia extends BlockCropsBase {
 
@@ -68,7 +61,7 @@ public class Wafflonia extends BlockCropsBase {
 		while (it.hasNext()) {
 			BlockPos looppos = (BlockPos)it.next();
 			Block loopblock = world.getBlockState(looppos).getBlock();
-			if (loopblock != null && !world.isAirBlock(looppos) && loopblock == UCBlocks.cropWafflonia) {
+			if (loopblock == UCBlocks.cropWafflonia) {
 				if (!world.isRemote)
 					friends++;
 			}

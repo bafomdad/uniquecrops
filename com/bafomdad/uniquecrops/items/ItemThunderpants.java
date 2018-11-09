@@ -53,12 +53,8 @@ public class ItemThunderpants extends ItemArmor implements IBookUpgradeable {
 	
 	@Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
-		
+
 		if (world.isRemote) return;
-		
-//		if (getCharge(stack) > 1.0F && world.rand.nextInt(10) == 0)
-//			UCPacketHandler.sendToNearbyPlayers(world, player.getPosition(), new PacketUCEffect(EnumParticleTypes.VILLAGER_ANGRY, player.posX - 1, player.posY + 0.65, player.posZ - 1, (int)getCharge(stack)));
-		
 		if (getCharge(stack) >= MAX_CHARGE) return;
 		
 		if (player.onGround && player.isSneaking()) {

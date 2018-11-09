@@ -24,12 +24,6 @@ public class EmblemMelee extends ItemBauble {
 		
 		return "melee";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@Override
 	public void onEquippedOrLoadedIntoWorld(ItemStack stack, EntityLivingBase player) {

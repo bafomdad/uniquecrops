@@ -149,7 +149,7 @@ public class UCEventHandlerClient {
 		registerBlockModel(UCBlocks.lavalily);
 		registerBlockModel(UCBlocks.icelily);
 		registerBlockModel(UCBlocks.darkBlock);
-		registerBlockModel(UCBlocks.barrel);
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.barrel), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":itemabstractbarrel", "inventory"));
 		registerBlockModel(UCBlocks.invisiGlass);
 		registerBlockModel(UCBlocks.demoCord);
 		registerBlockModel(UCBlocks.mirror);

@@ -10,6 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.common.IPlantable;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
@@ -25,8 +27,6 @@ public class SeedBehavior {
 		if (side != EnumFacing.UP || stack.isEmpty())
 			return false;
 		
-		if (cropBlock == UCBlocks.cropSucco) return false;
-		
 		if (!world.isRemote && cropBlock instanceof BlockCropsBase && !((BlockCropsBase)cropBlock).canPlantCrop()) {
 			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.BARRIER, pos.getX(), pos.getY() + 2, pos.getZ(), 0));
 			return false;
@@ -34,6 +34,9 @@ public class SeedBehavior {
 		else if (player.canPlayerEdit(pos, side, stack) && player.canPlayerEdit(pos.offset(EnumFacing.UP), side, stack)) {
 			IBlockState state = world.getBlockState(pos);
 			if (state.getBlock().canSustainPlant(state, world, pos, EnumFacing.UP, (IPlantable)stack.getItem()) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
+				if (cropBlock == UCBlocks.cropSucco)
+					return false;
+				
 				if (cropBlock == UCBlocks.cropCollis) {
 					if (!world.provider.isSurfaceWorld() || pos.getY() <= 100)
 						return false;
@@ -98,5 +101,10 @@ public class SeedBehavior {
 		}
 		if (tag.getInteger(TAG_ABSTRACT) <= 0)
 			tag.removeTag(TAG_ABSTRACT);
+	}
+	
+	public static boolean canIgnoreGrowthRestrictions(World world) {
+		
+		return world.getSaveHandler().getWorldDirectory().getName().equals(UniqueCrops.MOD_NAME);
 	}
 }

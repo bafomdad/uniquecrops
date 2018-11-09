@@ -66,8 +66,10 @@ public class Malleatoris extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (getAge(state) >= getMaxAge()) return;
-		
+		if (getAge(state) >= getMaxAge()) {
+			this.checkAndDropBlock(world, pos, state);
+			return;
+		}
 		if (!world.isRemote) {
 			AxisAlignedBB aabb = new AxisAlignedBB(pos.add(-4, 0, -4), pos.add(4, 1, 4));
 			List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, aabb);

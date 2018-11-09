@@ -109,8 +109,9 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.getAge(state) >= getMaxAge() || world.isRemote)
-			return;
+		if (this.getAge(state) >= getMaxAge()) return;
+
+		if (world.isRemote) return;
 		
 		if (!this.canBlockStay(world, pos, state)) {
 			EntityItem ei = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(this.getSeed()));
@@ -146,8 +147,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
     @Override
     public void grow(World world, BlockPos pos, IBlockState state) {
     	
-    	if (getAge(state) >= getMaxAge()) return;
-    	
+    	if (getAge(state) >= getMaxAge() || world.isRemote) return;
     	int stage = getStage(world, pos, state);
     	if (stage != -1 && steps.get(stage).getIndex() == 19) {
     		if (!world.isRemote)

@@ -56,7 +56,10 @@ public abstract class ItemBauble extends Item implements IBauble {
 	public abstract String getDescription();
 
 	@Override
-	public abstract BaubleType getBaubleType(ItemStack stack);
+	public BaubleType getBaubleType(ItemStack stack) {
+		
+		return BaubleType.CHARM;
+	}
 	
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase player) {

@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.crops;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -70,6 +71,10 @@ public class Succo extends BlockCropsBase {
     
     @Override
     public RayTraceResult collisionRayTrace(IBlockState state, World world, BlockPos pos, Vec3d start, Vec3d end) {
+    	
+    	EntityPlayer player = UniqueCrops.proxy.getPlayer();
+    	if (player != null && player.capabilities.isCreativeMode)
+    		return super.collisionRayTrace(state, world, pos, start, end);
     	
     	return null;
     }

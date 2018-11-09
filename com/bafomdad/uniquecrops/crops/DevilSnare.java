@@ -47,7 +47,7 @@ public class DevilSnare extends BlockCropsBase {
 		if (this.getAge(state) < getMaxAge())
 			return;
 		
-		if (entity != null && entity instanceof EntityLivingBase) {
+		if (entity instanceof EntityLivingBase) {
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 4));
 		}
     }

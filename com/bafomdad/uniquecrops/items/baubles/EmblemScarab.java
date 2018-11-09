@@ -29,13 +29,7 @@ public class EmblemScarab extends ItemBauble {
 
 		return "scarab";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
-
+	
 	@Override
 	void fillModifiers(Multimap<String, AttributeModifier> attributes, ItemStack stack) {}
 	

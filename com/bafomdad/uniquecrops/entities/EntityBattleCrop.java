@@ -41,7 +41,7 @@ public class EntityBattleCrop extends EntityCreature {
 		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
 		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, true));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 	}
 	
 	protected void applyEntityAttributes() {
@@ -125,7 +125,7 @@ public class EntityBattleCrop extends EntityCreature {
 		
 		super.onDeath(source);
 		
-		if (source.getTrueSource() instanceof EntityPlayer || source.getTrueSource() == this) {
+		if (source.getTrueSource() == this) {
 			this.entityDropItem(new ItemStack(UCItems.steelDonut), 0.0F);
 			this.entityDropItem(new ItemStack(UCItems.seedsDonuts), 0.0F);
 		}

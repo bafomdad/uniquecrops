@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.ICropBook;
 import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 
 public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
@@ -32,6 +34,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	private boolean clickHarvest;
 	private boolean bonemealable;
 
+	@Deprecated
 	private BlockCropsBase(EnumCrops type, boolean extra, boolean canPlant) {
 		
 		this.type = type;
@@ -74,13 +77,41 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		return bonemealable;
 	}
 	
+	/*
+	@Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		
+		if (SeedBehavior.canIgnoreGrowthRestrictions(world, pos)) {
+			this.checkAndDropBlock(world, pos, state);
+			return;
+		}
+		this.updateCrop(world, pos, state, rand);
+	}
+	
+	public void updateCrop(World world, BlockPos pos, IBlockState state, Random rand) {
+	
+		this.checkAndDropBlock(world, pos, state);
+		
+        if (!world.isAreaLoaded(pos, 1)) return;
+        if (world.getLightFromNeighbors(pos.up()) >= 9) {
+            int i = this.getAge(state);
+            if (i < this.getMaxAge()) {
+                float f = getGrowthChance(this, world, pos);
+                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0)) {
+                    world.setBlockState(pos, this.withAge(i + 1), 2);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+                }
+            }
+        }
+	}
+	*/
+	
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if (getAge(state) < getMaxAge()) return false;
 		
 		if (clickHarvest) {
-//			if (!player.getHeldItemMainhand().isEmpty()) return false;
 			if (getAge(state) >= getMaxAge() && !world.isRemote) {
 				world.setBlockState(pos, this.withAge(0), 3);
 				int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
@@ -92,7 +123,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	}
 	
     @Override
-    public List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	
         List<ItemStack> ret = new ArrayList<ItemStack>();
         ret.add(new ItemStack(this.getSeed(), 1, 0));

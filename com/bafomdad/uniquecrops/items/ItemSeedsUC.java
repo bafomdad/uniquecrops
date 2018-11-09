@@ -45,8 +45,11 @@ public class ItemSeedsUC extends Item implements IPlantable {
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
 		ItemStack stack = player.getHeldItem(hand);
-		
 		IBlockState state = world.getBlockState(pos);
+		if (!world.isRemote && SeedBehavior.canIgnoreGrowthRestrictions(world)) {
+			world.setBlockState(pos.offset(side), cropBlock.withAge(cropBlock.getMaxAge()), 3);
+			return EnumActionResult.SUCCESS;
+		}
 		if (SeedBehavior.canPlantCrop(stack, player, world, pos, side, cropBlock)) {
 			stack.shrink(1);
 			return EnumActionResult.SUCCESS;

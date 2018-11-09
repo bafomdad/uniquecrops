@@ -95,12 +95,9 @@ public class Artisia extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.getAge(state) >= getMaxAge() || world.isRemote)
-			return;
-		
 		super.updateTick(world, pos, state, rand);
 		TileEntity te = world.getTileEntity(pos);
-		if (te != null && te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ORIGIN)) {
+		if (te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ORIGIN)) {
 			((TileArtisia)te).findCore();
 		}
 	}

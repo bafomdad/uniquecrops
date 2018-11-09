@@ -1,5 +1,7 @@
 package com.bafomdad.uniquecrops.crops;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -55,6 +57,12 @@ public class Fossura extends BlockCropsBase {
         
 		return getAge(state) >= getMaxAge();
     }
+	
+	@Override
+	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		
+		this.checkAndDropBlock(world, pos, state);
+	}
 	
 	@Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {

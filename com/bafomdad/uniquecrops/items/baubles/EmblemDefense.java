@@ -31,12 +31,6 @@ public class EmblemDefense extends ItemBauble {
 
 		return "defense";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@SubscribeEvent
 	public void autoShield(LivingAttackEvent event) {

@@ -36,12 +36,6 @@ public class EmblemTransformation extends ItemBauble {
 		return "transformation";
 	}
 
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
-	
 	@SubscribeEvent
 	public void onHitEntity(LivingHurtEvent event) {
 		

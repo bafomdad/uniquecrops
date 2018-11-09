@@ -34,12 +34,6 @@ public class EmblemWeight extends ItemBauble {
 	}
 
 	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
-
-	@Override
 	void fillModifiers(Multimap<String, AttributeModifier> attributes, ItemStack stack) {}
 	
 	@SubscribeEvent

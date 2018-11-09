@@ -82,18 +82,7 @@ public class Lacusia extends BlockCropsBase {
 		if (world.isBlockPowered(pos))
 			world.scheduleUpdate(pos, this, 20);
 	}
-	
-//    @Override
-//    public void grow(World world, BlockPos pos, IBlockState state) {
-//    	
-//    	super.grow(world, pos, state);
-//    	TileEntity tile = world.getTileEntity(pos);
-//    	if (tile instanceof TileLacusia) {
-//    		((TileLacusia)tile).updateStuff();
-//    		world.scheduleUpdate(pos, this, 10);
-//    	}
-//    }
-	
+
 	@Override
     public boolean hasTileEntity(IBlockState state) {
         

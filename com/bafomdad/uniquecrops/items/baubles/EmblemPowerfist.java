@@ -25,12 +25,6 @@ public class EmblemPowerfist extends ItemBauble {
 		return "powerfist";
 	}
 
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
-	
 	@SubscribeEvent
 	public void fistingSpeed(BreakSpeed event) {
 		

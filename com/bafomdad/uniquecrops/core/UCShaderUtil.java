@@ -91,7 +91,7 @@ public class UCShaderUtil {
 	}
 	
 	public static void setScreenUniform(ResourceLocation res, String uniformName, int value, int... more) {
-		
+
 		if (more.length < 3) {
 			int[] temp = new int[3];
 			System.arraycopy(more, 0, temp, 0, more.length);
@@ -101,7 +101,7 @@ public class UCShaderUtil {
 		if (shaderGroup != null) {
 			List<Shader> shaders;
 			try {
-				shaders = (List<Shader>)list_shaders.invokeExact(shaderGroup);
+				shaders = (List<Shader>) list_shaders.invokeExact(shaderGroup);
 			} catch (Throwable t) {
 				return;
 			}

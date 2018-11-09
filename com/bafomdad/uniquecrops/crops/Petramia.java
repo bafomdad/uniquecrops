@@ -72,7 +72,10 @@ public class Petramia extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (pos.getY() >= 10) return;
+		if (pos.getY() >= 10) {
+			this.checkAndDropBlock(world, pos, state);
+			return;
+		}
 		
 		if (getAge(state) >= getMaxAge() /*&& world.getGameRules().getBoolean(PICKUP)*/) {
 			transformBedrock(world, pos);

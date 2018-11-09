@@ -25,12 +25,6 @@ public class EmblemPacifism extends ItemBauble {
 
 		return "pacifism";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@SubscribeEvent
 	public void noDamage(LivingAttackEvent event) {

@@ -34,12 +34,6 @@ public class EmblemRainbow extends ItemBauble {
 
 		return "rainbow";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@SubscribeEvent
 	public void onSheared(EntityInteractSpecific event) {

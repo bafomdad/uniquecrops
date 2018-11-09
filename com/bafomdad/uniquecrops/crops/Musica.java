@@ -49,7 +49,7 @@ public class Musica extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		return;
+		this.checkAndDropBlock(world, pos, state);;
 	}
 	
 	public void addAge(World world, BlockPos pos, IBlockState state, int stage) {
@@ -72,6 +72,6 @@ public class Musica extends BlockCropsBase {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
     	
-    	this.createParticles(state, world, pos, rand, EnumParticleTypes.NOTE, 10);
+    	this.createParticles(state, world, pos, rand, EnumParticleTypes.NOTE, 3);
     }
 }

@@ -48,17 +48,12 @@ public class Merlinia extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
+		this.checkAndDropBlock(world, pos, state);
 		if (world.rand.nextInt(3) == 0) {
 			world.setBlockState(pos, this.withAge(Math.max(getAge(state) - 1, 0)), 2);
 		}
 	}
 	
-    @Override
-    public void grow(World world, BlockPos pos, IBlockState state) {
-    	
-    	return;
-    }
-    
     public void merliniaGrowth(World world, BlockPos pos, int age) {
     	
     	IBlockState state = world.getBlockState(pos);

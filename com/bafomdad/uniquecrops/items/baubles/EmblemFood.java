@@ -22,12 +22,6 @@ public class EmblemFood extends ItemBauble {
 
 		return "food";
 	}
-
-	@Override
-	public BaubleType getBaubleType(ItemStack stack) {
-
-		return BaubleType.CHARM;
-	}
 	
 	@Override
 	public void onWornTick(ItemStack stack, EntityLivingBase player) {

@@ -49,8 +49,9 @@ public class WeepingBells extends BlockCropsBase implements ITileEntityProvider 
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		TileShyPlant te = (TileShyPlant)world.getTileEntity(pos);
-		if (te != null && te.isLooking()) {
+		this.checkAndDropBlock(world, pos, state);
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileShyPlant && ((TileShyPlant)te).isLooking()) {
 			super.updateTick(world, pos, state, rand);
 		}
 	}

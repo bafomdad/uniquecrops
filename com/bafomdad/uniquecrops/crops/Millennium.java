@@ -45,6 +45,7 @@ public class Millennium extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
+		this.checkAndDropBlock(world, pos, state);
 		if (getAge(state) < ((BlockCrops)state.getBlock()).getMaxAge()) {
 			Random rand1 = new Random(getAge(state) + rand.nextInt());
 			if (rand1.nextInt(100 * (getAge(state) + 1)) == 0 && world.rand.nextInt(2) == 0) {

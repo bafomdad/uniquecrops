@@ -63,9 +63,8 @@ public class MaryJane extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (!world.provider.doesWaterVaporize())
-			return;
-		
+		if (!world.provider.doesWaterVaporize()) return;
+
 		super.updateTick(world, pos, state, rand);
 	}
 	
