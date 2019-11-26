@@ -7,8 +7,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.UniqueCropsAPI;
-import com.bafomdad.uniquecrops.crafting.HourglassRecipe;
 import com.bafomdad.uniquecrops.entities.EntityItemHourglass;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 
@@ -22,7 +20,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -78,26 +75,27 @@ public class BlockHourglass extends BlockBaseUC {
 			while (it.hasNext()) {
 				BlockPos posit = (BlockPos)it.next();
 				if (!world.isRemote && !world.isAirBlock(posit)) {
-					IBlockState loopState = world.getBlockState(posit);
+					Block loopblock = world.getBlockState(posit).getBlock();
 					boolean flag = rand.nextInt(10) == 0;
-					
-					if (flag) {
-						HourglassRecipe recipe = UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.findRecipe(loopState);
-						if (recipe != null) {
-							EntityItemHourglass.convertBlock(world, posit, recipe.getOutput());
-						}
+					if (loopblock == Blocks.GRASS && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldGrass); break;
+					}
+					if (loopblock == Blocks.COBBLESTONE && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldCobble); break;
+					}
+					if (loopblock == Blocks.MOSSY_COBBLESTONE && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldCobbleMoss); break;
+					}
+					if (loopblock == Blocks.BRICK_BLOCK && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldBrick); break;
+					}
+					if (loopblock == Blocks.GRAVEL && flag) {
+						EntityItemHourglass.setOldBlock(world, posit, UCBlocks.oldGravel); break;
 					}
 				}
 			}
 		}
 	}
-	
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-    	
-    	if (rand.nextInt(2) == 0 && world.getRedstonePowerFromNeighbors(pos) > 0)
-    		world.spawnParticle(EnumParticleTypes.END_ROD, pos.getX() + rand.nextFloat(), pos.getY(), pos.getZ() + rand.nextFloat(), 0.0D, 0.03D, 0.0D);
-    }
 	
 	public static class ItemBlockHourglass extends ItemBlock {
 

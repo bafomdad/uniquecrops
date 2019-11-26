@@ -34,12 +34,6 @@ public final class CropBuilder {
 		return this;
 	}
 	
-	public CropBuilder setIgnoreGrowth(boolean flag) {
-		
-		crop.setIgnoreGrowthRestrictions(flag);
-		return this;
-	}
-	
 	public <E extends BlockCropsBase> BlockCropsBase build() {
 		
 		return crop;

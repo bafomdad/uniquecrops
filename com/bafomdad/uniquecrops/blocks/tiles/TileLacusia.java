@@ -17,7 +17,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileLacusia extends TileBaseRenderUC {
+public class TileLacusia extends TileBaseUC {
 
 	private ItemStackHandler inv = new ItemStackHandler(1);
 	private int dir;
@@ -33,8 +33,6 @@ public class TileLacusia extends TileBaseRenderUC {
 				TileEntity tileInv = null;
 				for (EnumFacing face : EnumFacing.HORIZONTALS) {
 					BlockPos looppos = getPos().offset(face);
-					if (!world.isBlockLoaded(looppos)) return;
-					
 					TileEntity tile = world.getTileEntity(looppos);
 					if (tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face)) {
 						tileInv = tile;
@@ -63,8 +61,6 @@ public class TileLacusia extends TileBaseRenderUC {
 					if (directionMatches(face)) continue;
 					
 					BlockPos looppos = getPos().offset(face);
-					if (!world.isBlockLoaded(looppos)) return;
-					
 					TileEntity tile = world.getTileEntity(looppos);
 					if (tile instanceof TileLacusia) {
 						TileLacusia lacusia = (TileLacusia)tile;
@@ -127,6 +123,33 @@ public class TileLacusia extends TileBaseRenderUC {
 	public void setItem(ItemStack stack) {
 		
 		inv.setStackInSlot(0, stack);
+	}
+	
+	public void markBlockForUpdate() {
+		
+		IBlockState state = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+	}
+	
+	public void markBlockForRenderUpdate() {
+		
+		world.markBlockRangeForRenderUpdate(pos, pos);
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		
+		return writeToNBT(new NBTTagCompound());
+	}
+	
+	@Nullable
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
+		NBTTagCompound nbtTag = new NBTTagCompound();
+		this.writeCustomNBT(nbtTag);
+		
+		return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
 	}
 	
 	@Override

@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMirror;
-import com.bafomdad.uniquecrops.core.UCConfig.CropConfig;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.entities.EntityMirror;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -36,7 +36,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -60,13 +59,13 @@ public class BlockMirror extends BlockBaseUC {
 		super("mirror", Material.CIRCUITS);
 		setHardness(0.3F);
 		setResistance(10.0F);
-		GameRegistry.registerTileEntity(TileMirror.class, new ResourceLocation(UniqueCrops.MOD_ID, "mirror"));
+		GameRegistry.registerTileEntity(TileMirror.class, "UC:TileMirror");
 	}
 	
     @Override
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
     
-    	if (!CropConfig.cropVampire) return;
+    	if (!UCConfig.cropVampire) return;
     	
     	IBlockState state = world.getBlockState(pos);
     	if (player.getAdjustedHorizontalFacing().getOpposite() != state.getValue(FACING)) return;
@@ -128,7 +127,7 @@ public class BlockMirror extends BlockBaseUC {
 			}
 		}
 		*/
-    	if (!CropConfig.cropVampire) return false;
+    	if (!UCConfig.cropVampire) return false;
     	if (facing != state.getValue(FACING)) return false;
     	
 		ItemStack stack = player.getHeldItem(hand);

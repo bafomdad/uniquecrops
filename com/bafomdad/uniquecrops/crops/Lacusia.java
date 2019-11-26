@@ -15,7 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -24,11 +23,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileLacusia;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Lacusia extends BlockCropsBase {
@@ -36,7 +34,7 @@ public class Lacusia extends BlockCropsBase {
 	public Lacusia() {
 		
 		super(EnumCrops.LACUSIA);
-		GameRegistry.registerTileEntity(TileLacusia.class, new ResourceLocation(UniqueCrops.MOD_ID, "lacusia"));
+		GameRegistry.registerTileEntity(TileLacusia.class, "TileLacusia");
 	}
 	
 	@Override

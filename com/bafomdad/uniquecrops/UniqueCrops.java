@@ -2,8 +2,6 @@ package com.bafomdad.uniquecrops;
 
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -12,16 +10,12 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-import com.bafomdad.uniquecrops.capabilities.CPProvider;
 import com.bafomdad.uniquecrops.core.IMCHandler;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
-import com.bafomdad.uniquecrops.data.UCWorldData;
 import com.bafomdad.uniquecrops.gui.GuiHandler;
-import com.bafomdad.uniquecrops.init.UCLootTables;
 import com.bafomdad.uniquecrops.integration.crafttweaker.CraftTweakerPlugin;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import com.bafomdad.uniquecrops.proxies.CommonProxy;
@@ -46,14 +40,12 @@ public class UniqueCrops {
 	public static boolean baublesLoaded = Loader.isModLoaded("baubles");
 	public static boolean ieLoaded = Loader.isModLoaded("immersiveengineering");
 	public static boolean ctLoaded = Loader.isModLoaded("crafttweaker");
-	public static boolean charsetLoaded = Loader.isModLoaded("charset");
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		UCPacketHandler.init();
-		CPProvider.register();
 		logger = event.getModLog();
 
 		proxy.preInit(event);
@@ -72,17 +64,9 @@ public class UniqueCrops {
 	public void postInit(FMLPostInitializationEvent event) {
 		
 		proxy.postInit(event);
-		UCLootTables.init();
 		if (ctLoaded) {
 			CraftTweakerPlugin.apply();
-			UniqueCropsAPI.COBBLONIA_DROPS_REGISTRY.setupDropChances();
 		}
-	}
-	
-	@Mod.EventHandler
-	public void serverStarted(FMLServerStartedEvent event) {
-		
-		UCWorldData.getInstance(0).markDirty();
 	}
 	
 	@Mod.EventHandler

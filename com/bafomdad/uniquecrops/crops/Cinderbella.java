@@ -12,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,11 +19,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileCinderbella;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
@@ -32,7 +30,7 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 	public Cinderbella() {
 		
 		super(EnumCrops.CINDERBELLA);
-		GameRegistry.registerTileEntity(TileCinderbella.class, new ResourceLocation(UniqueCrops.MOD_ID, "cinderbella"));
+		GameRegistry.registerTileEntity(TileCinderbella.class, "TileCinderbella");
 	}
 	
 	@Override
@@ -59,10 +57,6 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.canIgnoreGrowthRestrictions(world, pos)) {
-			super.updateTick(world, pos, state, rand);
-			return;
-		}
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileCinderbella) {
 			TileCinderbella tile = (TileCinderbella)te;
@@ -95,7 +89,7 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     	
-    	world.setBlockState(pos, state.getBlock().getDefaultState(), 3);
+    	world.setBlockState(pos, state.getBlock().getDefaultState(), 2);
     	TileEntity te = world.getTileEntity(pos);
     	if (te instanceof TileCinderbella) {
     		((TileCinderbella)te).setAbleToGrow(world);

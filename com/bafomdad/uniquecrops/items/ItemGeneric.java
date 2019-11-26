@@ -18,7 +18,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -42,14 +41,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.crops.Merlinia;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityEulaBook;
-import com.bafomdad.uniquecrops.entities.EntityItemCooking;
+import com.bafomdad.uniquecrops.entities.EntityItemPlum;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
+import com.bafomdad.uniquecrops.entities.EntityLegalStuff;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -118,47 +119,32 @@ public class ItemGeneric extends Item {
 		return false;
 	}
 	
-	@Override
-	public boolean hasCustomEntity(ItemStack stack) {
+	public ItemStack createStack(EnumItems item, int stacksize) {
 		
-		return stack.getItemDamage() == EnumItems.PLUM.ordinal() || stack.getItemDamage() == EnumItems.CINDERLEAF.ordinal();
+		return new ItemStack(this, stacksize, item.ordinal());
+	}
+	
+	public ItemStack createStack(EnumItems item) {
+		
+		return createStack(item, 1);
 	}
 	
 	@Override
-    public boolean onEntityItemUpdate(EntityItem ei) {
-        
-		if (ei.getItem().getItem() == UCItems.generic) {
-			if (ei.getItem().getItemDamage() == EnumItems.PLUM.ordinal()) {
-				double velY = 0;
-				if (ei.ticksExisted > 40) {
-					velY = 0.0625D;
-					if (ei.posY >= 256) {
-						ei.setDead();
-					}
-					ei.addVelocity(0, velY, 0);
-					if (ei.ticksExisted % 10 == 0 && ei.collided)
-					{
-						UCPacketHandler.sendToNearbyPlayers(ei.world, ei.getPosition(), new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, ei.posX, ei.posY, ei.posZ, 3));
-						ei.setDead();
-					}
-				}
-				return false;
-			}
-			if (ei.getItem().getItemDamage() == EnumItems.CINDERLEAF.ordinal()) {
-				if (ei.world.getBlockState(ei.getPosition()).getMaterial().isLiquid()) {
-					if (ei.getAge() % 20 == 0) {
-						if (ei.getItem().getCount() > 3) {
-							UCPacketHandler.sendToNearbyPlayers(ei.world, ei.getPosition(), new PacketUCEffect(EnumParticleTypes.LAVA, ei.posX, ei.posY + 0.1, ei.posZ, 6));
-							ei.world.setBlockState(ei.getPosition(), Blocks.LAVA.getDefaultState(), 3);
-						}
-					}
-				}
-			}
-		}
-		return false;
-    }
+	public boolean hasCustomEntity(ItemStack stack) {
+		
+		return stack.getItemDamage() == 2;
+	}
 	
-    @Override
+	@Override
+	public Entity createEntity(World world, Entity location, ItemStack stack) {
+		
+		if (location instanceof EntityItem) {
+			EntityItemPlum plum = new EntityItemPlum(world, (EntityItem)location, stack);
+			return plum;
+		}
+		return null;
+	}
+	
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		ItemStack stack = player.getHeldItem(hand);
@@ -195,6 +181,8 @@ public class ItemGeneric extends Item {
 		ItemStack stack = player.getHeldItem(hand);
 		if (!stack.isEmpty() && stack.getItem() == this) {
 			if (stack.getItemDamage() == EnumItems.GUIDE.ordinal() && hand == EnumHand.MAIN_HAND && !player.isSneaking()) {
+				if (!world.isRemote && (!stack.hasTagCompound()) || (!player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) || (player.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES) && (stack.hasTagCompound() && !stack.getTagCompound().hasKey(GrowthSteps.TAG_GROWTHSTAGES)))))
+					UCUtils.updateBook(player);
 				player.openGui(UniqueCrops.instance, 0, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 				return new ActionResult(EnumActionResult.SUCCESS, stack);
 			}
@@ -285,7 +273,7 @@ public class ItemGeneric extends Item {
 	@Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		
-		if (stack.getItemDamage() != EnumItems.EASYBADGE.ordinal())
+		if (stack.getItemDamage() != 20)
 			return;
 		
 		if (!(entity instanceof EntityPlayer) || (entity instanceof FakePlayer))

@@ -37,7 +37,8 @@ public class ZenSeedCrafting {
     ));
   }
 
-  private static class Add extends BaseUndoable {
+  private static class Add
+      extends BaseUndoable {
 
     private final ItemStack output;
     private final Ingredient center;
@@ -74,7 +75,8 @@ public class ZenSeedCrafting {
     ));
   }
 
-  private static class Remove extends BaseUndoable {
+  private static class Remove
+      extends BaseUndoable {
 
     private ItemStack output;
 

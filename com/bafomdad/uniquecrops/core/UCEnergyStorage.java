@@ -10,33 +10,6 @@ public class UCEnergyStorage extends EnergyStorage {
 		super(capacity, maxTransfer);
 	}
 	
-	@Override
-	public int receiveEnergy(int maxReceive, boolean simulate) {
-		
-		if (!this.canReceive())
-			return 0;
-		
-		int energy = this.getEnergyStored();
-		int energyReceived = Math.min(this.capacity - energy, Math.min(this.maxReceive, maxReceive));
-		if (!simulate)
-			this.setEnergyStored(energy + energyReceived);
-		
-		return energyReceived;
-	}
-	
-	@Override
-	public int extractEnergy(int maxExtract, boolean simulate) {
-		
-		if (!this.canExtract())
-			return 0;
-		
-		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-		if (!simulate)
-			this.setEnergyStored(energy - energyExtracted);
-		
-		return energyExtracted;
-	}
-	
 	public void deserializeNBT(NBTTagCompound tag) {
 		
 		this.setEnergyStored(tag.getInteger("Energy"));
@@ -50,5 +23,10 @@ public class UCEnergyStorage extends EnergyStorage {
 	public void setEnergyStored(int energy) {
 		
 		this.energy = energy;
+	}
+	
+	public void setMaxEnergyStorage(int capacity) {
+		
+		this.capacity = energy;
 	}
 }

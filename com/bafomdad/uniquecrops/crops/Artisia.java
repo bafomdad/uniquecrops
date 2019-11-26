@@ -15,17 +15,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileArtisia;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Artisia extends BlockCropsBase {
@@ -33,7 +31,7 @@ public class Artisia extends BlockCropsBase {
 	public Artisia() {
 		
 		super(EnumCrops.CRAFTER);
-		GameRegistry.registerTileEntity(TileArtisia.class, new ResourceLocation(UniqueCrops.MOD_ID, "artisia"));
+		GameRegistry.registerTileEntity(TileArtisia.class, "TileArtisia");
 	}
 	
 	@Override

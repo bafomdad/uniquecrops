@@ -9,8 +9,8 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import baubles.api.BaubleType;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.EnumEmblems;
 import com.bafomdad.uniquecrops.core.UCStrings;
-import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 

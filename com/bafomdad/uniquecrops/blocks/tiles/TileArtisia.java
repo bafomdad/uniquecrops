@@ -26,12 +26,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileArtisia extends TileBaseRenderUC {
+public class TileArtisia extends TileBaseUC {
 
 	public BlockPos core = BlockPos.ORIGIN;
 	private ItemStackHandler inv = new ItemStackHandler(1);
 	
-	private static final BlockPos[] GRIDPOS = { 
+	public static final BlockPos[] GRIDPOS = { 
 			new BlockPos(-1, 0, -1), new BlockPos(1, 0, 1), new BlockPos(-1, 0, 1), new BlockPos(1, 0, -1),
 			new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1) 
 	};
@@ -115,22 +115,16 @@ public class TileArtisia extends TileBaseRenderUC {
 			}
 			if (ei.getItem().getCount() <= 0) ei.setDead();
 			
-			SeedRecipe recipe = UniqueCropsAPI.SEED_RECIPE_REGISTRY.findRecipe(stacks);
-			if (recipe != null && !getWorld().isRemote) {
-				ItemStack output = recipe.getOutput().copy();
-				clearItems();
-				this.setItem(output);
+			for (SeedRecipe recipe : UniqueCropsAPI.SEED_RECIPE_REGISTRY.getRecipeList(new ArrayList<>())) {
+				if (recipe.matches(stacks)) {
+					if (!getWorld().isRemote) {
+						ItemStack output = recipe.getOutput().copy();
+						clearItems();
+						this.setItem(output);
+					}
+					break;
+				}
 			}
-//			for (SeedRecipe recipe : UniqueCropsAPI.SEED_RECIPE_REGISTRY.getRecipeList(new ArrayList<>())) {
-//				if (recipe.matches(stacks)) {
-//					if (!getWorld().isRemote) {
-//						ItemStack output = recipe.getOutput().copy();
-//						clearItems();
-//						this.setItem(output);
-//					}
-//					break;
-//				}
-//			}
 			this.markBlockForUpdate();
 		}
 	}
@@ -166,5 +160,55 @@ public class TileArtisia extends TileBaseRenderUC {
 	public void setItem(ItemStack stack) {
 		
 		inv.setStackInSlot(0, stack);
+	}
+	
+	public void markBlockForUpdate() {
+		
+		IBlockState state = world.getBlockState(pos);
+		world.notifyBlockUpdate(pos, state, state, 3);
+	}
+	
+	public void markBlockForRenderUpdate() {
+		
+		world.markBlockRangeForRenderUpdate(pos, pos);
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		
+		return writeToNBT(new NBTTagCompound());
+	}
+	
+	@Nullable
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
+		NBTTagCompound nbtTag = new NBTTagCompound();
+		this.writeCustomNBT(nbtTag);
+		
+		return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
+	}
+	
+	@Override
+	public void writeCustomNBT(NBTTagCompound tag) {
+		
+		tag.setLong("Core", core.toLong());
+		tag.setTag("inventory", inv.serializeNBT());
+	}
+	
+	@Override
+	public void readCustomNBT(NBTTagCompound tag) {
+		
+		this.core = BlockPos.fromLong(tag.getLong("Core"));
+		inv.deserializeNBT(tag.getCompoundTag("inventory"));
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+		
+		if (packet != null && packet.getNbtCompound() != null)
+			readCustomNBT(packet.getNbtCompound());
+		
+		markBlockForRenderUpdate();
 	}
 }

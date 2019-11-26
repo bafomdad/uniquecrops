@@ -12,8 +12,6 @@
 		"stalk=northeast": { "model": "uniquecrops:diagstalk", "y": 90 },
 		"stalk=northwest": { "model": "uniquecrops:diagstalk", "y": 0 },
 		"stalk=southeast": { "model": "uniquecrops:diagstalk", "y": 180 },
-		"stalk=southwest": { "model": "uniquecrops:diagstalk", "y": 270 },
-		"stalk=up": { "model": "uniquecrops:craftstalk" },
-		"stalk=down": { "model": "uniquecrops:centerstalk" }
+		"stalk=southwest": { "model": "uniquecrops:diagstalk", "y": 270 }
   }
 }

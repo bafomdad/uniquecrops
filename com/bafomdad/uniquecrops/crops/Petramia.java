@@ -21,8 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -72,10 +72,6 @@ public class Petramia extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.canIgnoreGrowthRestrictions(world, pos)) {
-			super.updateTick(world, pos, state, rand);
-			return;
-		}
 		if (pos.getY() >= 10) {
 			this.checkAndDropBlock(world, pos, state);
 			return;

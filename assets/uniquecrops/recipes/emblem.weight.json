@@ -9,7 +9,7 @@
     "item": "uniquecrops:emblem.weight"
   },
   "pattern": [
-    "BSB",
+    " S ",
     "ODO",
     "OOO"
   ],
@@ -23,9 +23,6 @@
 	},
 	"D": {
 	  "item": "uniquecrops:darkblock"
-	},
-	"B": {
-	  "item": "minecraft:fire_charge"
 	}
   }
 }

@@ -3,17 +3,12 @@ package com.bafomdad.uniquecrops.events;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -38,36 +33,18 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -75,54 +52,37 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.terraingen.OreGenEvent;
-import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
-import com.bafomdad.uniquecrops.api.IItemBooster;
-import com.bafomdad.uniquecrops.blocks.tiles.*;
+import com.bafomdad.uniquecrops.blocks.tiles.TileDigger;
+import com.bafomdad.uniquecrops.blocks.tiles.TileGoblet;
+import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
-import com.bafomdad.uniquecrops.capabilities.*;
-import com.bafomdad.uniquecrops.core.MultiblockPattern;
+import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.core.GrowthSteps;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.SeedBehavior;
-import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.crops.Enderlily;
 import com.bafomdad.uniquecrops.crops.Feroxia;
 import com.bafomdad.uniquecrops.crops.Imperia;
 import com.bafomdad.uniquecrops.crops.Musica;
-import com.bafomdad.uniquecrops.crops.supercrops.Itero;
-import com.bafomdad.uniquecrops.data.UCOreHandler;
-import com.bafomdad.uniquecrops.dimension.CropWorldTeleporter;
+import com.bafomdad.uniquecrops.entities.EntityItemDonk;
 import com.bafomdad.uniquecrops.init.UCBlocks;
-import com.bafomdad.uniquecrops.init.UCDimension;
 import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.items.ItemAnkh;
-import com.bafomdad.uniquecrops.items.ItemBrassKnuckles;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
-import com.bafomdad.uniquecrops.items.ItemImpactShield;
 import com.bafomdad.uniquecrops.items.ItemThunderpants;
-import com.bafomdad.uniquecrops.network.PacketSyncCap;
-import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class UCEventHandlerServer {
@@ -216,26 +176,6 @@ public class UCEventHandlerServer {
 	}
 	
 	@SubscribeEvent
-	public void playerJump(LivingEvent.LivingJumpEvent event) {
-		
-		EntityLivingBase elb = event.getEntityLiving();
-		if (elb.world.isRemote) return;
-		
-		if (elb instanceof EntityPlayer) {
-			if (elb.world.getBlockState(elb.getPosition()).getBlock() == UCBlocks.teleLily) {
-				for (int i = 1; i < 12; i++) {
-					BlockPos loopPos = elb.getPosition().offset(EnumFacing.UP, i);
-					if (elb.world.getBlockState(loopPos).getBlock() == UCBlocks.teleLily) {
-						elb.motionY = 0;
-						elb.setPositionAndUpdate(loopPos.getX() + 0.5, loopPos.up().getY(), loopPos.getZ() + 0.5);
-						return;
-					}
-				}
-			}
-		}
-	}
-	
-	@SubscribeEvent
 	public void noteBlockPlayEvent(NoteBlockEvent.Play event) {
 		
 		if (event.getWorld().isRemote)
@@ -277,7 +217,7 @@ public class UCEventHandlerServer {
 		}
 		if (crop == UCBlocks.cropFeroxia && ((Feroxia)crop).isFullyGrown(event.getWorld(), event.getPos(), event.getState())) {
 			if (!(event.getHarvester() instanceof FakePlayer))
-				UCUtils.generateSteps(event.getHarvester());
+				GrowthSteps.generateSteps(event.getHarvester());
 			else
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
@@ -319,11 +259,9 @@ public class UCEventHandlerServer {
 		
 		if (event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)event.getEntityLiving();
-			
-			ItemAnkh.saveAnkhItems(player);
-			
 			NBTTagCompound tag = player.getEntityData();
-			if (tag.hasKey("hasSacrificed") && !tag.getBoolean("hasSacrificed")) {
+			if (tag.hasKey("hasSacrificed") && !tag.getBoolean("hasSacrificed"))
+			{
 				EntityItem ei = new EntityItem(player.world, player.posX + 0.5D, player.posY + 0.5D, player.posZ + 0.5D, new ItemStack(UCItems.heart));
 				tag.setBoolean("hasSacrificed", true);
 				if (!player.world.isRemote)
@@ -354,7 +292,7 @@ public class UCEventHandlerServer {
 	    		EntityChicken chicken = (EntityChicken)event.getEntityLiving();
 	    		NBTTagCompound tag = chicken.getEntityData();
 	    		if (!chicken.isChild() && tag.hasKey(ItemGeneric.TAG_OVERCLUCK)) 
-	    			addDrop(event, EnumItems.EGGUPGRADE.createStack());
+	    			addDrop(event, UCItems.generic.createStack(EnumItems.EGGUPGRADE));
 	    	}
 		}
 		else if (!(event.getEntityLiving() instanceof EntityPlayer) && event.getSource().getTrueSource() instanceof EntityPlayer) {
@@ -362,12 +300,13 @@ public class UCEventHandlerServer {
 			EntityPlayer player = (EntityPlayer)event.getSource().getTrueSource();
 			EntityEquipmentSlot[] slot = new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET };
 			ItemStack boots = el.getItemStackFromSlot(slot[0]);
-			if (!boots.isEmpty() && player.inventory.hasItemStack(EnumItems.SLIPPER.createStack())) {
+			if (!boots.isEmpty() && player.inventory.hasItemStack(UCItems.generic.createStack(EnumItems.SLIPPER))) {
 				if (player.world.rand.nextInt(5) == 0) {
 					addDrop(event, new ItemStack(UCItems.slippers));
 					for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 						ItemStack oneboot = player.inventory.getStackInSlot(i);
-						if (!oneboot.isEmpty() && oneboot.getItem() == UCItems.generic && oneboot.getItemDamage() == 14) {
+						if (!oneboot.isEmpty() && oneboot.getItem() == UCItems.generic && oneboot.getItemDamage() == 14)
+						{
 							player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 							break;
 						}
@@ -401,25 +340,24 @@ public class UCEventHandlerServer {
 	}
 	
 	@SubscribeEvent
-	public void onPlayerClone(PlayerEvent.Clone event) {
+	public void checkPlayerNBT(PlayerEvent.Clone event) {
 		
-		if (event.isWasDeath() && !event.getEntityPlayer().world.getGameRules().getBoolean("keepInventory")) {
-			EntityPlayer oldPlayer = event.getOriginal();
-			EntityPlayer newPlayer = event.getEntityPlayer();
-			
-			ItemAnkh.putAnkhItems(oldPlayer, newPlayer);
-			
-			NBTTagCompound oldtag = oldPlayer.getEntityData();
-			NBTTagCompound tag = newPlayer.getEntityData();
-			if (oldtag.hasKey(UCStrings.TAG_GROWTHSTAGES)) {
-				tag.setTag(UCStrings.TAG_GROWTHSTAGES, oldtag.getTagList(UCStrings.TAG_GROWTHSTAGES, 10).copy());
-			}
-			if (oldtag.hasKey("hasSacrificed"))
-				tag.setBoolean("hasSacrificed", oldtag.getBoolean("hasSacrificed"));
-			
-			if (oldtag.hasKey(UCStrings.TAG_ABSTRACT))
-				tag.setInteger(UCStrings.TAG_ABSTRACT, oldtag.getInteger(UCStrings.TAG_ABSTRACT));
+		if (!event.isWasDeath())
+			return;
+		
+		EntityPlayer old = event.getOriginal();
+		EntityPlayer player = event.getEntityPlayer();
+		
+		NBTTagCompound oldtag = old.getEntityData();
+		NBTTagCompound tag = player.getEntityData();
+		if (oldtag.hasKey(GrowthSteps.TAG_GROWTHSTAGES)) {
+			tag.setTag(GrowthSteps.TAG_GROWTHSTAGES, oldtag.getTagList(GrowthSteps.TAG_GROWTHSTAGES, 10).copy());
 		}
+		if (oldtag.hasKey("hasSacrificed"))
+			tag.setBoolean("hasSacrificed", oldtag.getBoolean("hasSacrificed"));
+		
+		if (oldtag.hasKey(SeedBehavior.TAG_ABSTRACT))
+			tag.setInteger(SeedBehavior.TAG_ABSTRACT, oldtag.getInteger(SeedBehavior.TAG_ABSTRACT));
 	}
 	
 	@SubscribeEvent
@@ -444,30 +382,14 @@ public class UCEventHandlerServer {
 	@SubscribeEvent
 	public void onLivingAttack(LivingAttackEvent event) {
 		
-		if (event.getEntityLiving().world.isRemote) return;
-		// brass knuckle stuff
-		if (event.getEntityLiving() instanceof EntityLivingBase && event.getSource().getImmediateSource() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)event.getSource().getImmediateSource();
-			ItemStack brassKnuckles = player.getHeldItemMainhand();
-			if (brassKnuckles.getItem() == UCItems.brassKnuckles) {
-				boolean flag = NBTUtils.getList(brassKnuckles, "UC:hitList", 10, true) != null && NBTUtils.getList(brassKnuckles, "UC:hitList", 10, true).isEmpty();
-				if (!flag) return;
-				float damage = event.getAmount();
-				ItemBrassKnuckles.addHitEntity(event.getEntityLiving(), brassKnuckles, player.world.getTotalWorldTime(), damage);
-				event.setCanceled(true);
-				BlockPos pos = event.getEntityLiving().getPosition();
-				UCPacketHandler.sendToNearbyPlayers(player.world, player.getPosition(), new PacketUCEffect(EnumParticleTypes.CRIT, pos.getX() - 0.5, pos.getY() + 0.2, pos.getZ() - 0.5, 6));
-				return;
-			}
-		}
-		// thunder pants stuff
-		if (!(event.getEntityLiving() instanceof EntityPlayer)) return;
+		if (!(event.getEntityLiving() instanceof EntityPlayer) || event.getEntityLiving().world.isRemote)
+			return;
 		
 		EntityPlayer player = (EntityPlayer)event.getEntityLiving();
 		if (event.getSource().getImmediateSource() instanceof EntityLiving) {
 			EntityLiving el = (EntityLiving)event.getSource().getImmediateSource();
 			ItemStack pants = player.inventory.armorInventory.get(EntityEquipmentSlot.LEGS.getIndex());
-			if (!pants.isEmpty() && pants.getItem() == UCItems.thunderPantz) {
+			if (!pants.isEmpty() && pants.getItem() == UCItems.thunderpantz) {
 				ItemThunderpants pantz = (ItemThunderpants)pants.getItem();
 				if (pantz.getCharge(pants) < 1F) return;
 				
@@ -479,12 +401,6 @@ public class UCEventHandlerServer {
 				return;
 			}
 		}
-		// teleport player when they fall into the void on crop world
-		if (event.getSource() == DamageSource.OUT_OF_WORLD && player.world.provider.getDimension() == UCDimension.dimID) {
-			event.setCanceled(true);
-			player.changeDimension(0, new CropWorldTeleporter());
-			return;
-		}
 		// glass slippers cactus damage cancellation
 		ItemStack boots = player.inventory.armorInventory.get(EntityEquipmentSlot.FEET.getIndex());
 		if (!boots.isEmpty() && boots.getItem() == UCItems.slippers) {
@@ -493,22 +409,9 @@ public class UCEventHandlerServer {
 			if (cactus != null && cactus == Blocks.CACTUS)
 				event.setCanceled(true);
 		}
+		// cactus armor damage reflection
 		if (event.getSource() != DamageSource.MAGIC && event.getSource().getTrueSource() instanceof EntityLiving) {
 			EntityLivingBase elb = (EntityLivingBase)event.getSource().getTrueSource();
-			// goblet damage reflection
-			for (TileEntity tile : event.getEntityLiving().world.loadedTileEntityList) {
-				if (tile instanceof TileGoblet) {
-					EntityLivingBase tagged = UCUtils.getTaggedEntity(((TileGoblet)tile).entityId);
-					if (tagged != null) {
-						event.setCanceled(true);
-						tagged.attackEntityFrom(event.getSource(), event.getAmount());
-						if (!tagged.isEntityAlive())
-							((TileGoblet)tile).eraseTaglock();
-						return;
-					}
-				}
-			}
-			// cactus armor damage reflection
 			for (int i = 0; i < 4; i++) {
 				if (hasCactusArmorPiece(player, i)) {
 					float damage = event.getAmount();
@@ -516,11 +419,17 @@ public class UCEventHandlerServer {
 					return;
 				}
 			}
-			// impact shield damage event
-			ItemStack activeStack = player.getActiveItemStack();
-			if (!activeStack.isEmpty() && activeStack.getItem() == UCItems.impactShield) {
-				((ItemImpactShield)activeStack.getItem()).damageImpactShield(player, activeStack, event.getAmount());
-				event.setCanceled(true);
+			for (TileEntity tile : event.getEntityLiving().world.loadedTileEntityList) {
+				if (tile instanceof TileGoblet) {
+					EntityLivingBase tagged = ((TileGoblet)tile).getTaggedEntity();
+					if (tagged != null) {
+						event.setCanceled(true);
+						tagged.attackEntityFrom(event.getSource(), event.getAmount());
+						if (!tagged.isEntityAlive())
+							((TileGoblet)tile).eraseTaglock();
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -559,26 +468,12 @@ public class UCEventHandlerServer {
     }
     
     @SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent event) {
+    public void silverfishBlocks(BlockEvent.BreakEvent event) {
     	
     	if (event.getPlayer() == null)
     		return;
 
     	EntityPlayer player = event.getPlayer();
-    	
-    	if (player.inventory.armorInventory.get(3).getItem() == UCItems.pixelGlasses) {
-    		boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
-    		if (flag && event.getState().getBlock() == Blocks.STONE) {
-    			if (UCOreHandler.getInstance().getSaveInfo().containsValue(event.getPos())) {
-    				EntityItem ei = new EntityItem(event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, new ItemStack(UCItems.diamonds));
-    				if (!event.getWorld().isRemote)
-    					event.getWorld().spawnEntity(ei);
-        			UCOreHandler.getInstance().removeChunk(event.getPos(), true);
-        			player.inventory.armorInventory.get(3).damageItem(10, player);
-        			return;
-    			}
-    		}
-    	}
     	boolean flag = player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionPick;
     	if (!flag) return;
     	
@@ -646,7 +541,7 @@ public class UCEventHandlerServer {
 		
 		EntityPlayer player = event.player;
 		
-		if (!player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() == UCItems.pixelGlasses) {
+		if (!player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() == UCItems.pixelglasses) {
 			boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
 			if (event.side.isClient() && FMLClientHandler.instance().getClientPlayerEntity().getName().equals(player.getName())) {
 				if (flag)
@@ -655,15 +550,14 @@ public class UCEventHandlerServer {
 					UniqueCrops.proxy.disableBitsShader();
 			}
 		}
-		else if ((player.inventory.armorInventory.get(3).isEmpty() || !player.inventory.armorInventory.get(3).isEmpty() && !(player.inventory.armorInventory.get(3).getItem() != UCItems.pixelGlasses)) && event.side.isClient()) {
+		else if ((player.inventory.armorInventory.get(3).isEmpty() || !player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() != UCItems.pixelglasses) && event.side.isClient())
 			UniqueCrops.proxy.disableBitsShader();
-		}
 		
-		if (player.getEntityData().hasKey(UCStrings.TAG_ABSTRACT)) {
+		if (player.getEntityData().hasKey(SeedBehavior.TAG_ABSTRACT)) {
 			if (event.phase == Phase.START && event.player.world.rand.nextInt(1000) == 0) {
 				Random rand = new Random();
 				if (rand.nextInt(10) != 0) {
-					ItemHandlerHelper.giveItemToPlayer(player, EnumItems.ABSTRACT.createStack());
+					ItemHandlerHelper.giveItemToPlayer(player, UCItems.generic.createStack(EnumItems.ABSTRACT));
 					if (!event.player.world.isRemote)
 						SeedBehavior.setAbstractCropGrowth(event.player, false);
 				}
@@ -716,30 +610,7 @@ public class UCEventHandlerServer {
 	@SubscribeEvent
 	public void onCropGrowth(BlockEvent.CropGrowEvent.Pre event) {
 		
-		if (event.getWorld().isRemote) return;
-		
-		BlockPos pos = event.getPos();
-		List<EntityPlayer> players = event.getWorld().getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.add(-7, -3, -7), pos.add(7, 3, 7)));
-		for (EntityPlayer player : players) {
-			
-			ItemStack staff = player.getHeldItemMainhand();
-			ItemStack offhand = player.getHeldItemOffhand();
-
-			int distance = (int) player.getDistanceSqToCenter(event.getPos());
-			int range = (offhand.getItem() instanceof IItemBooster) ? 4 + ((IItemBooster)offhand.getItem()).getRange(offhand) : 3;
-			
-			if (distance <= range) {
-				CPCapability cap = staff.getCapability(CPProvider.CROP_POWER, null);
-				if (cap != null && cap.canAdd()) {
-					int extraPower = (offhand.getItem() instanceof IItemBooster) ? ((IItemBooster)offhand.getItem()).getPower(offhand) : 0;
-					cap.add(1 + extraPower);
-					if (player instanceof EntityPlayerMP)
-						UCPacketHandler.INSTANCE.sendTo(new PacketSyncCap(cap.serializeNBT()), (EntityPlayerMP)player);
-					event.setResult(Result.DENY);
-				}
-			}
-		}
-		if (event.getState().getBlock() != Blocks.WHEAT) return;
+		if (event.getState().getBlock() != Blocks.WHEAT || event.getWorld().isRemote) return;
 		
 		TileEntity tile = UCUtils.getClosestTile(TileDigger.class, event.getWorld(), event.getPos(), 8.0D);
 		if (tile instanceof TileDigger) {
@@ -752,132 +623,6 @@ public class UCEventHandlerServer {
 				event.setResult(Result.DENY);
 			else
 				event.setResult(Result.DEFAULT);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onBlockInteract(PlayerInteractEvent.RightClickBlock event) {
-		
-		List<MultiblockPattern> patterns = UCConfig.getPatterns();
-		if (patterns.isEmpty()) return;
-		
-		for (MultiblockPattern pattern : patterns) {
-			EntityPlayer player = event.getEntityPlayer();
-			ItemStack held = player.getHeldItem(event.getHand());
-			if (!ItemStack.areItemsEqual(held, pattern.getCatalyst())) continue;
-			
-			IBlockState state = event.getWorld().getBlockState(event.getPos());
-			if (!pattern.isOriginBlock(state)) continue;
-			
-			ActionResult<Set<BlockPos>> matched = pattern.match(event.getWorld(), event.getPos());
-			if (matched.getType() != EnumActionResult.SUCCESS) continue;
-			
-			int cropPower = pattern.getPower();
-			CPCapability cap = held.getCapability(CPProvider.CROP_POWER, null);
-			if (cropPower > 0) {
-				int power = (cap != null) ? cap.getPower() : 0;
-				if (power < cropPower) {
-					player.sendStatusMessage(new TextComponentString("Insufficient crop power."), true);
-					return;
-				}
-			}
-			if (cropPower > 0 && !event.getWorld().isRemote && player instanceof EntityPlayerMP) {
-				cap.remove(cropPower);
-				UCPacketHandler.INSTANCE.sendTo(new PacketSyncCap(cap.serializeNBT()), (EntityPlayerMP)player);
-			}
-			if (cropPower <= 0 && !event.getWorld().isRemote)
-				held.shrink(1);
-				
-			pattern.setResult(event.getWorld(), event.getPos());
-			event.setUseBlock(Result.DENY);
-			player.swingArm(event.getHand());
-			break;
-		}
-	}
-	
-	@SubscribeEvent
-	public void onItemToss(ItemTossEvent event) {
-		
-		EntityItem eventEntity = event.getEntityItem();
-		if (eventEntity.getItem().getItem() == UCItems.diamonds && !event.getPlayer().capabilities.isCreativeMode) {
-			event.setCanceled(true);
-			ItemStack eventStack = eventEntity.getItem().copy();
-			eventStack.damageItem(1, event.getPlayer());
-
-			if (!event.getEntity().world.isRemote) {
-				int num = 1;
-				if (eventStack.getItemDamage() <= event.getEntityItem().getItem().getMaxDamage() - 1)
-					ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), eventStack);
-				else num = 2;
-				
-				EntityItem diamonds = new EntityItem(event.getPlayer().world, eventEntity.getPosition().getX() + 0.5, eventEntity.getPosition().getY() + 0.5, eventEntity.getPosition().getZ() + 0.5, new ItemStack(Items.DIAMOND, num));
-				diamonds.setDefaultPickupDelay();
-				event.getPlayer().world.spawnEntity(diamonds);
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onPressurePlateTrigger(BlockEvent.NeighborNotifyEvent event) {
-		
-		if (event.getState().getBlock() == Blocks.STONE_PRESSURE_PLATE) {
-			if (event.getState().getValue(BlockPressurePlate.POWERED)) {
-				for (BlockPos loopPos : Itero.PLATES) {
-					TileEntity tile = event.getWorld().getTileEntity(event.getPos().subtract(loopPos));
-					if (tile instanceof TileItero) {
-						((TileItero)tile).matchCombo(event.getPos());
-						break;
-					}
-				}
-			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void onLootTableLoad(LootTableLoadEvent event) {
-		
-		LootPool pool = event.getTable().getPool("main");
-		if (pool == null) {
-			pool = new LootPool(new LootEntry[0], new LootCondition[0], new RandomValueRange(5, 10), new RandomValueRange(0), "main");
-			event.getTable().addPool(pool);
-		}
-		if (event.getName().equals(LootTableList.CHESTS_WOODLAND_MANSION)) {
-			pool.addEntry(new LootEntryItem(UCItems.seedsBlessed, 10, 0, new LootFunction[0], new LootCondition[0], UniqueCrops.MOD_ID + ":" + UCItems.seedsBlessed.getTranslationKey()));
-			pool.addEntry(new LootEntryItem(UCItems.potionEnnui, 20, 0, new LootFunction[0], new LootCondition[0], UniqueCrops.MOD_ID + ":" + UCItems.potionEnnui.getTranslationKey()));
-		}
-	}
-	
-	@SubscribeEvent
-	public void advancementEvent(AdvancementEvent event) {
-		
-		if (!event.getAdvancement().getId().toString().equals("uniquecrops:main/wildwoodstaff_craft")) return;
-		
-		ItemHandlerHelper.giveItemToPlayer(event.getEntityPlayer(), new ItemStack(UCItems.bookMultiblock));
-	}
-	
-//	@SubscribeEvent :)
-	public void getCollisions(GetCollisionBoxesEvent event) {
-		
-		Entity entity = event.getEntity();
-		if (!(entity instanceof EntityPlayer)) return;
-		
-		EntityPlayer player = (EntityPlayer)entity;
-		if (player.isSneaking()) {
-			AxisAlignedBB playerBB = player.getEntityBoundingBox();
-			World world = event.getWorld();
-			for (BlockPos.MutableBlockPos loopPos : BlockPos.getAllInBoxMutable(
-					MathHelper.floor(playerBB.minX),
-					MathHelper.floor(playerBB.minY - 1),
-					MathHelper.floor(playerBB.minZ),
-					MathHelper.floor(playerBB.minX),
-					MathHelper.floor(playerBB.minY),
-					MathHelper.floor(playerBB.minZ)
-					)) {
-				IBlockState state = world.getBlockState(loopPos);
-				if (state.getMaterial().isSolid()) {
-					event.getCollisionBoxesList().clear();
-				}
-			}
 		}
 	}
 	

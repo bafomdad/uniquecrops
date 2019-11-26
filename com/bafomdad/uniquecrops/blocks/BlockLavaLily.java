@@ -153,14 +153,14 @@ public class BlockLavaLily extends BlockBush {
 	                {
 	                    // special case for handling block placement with water lilies
 	                    net.minecraftforge.common.util.BlockSnapshot blocksnapshot = net.minecraftforge.common.util.BlockSnapshot.getBlockSnapshot(world, blockpos1);
-	                    world.setBlockState(blockpos1, UCBlocks.lavaLily.getDefaultState());
+	                    world.setBlockState(blockpos1, UCBlocks.lavalily.getDefaultState());
 	                    if (net.minecraftforge.event.ForgeEventFactory.onPlayerBlockPlace(player, blocksnapshot, net.minecraft.util.EnumFacing.UP, hand).isCanceled())
 	                    {
 	                        blocksnapshot.restore(true, false);
 	                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
 	                    }
 
-	                    world.setBlockState(blockpos1, UCBlocks.lavaLily.getDefaultState(), 11);
+	                    world.setBlockState(blockpos1, UCBlocks.lavalily.getDefaultState(), 11);
 
 	                    if (player instanceof EntityPlayerMP)
 	                    {

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class TileGoblet extends TileBaseUC {
 	
-	public UUID entityId;
+	private UUID entityId;
 
 	public void writeCustomNBT(NBTTagCompound tag) {
 		
@@ -45,4 +45,41 @@ public class TileGoblet extends TileBaseUC {
 			world.setBlockState(pos, UCBlocks.goblet.getDefaultState().withProperty(BlockGoblet.FILLED, false), 3);
 		}
 	}
+	
+	public EntityLivingBase getTaggedEntity() {
+		
+		if (entityId != null) {
+			if (!world.isRemote) {
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+				for (WorldServer wServer : server.worlds) {
+					for (Object obj : wServer.loadedEntityList) {
+						if (obj instanceof EntityLivingBase) {
+							EntityLivingBase living = (EntityLivingBase)obj;
+							UUID id = living.getPersistentID();
+							if (entityId.equals(id) && living.isEntityAlive())
+								return living;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	/*
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
+		NBTTagCompound nbtTag = new NBTTagCompound();
+		this.writeCustomNBT(nbtTag);
+		
+		return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		
+		return writeToNBT(new NBTTagCompound());
+	}
+	*/
 }

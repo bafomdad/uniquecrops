@@ -48,7 +48,7 @@ public class PacketSendKey implements IMessage {
 			
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			ItemStack glasses = player.inventory.armorInventory.get(3);
-			if (!glasses.isEmpty() && glasses.getItem() == UCItems.pixelGlasses)
+			if (!glasses.isEmpty() && glasses.getItem() == UCItems.pixelglasses)
 				NBTUtils.setBoolean(glasses, "isActive", !glasses.getTagCompound().getBoolean("isActive"));
 		}
 	}

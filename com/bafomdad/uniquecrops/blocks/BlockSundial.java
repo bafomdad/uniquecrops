@@ -5,9 +5,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.tiles.TileSundial;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.block.material.Material;
@@ -20,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -38,7 +36,7 @@ public class BlockSundial extends BlockBaseUC {
 		super("sundial", Material.ROCK);
 		setHardness(1.0F);
 		setResistance(1.0F);
-		GameRegistry.registerTileEntity(TileSundial.class, new ResourceLocation(UniqueCrops.MOD_ID, "sundial"));
+		GameRegistry.registerTileEntity(TileSundial.class, "UCTileSundial");
 	}
 	
 	@Override
@@ -138,6 +136,6 @@ public class BlockSundial extends BlockBaseUC {
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     	
-    	return EnumItems.SUNDIAL.createStack();
+    	return UCItems.generic.createStack(EnumItems.SUNDIAL);
     }
 }

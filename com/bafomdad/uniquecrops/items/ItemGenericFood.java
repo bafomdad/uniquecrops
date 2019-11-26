@@ -1,41 +1,43 @@
 package com.bafomdad.uniquecrops.items;
 
+import java.util.Iterator;
+
+import javax.annotation.Nullable;
+
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.PotionBehavior;
+import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.init.UCItems;
+
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.enums.EnumFoodstuffs;
-import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.init.UCPotions;
-import com.bafomdad.uniquecrops.potions.PotionBehavior;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemGenericFood extends ItemFood {
-	
-	private EnumFoodstuffs type;
-	
-	public ItemGenericFood(EnumFoodstuffs type) {
+
+	public ItemGenericFood(int amount, float saturation, boolean always, String itemname) {
 		
-		super(type.getAmount(), type.getSaturation(), false);
-		this.type = type;
-		if (type.isAlwaysEdible())
-			this.setAlwaysEdible();
-		setRegistryName("genericfood." + type.name().toLowerCase());
-		setTranslationKey(UniqueCrops.MOD_ID + ".genericfood." + type.name().toLowerCase());
+		super(amount, saturation, false);
+		setRegistryName("genericfood." + itemname);
+		setTranslationKey(UniqueCrops.MOD_ID + ".genericfood." + itemname);
 		setCreativeTab(UniqueCrops.TAB);
+		if (always)
+			setAlwaysEdible();
 		UCItems.items.add(this);
 	}
 	
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {
 		
-		if (stack.getItem() == UCItems.potionReverse)
+		if (stack.getItem() == UCItems.potionreverse)
 			return EnumAction.DRINK;
 		
 		return EnumAction.EAT;
@@ -45,28 +47,25 @@ public class ItemGenericFood extends ItemFood {
     protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 		
 		if (!world.isRemote) {
-			switch (type) {
-				case TERIYAKI: player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 3600)); break;
-				case LARGEPLUM: player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 40)); break;
-				case REVERSEPOTION:
-					PotionBehavior.reverseEffects(player);
-					player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-					break;
-				case GOLDENBREAD: player.addPotionEffect(new PotionEffect(MobEffects.LUCK, 2400)); break;
-				case HEART: player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 1200, 4)); break;
-				case ENNUIPOTION: 
-					player.addPotionEffect(new PotionEffect(UCPotions.ENNUI, 600, 1));
-					player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-					break;
-				default: break;
+			if (stack.getItem() == UCItems.teriyaki)
+				player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, 3600));
+			if (stack.getItem() == UCItems.largeplum)	
+				player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 40));
+			if (stack.getItem() == UCItems.potionreverse) {
+				PotionBehavior.reverseEffects(player);
+				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
 			}
+			if (stack.getItem() == UCItems.goldenbread)
+				player.addPotionEffect(new PotionEffect(MobEffects.LUCK, 2400));
+			if (stack.getItem() == UCItems.heart)
+				player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 1200, 4));
 		}
 	}
 	
 	@Override
     public int getItemStackLimit(ItemStack stack) {
     	
-		if (stack.getItem() == UCItems.potionReverse || stack.getItem() == UCItems.teriyaki)
+		if (stack.getItem() == UCItems.potionreverse || stack.getItem() == UCItems.teriyaki)
 			return 1;
 		
 		return super.getItemStackLimit(stack);
@@ -75,16 +74,6 @@ public class ItemGenericFood extends ItemFood {
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		
-		return stack.getItem() == UCItems.potionReverse || stack.getItem() == UCItems.potionEnnui;
+		return stack.getItem() == UCItems.potionreverse;
 	}
-	
-	@Override
-    public EnumRarity getRarity(ItemStack stack) {
-    	
-		switch (type) {
-			case REVERSEPOTION: return EnumRarity.UNCOMMON;
-			case ENNUIPOTION: return EnumRarity.UNCOMMON;
-			default: return super.getRarity(stack);
-		}
-    }
 }

@@ -4,5 +4,5 @@ public interface ICropBook {
 
 	public String getBookDescription();
 	
-	public boolean canIncludeInBook();
+//	public String getPageImage();
 }

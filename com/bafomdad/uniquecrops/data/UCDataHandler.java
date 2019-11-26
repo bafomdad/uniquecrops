@@ -33,7 +33,11 @@ public class UCDataHandler {
 		}
 		return saveInfo.get(dimId);
 	}
-
+	
+	public void refresh(int dimId, ChunkPos pos) {
+		
+	}
+	
 	public void addChunk(int dimId, ChunkPos pos, boolean dirty) {
 		
 		if (!getChunkInfo(dimId).contains(pos))

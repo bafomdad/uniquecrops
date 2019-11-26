@@ -20,8 +20,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -63,10 +63,6 @@ public class MaryJane extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.canIgnoreGrowthRestrictions(world, pos)) {
-			super.updateTick(world, pos, state, rand);
-			return;
-		}
 		if (!world.provider.doesWaterVaporize()) return;
 
 		super.updateTick(world, pos, state, rand);

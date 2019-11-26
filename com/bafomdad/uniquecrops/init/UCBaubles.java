@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.items.baubles.*;
 
 public class UCBaubles {

@@ -64,12 +64,7 @@ public class SeedBehavior {
 					return true;
 				}
 				if (cropBlock == UCBlocks.cropEula) {
-					NBTTagCompound data = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-					if (data != null && !data.getBoolean(UCStrings.TAG_EULA)) {
-						player.openGui(UniqueCrops.instance, 1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-						data.setBoolean(UCStrings.TAG_EULA, true);
-						player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, data);
-					}
+					player.openGui(UniqueCrops.instance, 1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 				}
 				if (cropBlock == UCBlocks.cropAbstract) {
 					player.renderBrokenItemStack(stack);
@@ -87,23 +82,25 @@ public class SeedBehavior {
 		return false;
 	}
 	
+	public static final String TAG_ABSTRACT = "UC_tagAbstractGrowth";
+	
 	public static void setAbstractCropGrowth(EntityPlayer player, boolean add) {
 		
 		NBTTagCompound tag = player.getEntityData();
-		if (!tag.hasKey(UCStrings.TAG_ABSTRACT) && add) {
-			tag.setInteger(UCStrings.TAG_ABSTRACT, 1);
+		if (!tag.hasKey(TAG_ABSTRACT) && add) {
+			tag.setInteger(TAG_ABSTRACT, 1);
 			return;
 		}
 		if (add) {
-			tag.setInteger(UCStrings.TAG_ABSTRACT, tag.getInteger(UCStrings.TAG_ABSTRACT) + 1);
+			tag.setInteger(TAG_ABSTRACT, tag.getInteger(TAG_ABSTRACT) + 1);
 		}
 		else if (!add) {
-			int value = tag.getInteger(UCStrings.TAG_ABSTRACT);
+			int value = tag.getInteger(TAG_ABSTRACT);
 			if (player.world.rand.nextInt(5) == 0)
-				tag.setInteger(UCStrings.TAG_ABSTRACT, value - 1);
+				tag.setInteger(TAG_ABSTRACT, value - 1);
 		}
-		if (tag.getInteger(UCStrings.TAG_ABSTRACT) <= 0)
-			tag.removeTag(UCStrings.TAG_ABSTRACT);
+		if (tag.getInteger(TAG_ABSTRACT) <= 0)
+			tag.removeTag(TAG_ABSTRACT);
 	}
 	
 	public static boolean canIgnoreGrowthRestrictions(World world) {

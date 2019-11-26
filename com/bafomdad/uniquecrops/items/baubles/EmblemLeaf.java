@@ -9,7 +9,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import baubles.api.BaubleType;
 
-import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
+import com.bafomdad.uniquecrops.core.EnumEmblems;
 import com.google.common.collect.Multimap;
 
 public class EmblemLeaf extends ItemBauble {

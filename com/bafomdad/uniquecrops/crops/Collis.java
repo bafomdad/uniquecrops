@@ -9,9 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Collis extends BlockCropsBase {
@@ -45,10 +45,6 @@ public class Collis extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		if (this.canIgnoreGrowthRestrictions(world, pos)) {
-			super.updateTick(world, pos, state, rand);
-			return;
-		}
 		checkHighplant(world, pos, state, getAge(state));
 	}
 	

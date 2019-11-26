@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "uniquecrops:blocks/flywood_log_top",
-        "side": "uniquecrops:blocks/flywood_log"
-    }
-}

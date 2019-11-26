@@ -39,8 +39,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
+import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.data.UCDataHandler;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -57,7 +57,7 @@ public class Imperia extends BlockCropsBase {
 	@SubscribeEvent
 	public void imperiaDenySpawn(LivingSpawnEvent.CheckSpawn event) {
 		
-//		if (event.getResult() == Event.Result.ALLOW) return;
+		if (event.getResult() == Event.Result.ALLOW) return;
 		
 		ChunkPos cPos = new ChunkPos(event.getEntityLiving().getPosition());
 		if (!event.getWorld().isRemote && !event.isSpawner() && event.getEntityLiving().isCreatureType(EnumCreatureType.MONSTER, false) && UCDataHandler.getInstance().getChunkInfo(event.getWorld().provider.getDimension()).contains(cPos)) {

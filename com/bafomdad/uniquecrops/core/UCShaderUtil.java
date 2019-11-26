@@ -90,6 +90,27 @@ public class UCShaderUtil {
 		}
 	}
 	
+	public static void setScreenUniform(ResourceLocation res, String uniformName, int value, int... more) {
+
+		if (more.length < 3) {
+			int[] temp = new int[3];
+			System.arraycopy(more, 0, temp, 0, more.length);
+			more = temp;
+		}
+		ShaderGroup shaderGroup = screenShaders.get(res);
+		if (shaderGroup != null) {
+			List<Shader> shaders;
+			try {
+				shaders = (List<Shader>) list_shaders.invokeExact(shaderGroup);
+			} catch (Throwable t) {
+				return;
+			}
+			for (Shader shader : shaders) {
+				shader.getShaderManager().getShaderUniformOrDefault(uniformName).set(value, more[0], more[1], more[2]);
+			}
+		}
+	}
+	
     public static void setScreenUniform(ResourceLocation res, String uniformName, float value, float... more) {
         
     	ShaderGroup shaderGroup = screenShaders.get(res);
@@ -123,7 +144,7 @@ public class UCShaderUtil {
 			final float partialTicks = event.getPartialTicks();
 			screenShaders.forEach((key, shaderGroup) -> {
 				GlStateManager.pushMatrix();
-//				setScreenUniform(key, "SystemTime", System.currentTimeMillis());
+				setScreenUniform(key, "SystemTime", System.currentTimeMillis());
 				shaderGroup.render(partialTicks);
 				GlStateManager.popMatrix();
 			});

@@ -34,12 +34,10 @@ item.uniquecrops.generic.pixels.name=Pixel Debris
 item.uniquecrops.generic.bluedye.name=Blue Dye
 item.uniquecrops.generic.escaperope.name=Escape Rope
 item.uniquecrops.generic.sundial.name=Sundial
-item.uniquecrops.generic.cubeythingy.name=Cubey Thingy
-item.uniquecrops.genericfood.largeplum.name=Large Dirigible Plum
+item.uniquecrops.genericfood.largeplum.name=Large Dirible Plum
 item.uniquecrops.genericfood.teriyaki.name=Chicken Teriyaki Bowl
 item.uniquecrops.genericfood.heart.name=Heart of Steve
 item.uniquecrops.genericfood.reversepotion.name=Potion of Reversing Effects
-item.uniquecrops.genericfood.ennuipotion.name=Potion of Boredom
 item.uniquecrops.genericfood.goldenbread.name=Golden Bread
 item.uniquecrops.genericfood.dietpills.name=Diet Pills
 item.uniquecrops.genericfood.waffle.name=Homestyled Waffle
@@ -53,7 +51,6 @@ item.uniquecrops.precision.axe.name=Precision Axe
 item.uniquecrops.precision.pick.name=Precision Pick
 item.uniquecrops.precision.shovel.name=Precision Shovel
 item.uniquecrops.precision.sword.name=Precision Sword
-item.uniquecrops.precision.hammer.name=Precision Hammer
 item.uniquecrops.3dglasses.name=3D Glasses
 item.uniquecrops.poncho.name=Comfy Poncho
 item.uniquecrops.slippers.name=Glass Slippers
@@ -69,18 +66,8 @@ item.uniquecrops.thunderpantz.name=Thunder Pants
 item.uniquecrops.beanpower.name=Battery Bean
 item.uniquecrops.democord.name=Detcord
 item.uniquecrops.steeldonut.name=Steel Donut
-item.uniquecrops.goodiebag.name=Goodie Bag
-item.uniquecrops.wildwoodstaff.name=Wildwood Staff
+item.uniquecrops.wildwoodstaff.name=Wildwood Staff (WIP)
 item.uniquecrops.vampiric_ointment.name=Vampiric Ointment
-item.uniquecrops.ankh.name=Flint Ankh
-item.uniquecrops.emeradic_diamond.name=Orb of Good Harvest
-item.uniquecrops.useless_lump.name=Useless Lump
-item.uniquecrops.diamonds.name=Bunch of Diamonds
-item.uniquecrops.impactshield.name=Impact Shield
-item.uniquecrops.brassknuckles.name=Brass Knuckles
-item.uniquecrops.book_multiblock.name=Guide to Unique Multiblocks
-item.uniquecrops.pixelbrush.name=Pixelsius Brush
-item.uniquecrops.rubikscube.name=Rubik's Cube
 item.uniquecrops.seednormal.name=Normie Seeds
 item.uniquecrops.seedprecision.name=Precision Seeds
 item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
@@ -114,8 +101,6 @@ item.uniquecrops.seedquarry.name=Fossura Seed
 item.uniquecrops.seedsucco.name=Succo Seed
 item.uniquecrops.seedinstabilis.name=Instabilis Seed
 item.uniquecrops.seeddonutsteel.name=Donut Seeds
-item.uniquecrops.seedadventus.name=Holiday Jellybeans
-item.uniquecrops.seedblessed.name=Blessed Seed
 
 # EMBLEMS
 item.uniquecrops.emblemmelee.name=Melee Emblem
@@ -165,7 +150,6 @@ tile.uniquecrops.cropquarry.name=Fossura
 tile.uniquecrops.cropdonutsteel.name=Donut Steel
 tile.uniquecrops.cropinstabilis.name=Instabilis
 tile.uniquecrops.cropsucco.name=Succo
-tile.uniquecrops.cropadventus.name=Adventus
 tile.uniquecrops.oldgrass.name=Ancient Grass
 tile.uniquecrops.oldgravel.name=Ancient Gravel
 tile.uniquecrops.oldcobble.name=Ancient Cobblestone
@@ -175,8 +159,6 @@ tile.uniquecrops.hourglass.name=Hourglass of Nostalgia
 tile.uniquecrops.totemhead.name=Totem of Sneaky Mobs
 tile.uniquecrops.lavalily.name=Lava Lily
 tile.uniquecrops.icelily.name=Ice Lily
-tile.uniquecrops.junglelily.name=Jungle Lily
-tile.uniquecrops.enderlily.name=Ender Lily
 tile.uniquecrops.darkblock.name=Dark Block
 tile.uniquecrops.sundial.name=Sundial
 tile.uniquecrops.abstractbarrel.name=Abstract Barrel
@@ -184,20 +166,6 @@ tile.uniquecrops.invisiglass.name=Invisibilia Glass
 tile.uniquecrops.democord.name=Detcord
 tile.uniquecrops.mirror.name=Mirror
 tile.uniquecrops.goblet.name=Goblet
-tile.uniquecrops.sunblock.name=Sun Block of Fertility
-tile.uniquecrops.driedthatch.name=Dried Thatch
-tile.uniquecrops.normiecrate.name=Normie Crate
-tile.uniquecrops.ruinedbricks.name=Ruined Bricks
-tile.uniquecrops.ruinedbrickscarved.name=Carved Ruined Bricks
-tile.uniquecrops.ruinedbricksred.name=Red Ruined Bricks
-tile.uniquecrops.ruinedbricksghost.name=Red Ruined Bricks (Ghost)
-tile.uniquecrops.harvesttrap.name=Harvest Trap
-tile.uniquecrops.bucketrope.name=Bucket on a Rope
-tile.uniquecrops.flywood_log.name=Flywood Log
-tile.uniquecrops.flywood_leaves.name=Flywood Leaves
-tile.uniquecrops.flywood_sapling.name=Flywood Sapling
-tile.uniquecrops.flywood_plank.name=Flywood Plank
-tile.uniquecrops.cocito.name=Cocito
 
 # BOOK TEXT
 uniquecrops.book.pageintro=Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.
@@ -236,7 +204,6 @@ uniquecrops.book.pagesucco=These crops suck, but that doesn't mean they are usel
 
 # TOOLTIPS
 uniquecrops.tooltip.guidebook=The Guide
-uniquecrops.tooltip.guidemultiblock=The Multiblocks
 uniquecrops.tooltip.discountbook=Craft with any tool or armor. Makes subsequent repairs cheaper.
 uniquecrops.tooltip.eggupgrade=Stuff this in a chicken to make it lay eggs faster.
 uniquecrops.tooltip.upgradebook=Combine with tools and armor that can be upgraded in an anvil.
@@ -261,13 +228,6 @@ uniquecrops.tooltip.weight=Any thrown items will have farther distance. Some wil
 uniquecrops.tooltip.ointment.empty=Rightclick on any non-player, non-boss creature.
 uniquecrops.tooltip.ointment.filled=Put in a goblet placed on the ground.
 uniquecrops.tooltip.thunderpantz=Sneak around on carpet to build up static electricity!
-uniquecrops.tooltip.rubikscube=Rightclick to open GUI. Crouch + rightclick to set teleport.
-uniquecrops.tooltip.impactshield=Absorbs damage while blocking with it. Explodes on last durability, followed by a cooldown.
-uniquecrops.tooltip.diamondbunch=A bunch of diamonds!
-uniquecrops.tooltip.sunblock=When powered, allows certain crops directly adjacent to it to ignore their own growth conditions.
-uniquecrops.conditions.tooltip=Feroxia growth conditions
-uniquecrops.crops.tooltip=Plantable crops
-uniquecrops.general.tooltip=General things
 
 # ADVANCEMENTS
 advancement.uniquecrops:seedPickup=REEEEE
@@ -330,8 +290,6 @@ advancement.uniquecrops:heartPickup=Self-sacrifice
 advancement.uniquecrops:heartPickup.desc=Obtain a Heart of Steve.
 advancement.uniquecrops:teriyakiPickup=Saturating chicken dinner
 advancement.uniquecrops:teriyakiPickup.desc=Obtain Chicken Teriyaki.
-advancement.uniquecrops:craftingWildwoodStaff=Wild Beginnings
-advancement.uniquecrops:craftingWildwoodStaff.desc=Craft or obtain a Wildwood Staff for the first time.
 
 # CONDITIONS
 uniquecrops.condition.fullmoon=Needs a full moon.
@@ -356,14 +314,6 @@ uniquecrops.condition.likescheckers=Likes a checker pattern of its buddies aroun
 uniquecrops.condition.dontbonemeal=Don't bonemeal the crop at this stage.
 uniquecrops.condition.selfsacrifice=Wait for demands to sacrifice yourself
 
-# ENCHANTING
-uniquecrops.enchanting.enchantmentexists=Enchantment already exists on item.
-uniquecrops.enchanting.notenoughpower=Not enough Crop Power to start enchanting. Cost:
-uniquecrops.enchanting.unknownrecipe=Uknown enchantment recipe.
-uniquecrops.enchanting.unenchantable=Enchantable item not found or is unenchantable.
-uniquecrops.enchanting.missingcrops=Not all hexis crops are present.
-uniquecrops.enchanting.cropgrowth=Minimum crop growth requirements not met:
-
 # EULA LICENSE TEXT
 uniquecrops.eula.text0=PLEASE READ THIS END-USER LICENSE AGREEMENT CAREFULLY BEFORE CLICKING THE "I AGREE" BUTTON, PLANTING OR USING THE CROPS. BY CLICKING THE "I AGREE" BUTTON, PLANTING OR USING THE CROPS, YOU ARE AGREEING TO BE BOUND BY THE TERMS AND CONDITION OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, DO NOT CLICK ON THE "I AGREE" BUTTON AND DO NOT PLANT OR USE THE CROPS.
 uniquecrops.eula.text1=MY MOD GRANTS YOU A REVOCABLE, NON-EXCLUSIVE, NON-TRANSFERABLE, LIMITED LICENSE TO PLANT, GROW AND USE THE CROPS SOLELY FOR YOUR PERSONAL, NON-COMMERCIAL PURPOSES STRICTLY IN ACCORDANCE WITH THE TERMS OF THIS AGREEMENT.
@@ -374,25 +324,12 @@ uniquecrops.eula.text5=DELETING THE MOD AND ALL COPIES THEREOF FROM YOUR MODPACK
 uniquecrops.eula.text6=IF ANY PROVISION OF THIS AGREEMENT IS HELD TO BE UNENFORCEABLE OR INVALID, SUCH PROVISION WILL BE CHANGED AND INTERPRETED TO ACCOMPLISH THE OBJECTIVES OF SUCH PROVISION, TO THE GREATEST EXTENT POSSIBLE UNDER APPLICABLE LAW AND THE REMAINING PROVISIONS WILL CONTINUE IN FULL FORCE AND EFFECT.
 uniquecrops.eula.text7=MY MOD RESERVES THE RIGHT, AT ITS SOLE DISCRETION, TO MODIFY OR REPLACE THIS AGREEMENT AT ANY TIME. IF A REVISION IS MATERIAL WE WILL PROVIDE AT LEAST 30 DAYS' NOTICE PRIOR TO ANY NEW TERMS TAKING EFFECT. WHAT CONSTITUTES A MATERIAL CHANGE WILL BE DETERMINED AT OUR SOLE DISCRETION.
 
-# MULTIBLOCKS BOOK TEXT
-uniquecrops.bookmultiblocks.page.intro=To get started with multiblocks, which is the act of transforming a set of blocks placed into the world into another set of blocks, you need a catalyst. The usual catalyst will be the wildwood staff, along with whatever power is stored in it that the recipes will ask for. Arrange the set of blocks in the world as shown by the recipe input grid, and rightclick the center of the arrangement with the catalyst. If the catalyst is not a wildwood staff, then it is a consumable item.
-uniquecrops.bookmultiblocks.page.craftystalks=Grow all of the Artisia crops as arranged in the recipe window to the fully grown stage. Once the multiblock is formed, give it some time to grow a crafting table. As the mod is now, this is just a glorified vanilla crafting table. That may change..
-uniquecrops.bookmultiblocks.page.cocito=The solution to furnaces only cooking a single item at a time, this crop will smelt multiple dropped items at once. After the items are smelted, if they are left alone, the supercrop will smelt them into useless lumps, so pick them up beforehand.
-uniquecrops.bookmultiblocks.page.exedo=A supercrop that hungers for any nearby living creatures. Once one unlucky victim gets within range, they will shake, and then pounce upon them with large jaws from the earth, swallowing them whole and leaving behind some drops.
-uniquecrops.bookmultiblocks.page.fascino=An enchanting supercrop, the formation of enchantment magic will depend on the formation of the Hexis crops around it. To figure out if the formation is correct, input the ingredients as shown in JEI recipe (right click Enchantment Table block), then grab a enchantable item in the offhand and rightclick the enchanter with a Wildwood staff. Smoke will appear in places where a Hexis crop is needed.
-uniquecrops.bookmultiblocks.page.itero=A supercrop that when rightclicked on, will output a random sequence on pressure plates surrounding it for you to follow. Get the order wrong and the supercrop will go back one stage. Get it right and it will advance a stage. The "demo" mode it will output when rightclicked on can be done as many times as you like, as long as you have not pressed any of the plates afterwards.
-uniquecrops.bookmultiblocks.page.portal=Making this portal to the next world will require bricks you will have to find underground in the overworld.
-uniquecrops.bookmultiblocks.page.weatherflesia=A rafflesia-like supercrop that holds information about the biome it's planted in. Rightclicking the center with a pixelsius brush will collect that information into it. How much information per random tick will depend on how long the plant has stayed since it was formed.
-
 # JEI CONTAINER
 container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
-container.jei.uniquecrops.hourglass.name=Hourglass Conversion
-container.jei.uniquecrops.heater.name=Cocito Smelting Recipe
-container.jei.uniquecrops.enchanter.name=Crop Powered Enchanting
 
 # KEYBINDINGS
 key.categories.uniquecrops=Unique Crops
-key.pixelglasses=Toggle Glasses Shader
+key.pixelglasses=Toggle Pixel Glasses
 
 # ENTITY
 entity.uniquecrops:battlecrop.name=Battle Crop

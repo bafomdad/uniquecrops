@@ -53,7 +53,6 @@ public class PacketUCEffect implements IMessage {
 		public IMessage onMessage(PacketUCEffect message, MessageContext ctx) {
 
 			UniqueCrops.proxy.spawnParticles(message.type, message.x, message.y, message.z, message.loopSize);
-			
 			return null;
 		}
 	}

@@ -13,13 +13,9 @@ import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -32,34 +28,32 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.UCShaderUtil;
 import com.bafomdad.uniquecrops.core.UCStrings;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.entities.EntityBattleCrop;
 import com.bafomdad.uniquecrops.entities.EntityCustomPotion;
 import com.bafomdad.uniquecrops.entities.EntityEulaBook;
 import com.bafomdad.uniquecrops.entities.EntityItemWeepingEye;
+import com.bafomdad.uniquecrops.entities.EntityLegalStuff;
 import com.bafomdad.uniquecrops.entities.EntityMirror;
 import com.bafomdad.uniquecrops.events.UCEventHandlerClient;
 import com.bafomdad.uniquecrops.gui.GuiBookEula;
-import com.bafomdad.uniquecrops.gui.GuiColorfulCubes;
-import com.bafomdad.uniquecrops.gui.GuiStaffOverlay;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCKeys;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import com.bafomdad.uniquecrops.render.FXSpark;
+import com.bafomdad.uniquecrops.render.RenderBattleCropEntity;
+import com.bafomdad.uniquecrops.render.RenderMirrorEntity;
+import com.bafomdad.uniquecrops.render.RenderThrowable;
 import com.bafomdad.uniquecrops.render.UCBipedLayerRenderer;
 import com.bafomdad.uniquecrops.render.WorldRenderHandler;
-import com.bafomdad.uniquecrops.render.entity.RenderBattleCropEntity;
-import com.bafomdad.uniquecrops.render.entity.RenderMirrorEntity;
-import com.bafomdad.uniquecrops.render.entity.RenderThrowable;
 
 public class ClientProxy extends CommonProxy {
 	
 	public static boolean flag = false;
-	private static final ResourceLocation BITS = new ResourceLocation("minecraft", "shaders/post/bits.json");
+	public static final ResourceLocation SHADER = new ResourceLocation("minecraft", "shaders/post/bits.json");
 	
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
@@ -72,7 +66,6 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		
 		super.init(event);
-		MinecraftForge.EVENT_BUS.register(new GuiStaffOverlay(Minecraft.getMinecraft()));
 		UCKeys.init();
 	}
 	
@@ -93,7 +86,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemWeepingEye.class, new RenderThrowable(rm, UCItems.generic, 16, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEulaBook.class, new RenderThrowable(rm, UCItems.generic, 24, ri));
 		
-		Map<String, RenderPlayer> skinMap = rm.getSkinMap();
+		Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
 		RenderPlayer render = skinMap.get("default");
 		render.addLayer(new UCBipedLayerRenderer());
 		render = skinMap.get("slim");
@@ -136,13 +129,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void enableBitsShader() {
 		
-		UCShaderUtil.enableScreenShader(BITS);
+		UCShaderUtil.enableScreenShader(SHADER);
 	}
 	
 	@Override
 	public void disableBitsShader() {
 		
-		UCShaderUtil.disableScreenShader(BITS);
+		UCShaderUtil.disableScreenShader(SHADER);
 	}
 	
 	@Override
@@ -151,7 +144,6 @@ public class ClientProxy extends CommonProxy {
 		WorldRenderHandler.pendingRemoval.add(mirror);
 	}
 	
-	@Override
 	public void openEulaBook(EntityPlayer player) {
 
 		Minecraft.getMinecraft().displayGuiScreen(new GuiBookEula(player));
@@ -161,12 +153,6 @@ public class ClientProxy extends CommonProxy {
 	public EntityPlayer getPlayer() {
 		
 		return Minecraft.getMinecraft().player;
-	}
-	
-	@Override
-	public World getClientWorld() {
-		
-		return Minecraft.getMinecraft().world;
 	}
 	
 	@Override
@@ -183,12 +169,5 @@ public class ClientProxy extends CommonProxy {
 		else
 			world.spawnParticle(particle, x, y, z, 0, 0, 0);
 		
-	}
-	
-	@Override
-	public void sparkFX(double x, double y, double z, float r, float g, float b, float size, float motionX, float motionY, float motionZ, float maxAgeMul) {
-		
-		FXSpark spark = new FXSpark(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, motionX, motionY, motionZ, maxAgeMul);
-		Minecraft.getMinecraft().effectRenderer.addEffect(spark);
 	}
 }

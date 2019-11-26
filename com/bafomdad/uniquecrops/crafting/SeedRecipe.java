@@ -24,10 +24,13 @@ public class SeedRecipe {
 		List<Ingredient> inputsMissing = new ArrayList<>(this.inputs);
 
 		for (ItemStack stack : stackList) {
+
 			if (stack.isEmpty()) {
 				break;
 			}
+
 			int stackIndex = -1;
+
 			for (int j = 0; j < inputsMissing.size(); j++) {
 				Ingredient input = inputsMissing.get(j);
 
@@ -36,6 +39,7 @@ public class SeedRecipe {
 					break;
 				}
 			}
+
 			if (stackIndex >= 0) {
 				inputsMissing.remove(stackIndex);
 
