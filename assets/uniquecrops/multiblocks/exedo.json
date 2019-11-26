@@ -1,0 +1,42 @@
+{
+  "name": "Exedo",
+  "description": "uniquecrops.bookmultiblocks.page.exedo",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 40
+  },
+  "shape": [
+    " D ",
+    "DWD",
+    " D "
+  ],
+  "shaperesult": [
+	"   ",
+	" E ",
+	"   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "D": {
+      "states": [
+        "uniquecrops:cropdevilsnare"
+      ]
+    },
+	"W": {
+	  "states": [
+	    "uniquecrops:cropweepingbells"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"E": {
+	  "states": [
+	    "uniquecrops:exedo"
+	  ]
+	}
+  }
+}

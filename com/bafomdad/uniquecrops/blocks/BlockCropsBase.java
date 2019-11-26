@@ -12,6 +12,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -23,9 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.ICropBook;
-import com.bafomdad.uniquecrops.core.EnumCrops;
-import com.bafomdad.uniquecrops.core.SeedBehavior;
+import com.bafomdad.uniquecrops.blocks.tiles.TileSunBlock;
+import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCBlocks;
+import com.bafomdad.uniquecrops.init.UCItems;
 
 public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	
@@ -33,17 +36,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	private boolean extra;
 	private boolean clickHarvest;
 	private boolean bonemealable;
-
-	@Deprecated
-	private BlockCropsBase(EnumCrops type, boolean extra, boolean canPlant) {
-		
-		this.type = type;
-		this.extra = extra;
-		this.clickHarvest = true;
-		setRegistryName("crop" + type.getName());
-		setTranslationKey(UniqueCrops.MOD_ID + ".crop" + type.getName());
-		UCBlocks.blocks.add(this);
-	}
+	private boolean ignoreGrowthRestrictions;
 	
 	public BlockCropsBase(EnumCrops type) {
 		
@@ -66,6 +59,20 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		return type.getConfig();
 	}
 	
+	public boolean canIgnoreGrowthRestrictions(World world, BlockPos pos) {
+		
+//		UCUtils.getClosestTile(TileSunBlock.class, world, pos, 8.0D);
+		if (!ignoreGrowthRestrictions) return false;
+		
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			BlockPos loopPos = pos.offset(facing);
+			TileEntity tile = world.getTileEntity(loopPos);
+			if (tile instanceof TileSunBlock && ((TileSunBlock)tile).powered)
+				return true;
+		}
+		return false;
+	}
+	
     @Override
     public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
 
@@ -74,42 +81,16 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     
 	public boolean canBonemeal(World world, BlockPos pos) {
 		
+		if (this.canIgnoreGrowthRestrictions(world, pos)) return true;
+		
 		return bonemealable;
 	}
-	
-	/*
-	@Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		
-		if (SeedBehavior.canIgnoreGrowthRestrictions(world, pos)) {
-			this.checkAndDropBlock(world, pos, state);
-			return;
-		}
-		this.updateCrop(world, pos, state, rand);
-	}
-	
-	public void updateCrop(World world, BlockPos pos, IBlockState state, Random rand) {
-	
-		this.checkAndDropBlock(world, pos, state);
-		
-        if (!world.isAreaLoaded(pos, 1)) return;
-        if (world.getLightFromNeighbors(pos.up()) >= 9) {
-            int i = this.getAge(state);
-            if (i < this.getMaxAge()) {
-                float f = getGrowthChance(this, world, pos);
-                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0)) {
-                    world.setBlockState(pos, this.withAge(i + 1), 2);
-                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
-                }
-            }
-        }
-	}
-	*/
 	
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if (getAge(state) < getMaxAge()) return false;
+//		if (player.getHeldItemMainhand().getItem() == UCItems.wildwoodStaff) return false;
 		
 		if (clickHarvest) {
 			if (getAge(state) >= getMaxAge() && !world.isRemote) {
@@ -164,6 +145,15 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     	
     	super.grow(world, pos, state);
     }
+    
+    /*
+	@Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		
+		if (this.canIgnoreGrowthRestrictions(world, pos)) 
+			super.updateTick(world, pos, state, rand);
+	}
+	*/
 	
 	@SideOnly(Side.CLIENT)
 	public void createParticles(IBlockState state, World world, BlockPos pos, Random rand, EnumParticleTypes particle, int rand2) {
@@ -189,10 +179,21 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		return UniqueCrops.MOD_ID + ".book.page" + type.getName();
 	}
 	
+	@Override
+	public boolean canIncludeInBook() {
+
+		return true;
+	}
+	
 	// new methods here
 	public void setBonemealable(boolean flag) {
 		
 		this.bonemealable = flag;
+	}
+	
+	public boolean getCanBonemeal() {
+		
+		return this.bonemealable;
 	}
 	
 	public void setClickHarvest(boolean flag) {
@@ -200,7 +201,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		this.clickHarvest = flag;
 	}
 	
-	public boolean getClickHarvest() {
+	public boolean getCanClickHarvest() {
 		
 		return clickHarvest;
 	}
@@ -208,5 +209,15 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	public void setExtraDrops(boolean flag) {
 		
 		this.extra = flag;
+	}
+	
+	public boolean getCanDropExtra() {
+		
+		return this.extra;
+	}
+	
+	public void setIgnoreGrowthRestrictions(boolean flag) {
+		
+		this.ignoreGrowthRestrictions = flag;
 	}
 }

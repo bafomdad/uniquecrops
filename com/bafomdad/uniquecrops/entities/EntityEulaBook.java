@@ -3,13 +3,13 @@ package com.bafomdad.uniquecrops.entities;
 import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumItems;
-import com.bafomdad.uniquecrops.core.PotionBehavior;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.gui.GuiBookEula;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketBookOpen;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
+import com.bafomdad.uniquecrops.potions.PotionBehavior;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -80,7 +80,7 @@ public class EntityEulaBook extends EntityPotion {
 			}
 		}
 		BlockPos pos = (result.sideHit != null) ? new BlockPos(result.hitVec).offset(result.sideHit) : new BlockPos(result.hitVec);
-		ItemStack stack = UCItems.generic.createStack(EnumItems.EULA);
+		ItemStack stack = EnumItems.EULA.createStack();
 		EntityItem eibook = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 		world.spawnEntity(eibook);
 	}

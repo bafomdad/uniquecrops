@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
-import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.entities.EntityBattleCrop;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
@@ -43,7 +43,7 @@ public class DonutSteel extends BlockCropsBase {
 			if (!world.isRemote) {
 				world.spawnEntity(ent);
 			}
-			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.CLOUD, pos.getX() + 0.5D, pos.getY() + 0.3D, pos.getZ() + 0.5D, 6));
+			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.CLOUD, pos.getX(), pos.getY() + 0.3D, pos.getZ(), 6));
 			return world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		}
         this.onBlockHarvested(world, pos, state, player);

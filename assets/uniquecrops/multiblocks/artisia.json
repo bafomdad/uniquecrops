@@ -1,0 +1,77 @@
+{
+  "name": "Crafty Stalks",
+  "description": "uniquecrops.bookmultiblocks.page.craftystalks",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 20
+  },
+  "shape": [
+    "AAA",
+    "AAA",
+    "AAA"
+  ],
+  "shaperesult": [
+	"HNP",
+	"WCE",
+	"DSG"
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "A": {
+      "states": [
+        "uniquecrops:cropartisia[age=7]"
+      ]
+    }
+  },
+  "definitionresult": {
+	"C": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=down]"
+	  ]
+	},
+	"N": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=north]"
+	  ]
+	},
+	"S": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=south]"
+	  ]
+	},
+	"W": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=west]"
+	  ]
+	},
+	"E": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=east]"
+	  ]
+	},
+	"H": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=northwest]"
+	  ]
+	},
+	"P": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=northeast]"
+	  ]
+	},
+	"D": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=southwest]"
+	  ]
+	},
+	"G": {
+	  "states": [
+	    "uniquecrops:stalk[stalk=southeast]"
+	  ]
+	}
+  }
+}

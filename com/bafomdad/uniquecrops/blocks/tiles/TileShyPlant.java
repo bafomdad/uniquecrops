@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.crops.WeepingBells;
-import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.entities.FakePlayerUC;
 import com.mojang.authlib.GameProfile;
 

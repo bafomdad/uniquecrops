@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 
-import com.bafomdad.uniquecrops.core.EnumEmblems;
+import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.google.common.collect.Multimap;
 
 public class EmblemTransformation extends ItemBauble {

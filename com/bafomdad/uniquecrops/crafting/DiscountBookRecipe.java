@@ -1,8 +1,8 @@
 package com.bafomdad.uniquecrops.crafting;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
 
@@ -34,7 +34,7 @@ public class DiscountBookRecipe extends net.minecraftforge.registries.IForgeRegi
 		for (int i = 0; i < ic.getSizeInventory(); i++) {
 			ItemStack stack = ic.getStackInSlot(i);
 			if (!stack.isEmpty()) {
-				if (stack.getItem() == UCItems.generic.createStack(EnumItems.DISCOUNT).getItem())
+				if (stack.getItem() == EnumItems.DISCOUNT.createStack().getItem())
 					foundDiscountBook = true;
 				else if (!foundItem && !(NBTUtils.detectNBT(stack) && NBTUtils.getBoolean(stack, ItemGeneric.TAG_DISCOUNT, false)) && !stack.getItem().hasContainerItem(stack) && isStackValid(stack))
 					foundItem = true;
@@ -51,7 +51,7 @@ public class DiscountBookRecipe extends net.minecraftforge.registries.IForgeRegi
 		
 		for (int i = 0; i < ic.getSizeInventory(); i++) {
 			ItemStack stack = ic.getStackInSlot(i);
-			if (!stack.isEmpty() && stack.getItem() != UCItems.generic.createStack(EnumItems.DISCOUNT).getItem())
+			if (!stack.isEmpty() && stack.getItem() != EnumItems.DISCOUNT.createStack().getItem())
 				item = stack;
 		}
 		ItemStack copy = item.copy();
@@ -63,7 +63,7 @@ public class DiscountBookRecipe extends net.minecraftforge.registries.IForgeRegi
 	@Override
 	public ItemStack getRecipeOutput() {
 
-		return UCItems.generic.createStack(EnumItems.DISCOUNT);
+		return EnumItems.DISCOUNT.createStack();
 	}
 
 	@Override

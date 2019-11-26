@@ -17,14 +17,21 @@ import net.minecraft.util.ResourceLocation;
 public class UCBipedLayerRenderer implements LayerRenderer<EntityLivingBase> {
 	
 	private static final ResourceLocation LIGHTNING_TEXTURE = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
-
+	private final ModelBiped model;
+	
+	public UCBipedLayerRenderer() {
+		
+		this.model = new ModelBiped(1.0F);
+	}
+	
 	@Override
 	public void doRenderLayer(EntityLivingBase elb, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, float scale) {
 
 		if (!elb.getItemStackFromSlot(EntityEquipmentSlot.LEGS).isEmpty()) {
 			ItemStack thunderpants = elb.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
-			if (thunderpants.getItem() == UCItems.thunderpantz) {
+			if (thunderpants.getItem() == UCItems.thunderPantz) {
 				
+				GlStateManager.pushMatrix();
 	            boolean flag = elb.isInvisible();
 	            GlStateManager.depthMask(!flag);
 	            Minecraft.getMinecraft().renderEngine.bindTexture(LIGHTNING_TEXTURE);
@@ -40,7 +47,6 @@ public class UCBipedLayerRenderer implements LayerRenderer<EntityLivingBase> {
 	            GlStateManager.scale(toScale, toScale, toScale);
 	            GlStateManager.disableLighting();
 	            GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
-	            ModelBiped model = new ModelBiped(1.0F);
 	            //ModelBiped model = ((ItemThunderpants)thunderpants.getItem()).getArmorModel(elb, thunderpants, EntityEquipmentSlot.LEGS, new ModelBiped(1.0F));
 	            model.bipedBody.isHidden = true;
 	            model.bipedHead.isHidden = true;
@@ -54,6 +60,7 @@ public class UCBipedLayerRenderer implements LayerRenderer<EntityLivingBase> {
 	            GlStateManager.enableLighting();
 	            GlStateManager.disableBlend();
 	            GlStateManager.depthMask(flag);
+	            GlStateManager.popMatrix();
 			}
 		}
 	}

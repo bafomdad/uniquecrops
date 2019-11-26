@@ -5,29 +5,28 @@ import java.util.Random;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.items.SlotItemHandler;
 
 import com.bafomdad.uniquecrops.blocks.tiles.TileBarrel;
 
 public class ContainerBarrel extends Container {
 	
 	TileBarrel tile;
-	IInventory inv;
 	
 	public ContainerBarrel(InventoryPlayer playerinv, TileBarrel tile) {
 		
 		this.tile = tile;
-		this.inv = tile;
 		int i;
 		int j;
 
     	Random rand = new Random();
         for (i = 0; i < 2; ++i) {
             for (j = 0; j < 2; ++j) {
-            	int z = rand.nextInt(inv.getSizeInventory());
-                this.addSlotToContainer(new Slot(tile, z, 72 + j * 18, 27 + i * 18));
+            	int z = rand.nextInt(tile.getInventory().getSlots());
+                this.addSlotToContainer(new SlotItemHandler(tile.getInventory(), z, 72 + j * 18, 27 + i * 18));
             }
         }
         for (i = 0; i < 3; ++i) {
@@ -42,7 +41,7 @@ public class ContainerBarrel extends Container {
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		
-		return tile.isUsableByPlayer(player);
+		return !(player instanceof FakePlayer);
 	}
 	
 	@Override
@@ -60,7 +59,7 @@ public class ContainerBarrel extends Container {
 					return ItemStack.EMPTY;
 			} else {
 				boolean b = false;
-				for (int i = 0; i < inv.getSizeInventory(); i++) {
+				for (int i = 0; i < tile.getInventory().getSlots(); i++) {
 					if (this.getSlot(i).isItemValid(stackInSlot)) {
 						if (this.mergeItemStack(stackInSlot, i, i + 1, false)) {
 							b = true;

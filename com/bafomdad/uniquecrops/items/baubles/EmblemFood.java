@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import baubles.api.BaubleType;
 
-import com.bafomdad.uniquecrops.core.EnumEmblems;
+import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.google.common.collect.Multimap;
 
 public class EmblemFood extends ItemBauble {
@@ -34,6 +34,12 @@ public class EmblemFood extends ItemBauble {
 				stack.damageItem(1, player);
 			}
 		}
+	}
+	
+	@Override
+	public BaubleType getBaubleType(ItemStack stack) {
+		
+		return BaubleType.RING;
 	}
 
 	@Override

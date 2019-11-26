@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import baubles.api.BaublesApi;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumEdibleMetal;
+import com.bafomdad.uniquecrops.core.enums.EnumEdibleMetal;
 import com.bafomdad.uniquecrops.init.UCBaubles;
 import com.bafomdad.uniquecrops.init.UCItems;
 

@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "uniquecrops:normiecrate"
+  },
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "N": {
+      "item": "uniquecrops:seednormal"
+    }
+  }
+}

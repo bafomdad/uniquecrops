@@ -34,9 +34,16 @@ public class UCWorldData extends WorldSavedData {
 			for (int i = 0; i < savedList.tagCount(); i++) {
 				NBTTagCompound saveTag = savedList.getCompoundTagAt(i);
 				ChunkPos cPos = new ChunkPos(saveTag.getInteger("chunkX"), saveTag.getInteger("chunkZ"));
-//				System.out.println("UCWorldData: " + cPos);
 				UCDataHandler.getInstance().addChunk(dimId, cPos, false);
 			}
+		}
+		NBTTagList tagList = tag.getTagList("savedOres", 10);
+//		UCOreHandler.getInstance().clearOreQueue();
+		for (int i = 0; i < tagList.tagCount(); i++) {
+			NBTTagCompound chunkTag = tagList.getCompoundTagAt(i);
+			BlockPos pos = BlockPos.fromLong(chunkTag.getLong("blockPos"));
+			BlockPos cPos = BlockPos.fromLong(chunkTag.getLong("chunkPos"));
+			UCOreHandler.getInstance().getSaveInfo().put(new ChunkPos(cPos.getX(), cPos.getZ()), pos);
 		}
 	}
 
@@ -50,7 +57,7 @@ public class UCWorldData extends WorldSavedData {
 		
 		tag.setIntArray("savedDims", savedDims);
 		for (int d : savedDims) {
-			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worlds[d];
+			World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(d);
 			if (world != null) {
 				NBTTagList savedList = new NBTTagList();
 				for (ChunkPos pos : UCDataHandler.getInstance().getChunkInfo(d)) {
@@ -62,6 +69,15 @@ public class UCWorldData extends WorldSavedData {
 				tag.setTag("savedList" + d, savedList);
 			}
 		}
+		NBTTagList tagList = new NBTTagList();
+		for (ChunkPos cPos : UCOreHandler.getInstance().getUnsavedChunks()) {
+			NBTTagCompound chunkTag = new NBTTagCompound();
+			chunkTag.setLong("chunkPos", new BlockPos(cPos.x, 0, cPos.z).toLong());
+			chunkTag.setLong("blockPos", UCOreHandler.getInstance().getSaveInfo().get(cPos).toLong());
+			tagList.appendTag(chunkTag);
+		}
+		tag.setTag("savedOres", tagList);
+		
 		return tag;
 	}
 	

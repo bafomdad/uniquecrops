@@ -2,26 +2,26 @@ package com.bafomdad.uniquecrops.blocks;
 
 import javax.annotation.Nullable;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.blocks.tiles.TileBarrel;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.blocks.tiles.TileBarrel;
 
 public class BlockBarrel extends BlockBaseUC {
 	
@@ -33,7 +33,7 @@ public class BlockBarrel extends BlockBaseUC {
 		setHardness(3.0F);
 		setResistance(5.0F);
 		setSoundType(SoundType.WOOD);
-		GameRegistry.registerTileEntity(TileBarrel.class, "TileAbstractBarrel");
+		GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation(UniqueCrops.MOD_ID, "abstractbarrel"));
 	}
 	
 	@Override
@@ -63,10 +63,14 @@ public class BlockBarrel extends BlockBaseUC {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		
 		TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof IInventory) {
-            InventoryHelper.dropInventoryItems(world, pos, (IInventory)tile);
-            world.updateComparatorOutputLevel(pos, this);
-        }
+		IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (handler != null) {
+			for (int i = 0; i < handler.getSlots(); i++) {
+				ItemStack stack = handler.getStackInSlot(i);
+				if (!stack.isEmpty())
+					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+			}
+		}
 		super.breakBlock(world, pos, state);
 	}
 	

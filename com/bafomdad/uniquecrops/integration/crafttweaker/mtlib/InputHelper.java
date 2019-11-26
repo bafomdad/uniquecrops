@@ -1,7 +1,10 @@
 package com.bafomdad.uniquecrops.integration.crafttweaker.mtlib;
 
+import crafttweaker.api.block.IBlock;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.mc1120.item.MCItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Array;
@@ -23,6 +26,19 @@ public class InputHelper {
 
       return (ItemStack) internal;
     }
+  }
+  
+  public static Block toBlock(IBlock iBlock) {
+	  
+	  if (iBlock == null)
+		  return Blocks.AIR;
+	  else {
+		  Object internal = iBlock.getDefinition().getInternal();
+		  if (!(internal instanceof Block)) {
+			  LogHelper.logError("Not a valid block: " + iBlock);
+		  }
+		  return (Block)internal;
+	  }
   }
 
   public static <T> T[][] getMultiDimensionalArray(Class<T> clazz, T[] array, int height, int width) {

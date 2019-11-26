@@ -47,16 +47,4 @@ public class ItemPrecisionShovel extends ItemSpade implements IBookUpgradeable {
 		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 8;
 		return sametool || flag;
     }
-	
-	@Override
-	public int getLevel(ItemStack stack) {
-
-		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
-	}
-
-	@Override
-	public void setLevel(ItemStack stack, int level) {
-
-		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
-	}
 }

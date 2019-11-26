@@ -33,8 +33,7 @@ public class PageImage extends Page {
 		
 		super.draw();
 		
-		TextureManager render = mc.renderEngine;
-		render.bindTexture(resource);
+		gui.mc.renderEngine.bindTexture(resource);
 		
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -42,7 +41,7 @@ public class PageImage extends Page {
 		int k = (gui.width - gui.WIDTH) / 2;
 		int j = (gui.height - gui.HEIGHT) / 2;
 		gui.drawTexturedModalRect(k + 5, j + 5, 0, 0, gui.WIDTH, gui.HEIGHT);
-		gui.drawCenteredString(mc.fontRenderer, text, drawX + 60, drawY + 150, Color.gray.getRGB());
+		gui.drawCenteredString(gui.mc.fontRenderer, text, drawX + 60, drawY + 150, Color.gray.getRGB());
 		GlStateManager.disableBlend();
 		
 		GlStateManager.pushMatrix();
@@ -57,9 +56,9 @@ public class PageImage extends Page {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		IBlockState state = block.getDefaultState().withProperty(BlockCrops.AGE, 7);
-		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		gui.mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		
-		BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
+		BlockRendererDispatcher brd = gui.mc.getBlockRendererDispatcher();
 		GlStateManager.translate(0, 0, 0 + 1);
 		GlStateManager.color(1, 1, 1, 1);
 		brd.renderBlockBrightness(state, 1.0F);

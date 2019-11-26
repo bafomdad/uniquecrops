@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "uniquecrops:sunblock"
+  },
+  "pattern": [
+    "EGE",
+    "GEG",
+    "EGE"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "uniquecrops:generic",
+	  "data": 9
+    },
+    "G": {
+      "item": "uniquecrops:invisiglass"
+    }
+  }
+}

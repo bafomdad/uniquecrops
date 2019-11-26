@@ -68,7 +68,6 @@ public class ItemBeanBattery extends Item {
     	if(stack.hasCapability(CapabilityEnergy.ENERGY, null)){
             IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
             if(storage instanceof UCEnergyStorage) {
-            	((UCEnergyStorage)storage).setMaxEnergyStorage(energy);
                 ((UCEnergyStorage)storage).setEnergyStored(energy);
             }
         }
@@ -125,7 +124,7 @@ public class ItemBeanBattery extends Item {
 		public final UCEnergyStorage storage;
 		
 		public EnergyItemProvider(ItemStack stack, ItemBeanBattery item) {
-			
+
 			this.storage = new UCEnergyStorage(10000, 400) {
 				@Override
 				public int getEnergyStored() {
