@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "axis=y":    { "model": "uniquecrops:flywood_log" },
+        "axis=z":     { "model": "uniquecrops:flywood_log", "x": 90 },
+        "axis=x":     { "model": "uniquecrops:flywood_log", "x": 90, "y": 90 },
+        "axis=none":   { "model": "uniquecrops:flywood_log" }
+    }
+}

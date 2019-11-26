@@ -9,18 +9,15 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBookEula extends GuiScreen {
+public class GuiBookEula extends GuiAbstractBook {
 
 	public static ResourceLocation texture = new ResourceLocation(UniqueCrops.MOD_ID, "textures/gui/bookeula.png");
-	public static List<PageEula> pageList = new ArrayList<PageEula>();
-	public final EntityPlayer reader;
-	
-	public int WIDTH = 175;
-	public int HEIGHT = 228;
+	public static List<Page> pageList = new ArrayList();
 	
 	private GuiButton next;
 	private GuiButton prev;
@@ -28,19 +25,19 @@ public class GuiBookEula extends GuiScreen {
 	private GuiButton disagree;
 	
 	private int pageIndex;
-	private PageEula currentPage;
+	private Page currentPage;
 	
 	public GuiBookEula(EntityPlayer player) {
 		
+		super(player, ItemStack.EMPTY);
 		this.pageIndex = 0;
-		this.reader = player;
 	}
 	
 	@Override
 	public void initGui() {
 		
 		super.initGui();
-		PageEula.loadPages(this);
+		Page.loadEulaPages(this);
 		this.buttonList.clear();
 		int  k = (this.width - this.WIDTH) / 2;
 		int l = (this.height - this.HEIGHT) / 2;
@@ -55,7 +52,7 @@ public class GuiBookEula extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		
-		switch(button.id){
+		switch(button.id) {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
 			case 2: mc.displayGuiScreen(null); break;

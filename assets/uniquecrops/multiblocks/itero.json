@@ -1,0 +1,52 @@
+{
+  "name": "Itero",
+  "description": "uniquecrops.bookmultiblocks.page.itero",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 80
+  },
+  "shape": [
+    "PRP",
+    "RCR",
+    "PRP"
+  ],
+  "shaperesult": [
+	"P P",
+	" I ",
+	"P P"
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "P": {
+      "states": [
+        "minecraft:stone_pressure_plate"
+      ]
+    },
+	"C": {
+	  "states": [
+	    "uniquecrops:croppixelsius[age=7]"
+	  ]
+	},
+	"R": {
+	  "states": [
+	    "minecraft:redstone_wire"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"I": {
+	  "states": [
+	    "uniquecrops:itero"
+	  ]
+	},
+	"P": {
+	  "states": [
+		"minecraft:stone_pressure_plate"
+	  ]
+	}
+  }
+}

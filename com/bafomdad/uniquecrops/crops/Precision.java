@@ -13,8 +13,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
-import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Precision extends BlockCropsBase {
@@ -39,18 +39,22 @@ public class Precision extends BlockCropsBase {
 	@Override
 	public int damageDropped(IBlockState state) {
 		
-		if (this.getAge(state) == 6)
-			return 7;
-		
-		return 0;
+		return this.getAge(state) == 6 ? 7 : 0;
 	}
 	
+	@Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     	
     	if (this.getAge(state) == 6)
     		return this.getCrop();
 
     	return this.getSeed();
+    }
+	
+	@Override
+    public boolean canProvidePower(IBlockState state) {
+        
+		return this.getAge(state) == 6;
     }
     
     @Override

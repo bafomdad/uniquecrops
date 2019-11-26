@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+        "particle": "uniquecrops:blocks/crate1",
+        "down": "uniquecrops:blocks/crate2",
+        "up": "uniquecrops:blocks/crate3",
+        "north": "uniquecrops:blocks/crate1",
+        "east": "uniquecrops:blocks/crate2",
+        "south": "uniquecrops:blocks/crate1",
+        "west": "uniquecrops:blocks/crate2"
+    }
+}

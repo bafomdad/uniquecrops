@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileSucco;
-import com.bafomdad.uniquecrops.core.EnumCrops;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Succo extends BlockCropsBase {

@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "uniquecrops:bucketrope"
+  },
+  "pattern": [
+    "FFF",
+    " R ",
+    " B "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "type": "forge:ore_dict",
+	  "ore": "fenceWood"
+    },
+    "R": {
+      "item": "uniquecrops:generic",
+	  "data": 28
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    }
+  }
+}

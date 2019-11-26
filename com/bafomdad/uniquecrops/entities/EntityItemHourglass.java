@@ -2,11 +2,14 @@ package com.bafomdad.uniquecrops.entities;
 
 import java.util.Iterator;
 
+import com.bafomdad.uniquecrops.UniqueCropsAPI;
+import com.bafomdad.uniquecrops.crafting.HourglassRecipe;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -46,29 +49,21 @@ public class EntityItemHourglass extends EntityItem {
 			while (it.hasNext()) {
 				BlockPos posit = (BlockPos)it.next();
 				if (!world.isRemote && !world.isAirBlock(posit)) {
-					Block loopblock = world.getBlockState(posit).getBlock();
+					IBlockState loopState = world.getBlockState(posit);
 					boolean flag = rand.nextInt(10) == 0;
-					if (loopblock == Blocks.GRASS && flag) {
-						setOldBlock(world, posit, UCBlocks.oldGrass); break;
-					}
-					if (loopblock == Blocks.COBBLESTONE && flag) {
-						setOldBlock(world, posit, UCBlocks.oldCobble); break;
-					}
-					if (loopblock == Blocks.MOSSY_COBBLESTONE && flag) {
-						setOldBlock(world, posit, UCBlocks.oldCobbleMoss); break;
-					}
-					if (loopblock == Blocks.BRICK_BLOCK && flag) {
-						setOldBlock(world, posit, UCBlocks.oldBrick); break;
-					}
-					if (loopblock == Blocks.GRAVEL && flag) {
-						setOldBlock(world, posit, UCBlocks.oldGravel); break;
+					
+					if (flag) {
+						HourglassRecipe recipe = UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.findRecipe(loopState);
+						if (recipe != null) {
+							this.convertBlock(world, posit, recipe.getOutput());
+						}
 					}
 				}
 			}
 		}
 	}
 	
-	public static void setOldBlock(World world, BlockPos pos, Block block) {
+	public static void convertBlock(World world, BlockPos pos, Block block) {
 		
 		world.setBlockState(pos, block.getDefaultState(), 2);
 		UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, pos.getX() + 0.5D, pos.getY() + 1, pos.getZ() + 0.5D, 3));

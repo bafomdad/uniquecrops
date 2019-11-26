@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "uniquecrops:bookmultiblock"
+  },
+  "pattern": [
+    "N",
+    "B",
+    "P"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:generic",
+	  "data": 9
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "N": {
+      "item": "uniquecrops:seedferoxia"
+    }
+  }
+}

@@ -1,11 +1,7 @@
 package com.bafomdad.uniquecrops.crops;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.locks.Condition;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -15,56 +11,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileFeroxia;
-import com.bafomdad.uniquecrops.core.EnumCrops;
-import com.bafomdad.uniquecrops.core.GrowthSteps;
-import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
+import com.bafomdad.uniquecrops.core.enums.EnumGrowthSteps;
 import com.bafomdad.uniquecrops.init.UCItems;
 
-public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
+public class Feroxia extends BlockCropsBase {
 	
-	public static List<GrowthSteps> steps = new ArrayList<GrowthSteps>();
-
 	public Feroxia() {
 		
 		super(EnumCrops.SAVAGEPLANT);
-		GameRegistry.registerTileEntity(TileFeroxia.class, "TileFeroxia");
-		init();
+		GameRegistry.registerTileEntity(TileFeroxia.class, new ResourceLocation(UniqueCrops.MOD_ID, "feroxia"));
 	}
-	
-	private void init() {
-		
-		steps.add(new GrowthSteps(UCStrings.MOON, new GrowthSteps.MoonPhase(), 0));
-		steps.add(new GrowthSteps(UCStrings.BURNINGPLAYER, new GrowthSteps.BurningPlayer(), 1));
-		steps.add(new GrowthSteps(UCStrings.DRYFARMLAND, new GrowthSteps.DryFarmland(), 2));
-		steps.add(new GrowthSteps(UCStrings.HASTORCH, new GrowthSteps.HasTorch(), 3));
-		steps.add(new GrowthSteps(UCStrings.HELLWORLD, new GrowthSteps.HellWorld(), 4));
-		steps.add(new GrowthSteps(UCStrings.DARKNESS, new GrowthSteps.LikesDarkness(), 5));
-		steps.add(new GrowthSteps(UCStrings.LIKESHEIGHTS, new GrowthSteps.LikesHeights(), 6));
-		steps.add(new GrowthSteps(UCStrings.UNDERFARMLAND, new GrowthSteps.UnderFarmland(), 7));
-		steps.add(new GrowthSteps(UCStrings.LILYPADS, new GrowthSteps.LikesLilypads(), 8));
-		steps.add(new GrowthSteps(UCStrings.HUNGRYPLANT, new GrowthSteps.HungryPlant(), 9));
-		steps.add(new GrowthSteps(UCStrings.THIRSTYPLANT, new GrowthSteps.ThirstyPlant(), 10));
-		steps.add(new GrowthSteps(UCStrings.LIKESCHICKEN, new GrowthSteps.LikesChicken(), 11));
-		steps.add(new GrowthSteps(UCStrings.REDSTONE, new GrowthSteps.RequiresRedstone(), 12));
-		steps.add(new GrowthSteps(UCStrings.VAMPIREPLANT, new GrowthSteps.VampirePlant(), 13));
-		steps.add(new GrowthSteps(UCStrings.FULLBRIGHTNESS, new GrowthSteps.FullBrightness(), 14));
-		steps.add(new GrowthSteps(UCStrings.LIKESWARTS, new GrowthSteps.LikesWarts(), 15));
-		steps.add(new GrowthSteps(UCStrings.LIKESCOOKING, new GrowthSteps.LikesCooking(), 16));
-		steps.add(new GrowthSteps(UCStrings.LIKESBREWING, new GrowthSteps.LikesBrewing(), 17));
-		steps.add(new GrowthSteps(UCStrings.LIKESCHECKERS, new GrowthSteps.CheckerBoard(), 18));
-		steps.add(new GrowthSteps(UCStrings.DONTBONEMEAL, new GrowthSteps.DontBonemeal(), 19));
-		steps.add(new GrowthSteps(UCStrings.SELFSACRIFICE, new GrowthSteps.SacrificeSelf(), 20));
-	}
-	
+
 	@Override
 	public Item getSeed() {
 		
@@ -110,7 +79,10 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
 		if (this.getAge(state) >= getMaxAge()) return;
-
+		if (this.canIgnoreGrowthRestrictions(world, pos)) {
+			super.updateTick(world, pos, state, rand);
+			return;
+		}
 		if (world.isRemote) return;
 		
 		if (!this.canBlockStay(world, pos, state)) {
@@ -122,7 +94,7 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		int stage = getStage(world, pos, state);
 		if (stage == -1) return;
 		
-		if (!steps.get(stage).getCondition().canAdvance(world, pos, state))
+		if (!EnumGrowthSteps.values()[stage].canAdvance(world, pos, state))
 			return;
 		
 		if (rand.nextInt(3) == 0)
@@ -134,11 +106,11 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
     
     	world.setBlockState(pos, state.getBlock().getDefaultState(), 2);
     	TileEntity te = world.getTileEntity(pos);
-    	if (te != null && te instanceof TileFeroxia) {
+    	if (te instanceof TileFeroxia) {
     		if (placer instanceof EntityPlayer && !(placer instanceof FakePlayer)) {
         		((TileFeroxia)te).setOwner(placer.getUniqueID());
-        		if (!world.isRemote && !placer.getEntityData().hasKey(GrowthSteps.TAG_GROWTHSTAGES)) {
-        			GrowthSteps.generateSteps((EntityPlayer)placer);
+        		if (!world.isRemote && !placer.getEntityData().hasKey(UCStrings.TAG_GROWTHSTAGES)) {
+        			UCUtils.generateSteps((EntityPlayer)placer);
         		}
     		}
     	}
@@ -149,12 +121,12 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
     	
     	if (getAge(state) >= getMaxAge() || world.isRemote) return;
     	int stage = getStage(world, pos, state);
-    	if (stage != -1 && steps.get(stage).getIndex() == 19) {
+    	if (stage != -1 && EnumGrowthSteps.values()[stage].ordinal() == 19) {
     		if (!world.isRemote)
     			world.setBlockState(pos, this.withAge(0), 3);
     		return;
     	}
-    	else if (stage != -1 && steps.get(stage).getCondition().canAdvance(world, pos, state)) {
+    	else if (stage != -1 && EnumGrowthSteps.values()[stage].canAdvance(world, pos, state)) {
     		if (!world.isRemote)
     			world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
     	}
@@ -175,9 +147,15 @@ public class Feroxia extends BlockCropsBase implements ITileEntityProvider {
 		return tag.getInteger("stage" + this.getAge(state));
     }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-
-		return new TileFeroxia();
-	}
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+    	
+    	return true;
+    }
+    
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+    	
+    	return new TileFeroxia();
+    }
 }

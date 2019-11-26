@@ -1,0 +1,61 @@
+{
+  "name": "Cropworld Portal",
+  "description": "uniquecrops.bookmultiblocks.page.portal",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 50
+  },
+  "shape": [
+    "CRRRC",
+    "R   R",
+    "R E R",
+	"R   R",
+	"CRRRC"
+  ],
+  "shaperesult": [
+    "CRRRC",
+    "RPPPR",
+    "RPPPR",
+	"RPPPR",
+	"CRRRC"
+  ],
+  "origin": {
+    "x": 2,
+    "y": 2
+  },
+  "definition": {
+    "R": {
+      "states": [
+        "uniquecrops:ruinedbricks"
+      ]
+    },
+	"C": {
+      "states": [
+        "uniquecrops:ruinedbrickscarved"
+      ]
+    },
+	"E": {
+      "states": [
+        "minecraft:emerald_block"
+      ]
+    }
+  },
+  "definitionresult": {
+    "R": {
+      "states": [
+        "uniquecrops:ruinedbricks"
+      ]
+    },
+	"C": {
+      "states": [
+        "uniquecrops:ruinedbrickscarved"
+      ]
+    },
+	"P": {
+      "states": [
+        "uniquecrops:portal"
+      ]
+    }
+  }
+}

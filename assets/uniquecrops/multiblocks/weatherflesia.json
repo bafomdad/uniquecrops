@@ -1,0 +1,87 @@
+{
+  "name": "Weatherflesia",
+  "description": "uniquecrops.bookmultiblocks.page.weatherflesia",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 45
+  },
+  "shape": [
+    "TKT",
+    "KBK",
+    "TKT"
+  ],
+  "shaperesult": [
+	"HNP",
+	"WCE",
+	"DSG"
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "T": {
+      "states": [
+        "uniquecrops:cropindustria"
+      ]
+    },
+	"K": {
+	  "states": [
+	    "uniquecrops:cropknowledge"
+	  ]
+	},
+	"B": {
+	  "states": [
+	    "minecraft:beacon"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"C": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=up]"
+	  ]
+	},
+	"N": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=north]"
+	  ]
+	},
+	"S": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=south]"
+	  ]
+	},
+	"W": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=west]"
+	  ]
+	},
+	"E": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=east]"
+	  ]
+	},
+	"H": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=northwest]"
+	  ]
+	},
+	"P": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=northeast]"
+	  ]
+	},
+	"D": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=southwest]"
+	  ]
+	},
+	"G": {
+	  "states": [
+	    "uniquecrops:weatherflesia[rafflesia=southeast]"
+	  ]
+	}
+  }
+}

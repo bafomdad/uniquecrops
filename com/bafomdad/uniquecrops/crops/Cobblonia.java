@@ -11,9 +11,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.bafomdad.uniquecrops.UniqueCropsAPI;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
-import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Cobblonia extends BlockCropsBase {
@@ -61,7 +62,9 @@ public class Cobblonia extends BlockCropsBase {
 			cobblegen++;
 		
 		if (cobblegen > 0) {
-			EntityItem cobble = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(Blocks.COBBLESTONE, cobblegen, 0));
+			ItemStack toDrop = UniqueCropsAPI.COBBLONIA_DROPS_REGISTRY.getRandomWeightedDrop();
+			toDrop.setCount(cobblegen);
+			EntityItem cobble = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, toDrop);
 			if (!world.isRemote)
 				world.spawnEntity(cobble);
 		}

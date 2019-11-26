@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
-import com.bafomdad.uniquecrops.core.EnumItems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -56,16 +56,4 @@ public class ItemPrecisionSword extends ItemSword implements IBookUpgradeable {
 		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == EnumItems.PREGEM.ordinal();
 		return sametool || flag;
     }
-	
-	@Override
-	public int getLevel(ItemStack stack) {
-
-		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
-	}
-
-	@Override
-	public void setLevel(ItemStack stack, int level) {
-
-		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
-	}
 }

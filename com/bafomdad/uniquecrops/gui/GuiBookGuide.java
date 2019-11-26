@@ -16,19 +16,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 
-public class GuiBookGuide extends GuiScreen {
+public class GuiBookGuide extends GuiAbstractBook {
 
 	public static ResourceLocation texture = new ResourceLocation(UniqueCrops.MOD_ID, "textures/gui/bookguide.png");
 	public static List<Page> pageList = new ArrayList<Page>();
-	public final EntityPlayer reader;
-	public final ItemStack book;
-	
-	public int WIDTH = 175;
-	public int HEIGHT = 228;
 	
 	private GuiButton next;
 	private GuiButton prev;
@@ -37,23 +32,19 @@ public class GuiBookGuide extends GuiScreen {
 	private GuiButton backbutton;
 	
 	private int pageIndex;
-	private int savedIndex;
 	private Page currentPage;
 	
 	public GuiBookGuide(EntityPlayer player, ItemStack heldBook) {
 
-		this.pageIndex = 0;
-		this.reader = player;
-		this.book = heldBook;
-		this.savedIndex = NBTUtils.getInt(book, "savedIndex", 0);
-		this.pageIndex = savedIndex;
+		super(player, heldBook);
+		this.pageIndex = NBTUtils.getInt(heldBook, "savedIndex", 0);
 	}
 	
 	@Override
 	public void initGui() {
 		
 		super.initGui();
-		Page.loadPages(this);
+		Page.loadGuidePages(this);
 		this.buttonList.clear();
 		int k = (this.width - this.WIDTH) / 2;
 		int l = (this.height - this.HEIGHT) / 2; 
@@ -85,12 +76,12 @@ public class GuiBookGuide extends GuiScreen {
 		switch (button.id) {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
-			case 2: pageIndex = (pageIndex + catsize) * 2; break;
-			case 3: pageIndex = (pageIndex + (catsize2 + (EnumCrops.values().length / 2) - 1)) * 2; break;
+			case 2: pageIndex = ((pageIndex + catsize) * 3) - 2; break;
+//			case 3: pageIndex = ((pageIndex + (catsize2 + (EnumCrops.values().length / 2) - 1)) * 3) - 2; break;
+			case 3: pageIndex = ((pageIndex + (catsize2 + (Page.cropCount / 2) - 1)) * 3) - 2; break;
 			case 4: pageIndex = 2; break;
 		}
-		this.savedIndex = pageIndex;
-		NBTUtils.setInt(book, "savedIndex", savedIndex);
+		NBTUtils.setInt(book, "savedIndex", pageIndex);
 		updateButtons();
 	}
 	
@@ -131,7 +122,7 @@ public class GuiBookGuide extends GuiScreen {
 		
 		boolean update = false;
 		if (key == Keyboard.KEY_ESCAPE) {
-			NBTUtils.setInt(book, "savedIndex", savedIndex);
+			NBTUtils.setInt(book, "savedIndex", pageIndex);
 			mc.displayGuiScreen(null);
 		}
 		if (key == Keyboard.KEY_RIGHT && this.next.visible) {
@@ -147,14 +138,8 @@ public class GuiBookGuide extends GuiScreen {
 			update = true;
 		}
 		if (update) {
-			this.savedIndex = pageIndex;
-			NBTUtils.setInt(book, "savedIndex", savedIndex);
+			NBTUtils.setInt(book, "savedIndex", pageIndex);
 			updateButtons();
 		}
-	}
-	
-	public float getZLevel() {
-		
-		return zLevel;
 	}
 }

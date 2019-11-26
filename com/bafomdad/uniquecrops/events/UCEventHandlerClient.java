@@ -3,21 +3,31 @@ package com.bafomdad.uniquecrops.events;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.profiler.Profiler;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -32,11 +42,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import org.lwjgl.opengl.GL11;
+
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumItems;
+import com.bafomdad.uniquecrops.api.IBookUpgradeable;
+import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCDyePlantStitch;
 import com.bafomdad.uniquecrops.core.UCInvisibiliaStitch;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
+import com.bafomdad.uniquecrops.data.UCOreHandler;
 import com.bafomdad.uniquecrops.entities.EntityBattleCrop;
+import com.bafomdad.uniquecrops.entities.EntityItemCooking;
 import com.bafomdad.uniquecrops.entities.EntityMirror;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -45,8 +62,11 @@ import com.bafomdad.uniquecrops.init.UCSounds;
 import com.bafomdad.uniquecrops.items.ItemGeneric;
 import com.bafomdad.uniquecrops.network.PacketSendKey;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import com.bafomdad.uniquecrops.render.RenderBattleCropEntity;
-import com.bafomdad.uniquecrops.render.RenderMirrorEntity;
+import com.bafomdad.uniquecrops.render.ClientMethodHandles;
+import com.bafomdad.uniquecrops.render.UCParticleSpawner;
+import com.bafomdad.uniquecrops.render.entity.RenderBattleCropEntity;
+import com.bafomdad.uniquecrops.render.entity.RenderCookingItem;
+import com.bafomdad.uniquecrops.render.entity.RenderMirrorEntity;
 
 public class UCEventHandlerClient {
 	
@@ -73,7 +93,7 @@ public class UCEventHandlerClient {
 			EntityPlayer player = Minecraft.getMinecraft().player;
 			if (player instanceof FakePlayer) return;
 			if (player.inventory.armorItemInSlot(3) == null) return;
-			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelglasses) return;
+			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelGlasses) return;
 			
 			UCPacketHandler.INSTANCE.sendToServer(new PacketSendKey());
 		}
@@ -93,10 +113,68 @@ public class UCEventHandlerClient {
     }
     
     @SubscribeEvent
+    public void renderWorldLast(RenderWorldLastEvent event) {
+    	
+    	Profiler profiler = Minecraft.getMinecraft().profiler;
+    	
+    	profiler.startSection("uniquecrops-particles");
+    	UCParticleSpawner.dispatch();
+    	profiler.endSection();
+    	
+    	Minecraft mc = Minecraft.getMinecraft();
+    	EntityPlayer player = mc.player;
+    	if (player.inventory.armorItemInSlot(3).getItem() == UCItems.pixelGlasses) {
+    		boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
+    		boolean flag2 = ((IBookUpgradeable)UCItems.pixelGlasses).isMaxLevel(player.inventory.armorItemInSlot(3));
+    		if (flag && flag2) {
+        		GlStateManager.pushMatrix();
+        		GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+        		GlStateManager.disableDepth();
+        		GlStateManager.enableBlend();
+        		
+        		ChunkPos cPos = new ChunkPos(player.getPosition());
+        		if (UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
+        			BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
+        			renderOres(pos, mc);
+        		}
+        		GlStateManager.enableDepth();
+        		GlStateManager.disableBlend();
+        		GL11.glPopAttrib();
+        		GlStateManager.popMatrix();
+    		}
+    	}
+    }
+    
+    private void renderOres(BlockPos pos, Minecraft mc) {
+
+    	double renderPosX, renderPosY, renderPosZ;
+    	
+    	try {
+    		renderPosX = (double)ClientMethodHandles.renderPosX_getter.invokeExact(mc.getRenderManager());
+    		renderPosY = (double)ClientMethodHandles.renderPosY_getter.invokeExact(mc.getRenderManager());
+    		renderPosZ = (double)ClientMethodHandles.renderPosZ_getter.invokeExact(mc.getRenderManager());
+    	} catch (Throwable t) {
+    		return;
+    	}
+    	
+    	GlStateManager.pushMatrix();
+    	GlStateManager.translate(0, 0, 1);
+    	GlStateManager.translate(pos.getX() - renderPosX, pos.getY() - renderPosY, pos.getZ() - renderPosZ);
+    	
+    	mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+    	BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
+    	brd.renderBlockBrightness(Blocks.PINK_GLAZED_TERRACOTTA.getDefaultState(), 1.0F);
+    	
+    	GlStateManager.popMatrix();
+    }
+    
+    @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
     	
-    	if (event.getModID().equals(UniqueCrops.MOD_ID))
-    		ConfigManager.load(UniqueCrops.MOD_ID, Config.Type.INSTANCE);
+    	if (event.getModID().equals(UniqueCrops.MOD_ID)) {
+    		ConfigManager.sync(UniqueCrops.MOD_ID, Config.Type.INSTANCE);
+    		UCConfig.syncMultiblocks();
+    	}
     }
     
     @SubscribeEvent
@@ -108,14 +186,18 @@ public class UCEventHandlerClient {
 			public int colorMultiplier(ItemStack stack, int tintIndex) {
 				
 				if (!stack.isEmpty()) {
-					if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionreverse) {
+					if ((stack.getItem() instanceof ItemGeneric && stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal()) || stack.getItem() == UCItems.potionReverse) {
 						if (tintIndex == 0)
 							return 0x845c28;
+					}
+					if (stack.getItem() == UCItems.potionEnnui) {
+						if (tintIndex == 0)
+							return 0x1C062D;
 					}
 				}
 				return 0xffffff;
 			}
-		}, UCItems.generic, UCItems.potionreverse);
+		}, UCItems.generic, UCItems.potionReverse, UCItems.potionEnnui);
     }
     
     @SubscribeEvent
@@ -135,6 +217,14 @@ public class UCEventHandlerClient {
     	}
     }
     
+//    @SubscribeEvent :)
+    public void onBlockOverlay(RenderBlockOverlayEvent event) {
+    	
+    	if (event.getOverlayType() == OverlayType.BLOCK) {
+    		event.setCanceled(true);
+    	}
+    }
+    
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
 		
@@ -144,17 +234,34 @@ public class UCEventHandlerClient {
 		registerBlockModel(UCBlocks.oldBrick);
 		registerBlockModel(UCBlocks.oldGravel);
 		registerBlockModel(UCBlocks.oldGrass);
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.hourglass), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":itemhourglass", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.totemhead), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":itemtotemhead", "inventory"));
-		registerBlockModel(UCBlocks.lavalily);
-		registerBlockModel(UCBlocks.icelily);
+		registerBlockModel(UCBlocks.hourglass, "itemhourglass");
+		registerBlockModel(UCBlocks.totemHead, "itemtotemhead");
+		registerBlockModel(UCBlocks.lavaLily);
+		registerBlockModel(UCBlocks.iceLily);
+		registerBlockModel(UCBlocks.jungleLily);
+		registerBlockModel(UCBlocks.teleLily);
 		registerBlockModel(UCBlocks.darkBlock);
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.barrel), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":itemabstractbarrel", "inventory"));
+		registerBlockModel(UCBlocks.barrel, "itemabstractbarrel");
 		registerBlockModel(UCBlocks.invisiGlass);
 		registerBlockModel(UCBlocks.demoCord);
 		registerBlockModel(UCBlocks.mirror);
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.goblet), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":goblet_empty", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(UCBlocks.goblet), 1, new ModelResourceLocation(UniqueCrops.MOD_ID + ":goblet_filled", "inventory"));
+		registerBlockModel(UCBlocks.sunBlock);
+		registerBlockModel(UCBlocks.driedThatch);
+		registerBlockModel(UCBlocks.normieCrate);
+		registerBlockModel(UCBlocks.ruinedBricks);
+		registerBlockModel(UCBlocks.ruinedBricksCarved);
+		registerBlockModel(UCBlocks.ruinedBricksRed);
+		registerBlockModel(UCBlocks.ruinedBricksGhost);
+		registerBlockModel(UCBlocks.portal);
+		registerBlockModel(UCBlocks.cocito);
+		registerBlockModel(UCBlocks.harvestTrap, "itemharvesttrap");
+		registerBlockModel(UCBlocks.bucketRope, "itembucketrope");
+		registerBlockModel(UCBlocks.flywoodLog);
+		registerCustomBlockModel(UCBlocks.flywoodLeaves, BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE);
+		registerBlockModel(UCBlocks.flywoodSapling);
+		registerBlockModel(UCBlocks.flywoodPlank);
 		
 		// ITEMS
 		for (Item item : UCItems.items)
@@ -163,11 +270,25 @@ public class UCEventHandlerClient {
 		// ENTITIES
 		RenderingRegistry.registerEntityRenderingHandler(EntityMirror.class, RenderMirrorEntity.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBattleCrop.class, RenderBattleCropEntity.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(EntityItemCooking.class, RenderCookingItem.FACTORY);
 	}
 	
 	private void registerBlockModel(Block block) {
 		
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+	}
+	
+	private void registerBlockModel(Block block, String resLoc) {
+		
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(UniqueCrops.MOD_ID + ":" + resLoc, "inventory"));
+	}
+	
+	private void registerCustomBlockModel(Block block, IProperty... propertyToIgnore) {
+		
+		IStateMapper stateMapper = new StateMap.Builder().ignore(propertyToIgnore).build();
+		ModelLoader.setCustomStateMapper(block, stateMapper);
+		ModelResourceLocation mrl = stateMapper.putStateModelLocations(block).get(block.getDefaultState());
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, mrl);
 	}
 	
 	private void registerItemModel(Item item) {

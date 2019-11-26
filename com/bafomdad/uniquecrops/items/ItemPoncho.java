@@ -5,6 +5,7 @@ import java.util.List;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.init.UCDimension;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -44,6 +45,8 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
 	@Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
 		
+		if (world.provider.getDimension() == UCDimension.dimID) return;
+		
 		player.jumpMovementFactor = (0.025F + 1 * 0.02F);
 		if (player.motionY < -0.175F && !player.onGround && !player.capabilities.isFlying && !player.isSneaking()) {
 			float fallVel = -0.175F;
@@ -57,17 +60,5 @@ public class ItemPoncho extends ItemArmor implements IBookUpgradeable {
 		
 		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 12;
 		return toRepair.getItem() == this && flag;
-	}
-
-	@Override
-	public int getLevel(ItemStack stack) {
-
-		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
-	}
-
-	@Override
-	public void setLevel(ItemStack stack, int level) {
-
-		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
 	}
 }

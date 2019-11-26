@@ -6,7 +6,7 @@ public class PageText extends Page {
 
 	private String text;
 	
-	public PageText(GuiBookGuide screen, String text) {
+	public PageText(GuiAbstractBook screen, String text) {
 		
 		super(screen);
 		this.text = text;
@@ -16,6 +16,6 @@ public class PageText extends Page {
 	public void draw() {
 		
 		super.draw();
-		mc.fontRenderer.drawSplitString(I18n.format(text), this.drawX, this.drawY, this.wordWrap, 0);
+		gui.mc.fontRenderer.drawSplitString(I18n.format(text), this.drawX, this.drawY, this.wordWrap, 0);
 	}
 }

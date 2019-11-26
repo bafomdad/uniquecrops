@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -18,10 +19,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileIndustria;
-import com.bafomdad.uniquecrops.core.EnumCrops;
-import com.bafomdad.uniquecrops.core.UCConfig;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.ItemBeanBattery;
 
@@ -30,7 +31,7 @@ public class Industria extends BlockCropsBase {
 	public Industria() {
 		
 		super(EnumCrops.ENERGY);
-		GameRegistry.registerTileEntity(TileIndustria.class, "UC:TileIndustria");
+		GameRegistry.registerTileEntity(TileIndustria.class, new ResourceLocation(UniqueCrops.MOD_ID, "industria"));
 	}
 	
 	@Override
@@ -59,10 +60,10 @@ public class Industria extends BlockCropsBase {
         int count = this.quantityDropped(state, fortune, rand);
         
         if (getAge(state) >= getMaxAge()) {
-        	int capacity = 10000 / count;
+        	int storedEnergy = 10000 / count;
             for(int i = 0; i < count; i++) {
             	ItemStack battery = new ItemStack(UCItems.beanBattery, 1, 0);
-            	((ItemBeanBattery)battery.getItem()).setEnergy(battery, capacity);
+            	((ItemBeanBattery)battery.getItem()).setEnergy(battery, storedEnergy);
             	ret.add(battery);
             }
         }

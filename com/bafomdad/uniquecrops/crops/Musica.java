@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.NoteBlockEvent.Instrument;
@@ -16,11 +17,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMusicaPlant.Beat;
-import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Musica extends BlockCropsBase {
@@ -30,7 +32,7 @@ public class Musica extends BlockCropsBase {
 	public Musica() {
 		
 		super(EnumCrops.MUSICAPLANT);
-		GameRegistry.registerTileEntity(TileMusicaPlant.class, "TileMusicaPlant");
+		GameRegistry.registerTileEntity(TileMusicaPlant.class, new ResourceLocation(UniqueCrops.MOD_ID, "musicaplant"));
 	}
 	
 	@Override
@@ -49,7 +51,11 @@ public class Musica extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		this.checkAndDropBlock(world, pos, state);;
+		if (this.canIgnoreGrowthRestrictions(world, pos)) {
+			super.updateTick(world, pos, state, rand);
+			return;
+		}
+		this.checkAndDropBlock(world, pos, state);
 	}
 	
 	public void addAge(World world, BlockPos pos, IBlockState state, int stage) {

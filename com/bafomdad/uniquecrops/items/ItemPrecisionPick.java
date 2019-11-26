@@ -98,16 +98,4 @@ public class ItemPrecisionPick extends ItemTool implements IBookUpgradeable {
         Material material = state.getMaterial();
         return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
-    
-	@Override
-	public int getLevel(ItemStack stack) {
-
-		return NBTUtils.getInt(stack, ItemGeneric.TAG_UPGRADE, -1);
-	}
-
-	@Override
-	public void setLevel(ItemStack stack, int level) {
-
-		NBTUtils.setInt(stack, ItemGeneric.TAG_UPGRADE, level);
-	}
 }

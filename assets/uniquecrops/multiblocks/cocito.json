@@ -1,0 +1,42 @@
+{
+  "name": "Cocito",
+  "description": "uniquecrops.bookmultiblocks.page.cocito",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 40
+  },
+  "shape": [
+    "MDM",
+    "DMD",
+    "MDM"
+  ],
+  "shaperesult": [
+	"   ",
+	" C ",
+	"   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "D": {
+      "states": [
+        "uniquecrops:cropindustria"
+      ]
+    },
+	"M": {
+	  "states": [
+		"uniquecrops:cropmaryjane"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"C": {
+	  "states": [
+	    "uniquecrops:cocito"
+	  ]
+	}
+  }
+}

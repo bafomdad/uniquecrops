@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "uniquecrops:pixelbrush"
+  },
+  "pattern": [
+    " S ",
+	"ISI",
+	"PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:generic",
+	  "data": 26
+    },
+	"I": {
+	  "item": "uniquecrops:generic",
+	  "data": 11
+	},
+	"S": {
+	  "item": "minecraft:stick"
+	}
+  }
+}

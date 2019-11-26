@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.core.EnumEmblems;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;

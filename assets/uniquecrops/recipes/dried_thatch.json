@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "uniquecrops:driedthatch",
+	"count": 4
+  },
+  "pattern": [
+    "HH",
+    "HH"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    }
+  }
+}

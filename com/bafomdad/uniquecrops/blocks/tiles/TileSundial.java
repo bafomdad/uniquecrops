@@ -8,7 +8,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
 
-public class TileSundial extends TileBaseUC implements ITickable {
+public class TileSundial extends TileBaseRenderUC implements ITickable {
 	
 	public float rotation;
 	public float savedRotation;
@@ -31,31 +31,6 @@ public class TileSundial extends TileBaseUC implements ITickable {
 	}
 	
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-		
-		if (packet != null && packet.getNbtCompound() != null)
-			readCustomNBT(packet.getNbtCompound());
-		
-		markBlockForRenderUpdate();
-	}
-	
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		
-		return writeToNBT(new NBTTagCompound());
-	}
-	
-	@Nullable
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		
-		NBTTagCompound nbtTag = new NBTTagCompound();
-		this.writeCustomNBT(nbtTag);
-		
-		return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
-	}
-	
-	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
 		
 		tag.setInteger("UC_savedTime", savedTime);
@@ -69,16 +44,5 @@ public class TileSundial extends TileBaseUC implements ITickable {
 		this.savedTime = tag.getInteger("UC_savedTime");
 		this.hasPower = tag.getBoolean("UC_hasPower");
 		this.savedRotation = tag.getFloat("UC_savedRotation");
-	}
-	
-	public void markBlockForUpdate() {
-		
-		IBlockState state = getWorld().getBlockState(pos);
-		getWorld().notifyBlockUpdate(pos, state, state, 3);
-	}
-	
-	public void markBlockForRenderUpdate() {
-		
-		getWorld().markBlockRangeForRenderUpdate(pos, pos);
 	}
 }

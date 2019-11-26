@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "uniquecrops:bucket_rope"
+  },
+  "variants": {
+        "facing=west": { "model": "uniquecrops:bucket_rope", "y": 90 },
+        "facing=south": { "model": "uniquecrops:bucket_rope" },
+        "facing=east": { "model": "uniquecrops:bucket_rope", "y": 90 },
+        "facing=north": { "model": "uniquecrops:bucket_rope" }
+  }
+}

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 
-import com.bafomdad.uniquecrops.core.EnumEmblems;
+import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCRecipes;
 import com.bafomdad.uniquecrops.items.ItemEdibleMetal;

@@ -2,7 +2,7 @@ package com.bafomdad.uniquecrops.items.baubles;
 
 import java.util.Collection;
 
-import com.bafomdad.uniquecrops.core.EnumEmblems;
+import com.bafomdad.uniquecrops.core.enums.EnumEmblems;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.EntityLivingBase;

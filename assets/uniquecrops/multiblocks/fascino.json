@@ -1,0 +1,42 @@
+{
+  "name": "Fascino",
+  "description": "uniquecrops.bookmultiblocks.page.fascino",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "data": 0,
+	"power": 75
+  },
+  "shape": [
+    "L L",
+	" W ",
+	"L L"
+  ],
+  "shaperesult": [
+    "   ",
+	" D ",
+	"   "
+  ],
+  "origin": {
+    "x": 0,
+    "y": 0
+  },
+  "definition": {
+    "W": {
+      "states": [
+        "minecraft:enchanting_table"
+      ]
+    },
+	"L": {
+	  "states": [
+	    "minecraft:lapis_block"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"D": {
+	  "states": [
+	    "uniquecrops:fascino"
+	  ]
+	}
+  }
+}

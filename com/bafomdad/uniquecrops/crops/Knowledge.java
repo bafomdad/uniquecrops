@@ -27,9 +27,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
-import com.bafomdad.uniquecrops.core.EnumCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCConfig;
+import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Knowledge extends BlockCropsBase {
@@ -66,6 +66,10 @@ public class Knowledge extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
+		if (this.canIgnoreGrowthRestrictions(world, pos)) {
+			super.updateTick(world, pos, state, rand);
+			return;
+		}
 		this.checkAndDropBlock(world, pos, state);
 		if (this.getAge(state) >= getMaxAge() || world.isRemote)
 			return;
@@ -82,7 +86,7 @@ public class Knowledge extends BlockCropsBase {
 		while (it.hasNext()) {
 			BlockPos posit = (BlockPos)it.next();
 			Block loopblock = world.getBlockState(posit).getBlock();
-			if (loopblock == Blocks.BOOKSHELF) {
+			if (loopblock.getEnchantPowerBonus(world, posit) >= 1F) {
 				TileEntity te = world.getTileEntity(posit.up());
 				if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
 					IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);

@@ -14,11 +14,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCKeys;
 
-public class ItemPixelGlasses extends ItemArmor {
-
+public class ItemPixelGlasses extends ItemArmor implements IBookUpgradeable {
+	
 	public ItemPixelGlasses(ArmorMaterial material, int renderindex, EntityEquipmentSlot slot) {
 		
 		super(material, renderindex, slot);
@@ -35,6 +36,12 @@ public class ItemPixelGlasses extends ItemArmor {
 		super.addInformation(stack, player, list, whatisthis);
 		if (UCKeys.pixelKey != null)
 			list.add(TextFormatting.GOLD + "Press Key " + Keyboard.getKeyName(UCKeys.pixelKey.getKeyCode()) + " to toggle.");
+		int upgradeLevel = getLevel(stack);
+		if (upgradeLevel > -1) {
+			list.add(TextFormatting.GOLD + "+" + upgradeLevel);
+		}
+		else
+			list.add(TextFormatting.GOLD + "Upgradeable");
 	}
 	
 	@Override
