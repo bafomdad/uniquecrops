@@ -9,13 +9,13 @@
         "inventory": [{}],
         "age":{
             0:{"textures": {"crop":"uniquecrops:blocks/normal1"}},
-            1:{"textures": {"crop":"uniquecrops:blocks/normal1"}},
+            1:{"textures": {"crop":"uniquecrops:blocks/normal2"}},
             2:{"textures": {"crop":"uniquecrops:blocks/normal2"}},
-            3:{"textures": {"crop":"uniquecrops:blocks/normal2"}},
+            3:{"textures": {"crop":"uniquecrops:blocks/normal3"}},
             4:{"textures": {"crop":"uniquecrops:blocks/normal3"}},
-            5:{"textures": {"crop":"uniquecrops:blocks/normal3"}},
+            5:{"textures": {"crop":"uniquecrops:blocks/normal4"}},
             6:{"textures": {"crop":"uniquecrops:blocks/normal4"}},
-            7:{"textures": {"crop":"uniquecrops:blocks/normal4"}}
+            7:{"textures": {"crop":"uniquecrops:blocks/normal5"}}
         }
     }
 }
