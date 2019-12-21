@@ -2,6 +2,8 @@ package com.bafomdad.uniquecrops.blocks;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.enums.EnumDirectional;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -21,7 +23,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockStalk extends BlockBaseStalk {
@@ -66,6 +70,16 @@ public class BlockStalk extends BlockBaseStalk {
 			}
 		}
 	}
+	
+    @Override
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        
+    	if (getMetaFromState(state) == EnumDirectional.UP.ordinal()) {
+    		return FULL_BLOCK_AABB;
+    	}
+    	return NULL_AABB;
+    }
 	
 	@Override
 	protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state) {

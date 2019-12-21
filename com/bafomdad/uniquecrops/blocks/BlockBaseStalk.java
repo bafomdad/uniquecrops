@@ -40,13 +40,6 @@ public abstract class BlockBaseStalk extends Block {
     }
 	
     protected void checkAndDropBlock(World world, BlockPos pos, IBlockState state) {}
-	
-    @Override
-    @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        
-    	return NULL_AABB;
-    }
     
     @Override
     public boolean isOpaqueCube(IBlockState state) {
