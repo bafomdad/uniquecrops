@@ -1,0 +1,28 @@
+{
+  "conditions": [
+	{
+	  "type": "forge:mod_loaded",
+	  "modid": "baubles"
+	}
+  ],
+  "result": {
+    "item": "uniquecrops:emblem.bookworm"
+  },
+  "pattern": [
+    " B ",
+    "PDP",
+    " B "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:potato"
+    },
+	"D": {
+	  "item": "uniquecrops:darkblock"
+	},
+	"B": {
+	  "item": "minecraft:enchanted_book"
+	}
+  }
+}

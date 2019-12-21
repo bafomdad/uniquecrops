@@ -14,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
@@ -27,6 +28,9 @@ public class UCRecipes {
 	public static void init() {
 		
 		initEdibleMetals();
+		
+		FurnaceRecipes.instance().addSmeltingRecipe(EnumItems.UNCOOKEDWAFFLE.createStack(), new ItemStack(UCItems.waffle), 0.35F);
+		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(Items.MILK_BUCKET), new ItemStack(UCItems.boiledMilk), 0F);
 		
 		ItemStack awkwardpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("awkward"));
 		ItemStack healpotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionType.getPotionTypeForName("healing"));
@@ -82,9 +86,9 @@ public class UCRecipes {
 		
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.DEPTH_STRIDER, 40, new ItemStack(Blocks.SPONGE), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.WATER_BUCKET));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FROST_WALKER, 30, getEnchantedBook(Enchantments.DEPTH_STRIDER), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BLAST_PROTECTION, 15, new ItemStack(Blocks.TNT), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.FLINT_AND_STEEL), new ItemStack(Items.GUNPOWDER));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BLAST_PROTECTION, 40, new ItemStack(Blocks.TNT), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.FLINT_AND_STEEL), new ItemStack(Blocks.OBSIDIAN));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.EFFICIENCY, 50, new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Items.REDSTONE), new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Blocks.REDSTONE_TORCH), new ItemStack(Items.BEETROOT));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FEATHER_FALLING, 30, EnumItems.INVISIFEATHER.createStack(), new ItemStack(Items.FEATHER), new ItemStack(UCItems.cactusBoots));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FEATHER_FALLING, 40, EnumItems.INVISIFEATHER.createStack(), new ItemStack(Items.FEATHER), new ItemStack(UCItems.cactusBoots));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SILK_TOUCH, 40, new ItemStack(Blocks.WEB), EnumItems.PREGEM.createStack(), EnumItems.PREGEM.createStack(), new ItemStack(Items.SHEARS));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_ASPECT, 50, new ItemStack(Items.IRON_SWORD), new ItemStack(UCItems.seedsMaryjane), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FLAME, 40, new ItemStack(Items.BOW), new ItemStack(UCItems.seedsMaryjane), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), new ItemStack(UCItems.seedsMaryjane));
@@ -92,6 +96,13 @@ public class UCRecipes {
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BANE_OF_ARTHROPODS, 30, new ItemStack(Items.IRON_SWORD), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FORTUNE, 80, EnumItems.ESSENCE.createStack(), new ItemStack(Items.DIAMOND_PICKAXE), EnumItems.PREGEM.createStack());
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_PROTECTION, 40, EnumItems.CINDERLEAF.createStack(), new ItemStack(Items.LAVA_BUCKET), EnumItems.CINDERLEAF.createStack(), new ItemStack(Blocks.BRICK_BLOCK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.THORNS, 20, new ItemStack(UCItems.cactusBoots), new ItemStack(UCItems.cactusHelm), new ItemStack(UCItems.cactusLeggings), new ItemStack(UCItems.cactusPlate));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROTECTION, 80, new ItemStack(UCBlocks.darkBlock), new ItemStack(UCBlocks.darkBlock), new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.GOLD_BLOCK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROJECTILE_PROTECTION, 60, new ItemStack(Items.SHIELD), new ItemStack(Items.ARROW), new ItemStack(Items.ARMOR_STAND));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_PROTECTION, 40, new ItemStack(Items.WATER_BUCKET), new ItemStack(Blocks.ICE), new ItemStack(Blocks.NETHER_WART_BLOCK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SHARPNESS, 90, new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.IRON_SWORD), new ItemStack(Items.GOLDEN_SWORD));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.RESPIRATION, 20, new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS), new ItemStack(Blocks.PRISMARINE));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.MENDING, 90, new ItemStack(Items.EXPERIENCE_BOTTLE), new ItemStack(Blocks.ANVIL), new ItemStack(UCItems.potionReverse));
 	}
 	
 	private static ItemStack getDyeCraftingResult(int meta) {

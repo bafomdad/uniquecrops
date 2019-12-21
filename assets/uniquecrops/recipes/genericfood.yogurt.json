@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "uniquecrops:genericfood.yogurt",
+	"count": 2
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:boiled_milk"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+	{
+	  "item": "minecraft:bowl"
+	},
+    {
+      "item": "uniquecrops:seeddyeius"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

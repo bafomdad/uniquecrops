@@ -45,6 +45,7 @@ public class EmblemTransformation extends ItemBauble {
 		
 		ItemStack transformer = BaublesApi.getBaublesHandler((EntityPlayer)event.getSource().getImmediateSource()).getStackInSlot(6);
 		if (transformer.isEmpty() || (!transformer.isEmpty() && transformer.getItem() != this)) return;
+//		if (!hasBauble((EntityPlayer)event.getEntityLiving())) return;
 		
 		Random rand = new Random();
 		if (rand.nextInt(100) != 0) return;
