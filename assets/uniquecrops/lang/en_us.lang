@@ -35,6 +35,7 @@ item.uniquecrops.generic.bluedye.name=Blue Dye
 item.uniquecrops.generic.escaperope.name=Escape Rope
 item.uniquecrops.generic.sundial.name=Sundial
 item.uniquecrops.generic.cubeythingy.name=Cubey Thingy
+item.uniquecrops.generic.uncookedwaffle.name=Uncooked Waffle
 item.uniquecrops.genericfood.largeplum.name=Large Dirigible Plum
 item.uniquecrops.genericfood.teriyaki.name=Chicken Teriyaki Bowl
 item.uniquecrops.genericfood.heart.name=Heart of Steve
@@ -43,12 +44,15 @@ item.uniquecrops.genericfood.ennuipotion.name=Potion of Boredom
 item.uniquecrops.genericfood.goldenbread.name=Golden Bread
 item.uniquecrops.genericfood.dietpills.name=Diet Pills
 item.uniquecrops.genericfood.waffle.name=Homestyled Waffle
+item.uniquecrops.genericfood.yogurt.name=Yoghurt くコ:彡:
+item.uniquecrops.genericfood.eggnog.name=Eggnog
 item.uniquecrops.ediblemetal.diamond.name=Diamond
 item.uniquecrops.ediblemetal.emerald.name=Emerald
 item.uniquecrops.ediblemetal.lapis.name=Lapis Lazuli
 item.uniquecrops.ediblemetal.ironingot.name=Iron Ingot
 item.uniquecrops.ediblemetal.goldingot.name=Gold Ingot
 item.uniquecrops.ediblemetal.goldnugget.name=Gold Nugget
+item.uniquecrops.enchantedbook.name=Enchanted Book
 item.uniquecrops.precision.axe.name=Precision Axe
 item.uniquecrops.precision.pick.name=Precision Pick
 item.uniquecrops.precision.shovel.name=Precision Shovel
@@ -81,6 +85,7 @@ item.uniquecrops.brassknuckles.name=Brass Knuckles
 item.uniquecrops.book_multiblock.name=Guide to Unique Multiblocks
 item.uniquecrops.pixelbrush.name=Pixelsius Brush
 item.uniquecrops.rubikscube.name=Rubik's Cube
+item.uniquecrops.boiled_milk.name=Boiled Milk
 item.uniquecrops.seednormal.name=Normie Seeds
 item.uniquecrops.seedprecision.name=Precision Seeds
 item.uniquecrops.seeddirigible.name=Dirigible Plum Seeds
@@ -130,6 +135,17 @@ item.uniquecrops.emblemleaf.name=Leaf Badge
 item.uniquecrops.emblempacifism.name=The Pacifist's Emblem
 item.uniquecrops.emblemblacksmith.name=The Blacksmith's Emblem
 item.uniquecrops.emblemweight.name=Thrower's Emblem
+item.uniquecrops.emblembookworm.name=Bookworm Emblem
+
+# MUSIC DISCS
+item.uniquecrops.neonsigns.name=Music Disc - 「サンセット Ｎｅｔｗｏｒｋ❾❶」
+item.record.uniquecrops:neonsigns.desc=roadtrip - neon signs
+item.uniquecrops.faraway.name=Music Disc - Infinity Frequencies
+item.record.uniquecrops:faraway.desc=Into the light - Far away
+item.uniquecrops.simply.name=Music Disc - luxury elite
+item.record.uniquecrops:simply.desc=101.7 WAVE II - simply
+item.uniquecrops.taxi.name=Music Disc - glaciære
+item.record.uniquecrops:taxi.desc=Water Slide - Taxi Ride Home
 
 # BLOCKS
 tile.uniquecrops.cropnormal.name=Normie
@@ -198,6 +214,7 @@ tile.uniquecrops.flywood_leaves.name=Flywood Leaves
 tile.uniquecrops.flywood_sapling.name=Flywood Sapling
 tile.uniquecrops.flywood_plank.name=Flywood Plank
 tile.uniquecrops.cocito.name=Cocito
+tile.uniquecrops.fascino.name=Fascino
 
 # BOOK TEXT
 uniquecrops.book.pageintro=Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.
@@ -243,7 +260,7 @@ uniquecrops.tooltip.upgradebook=Combine with tools and armor that can be upgrade
 uniquecrops.tooltip.slipperglass=Go hunt for mobs wearing boots with this in your inventory.
 uniquecrops.tooltip.easybadge=Keep in hotbar. Makes some mobs easier to deal with.
 uniquecrops.tooltip.eulabook=Players being disruptive in court? Throw the book at them!
-uniquecrops.tooltip.escaperope=Consumable item: Sends the player to the highest block directly above them.
+uniquecrops.tooltip.escaperope=Consumable item: Sends the player to the highest block directly above them. Works in the nether.
 uniquecrops.tooltip.sundial=Emits redstone signal based on the time of day you set it at.
 uniquecrops.tooltip.batstaff=GET RID OF THOSE PESKY BATS. NO DROPS.
 uniquecrops.tooltip.defense=Blocks arrow damage so long as you have a shield equipped in the off hand.
@@ -258,6 +275,7 @@ uniquecrops.tooltip.transformation=Has a chance of transforming a mob when hitti
 uniquecrops.tooltip.pacifism=Reduces all damage you give and take to 0.
 uniquecrops.tooltip.blacksmith=Any work done on an anvil will not damage the anvil.
 uniquecrops.tooltip.weight=Any thrown items will have farther distance. Some will hurt.
+uniquecrops.tooltip.bookworm=Makes enchanted books edible. The more enchantments on one, the more filling.
 uniquecrops.tooltip.ointment.empty=Rightclick on any non-player, non-boss creature.
 uniquecrops.tooltip.ointment.filled=Put in a goblet placed on the ground.
 uniquecrops.tooltip.thunderpantz=Sneak around on carpet to build up static electricity!
@@ -384,11 +402,24 @@ uniquecrops.bookmultiblocks.page.itero=A supercrop that when rightclicked on, wi
 uniquecrops.bookmultiblocks.page.portal=Making this portal to the next world will require bricks you will have to find underground in the overworld.
 uniquecrops.bookmultiblocks.page.weatherflesia=A rafflesia-like supercrop that holds information about the biome it's planted in. Rightclicking the center with a pixelsius brush will collect that information into it. How much information per random tick will depend on how long the plant has stayed since it was formed.
 
-# JEI CONTAINER
+# JEI
 container.jei.uniquecrops.craftyplant.name=Seed Crafting Recipe
 container.jei.uniquecrops.hourglass.name=Hourglass Conversion
 container.jei.uniquecrops.heater.name=Cocito Smelting Recipe
 container.jei.uniquecrops.enchanter.name=Crop Powered Enchanting
+info.jei.uniquecrops.harvesttrap=Randomly ticks crops in an area around and on the same Y level as it is. Occasionally there is a chance that yellow sparks will emit from the block. Rightclicking it will provide crops around it a speed boost for a short time. Cannot be placed near other harvest traps.
+info.jei.uniquecrops.emeradicdiamond=When held in the offhand, along with the Wildwood Staff in the main hand, the orb boosts the range in which to search for nearby vanilla crops to steal growth ticks from.
+info.jei.uniquecrops.wildwoodstaff=This staff uses the power of crops to construct multiblocks, enchant, and so on. To fill it up with crop power, one must have vanilla crops growing nearby, in order to steal their growth ticks.
+info.jei.uniquecrops.pixelbrush=Setting this inside the center of a Weatherflesia will set its biome to that the Weatherflesia is constructed in. Additionally, the Weatherflesia will charge up the brush, the strength of the charge depending on the length of time from when it was constructed.
+info.jei.uniquecrops.precisionaxe=+10 Upgrade: Axe gives beheading abilities to the player who wields it against mobs.
+info.jei.uniquecrops.precisionsword=+10 Upgrade: Sword will now ignore the invulnerability time of the victims.
+info.jei.uniquecrops.precisionshovel=+10 Upgrade: Breaking sand and gravel will not cause the blocks to fall.
+info.jei.uniquecrops.precisionpick=+10 Upgrade: Grants the pickaxe the ability to pick up mob spawners and silverfish blocks.
+info.jei.uniquecrops.3dglasses=+10 Upgrade: Grants night vision to the wearer when in darkness.
+info.jei.uniquecrops.poncho=+10 Upgrade: Will make most mobs ignore the wearer.
+info.jei.uniquecrops.thunderpantz=Charge speed scales up with upgrade level.
+info.jei.uniquecrops.pixelglasses=+10 Upgrade: Will let the player see unusually pink blocks deep underground when using pixel vision.
+info.jei.uniquecrops.flintankh=The Flint Ankh will save any items adjacent to it in the inventory in a 3x3 grid pattern, with the Ankh as the center. It will take damage each time the player dies with it in their inventory.
 
 # KEYBINDINGS
 key.categories.uniquecrops=Unique Crops
