@@ -2,7 +2,6 @@ package com.bafomdad.uniquecrops.crops;
 
 import java.util.Random;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -17,7 +16,7 @@ import com.bafomdad.uniquecrops.blocks.tiles.TileShyPlant;
 import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
-public class WeepingBells extends BlockCropsBase implements ITileEntityProvider {
+public class WeepingBells extends BlockCropsBase {
 
 	public WeepingBells() {
 		
@@ -61,8 +60,14 @@ public class WeepingBells extends BlockCropsBase implements ITileEntityProvider 
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-
-		return new TileShyPlant();
+    public boolean hasTileEntity(IBlockState state) {
+		
+		return true;
 	}
+	
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+    	
+    	return new TileShyPlant();
+    }
 }
