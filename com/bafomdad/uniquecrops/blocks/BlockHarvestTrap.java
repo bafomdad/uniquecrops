@@ -7,6 +7,9 @@ import javax.annotation.Nullable;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.tiles.TileHarvestTrap;
+import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.network.PacketUCEffect;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -119,6 +122,10 @@ public class BlockHarvestTrap extends BlockBaseUC {
 		
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof TileHarvestTrap) {
+			if (UCUtils.getClosestTile(TileHarvestTrap.class, world, pos, 10.0D) != null) {
+				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.BARRIER, pos.getX(), pos.getY() + 0.75, pos.getZ(), 0));
+				return;
+			}
 			TileHarvestTrap trap = (TileHarvestTrap)tile;
 			if (trap.hasSpirit()) return;
 			
