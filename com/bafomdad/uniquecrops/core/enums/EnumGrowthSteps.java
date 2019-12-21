@@ -252,7 +252,8 @@ public enum EnumGrowthSteps {
 		@Override
 		public boolean canAdvance(World world, BlockPos pos, IBlockState state) {
 
-			return world.getLightFromNeighbors(pos) >= 13;
+			int light = world.getLightFor(EnumSkyBlock.BLOCK, pos.up());
+			return light >= 13;
 		}
 	},
 	LIKESWARTS(UCStrings.LIKESWARTS, UCConfig.GrowthConfig.likesWarts) {
