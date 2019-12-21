@@ -6,13 +6,16 @@ import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 
+import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.crafting.*;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -51,10 +54,34 @@ public class JEIPluginUC implements IModPlugin {
 		registry.addRecipeCatalyst(EnumItems.DUMMYITEM.createStack(), UID_SEED_RECIPE);
 		registry.addRecipeCatalyst(new ItemStack(UCBlocks.hourglass), UUID_HOURGLASS_RECIPE);
 		registry.addRecipeCatalyst(new ItemStack(UCBlocks.cocito), UUID_HEATER_RECIPE);
-		registry.addRecipeCatalyst(new ItemStack(Blocks.ENCHANTING_TABLE), UUID_ENCHANTER_RECIPE);
+		registry.addRecipeCatalyst(new ItemStack(UCItems.wildwoodStaff), UUID_ENCHANTER_RECIPE);
+		
+		addDescription(registry, UCBlocks.harvestTrap, "harvesttrap");
+		addDescription(registry, UCItems.emeradicDiamond, "emeradicdiamond");
+		addDescription(registry, UCItems.wildwoodStaff, "wildwoodstaff");
+		addDescription(registry, UCItems.pixelBrush, "pixelbrush");
+		addDescription(registry, UCItems.precisionAxe, "precisionaxe");
+		addDescription(registry, UCItems.precisionPick, "precisionpick");
+		addDescription(registry, UCItems.precisionShovel, "precisionshovel");
+		addDescription(registry, UCItems.precisionSword, "precisionsword");
+		addDescription(registry, UCItems.glasses3D, "3dglasses");
+		addDescription(registry, UCItems.poncho, "poncho");
+		addDescription(registry, UCItems.thunderPantz, "thunderpantz");
+		addDescription(registry, UCItems.pixelGlasses, "pixelglasses");
+		addDescription(registry, UCItems.ankh, "flintankh");
 
 		IJeiHelpers helpers = registry.getJeiHelpers();
 		IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
 		blacklist.addIngredientToBlacklist(EnumItems.DUMMYITEM.createStack());
+	}
+	
+	private void addDescription(IModRegistry registry, Item item, String str) {
+		
+		registry.addIngredientInfo(new ItemStack(item), ItemStack.class, UCStrings.INFOJEI + str);
+	}
+	
+	private void addDescription(IModRegistry registry, Block block, String str) {
+		
+		registry.addIngredientInfo(new ItemStack(block), ItemStack.class, UCStrings.INFOJEI + str);
 	}
 }
