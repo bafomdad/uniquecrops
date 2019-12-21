@@ -10,12 +10,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -82,7 +84,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	public boolean canBonemeal(World world, BlockPos pos) {
 		
 		if (this.canIgnoreGrowthRestrictions(world, pos)) return true;
-		
+
 		return bonemealable;
 	}
 	
@@ -90,19 +92,34 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if (getAge(state) < getMaxAge()) return false;
-//		if (player.getHeldItemMainhand().getItem() == UCItems.wildwoodStaff) return false;
-		
+
 		if (clickHarvest) {
 			if (getAge(state) >= getMaxAge() && !world.isRemote) {
 				world.setBlockState(pos, this.withAge(0), 3);
 				int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
-				this.dropBlockAsItem(world, pos, state, fortune);
+//				this.dropBlockAsItem(world, pos, state, fortune);
+				harvestItems(world, pos, state, fortune);
 			}
 			return true;
 		}
 		return false;
 	}
 	
+	private void harvestItems(World world, BlockPos pos, IBlockState state, int fortune) {
+		
+		Item item = this.getCrop();
+		if (item != Items.AIR) {
+			int fortuneDrop = fortune > 0 ? world.rand.nextInt(fortune) : 0;
+			for (int i = 0; i < this.quantityDropped(world.rand) + fortuneDrop; i++) {
+				InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(item, 1, this.damageDropped(state)));
+			}
+		}
+		if (this.getCanDropExtra() && world.rand.nextBoolean()) {
+			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(this.getSeed(), 1, 0));
+		}
+	}
+	
+	/*
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	
@@ -136,6 +153,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
         }
         return ret;
     }
+    */
     
     @Override
     public void grow(World world, BlockPos pos, IBlockState state) {
@@ -145,16 +163,7 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
     	
     	super.grow(world, pos, state);
     }
-    
-    /*
-	@Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		
-		if (this.canIgnoreGrowthRestrictions(world, pos)) 
-			super.updateTick(world, pos, state, rand);
-	}
-	*/
-	
+
 	@SideOnly(Side.CLIENT)
 	public void createParticles(IBlockState state, World world, BlockPos pos, Random rand, EnumParticleTypes particle, int rand2) {
 		
