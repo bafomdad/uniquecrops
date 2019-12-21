@@ -12,6 +12,7 @@ import com.bafomdad.uniquecrops.core.UCStrings;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.profiler.Profiler;
@@ -41,45 +42,47 @@ public class GuiStaffOverlay extends Gui {
 		
 		Profiler profiler = mc.profiler;
 		if (event.getType() == ElementType.ALL) {
+			if (mc.currentScreen != null && mc.currentScreen instanceof GuiChat) return;
 			profiler.startSection("UC-hud");
 			CPCapability cap = mc.player.getHeldItemMainhand().getCapability(CPProvider.CROP_POWER, null);
-				if (cap == null) {
-					profiler.endSection();
-					return;
-				}
-				ScaledResolution scaled = new ScaledResolution(mc);
-				int i = cap.getPower();
-				boolean flag = this.staffUpdateCounter > this.updateCounter /*&& (this.staffUpdateCounter - this.updateCounter) / 3L % 2L == 1L*/; 
-				if (flag) {
-					GlStateManager.color(0.0F, 1.0F, 0.0F);
-				}
-				GL11.glDisable(GL11.GL_LIGHTING);
+			if (cap == null) {
+				profiler.endSection();
+				return;
+			}
+			ScaledResolution scaled = new ScaledResolution(mc);
+			int i = cap.getPower();
+			boolean flag = this.staffUpdateCounter > this.updateCounter /*&& (this.staffUpdateCounter - this.updateCounter) / 3L % 2L == 1L*/; 
+			if (flag) {
+				GlStateManager.color(0.0F, 1.0F, 0.0F);
+			}
+			GL11.glDisable(GL11.GL_LIGHTING);
 //				this.drawCenteredString(mc.fontRenderer, "Crop power: " + cap.getPower() + " / " + cap.getCapacity(), width / 2, 10, Color.WHITE.getRGB());
-				
+			
 //				float scale = (float)Math.min(0.125F, Math.sin(Minecraft.getSystemTime() / 2000D));
-				float scale = (float)Math.sin(Minecraft.getSystemTime() / 500D) * 0.015625F;
-				GlStateManager.pushMatrix();
-				if (i < this.capacity) {
-					this.lastSystemTime = Minecraft.getSystemTime();
+			float scale = (float)Math.sin(Minecraft.getSystemTime() / 500D) * 0.015625F;
+			GlStateManager.pushMatrix();
+			if (i < this.capacity) {
+				this.lastSystemTime = Minecraft.getSystemTime();
 //					GlStateManager.color(1.0F, 0.0F, 0.0F);
-					this.staffUpdateCounter = this.updateCounter + 200;
-				}
-				if (i > this.capacity) {
-					this.lastSystemTime = Minecraft.getSystemTime();
+				this.staffUpdateCounter = this.updateCounter + 200;
+			}
+			if (i > this.capacity) {
+				this.lastSystemTime = Minecraft.getSystemTime();
 //					GlStateManager.color(0.0F, 1.0F, 0.0F);
-					this.staffUpdateCounter = this.updateCounter + 200;
-				}
-				if (Minecraft.getSystemTime() - this.lastSystemTime > 1000L) {
-					this.capacity = i;
-					this.lastSystemTime = Minecraft.getSystemTime();
-				}
-				GlStateManager.scale(1 + scale, 1 + scale, 1 + scale);
-				this.renderLeafBar(scaled, cap.getPower(), cap.getCapacity());
-				GlStateManager.popMatrix();
+				this.staffUpdateCounter = this.updateCounter + 200;
+			}
+			if (Minecraft.getSystemTime() - this.lastSystemTime > 1000L) {
 				this.capacity = i;
+				this.lastSystemTime = Minecraft.getSystemTime();
+			}
+			GlStateManager.scale(1 + scale, 1 + scale, 1 + scale);
+			this.renderLeafBar(scaled, cap.getPower(), cap.getCapacity());
+			GlStateManager.popMatrix();
+			this.capacity = i;
+			
+			profiler.endSection();
 		}
 		++this.updateCounter;
-		profiler.endSection();
 	}
 	
 	private void renderLeafBar(ScaledResolution res, int currentPower, int capacity) {
