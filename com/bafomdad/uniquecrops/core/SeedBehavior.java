@@ -38,7 +38,7 @@ public class SeedBehavior {
 					return false;
 				
 				if (cropBlock == UCBlocks.cropCollis) {
-					if (!world.provider.isSurfaceWorld() || pos.getY() <= 100)
+					if (pos.getY() <= 100)
 						return false;
 				}
 				if (cropBlock == UCBlocks.cropCinderbella) {
