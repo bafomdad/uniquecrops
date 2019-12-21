@@ -19,6 +19,8 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.enums.EnumCrops;
+import com.bafomdad.uniquecrops.network.PacketBookIndex;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class GuiBookGuide extends GuiAbstractBook {
 
@@ -81,7 +83,6 @@ public class GuiBookGuide extends GuiAbstractBook {
 			case 3: pageIndex = ((pageIndex + (catsize2 + (Page.cropCount / 2) - 1)) * 3) - 2; break;
 			case 4: pageIndex = 2; break;
 		}
-		NBTUtils.setInt(book, "savedIndex", pageIndex);
 		updateButtons();
 	}
 	
@@ -122,7 +123,7 @@ public class GuiBookGuide extends GuiAbstractBook {
 		
 		boolean update = false;
 		if (key == Keyboard.KEY_ESCAPE) {
-			NBTUtils.setInt(book, "savedIndex", pageIndex);
+			UCPacketHandler.INSTANCE.sendToServer(new PacketBookIndex(pageIndex));
 			mc.displayGuiScreen(null);
 		}
 		if (key == Keyboard.KEY_RIGHT && this.next.visible) {
@@ -138,7 +139,6 @@ public class GuiBookGuide extends GuiAbstractBook {
 			update = true;
 		}
 		if (update) {
-			NBTUtils.setInt(book, "savedIndex", pageIndex);
 			updateButtons();
 		}
 	}

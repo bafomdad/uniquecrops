@@ -27,6 +27,7 @@ public class UCPacketHandler {
 		INSTANCE.registerMessage(PacketSyncCap.Handler.class, PacketSyncCap.class, packetId++, Side.CLIENT);
 		INSTANCE.registerMessage(PacketBiomeChange.Handler.class, PacketBiomeChange.class, packetId++, Side.CLIENT);
 		INSTANCE.registerMessage(PacketColorfulCube.Handler.class, PacketColorfulCube.class, packetId++, Side.SERVER);
+		INSTANCE.registerMessage(PacketBookIndex.Handler.class, PacketBookIndex.class, packetId++, Side.SERVER);
 	}
 	
 	public static void sendToNearbyPlayers(World world, BlockPos pos, IMessage toSend) {

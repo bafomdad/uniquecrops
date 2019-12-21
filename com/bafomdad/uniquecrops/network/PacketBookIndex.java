@@ -1,6 +1,12 @@
 package com.bafomdad.uniquecrops.network;
 
+import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
+import com.bafomdad.uniquecrops.init.UCItems;
+
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -34,21 +40,12 @@ public class PacketBookIndex implements IMessage {
 		@Override
 		public IMessage onMessage(final PacketBookIndex message, final MessageContext ctx) {
 
-			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(new Runnable() {
-
-				@Override
-				public void run() {
-					
-					handle(message, ctx);
-				}
-				
-			});
+			EntityPlayerMP player = ctx.getServerHandler().player;
+			ItemStack book = player.getHeldItemMainhand();
+			if (!book.isEmpty() && (book.getItem() == UCItems.bookMultiblock || (book.getItem() == UCItems.generic && book.getItemDamage() == EnumItems.GUIDE.ordinal()))) {
+				NBTUtils.setInt(book, "savedIndex", message.index);
+			}
 			return null;
-		}
-		
-		public void handle(PacketBookIndex message, MessageContext ctx) {
-			
-			
 		}
 	}
 }

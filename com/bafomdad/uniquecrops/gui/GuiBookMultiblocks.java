@@ -1,6 +1,7 @@
 package com.bafomdad.uniquecrops.gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
@@ -16,6 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.network.PacketBookIndex;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
 public class GuiBookMultiblocks extends GuiAbstractBook {
 	
@@ -24,6 +27,8 @@ public class GuiBookMultiblocks extends GuiAbstractBook {
 
 	private GuiButton next;
 	private GuiButton prev;
+	private GuiButton tableOfContents;
+	private GuiButton backButton;
 	
 	private int pageIndex;
 	private Page currentPage;
@@ -45,6 +50,14 @@ public class GuiBookMultiblocks extends GuiAbstractBook {
 		this.currentPage = pageList.size() > 0 ? (this.pageIndex < pageList.size() ? pageList.get(this.pageIndex) : null) : null;
 		buttonList.add(this.next = new GuiButtonPageChange(0, k + WIDTH - 26, l + 210, false));
 		buttonList.add(this.prev = new GuiButtonPageChange(1, k + 10, l + 210, true));
+		List<String> patternList = new ArrayList();
+		for (Page page : pageList) {
+			if (page instanceof PageRecipes) {
+				patternList.add(((PageRecipes)page).getTitle());
+			}
+		}
+		buttonList.add(this.tableOfContents = new GuiButtonLink(this, 2, k + 15, l + 35, 100, 168, patternList.toArray(new String[0])));
+		buttonList.add(this.backButton = new GuiBackButton(3, k + 80, l + 210));
 		
 		updateButtons();
 	}
@@ -52,11 +65,13 @@ public class GuiBookMultiblocks extends GuiAbstractBook {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		
+		int contentSize = ((GuiButtonLink)tableOfContents).selectedOption;
 		switch (button.id) {
 			case 0: pageIndex++; break;
 			case 1: --pageIndex; break;
+			case 2: pageIndex = ((pageIndex + contentSize) * 2) + 1; break;
+			case 3: pageIndex = 1; break;
 		}
-		NBTUtils.setInt(book, "savedIndex", pageIndex);
 		updateButtons();
 	}
 	
@@ -64,6 +79,8 @@ public class GuiBookMultiblocks extends GuiAbstractBook {
 		
 		this.next.visible = (this.pageIndex < this.pageList.size() - 1);
 		this.prev.visible = this.pageIndex > 0;
+		this.tableOfContents.visible = this.pageIndex == 1;
+		this.backButton.visible = this.pageIndex > 1;
 	}
 	
 	@Override
@@ -94,7 +111,7 @@ public class GuiBookMultiblocks extends GuiAbstractBook {
 	protected void keyTyped(char character, int key) {
 		
 		if (key == Keyboard.KEY_ESCAPE) {
-			NBTUtils.setInt(book, "savedIndex", pageIndex);
+			UCPacketHandler.INSTANCE.sendToServer(new PacketBookIndex(pageIndex));
 			mc.displayGuiScreen(null);
 		}
 	}
