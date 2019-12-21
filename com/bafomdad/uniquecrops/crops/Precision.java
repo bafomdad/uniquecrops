@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -43,12 +44,41 @@ public class Precision extends BlockCropsBase {
 	}
 	
 	@Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+		
+        this.checkAndDropBlock(world, pos, state);
+
+        if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (world.getLightFromNeighbors(pos.up()) >= 9) {
+            int i = this.getAge(state);
+
+            if (i < this.getMaxAge()) {
+                float f = getGrowthChance(this, world, pos);
+
+                if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0)) {
+                    world.setBlockState(pos, this.withAge(i + 1), 3);
+                    net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+                }
+            }
+        }
+	}
+	
+	@Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     	
     	if (this.getAge(state) == 6)
     		return this.getCrop();
 
     	return this.getSeed();
+    }
+	
+	@Override
+    public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+        
+		if (this.getAge(state) != 6)
+			return 0;
+		
+		return 15;
     }
 	
 	@Override
