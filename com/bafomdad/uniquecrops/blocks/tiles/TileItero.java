@@ -67,17 +67,16 @@ public class TileItero extends TileBaseUC implements ITickable {
 			return;
 		}
 		if (Itero.PLATES[gameCombos[gameIndex]].equals(subPos)) {
-			System.out.println("yep");
 			if (++this.gameIndex >= this.gameCombos.length) {
-				UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.END_ROD, this.pos.getX() + 0.5, this.pos.getY() + 0.3, this.pos.getZ() + 0.5, 4));
+				UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticleTypes.END_ROD, this.pos.getX(), this.pos.getY() + 0.3, this.pos.getZ(), 4));
 				advanceStage();
 				reset();
 				return;
 			}
-			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.HEART, this.pos.getX() + 0.5, this.pos.getY() + 0.3, this.pos.getZ() + 0.5, 0));
+			UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticleTypes.HEART, this.pos.getX(), this.pos.getY() + 0.3, this.pos.getZ(), 0));
 			return;
 		} else {
-			UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_LARGE, this.pos.getX() + 0.5, this.pos.getY() + 0.3, this.pos.getZ() + 0.5, 0));
+			UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_LARGE, this.pos.getX() + 0.5, this.pos.getY() + 0.3, this.pos.getZ() + 0.5, 0));
 			regressStage();
 			reset();
 		}

@@ -375,7 +375,8 @@ public class UCEventHandlerServer {
 				}
 			}
 			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == UCItems.precisionAxe) {
-				if (((IBookUpgradeable)player.getHeldItemMainhand().getItem()).getLevel(player.getHeldItemMainhand()) == 10) {
+				ItemStack axe = player.getHeldItemMainhand();
+				if (((IBookUpgradeable)axe.getItem()).isMaxLevel(axe)) {
 					Random rand = el.world.rand;
 					int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
 					if (rand.nextInt(15) <= 2 + looting) {
@@ -777,7 +778,7 @@ public class UCEventHandlerServer {
 			if (cropPower > 0) {
 				int power = (cap != null) ? cap.getPower() : 0;
 				if (power < cropPower) {
-					player.sendStatusMessage(new TextComponentString("Insufficient crop power."), true);
+					player.sendStatusMessage(new TextComponentString("Insufficient crop power. Needed: " + cropPower), true);
 					return;
 				}
 			}
@@ -789,7 +790,8 @@ public class UCEventHandlerServer {
 				held.shrink(1);
 				
 			pattern.setResult(event.getWorld(), event.getPos());
-			event.setUseBlock(Result.DENY);
+//			event.setUseBlock(Result.DENY);
+			event.setCanceled(true);
 			player.swingArm(event.getHand());
 			break;
 		}

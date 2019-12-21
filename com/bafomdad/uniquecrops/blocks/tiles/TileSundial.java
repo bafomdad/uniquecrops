@@ -21,9 +21,10 @@ public class TileSundial extends TileBaseRenderUC implements ITickable {
 		if (world.getTotalWorldTime() % 20 == 0) {
 			boolean powered = hasPower;
 			long time = world.getWorldTime() % 24000L;
-			float rot = world.getCelestialAngle(1.0F);
+			float rot = world.getCelestialAngleRadians(1.0F);
+			int timeMod = 1500;
 			if (savedTime > 0)
-				hasPower = (int)(time / 1500) == (savedTime / 1500);
+				hasPower = (int)(time / timeMod) == (savedTime / timeMod);
 			rotation = rot;
 			if (powered != hasPower)
 				world.notifyNeighborsOfStateChange(pos, blockType, true);

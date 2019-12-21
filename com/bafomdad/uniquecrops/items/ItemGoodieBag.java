@@ -63,7 +63,8 @@ public class ItemGoodieBag extends Item {
 				stack = new ItemStack(Item.REGISTRY.getRandomObject(rand));
 			else
 				stack = new ItemStack(Block.REGISTRY.getRandomObject(rand));
-			return stack;
+			if (!stack.isEmpty())
+				return stack;
 		}
 		return new ItemStack(Items.COAL);
 	}

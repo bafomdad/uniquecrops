@@ -61,7 +61,7 @@ public class ItemThunderpants extends ItemArmor implements IBookUpgradeable {
 			BlockPos pos = new BlockPos(MathHelper.floor(player.posX), player.getPosition().getY(), MathHelper.floor(player.posZ));
 			Block block = world.getBlockState(pos).getBlock();
 			if (block instanceof BlockCarpet) {
-				if (world.rand.nextInt(10) == 0)
+				if (world.rand.nextInt(11 - Math.max(this.getLevel(stack), 0)) == 0)
 					setCharge(stack, getCharge(stack) + world.rand.nextFloat());
 			}
 		}

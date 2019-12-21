@@ -13,5 +13,6 @@ public enum EnumEmblems {
 	RAINBOW,
 	PACIFISM,
 	BLACKSMITH,
-	WEIGHT;
+	WEIGHT,
+	BOOKWORM;
 }

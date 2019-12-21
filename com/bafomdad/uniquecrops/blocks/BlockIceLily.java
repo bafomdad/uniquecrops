@@ -66,7 +66,7 @@ public class BlockIceLily extends BlockLilyPad {
 		
 		if (entity instanceof EntityItem) {
 			EntityItem ei = (EntityItem)entity;
-			if (!ei.isDead)
+			if (!ei.isDead && ei.getEntityData().getShort("Age") > -6000)
 				ei.setNoDespawn();
 		}
     }

@@ -41,6 +41,7 @@ public class BlockBucketRope extends Block {
 		setTranslationKey(UniqueCrops.MOD_ID + ".bucketrope");
 		setCreativeTab(UniqueCrops.TAB);
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		this.setHardness(1.0F);
 		UCBlocks.blocks.add(this);
 	}
 	

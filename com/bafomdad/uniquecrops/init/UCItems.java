@@ -65,7 +65,8 @@ public class UCItems {
 	
 	public static ItemGeneric generic;
 	
-	public static Item 
+	// FOODS
+	public static Item
 		largeplum,
 		teriyaki,
 		heart,
@@ -74,6 +75,17 @@ public class UCItems {
 		dietpills,
 		waffle,
 		potionEnnui,
+		yogurt,
+		eggnog,
+		edibleDiamond,
+		edibleIngotIron,
+		edibleIngotGold,
+		edibleLapis,
+		edibleEmerald,
+		edibleNuggetGold,
+		edibleBook;
+	
+	public static Item 
 		enderSnooker,
 		handMirror,
 		batStaff,
@@ -88,14 +100,8 @@ public class UCItems {
 		diamonds,
 		bookMultiblock,
 		pixelBrush,
-		rubiksCube;
-	
-	public static Item edibleDiamond;
-	public static Item edibleLapis;
-	public static Item edibleEmerald;
-	public static Item edibleIngotIron;
-	public static Item edibleIngotGold;
-	public static Item edibleNuggetGold;
+		rubiksCube,
+		boiledMilk;
 	
 	public static ItemArmor glasses3D;
 	public static ItemArmor pixelGlasses;
@@ -110,6 +116,11 @@ public class UCItems {
 	public static ItemArmor cactusBoots, cactusLeggings, cactusPlate, cactusHelm;
 	public static Item impactShield;
 	public static ItemSword brassKnuckles;
+	
+	public static ItemVaporRecord music1;
+	public static ItemVaporRecord music2;
+	public static ItemVaporRecord music3;
+	public static ItemVaporRecord music4;
 	
 	public static final ItemArmor.ArmorMaterial glassesMaterial = EnumHelper.addArmorMaterial("3dglasses", "uniquecrops:3dglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
 	public static final ItemArmor.ArmorMaterial pixelMaterial = EnumHelper.addArmorMaterial("pixelglasses", "uniquecrops:pixelglasses", 200, new int[] { 0, 0, 0, 0 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0F);
@@ -167,6 +178,15 @@ public class UCItems {
 		dietpills = new ItemGenericFood(EnumFoodstuffs.DIETPILLS);
 		waffle = new ItemGenericFood(EnumFoodstuffs.WAFFLE);
 		potionEnnui = new ItemGenericFood(EnumFoodstuffs.ENNUIPOTION);
+		yogurt = new ItemGenericFood(EnumFoodstuffs.YOGURT).setContainerItem(Items.BOWL);
+		eggnog = new ItemGenericFood(EnumFoodstuffs.EGGNOG);
+		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
+		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");
+		edibleLapis = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "lapis");
+		edibleIngotIron = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "ironingot");
+		edibleIngotGold = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "goldingot");
+		edibleNuggetGold = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "goldnugget");
+		edibleBook = new ItemEdibleBook();
 		
 		enderSnooker = new ItemEnderSnooker();
 		handMirror = new ItemHandMirror();
@@ -182,13 +202,8 @@ public class UCItems {
 		items.add(uselessLump);
 		diamonds = new ItemDiamondBunch();
 		bookMultiblock = new ItemBookMultiblock();
-		
-		edibleDiamond = new ItemEdibleMetal(EnumEdibleMetal.GEM, "diamond");
-		edibleEmerald = new ItemEdibleMetal(EnumEdibleMetal.GEM, "emerald");
-		edibleLapis = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "lapis");
-		edibleIngotIron = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "ironingot");
-		edibleIngotGold = new ItemEdibleMetal(EnumEdibleMetal.INGOT, "goldingot");
-		edibleNuggetGold = new ItemEdibleMetal(EnumEdibleMetal.NUGGET, "goldnugget");
+		boiledMilk = new Item().setRegistryName("boiled_milk").setTranslationKey(UniqueCrops.MOD_ID + ".boiled_milk").setCreativeTab(UniqueCrops.TAB).setMaxStackSize(1).setContainerItem(Items.BUCKET);
+		items.add(boiledMilk);
 		
 		glasses3D = new Item3DGlasses(glassesMaterial, 1, EntityEquipmentSlot.HEAD);
 		pixelGlasses = new ItemPixelGlasses(pixelMaterial, 1, EntityEquipmentSlot.HEAD);
@@ -204,6 +219,11 @@ public class UCItems {
 		brassKnuckles = new ItemBrassKnuckles();
 		pixelBrush = new ItemPixelBrush();
 		rubiksCube = new ItemColorfulCube();
+		
+		music1 = new ItemVaporRecord("neonsigns", UCSounds.MUSIC1);
+		music2 = new ItemVaporRecord("faraway", UCSounds.MUSIC2);
+		music3 = new ItemVaporRecord("taxi", UCSounds.MUSIC3);
+		music4 = new ItemVaporRecord("simply", UCSounds.MUSIC4);
 		
 		cactusBoots = (ItemArmor)new ItemArmor(cactusMaterial, 2, EntityEquipmentSlot.FEET).setRegistryName("cactusboots").setTranslationKey(UniqueCrops.MOD_ID + ".cactusboots").setCreativeTab(UniqueCrops.TAB);
 		items.add(cactusBoots);

@@ -74,7 +74,7 @@ public class BlockSundial extends BlockBaseUC {
 			if (tile instanceof TileSundial) {
 				long time = world.getWorldTime() % 24000L;
 				((TileSundial)tile).savedTime = (int)time;
-				((TileSundial)tile).savedRotation = world.getCelestialAngle(1.0F);
+				((TileSundial)tile).savedRotation = world.getCelestialAngleRadians(1.0F);
 				((TileSundial)tile).markBlockForUpdate();
 			}
 		}

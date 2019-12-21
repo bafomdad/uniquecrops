@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.crops;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -107,11 +108,15 @@ public class Feroxia extends BlockCropsBase {
     	world.setBlockState(pos, state.getBlock().getDefaultState(), 2);
     	TileEntity te = world.getTileEntity(pos);
     	if (te instanceof TileFeroxia) {
+    		world.playEvent(2001, pos, Block.getStateId(state));
     		if (placer instanceof EntityPlayer && !(placer instanceof FakePlayer)) {
-        		((TileFeroxia)te).setOwner(placer.getUniqueID());
-        		if (!world.isRemote && !placer.getEntityData().hasKey(UCStrings.TAG_GROWTHSTAGES)) {
-        			UCUtils.generateSteps((EntityPlayer)placer);
-        		}
+    			if (!world.isRemote) {
+            		((TileFeroxia)te).setOwner(placer.getUniqueID());
+            		if (!placer.getEntityData().hasKey(UCStrings.TAG_GROWTHSTAGES)) {
+            			UCUtils.generateSteps((EntityPlayer)placer);
+            		}
+            		UCUtils.updateBook((EntityPlayer)placer);
+    			}
     		}
     	}
     }
@@ -120,15 +125,15 @@ public class Feroxia extends BlockCropsBase {
     public void grow(World world, BlockPos pos, IBlockState state) {
     	
     	if (getAge(state) >= getMaxAge() || world.isRemote) return;
+    	
     	int stage = getStage(world, pos, state);
-    	if (stage != -1 && EnumGrowthSteps.values()[stage].ordinal() == 19) {
-    		if (!world.isRemote)
-    			world.setBlockState(pos, this.withAge(0), 3);
+    	if (stage != -1 && EnumGrowthSteps.values()[stage].ordinal() == EnumGrowthSteps.NOBONEMEAL.ordinal()) {
+    		world.setBlockState(pos, this.withAge(0), 3);
     		return;
     	}
     	else if (stage != -1 && EnumGrowthSteps.values()[stage].canAdvance(world, pos, state)) {
-    		if (!world.isRemote)
-    			world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+    		world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+    		return;
     	}
     }
     

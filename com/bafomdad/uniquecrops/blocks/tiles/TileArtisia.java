@@ -167,4 +167,18 @@ public class TileArtisia extends TileBaseRenderUC {
 		
 		inv.setStackInSlot(0, stack);
 	}
+	
+	@Override
+	public void writeCustomNBT(NBTTagCompound tag) {
+		
+		tag.setLong("Core", core.toLong());
+		tag.setTag("inventory", inv.serializeNBT());
+	}
+	
+	@Override
+	public void readCustomNBT(NBTTagCompound tag) {
+		
+		this.core = BlockPos.fromLong(tag.getLong("Core"));
+		inv.deserializeNBT(tag.getCompoundTag("inventory"));
+	}
 }

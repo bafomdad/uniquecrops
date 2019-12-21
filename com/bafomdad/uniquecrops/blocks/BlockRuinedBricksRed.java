@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops.blocks;
 
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,8 +19,14 @@ public class BlockRuinedBricksRed extends BlockBaseUC {
 		
 		super("ruinedbricksred", Material.ROCK);
 		setHardness(1.15F);
-		setResistance(30.0F);
+		setResistance(2000.0F);
 	}
+	
+	@Override
+    public EnumPushReaction getPushReaction(IBlockState state) {
+		
+        return EnumPushReaction.BLOCK;
+    }
 	
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {

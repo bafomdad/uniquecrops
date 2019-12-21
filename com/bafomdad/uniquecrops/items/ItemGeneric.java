@@ -34,6 +34,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -112,7 +113,7 @@ public class ItemGeneric extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		
-		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal())
+		if (stack.getItemDamage() == EnumItems.DISCOUNT.ordinal() || stack.getItemDamage() == EnumItems.POTIONSPLASH.ordinal() || stack.getItemDamage() == EnumItems.MILLENNIUMEYE.ordinal())
 			return true;
 		
 		return false;
@@ -203,8 +204,7 @@ public class ItemGeneric extends Item {
 		            stack.shrink(1);
 
 		        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		        if (!world.isRemote)
-		        {
+		        if (!world.isRemote) {
 		            EntityCustomPotion entitypotion = new EntityCustomPotion(world, player, stack);
 		            entitypotion.shoot(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
 		            world.spawnEntity(entitypotion);
@@ -216,8 +216,7 @@ public class ItemGeneric extends Item {
 		            stack.shrink(1);
 
 		        world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		        if (!world.isRemote)
-		        {
+		        if (!world.isRemote) {
 		            EntityItemWeepingEye eye = new EntityItemWeepingEye(world, player.posX, player.posY + 1.5D, player.posZ);
 		            eye.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 		            world.spawnEntity(eye);
@@ -254,12 +253,30 @@ public class ItemGeneric extends Item {
 		        }
 		        return new ActionResult(EnumActionResult.SUCCESS, stack);
 			}
-			if (stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal() && !world.provider.doesWaterVaporize()) {
+			if (stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal()) {
 				BlockPos highestPos = world.getHeight(player.getPosition());
-				if (!player.capabilities.isCreativeMode)
-					stack.shrink(1);
 				if (!world.isRemote) {
+					if (world.provider.getDimension() == -1 && player.posY >= 126) {
+						int air = 0;
+						for (int i = highestPos.getY(); i > 1; i--) {
+							MutableBlockPos loopPos = new MutableBlockPos(highestPos.getX(), i, highestPos.getZ());
+							if (world.isAirBlock(loopPos))
+								air++;
+							else
+								air = 0;
+							if (air >= 2 && !world.isAirBlock(loopPos.down()) && world.getBlockState(loopPos.down()).getBlock() != Blocks.LAVA) {
+								player.setPositionAndUpdate(highestPos.getX() + 0.5, loopPos.toImmutable().getY(), highestPos.getZ() + 0.5);
+								if (!player.capabilities.isCreativeMode)
+									stack.shrink(1);
+								return new ActionResult(EnumActionResult.SUCCESS, stack);
+							}
+						}
+					}
+					if (player.posY == highestPos.getY()) return new ActionResult(EnumActionResult.PASS, stack);
+					
 					player.setPositionAndUpdate(highestPos.getX() + 0.5, highestPos.getY(), highestPos.getZ() + 0.5);
+					if (!player.capabilities.isCreativeMode)
+						stack.shrink(1);
 				}
 				return new ActionResult(EnumActionResult.SUCCESS, stack);
 			}
@@ -320,7 +337,7 @@ public class ItemGeneric extends Item {
 	@Override
     public int getItemStackLimit(ItemStack stack) {
     	
-		if (stack.getTranslationKey().contains("book") || stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal() || stack.getItemDamage() == EnumItems.ESCAPEROPE.ordinal())
+		if (stack.getTranslationKey().contains("book") || stack.getItemDamage() == EnumItems.DOGRESIDUE.ordinal())
 			return 1;
 		
 		return super.getItemStackLimit(stack);

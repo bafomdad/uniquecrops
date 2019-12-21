@@ -14,6 +14,7 @@ public class TileHarvestTrap extends TileBaseRenderUC implements ITickable {
 	private boolean hasSpirit;
 	private boolean collectedSpirit;
 	private int spiritTime = 0;
+	private final int range = 4;
 	
 	@Override
 	public void update() {
@@ -37,7 +38,7 @@ public class TileHarvestTrap extends TileBaseRenderUC implements ITickable {
 		
 		if (world.isRemote) return;
 		
-		Iterable<BlockPos> posList = BlockPos.getAllInBox(pos.add(-5, 0, -5), pos.add(5, 1, 5));
+		Iterable<BlockPos> posList = BlockPos.getAllInBox(pos.add(-range, 0, -range), pos.add(range, 1, range));
 		Iterator<BlockPos> iterator = posList.iterator();
 		while (iterator.hasNext()) {
 			BlockPos loopPos = iterator.next();

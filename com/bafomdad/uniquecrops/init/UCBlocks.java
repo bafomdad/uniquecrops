@@ -149,7 +149,7 @@ public class UCBlocks {
 		cropSucco = CropBuilder.create(new Succo()).setExtraDrops(false).setBonemealable(false).setClickHarvest(false).build();
 		cropAdventus = CropBuilder.create(new Adventus()).setExtraDrops(false).build();
 		cropHoly = CropBuilder.create(new HolyCrop()).setExtraDrops(false).setClickHarvest(false).build();
-		cropFeroxia = CropBuilder.create(new Feroxia()).setClickHarvest(false).setExtraDrops(false).setBonemealable(false).setIgnoreGrowth(true).build();
+		cropFeroxia = CropBuilder.create(new Feroxia()).setClickHarvest(false).setExtraDrops(false).setBonemealable(true).setIgnoreGrowth(true).build();
 		
 		exedo = new Exedo();
 		cocito = new Cocito();

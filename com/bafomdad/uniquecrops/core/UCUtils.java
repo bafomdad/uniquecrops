@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.bafomdad.uniquecrops.core.enums.EnumGrowthSteps;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.network.PacketBiomeChange;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
@@ -103,14 +104,14 @@ public class UCUtils {
 	
 	public static void updateBook(EntityPlayer player) {
 		
-		if (!player.inventory.hasItemStack(new ItemStack(UCItems.generic, 1, 0)))
+		if (!player.inventory.hasItemStack(EnumItems.GUIDE.createStack()))
 			return;
 		
 		NBTTagList taglist = UCUtils.getServerTaglist(player.getEntityId());
 		if (taglist != null) {
 			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 				ItemStack book = player.inventory.mainInventory.get(i);
-				if (!book.isEmpty() && book.getItem() == UCItems.generic && book.getItemDamage() == 0) 
+				if (!book.isEmpty() && book.getItem() == UCItems.generic && book.getItemDamage() == EnumItems.GUIDE.ordinal()) 
 					book.setTagInfo(UCStrings.TAG_GROWTHSTAGES, taglist);
 			}
 		}
@@ -120,7 +121,7 @@ public class UCUtils {
 		
 		TileEntity closest = null;
 		for (TileEntity tile : world.loadedTileEntityList) {
-			if (tile.getClass() == tileToFind) {
+			if (tile.getClass() == tileToFind && !pos.equals(tile.getPos())) {
 				double distance = tile.getPos().distanceSq(pos);
 				if (closest == null && distance <= dist) {
 					closest = tile;
@@ -147,8 +148,8 @@ public class UCUtils {
 		}
 		List<EnumGrowthSteps> copysteps = new ArrayList();
 		Arrays.stream(EnumGrowthSteps.values()).forEach(g -> {
-			if (g.isEnabled() && g.ordinal() != 20)
-				copysteps.add(g); 
+			if (g.isEnabled() && g.ordinal() != EnumGrowthSteps.SELFSACRIFICE.ordinal())
+				copysteps.add(g);
 			});
 
 		Collections.shuffle(copysteps);

@@ -89,6 +89,8 @@ public class Enderlily extends BlockCropsBase {
 				List<BlockPos> target = UCUtils.makeCollection(getBox, true);
 				for (BlockPos looppos : target) {
 					Block loopblock = world.getBlockState(looppos).getBlock();
+					if (world.getTileEntity(looppos) != null) continue;
+					
 					if ((world.isAirBlock(looppos) || (loopblock instanceof IGrowable && loopblock != this))) {
 						IBlockState savestate = world.getBlockState(looppos);
 						if (world.getBlockState(looppos.down()).getBlock() == Blocks.FARMLAND && world.rand.nextInt(7) == 0) {

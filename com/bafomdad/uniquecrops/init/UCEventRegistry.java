@@ -50,7 +50,9 @@ public class UCEventRegistry {
 		
 		for (Item item : UCItems.items)
 			reg.register(item);
-
+		
+		reg.register(UCItems.edibleBook);
+		
 		// ITEMBLOCKS
 		reg.register(new BlockLavaLily.ItemLavaLily(UCBlocks.lavaLily).setRegistryName(UCBlocks.lavaLily.getRegistryName()));
 		reg.register(new ItemBlockLily(UCBlocks.iceLily).setRegistryName(UCBlocks.iceLily.getRegistryName()));
@@ -119,6 +121,7 @@ public class UCEventRegistry {
 	public void registerSounds(RegistryEvent.Register<SoundEvent> event) {
 		
 		event.getRegistry().register(UCSounds.OOF);
+		event.getRegistry().register(UCSounds.MUSIC1);
 	}
 	
 	@SubscribeEvent

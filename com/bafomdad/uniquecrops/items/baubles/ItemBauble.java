@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
 import baubles.api.IBauble;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -125,5 +126,11 @@ public abstract class ItemBauble extends Item implements IBauble {
 	public void setLastPlayerHashcode(ItemStack stack, int hash) {
 		
 		NBTUtils.setInt(stack, HASHCODE, hash);
+	}
+	
+	protected boolean hasBauble(EntityPlayer player) {
+		
+		ItemStack bauble = BaublesApi.getBaublesHandler(player).getStackInSlot(BaubleType.CHARM.ordinal());
+		return !bauble.isEmpty() && bauble.getItem() == this;
 	}
 }

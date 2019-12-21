@@ -128,7 +128,7 @@ public class Itero extends BlockSuperCropsBase {
     	if (rand.nextInt(2) == 0) {
     		TileEntity tile = world.getTileEntity(pos);
     		if (tile instanceof TileItero && ((TileItero)tile).showingDemo())
-    			world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat(), 0.0D, 0.03D, 0.0D);
+    			world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + rand.nextFloat(), pos.getY() + 0.25, pos.getZ() + rand.nextFloat(), 0.0D, 0.03D, 0.0D);
     	}
     }
 }

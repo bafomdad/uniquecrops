@@ -116,11 +116,11 @@ public class TileFascino extends TileBaseRenderUC implements ITickable {
 			}
 		}
 		if (maxGrowth < enchantmentSize) {
-			player.sendStatusMessage(new TextComponentTranslation("uniquecrops.enchanting.cropgrowth" + " " +  enchantmentSize), true);
+			player.sendStatusMessage(new TextComponentTranslation("uniquecrops.enchanting.cropgrowth").appendText(" " +  enchantmentSize), true);
 			return;
 		}
 		if (!ItemWildwoodStaff.adjustPower(staff, powerCost)) {
-			player.sendStatusMessage(new TextComponentTranslation("uniquecrops.enchanting.notenoughpower" + " " + powerCost), true);
+			player.sendStatusMessage(new TextComponentTranslation("uniquecrops.enchanting.notenoughpower").appendText(" " + powerCost), true);
 			return;
 		}
 		stage = Stage.PREPARE;
