@@ -35,7 +35,7 @@ public class ModelSundial extends ModelBase {
 		Shape2.mirror = true;
 		setRotation(Shape2, 0F, 0F, 0F);
 		Shape3 = new ModelRenderer(this, 0, 0);
-		Shape3.addBox(-1F, -1F, 0F, 2, 2, 8);
+		Shape3.addBox(-1F, -1.5F, 0F, 2, 2, 8);
 		Shape3.setRotationPoint(4F, 0F, -4F);
 		Shape3.setTextureSize(64, 32);
 		Shape3.mirror = true;
