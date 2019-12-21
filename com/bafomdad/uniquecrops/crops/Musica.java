@@ -27,7 +27,24 @@ import com.bafomdad.uniquecrops.init.UCItems;
 
 public class Musica extends BlockCropsBase {
 	
-	private Item[] recordlist = new Item[] { Items.RECORD_BLOCKS, Items.RECORD_CAT, Items.RECORD_CHIRP, Items.RECORD_FAR, Items.RECORD_MALL, Items.RECORD_MELLOHI, Items.RECORD_STAL, Items.RECORD_STRAD, Items.RECORD_WAIT, Items.RECORD_WARD, Items.RECORD_11, Items.RECORD_13 };
+	private static final Item[] RECORDLIST = new Item[] { 
+			Items.RECORD_BLOCKS, 
+			Items.RECORD_CAT, 
+			Items.RECORD_CHIRP, 
+			Items.RECORD_FAR, 
+			Items.RECORD_MALL, 
+			Items.RECORD_MELLOHI, 
+			Items.RECORD_STAL, 
+			Items.RECORD_STRAD, 
+			Items.RECORD_WAIT, 
+			Items.RECORD_WARD, 
+			Items.RECORD_11, 
+			Items.RECORD_13,
+			UCItems.music1,
+			UCItems.music2, 
+			UCItems.music3,
+			UCItems.music4 
+			};
 	
 	public Musica() {
 		
@@ -45,7 +62,7 @@ public class Musica extends BlockCropsBase {
 	public Item getCrop() {
 		
 		Random rand = new Random();
-		return recordlist[rand.nextInt(recordlist.length)];
+		return RECORDLIST[rand.nextInt(RECORDLIST.length)];
 	}
 	
 	@Override
