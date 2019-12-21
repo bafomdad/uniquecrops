@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -40,12 +41,13 @@ public class Cobblonia extends BlockCropsBase {
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
 		if (this.getAge(state) >= getMaxAge()) {
-			cobbleGen(world, pos);
+			boolean flag = this.canIgnoreGrowthRestrictions(world, pos);
+			cobbleGen(world, pos, flag);
 		}
 		super.updateTick(world, pos, state, rand);
 	}
 	
-	private void cobbleGen(World world, BlockPos pos) {
+	private void cobbleGen(World world, BlockPos pos, boolean boost) {
 		
 		BlockPos north = pos.down().offset(EnumFacing.NORTH);
 		BlockPos west = pos.down().offset(EnumFacing.WEST);
@@ -63,10 +65,11 @@ public class Cobblonia extends BlockCropsBase {
 		
 		if (cobblegen > 0) {
 			ItemStack toDrop = UniqueCropsAPI.COBBLONIA_DROPS_REGISTRY.getRandomWeightedDrop();
-			toDrop.setCount(cobblegen);
-			EntityItem cobble = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, toDrop);
-			if (!world.isRemote)
-				world.spawnEntity(cobble);
+			if (toDrop.getItem() == Item.getItemFromBlock(Blocks.COBBLESTONE) && boost)
+				toDrop.setCount(64);
+			else if (!boost)
+				toDrop.setCount(cobblegen);
+			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, toDrop);
 		}
 	}
 }
