@@ -28,7 +28,6 @@ public class PageGrowthList extends Page {
 		gui.mc.fontRenderer.setUnicodeFlag(true);
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(1F, 1F, 1F);
-//		NBTTagList taglist = UCUtils.getServerTaglist(gui.reader.getEntityId());
 		NBTTagList taglist = gui.book.getTagCompound().getTagList(UCStrings.TAG_GROWTHSTAGES, 10);
 		for (int i = 0; i < taglist.tagCount(); i++) {
 			NBTTagCompound tag = taglist.getCompoundTagAt(i);

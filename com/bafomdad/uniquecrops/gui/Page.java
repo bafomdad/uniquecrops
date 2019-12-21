@@ -75,6 +75,7 @@ public abstract class Page {
 		
 		GuiBookMultiblocks.pageList.clear();
 		GuiBookMultiblocks.pageList.add(new PageTitleMultiblocks(screen));
+		GuiBookMultiblocks.pageList.add(new PageText(screen, "Table of Contents"));
 		List<MultiblockPattern> patterns = UCConfig.getPatterns();
 		if (!patterns.isEmpty()) {
 			GuiBookMultiblocks.pageList.add(new PageText(screen, UniqueCrops.MOD_ID + ".bookmultiblocks.page.intro"));

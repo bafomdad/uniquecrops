@@ -15,13 +15,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiButtonLink extends GuiButton {
 	
-	final GuiBookGuide gui;
+	final GuiAbstractBook gui;
 	private String[] desc;
 	int offset;
 	
 	public int selectedOption = -1;
 
-	public GuiButtonLink(GuiBookGuide gui, int id, int x, int y, int w, int h, String... desc) {
+	public GuiButtonLink(GuiAbstractBook gui, int id, int x, int y, int w, int h, String... desc) {
 		
 		super(id, x, y, w, h, "");
 		this.gui = gui;
@@ -36,16 +36,14 @@ public class GuiButtonLink extends GuiButton {
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		
-		if (this.visible)
-		{
+		if (this.visible) {
 			int mmY = mouseY - this.y;
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(1F, 1F, 1F);
 			GlStateManager.translate(x / 1F, y / 1F, 0);
 			GlStateManager.color(1, 1, 1);
 			this.hovered = mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
-			for (int i = 0; i < desc.length; i++) 
-			{
+			for (int i = 0; i < desc.length; i++) {
 				int color = Color.black.getRGB();
 				if (hovered && mmY >= i * getFontHeight() && mmY < (i + 1) * getFontHeight())
 					color = Color.orange.getRGB();

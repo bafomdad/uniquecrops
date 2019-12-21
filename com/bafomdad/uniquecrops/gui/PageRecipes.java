@@ -34,7 +34,7 @@ public class PageRecipes extends Page {
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(1.625F, 1.625F, 1.625F);
-		String title = pattern.getName();
+		String title = getTitle();
 		gui.mc.fontRenderer.drawString(title, ((gui.width - gui.WIDTH) - gui.mc.fontRenderer.getStringWidth(title)) / 2, j + 7, Color.GRAY.getRGB(), false);
 		GlStateManager.popMatrix();
 		int size = pattern.getShape().length;
@@ -71,5 +71,10 @@ public class PageRecipes extends Page {
 		
 		for (GuiItemDisplay display : this.displayList)
 			display.onMouseHover(mouseX, mouseY);
+	}
+	
+	public String getTitle() {
+		
+		return pattern.getName();
 	}
 }
