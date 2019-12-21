@@ -16,35 +16,35 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "A": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 0
     },
     "B": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 1
     },
     "C": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 2
     },
     "E": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 3
     },
     "F": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 4
     },
     "G": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 5
     },
     "H": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 6
     },
     "I": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:wool",
 	  "data": 7
     },
 	"D": {

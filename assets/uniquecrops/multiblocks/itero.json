@@ -28,7 +28,7 @@
     },
 	"C": {
 	  "states": [
-	    "uniquecrops:croppixelsius[age=7]"
+	    "uniquecrops:croppixelsius"
 	  ]
 	},
 	"R": {
@@ -45,7 +45,7 @@
 	},
 	"P": {
 	  "states": [
-		"minecraft:stone_pressure_plate"
+		"minecraft:stone_pressure_plate[powered=false]"
 	  ]
 	}
   }

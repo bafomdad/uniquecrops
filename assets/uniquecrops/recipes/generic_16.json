@@ -4,9 +4,9 @@
     "data": 16
   },
   "pattern": [
-    "TTT",
+    " T ",
     "TET",
-    "TTT"
+    " T "
   ],
   "type": "minecraft:crafting_shaped",
   "key": {

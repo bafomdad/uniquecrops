@@ -11,7 +11,7 @@
   "key": {
     "P": {
       "type": "forge:ore_dict",
-	  "ore": "plankWood"
+	  "ore": "logWood"
     },
     "S": {
       "type": "forge:ore_dict",
