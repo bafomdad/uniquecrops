@@ -26,7 +26,7 @@ public class RenderSunBlock extends TileEntitySpecialRenderer<TileSunBlock> {
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TEX);
 		Tessellator tess = Tessellator.getInstance();
-		GlStateManager.disableDepth();
+//		GlStateManager.disableDepth();
 		GlStateManager.disableAlpha();
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
@@ -59,7 +59,7 @@ public class RenderSunBlock extends TileEntitySpecialRenderer<TileSunBlock> {
 		}
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
-		GlStateManager.enableDepth();
+//		GlStateManager.enableDepth();
 		GlStateManager.enableLighting();
 		
 		GlStateManager.popMatrix();
