@@ -47,4 +47,16 @@ public class ItemDiamondBunch extends Item {
     	
         return false;
     }
+	
+	@Override
+    public boolean isEnchantable(ItemStack stack) {
+    	
+        return false;
+    }
+	
+	@Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		
+		return false;
+	}
 }

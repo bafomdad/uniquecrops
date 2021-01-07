@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -54,6 +56,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
@@ -77,6 +80,7 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
@@ -105,6 +109,7 @@ import com.bafomdad.uniquecrops.core.SeedBehavior;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumBonemealDye;
 import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.crops.Enderlily;
 import com.bafomdad.uniquecrops.crops.Feroxia;
@@ -137,6 +142,10 @@ public class UCEventHandlerServer {
 		ItemStack left = event.getLeft();
 		ItemStack right = event.getRight();
 		
+		if (left.getItem() == UCItems.diamonds || right.getItem() == UCItems.diamonds) {
+			event.setCanceled(true);
+			return;
+		}
 		if (left.isEmpty() || right.isEmpty())
 			return;
 		
@@ -275,25 +284,13 @@ public class UCEventHandlerServer {
 				event.setResult(Result.DEFAULT);
 			}
 		}
-		if (crop == UCBlocks.cropFeroxia && ((Feroxia)crop).isFullyGrown(event.getWorld(), event.getPos(), event.getState())) {
-			if (!(event.getHarvester() instanceof FakePlayer))
+		if (crop == UCBlocks.cropFeroxia && ((BlockCrops)crop).isMaxAge(event.getState())) {
+			if (event.getHarvester() != null && !(event.getHarvester() instanceof FakePlayer))
 				UCUtils.generateSteps(event.getHarvester());
 			else
 				event.getDrops().clear();
 			event.setResult(Result.DEFAULT);
 		}
-//		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
-//			for (ItemStack stack : event.getDrops()) {
-//				if (stack.getItem() == Items.DYE) {
-//					int meta = stack.getItemDamage();
-//					if (EnumDyeColor.byDyeDamage(meta) == EnumDyeColor.BLUE) {
-//						event.getDrops().remove(stack);
-//						event.getDrops().add(UCItems.generic.createStack(EnumItems.BLUEDYE));
-//						return;
-//					}
-//				}
-//			}
-//		}
 		if (crop == UCBlocks.cropDyeius && !event.getDrops().isEmpty()) {
 			for (ItemStack stack : event.getDrops()) {
 				if (stack.getItem() == Items.DYE) {
@@ -421,6 +418,7 @@ public class UCEventHandlerServer {
 			if (oldtag.hasKey(UCStrings.TAG_ABSTRACT))
 				tag.setInteger(UCStrings.TAG_ABSTRACT, oldtag.getInteger(UCStrings.TAG_ABSTRACT));
 		}
+		
 	}
 	
 	@SubscribeEvent
@@ -647,8 +645,21 @@ public class UCEventHandlerServer {
 		
 		EntityPlayer player = event.player;
 		
-		if (!player.inventory.armorInventory.get(3).isEmpty() && player.inventory.armorInventory.get(3).getItem() == UCItems.pixelGlasses) {
-			boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
+		ItemStack pixelGlasses = player.inventory.armorInventory.get(3);
+		if (pixelGlasses.getItem() == UCItems.pixelGlasses) {
+			boolean flag = NBTUtils.getBoolean(pixelGlasses, "isActive", false);
+			boolean flag2 = ((IBookUpgradeable)UCItems.pixelGlasses).isMaxLevel(pixelGlasses);
+			if (flag && flag2) {
+				if (event.phase == Phase.START && player.world.getTotalWorldTime() % 20 == 0) {
+	        		ChunkPos cPos = new ChunkPos(player.getPosition());
+	        		if (UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
+	        			BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
+	        			NBTUtils.setLong(pixelGlasses, "orePos", pos.toLong());
+	        		} 
+	        		if (!event.side.isClient() && !UCOreHandler.getInstance().getSaveInfo().containsKey(cPos))
+	        			NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ORIGIN.toLong());
+				}
+			}
 			if (event.side.isClient() && FMLClientHandler.instance().getClientPlayerEntity().getName().equals(player.getName())) {
 				if (flag)
 					UniqueCrops.proxy.enableBitsShader();
@@ -659,14 +670,13 @@ public class UCEventHandlerServer {
 		else if ((player.inventory.armorInventory.get(3).isEmpty() || !player.inventory.armorInventory.get(3).isEmpty() && !(player.inventory.armorInventory.get(3).getItem() != UCItems.pixelGlasses)) && event.side.isClient()) {
 			UniqueCrops.proxy.disableBitsShader();
 		}
-		
 		if (player.getEntityData().hasKey(UCStrings.TAG_ABSTRACT)) {
-			if (event.phase == Phase.START && event.player.world.rand.nextInt(1000) == 0) {
+			if (event.phase == Phase.START && player.world.rand.nextInt(1000) == 0) {
 				Random rand = new Random();
 				if (rand.nextInt(10) != 0) {
 					ItemHandlerHelper.giveItemToPlayer(player, EnumItems.ABSTRACT.createStack());
 					if (!event.player.world.isRemote)
-						SeedBehavior.setAbstractCropGrowth(event.player, false);
+						SeedBehavior.setAbstractCropGrowth(event.player, -1);
 				}
 			}
 		}
@@ -695,21 +705,17 @@ public class UCEventHandlerServer {
 	@SubscribeEvent
 	public void onSpawnerSpawn(LivingSpawnEvent.CheckSpawn event) {
 		
-		if (event.getSpawner() == null) return;
+		if (event.getSpawner() == null || event.getWorld().getDifficulty() == EnumDifficulty.PEACEFUL) return;
 		
-//		if (event.getWorld().getRedstonePowerFromNeighbors(event.getSpawner().getSpawnerPosition()) > 0) {
-//			event.setResult(Result.DENY);
-//			event.getSpawner().resetTimer();
-//			return;
-//		}
 		if (event.getWorld().provider.isNether()) {
+			if (!UCConfig.witherSkeletonSpawner) return;
 			if (event.getEntityLiving() instanceof EntitySkeleton && event.getWorld().rand.nextInt(4) > 1) {
 				EntityWitherSkeleton skeleton = new EntityWitherSkeleton(event.getWorld());
 				skeleton.setPosition(event.getX(), event.getY(), event.getZ());
 				skeleton.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
 				event.getWorld().spawnEntity(skeleton);
 				event.getEntity().setDead();
-//				event.setResult(Result.DENY);
+				event.setResult(Result.DENY);
 			}
 		}
 	}
@@ -723,14 +729,14 @@ public class UCEventHandlerServer {
 		List<EntityPlayer> players = event.getWorld().getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.add(-7, -3, -7), pos.add(7, 3, 7)));
 		for (EntityPlayer player : players) {
 			
-			ItemStack staff = player.getHeldItemMainhand();
+			ItemStack itemCap = player.getHeldItemMainhand();
 			ItemStack offhand = player.getHeldItemOffhand();
 
 			int distance = (int) player.getDistanceSqToCenter(event.getPos());
 			int range = (offhand.getItem() instanceof IItemBooster) ? 4 + ((IItemBooster)offhand.getItem()).getRange(offhand) : 3;
 			
 			if (distance <= range) {
-				CPCapability cap = staff.getCapability(CPProvider.CROP_POWER, null);
+				CPCapability cap = itemCap.getCapability(CPProvider.CROP_POWER, null);
 				if (cap != null && cap.canAdd()) {
 					int extraPower = (offhand.getItem() instanceof IItemBooster) ? ((IItemBooster)offhand.getItem()).getPower(offhand) : 0;
 					cap.add(1 + extraPower);
@@ -783,10 +789,12 @@ public class UCEventHandlerServer {
 				}
 			}
 			if (cropPower > 0 && !event.getWorld().isRemote && player instanceof EntityPlayerMP) {
-				cap.remove(cropPower);
-				UCPacketHandler.INSTANCE.sendTo(new PacketSyncCap(cap.serializeNBT()), (EntityPlayerMP)player);
+				if (!player.capabilities.isCreativeMode) {
+					cap.remove(cropPower);
+					UCPacketHandler.INSTANCE.sendTo(new PacketSyncCap(cap.serializeNBT()), (EntityPlayerMP)player);
+				}
 			}
-			if (cropPower <= 0 && !event.getWorld().isRemote)
+			if (cropPower <= 0 && !event.getWorld().isRemote && !player.capabilities.isCreativeMode)
 				held.shrink(1);
 				
 			pattern.setResult(event.getWorld(), event.getPos());
@@ -853,8 +861,19 @@ public class UCEventHandlerServer {
 	public void advancementEvent(AdvancementEvent event) {
 		
 		if (!event.getAdvancement().getId().toString().equals("uniquecrops:main/wildwoodstaff_craft")) return;
+		if (event.getEntityPlayer().inventory.hasItemStack(new ItemStack(UCItems.bookMultiblock))) return;
 		
 		ItemHandlerHelper.giveItemToPlayer(event.getEntityPlayer(), new ItemStack(UCItems.bookMultiblock));
+	}
+	
+	@SubscribeEvent
+	public void onBonemealEvent(BonemealEvent event) {
+		
+		if (!(event.getBlock().getBlock() instanceof BlockGrass)) return;
+		ItemStack stack = event.getStack();
+		if (stack.getItem() == UCItems.dyedBonemeal) {	
+			event.setResult(EnumBonemealDye.values()[EnumDyeColor.byDyeDamage(stack.getItemDamage()).getMetadata()].grow(event.getWorld(), event.getPos()));
+		}
 	}
 	
 //	@SubscribeEvent :)
