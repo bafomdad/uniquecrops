@@ -125,19 +125,24 @@ public class ItemWildwoodStaff extends Item {
     	super.readNBTShareTag(stack, nbt);
     }
     
-//    @Override
-//    public void onUpdate(ItemStack stack, World world, Entity entity, int itemslot, boolean isSelected) {
-//    	
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemslot, boolean isSelected) {
+    	
+    	CPCapability cap = stack.getCapability(CPProvider.CROP_POWER, null);
+    	if (cap == null) return;
+    	
+    	if (cap.hasCooldown() && !world.isRemote) {
+    		cap.setCooldown(cap.getCooldown() - 1);
+    	}
 //    	if (!stack.hasCapability(CPProvider.CROP_POWER, null) || !stack.hasTagCompound() || !stack.getTagCompound().hasKey("cropCap", 10))
 //    		return;
 //    	
-//    	CPCapability cap = stack.getCapability(CPProvider.CROP_POWER, null);
 //    	cap.deserializeNBT(stack.getTagCompound().getCompoundTag(TEMP_CAP));
 //    	stack.getTagCompound().removeTag(TEMP_CAP);
 //    	
 //    	if (stack.getTagCompound().getSize() <= 0)
 //    		stack.setTagCompound(null);
-//    }
+    }
 	
 	@Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

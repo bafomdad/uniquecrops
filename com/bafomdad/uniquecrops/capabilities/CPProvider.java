@@ -24,6 +24,13 @@ public class CPProvider implements ICapabilitySerializable<NBTTagCompound> {
 		cap = new CPCapability();
 	}
 	
+	public CPProvider(int capacity, boolean ignoreCooldown) {
+		
+		cap = new CPCapability();
+		cap.setCapacity(capacity);
+		cap.setIgnoreCooldown(ignoreCooldown);
+	}
+	
 	public static void register() {
 		
 		CapabilityManager.INSTANCE.register(CPCapability.class, new Capability.IStorage<CPCapability>() {
