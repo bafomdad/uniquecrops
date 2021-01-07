@@ -56,9 +56,14 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 		return type.getName();
 	}
 	
-	public boolean canPlantCrop() {
+	public boolean canPlantCrop(World world, EntityPlayer player, EnumFacing side, BlockPos pos, ItemStack stack) {
 		
-		return type.getConfig();
+		return true;
+	}
+	
+	public EnumCrops getType() {
+		
+		return this.type;
 	}
 	
 	public boolean canIgnoreGrowthRestrictions(World world, BlockPos pos) {
@@ -228,5 +233,10 @@ public abstract class BlockCropsBase extends BlockCrops implements ICropBook {
 	public void setIgnoreGrowthRestrictions(boolean flag) {
 		
 		this.ignoreGrowthRestrictions = flag;
+	}
+	
+	public boolean ignoresGrowthRestrictions() {
+		
+		return this.ignoreGrowthRestrictions;
 	}
 }

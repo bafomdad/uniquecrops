@@ -50,7 +50,7 @@ public class IEPlugin {
 			throw new Exception("No valid BellJarHandler class to hook into.");
 		
 		blusunrize.immersiveengineering.api.tool.BelljarHandler bellHandler = new blusunrize.immersiveengineering.api.tool.BelljarHandler();
-		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsNormal), new ItemStack[]{ new ItemStack(Items.CARROT), new ItemStack(Items.WHEAT), new ItemStack(Items.POTATO), new ItemStack(Items.BEETROOT), new ItemStack(Items.MELON)}, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropNormal.getDefaultState()});
+//		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsNormal), new ItemStack[]{ new ItemStack(Items.CARROT), new ItemStack(Items.WHEAT), new ItemStack(Items.POTATO), new ItemStack(Items.BEETROOT), new ItemStack(Items.MELON)}, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropNormal.getDefaultState()});
 		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsInvisibilia), new ItemStack[]{ EnumItems.INVISITWINE.createStack(2), new ItemStack(UCItems.seedsInvisibilia)}, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropInvisibilia.getDefaultState()});
 		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsMillennium), new ItemStack[]{ EnumItems.MILLENNIUMEYE.createStack() }, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropMillennium.getDefaultState()});
 		rFactory.registerCrop.invoke(bellHandler.cropHandler, new ItemStack(UCItems.seedsCollis), new ItemStack[]{ EnumItems.GOLDENRODS.createStack(3), new ItemStack(UCItems.seedsCollis)}, new ItemStack(Blocks.DIRT), new IBlockState[]{UCBlocks.cropCollis.getDefaultState()});

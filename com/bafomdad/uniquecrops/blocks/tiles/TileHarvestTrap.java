@@ -14,6 +14,7 @@ public class TileHarvestTrap extends TileBaseRenderUC implements ITickable {
 	private boolean hasSpirit;
 	private boolean collectedSpirit;
 	private int spiritTime = 0;
+	private int baitpower = 0;
 	private final int range = 4;
 	
 	@Override
@@ -85,6 +86,16 @@ public class TileHarvestTrap extends TileBaseRenderUC implements ITickable {
 	public boolean isCollected() {
 		
 		return this.collectedSpirit;
+	}
+	
+	public int getBaitPower() {
+		
+		return this.baitpower;
+	}
+	
+	public void setBaitPower(int power) {
+		
+		this.baitpower = power;
 	}
 	
 	public float[] getSpiritColor() {

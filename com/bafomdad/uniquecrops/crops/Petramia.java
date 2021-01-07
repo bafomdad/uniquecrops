@@ -51,6 +51,12 @@ public class Petramia extends BlockCropsBase {
 	}
 	
 	@Override
+	public boolean canPlantCrop(World world, EntityPlayer player, EnumFacing side, BlockPos pos, ItemStack stack) {
+		
+		return pos.up().getY() < 10;
+	}
+	
+	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);

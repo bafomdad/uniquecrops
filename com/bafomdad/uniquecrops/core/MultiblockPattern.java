@@ -86,24 +86,24 @@ public class MultiblockPattern {
 		
 		char originChar = shape[origin.y].charAt(origin.x);
 		if (originChar == ' ' || definition.get(originChar).test(Blocks.AIR.getDefaultState()))
-			throw new IllegalStateException("Origin point cannot be blank space");
+			throw new IllegalStateException(patternName + ": Origin point cannot be blank space");
 		
 		int lineLength = shape[0].length();
 		for (String line : shape) {
 			if (line.length() != lineLength)
-				throw new IllegalStateException("All lines in the shape must be the same size");
+				throw new IllegalStateException(patternName + ": All lines in the shape must be the same size");
 			
 			for (char letter : line.toCharArray())
 				if (definition.get(letter) == null)
-					throw new IllegalStateException(letter + " is not defined.");
+					throw new IllegalStateException(patternName + ": " + letter + " is not defined.");
 		}
 		for (String line2 : shapeResult) {
 			if (line2.length() != lineLength)
-				throw new IllegalStateException("All lines in the shape must be the same size");
+				throw new IllegalStateException(patternName + ": All lines in the shape must be the same size");
 			
 			for (char letter : line2.toCharArray())
 				if (definitionResult.get(letter) == null)
-					throw new IllegalStateException(letter + " is not defined.");
+					throw new IllegalStateException(patternName + ": " + letter + " is not defined.");
 		}
 		this.name = patternName;
 		this.description = description;

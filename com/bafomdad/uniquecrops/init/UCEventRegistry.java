@@ -85,6 +85,9 @@ public class UCEventRegistry {
 		reg.register(new ItemBlockLeaves(UCBlocks.flywoodLeaves).setRegistryName(UCBlocks.flywoodLeaves.getRegistryName()));
 		reg.register(rib(UCBlocks.flywoodSapling));
 		reg.register(rib(UCBlocks.flywoodPlank));
+		reg.register(rib(UCBlocks.eggBasket));
+		reg.register(rib(UCBlocks.precisionBlock));
+		reg.register(rib(UCBlocks.cinderTorch));
 	}
 	
 	@SubscribeEvent
@@ -115,6 +118,7 @@ public class UCEventRegistry {
 		event.getRegistry().register(entityBuilder("mirror", EntityMirror.class, 64, 20, false));
 		event.getRegistry().register(entityBuilder("battlecrop", EntityBattleCrop.class));
 		event.getRegistry().register(entityBuilder("cookingitem", EntityItemCooking.class));
+		event.getRegistry().register(entityBuilder("entitymovingcrop", EntityMovingCrop.class));
 	}
 	
 	@SubscribeEvent
@@ -122,6 +126,9 @@ public class UCEventRegistry {
 		
 		event.getRegistry().register(UCSounds.OOF);
 		event.getRegistry().register(UCSounds.MUSIC1);
+		event.getRegistry().register(UCSounds.MUSIC2);
+		event.getRegistry().register(UCSounds.MUSIC3);
+		event.getRegistry().register(UCSounds.MUSIC4);
 	}
 	
 	@SubscribeEvent

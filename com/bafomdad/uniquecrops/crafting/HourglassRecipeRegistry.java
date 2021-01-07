@@ -17,16 +17,33 @@ public class HourglassRecipeRegistry {
 		this.recipeList = new ArrayList();
 	}
 	
+	public void addRecipe(Block output, int outputMeta, Block input, int inputMeta) {
+		
+		HourglassRecipe recipe = new HourglassRecipe(output, outputMeta, input, inputMeta);
+		this.recipeList.add(recipe);
+	}
+	
 	public void addRecipe(Block output, Block input) {
 
-		HourglassRecipe recipe = new HourglassRecipe(output, input);
-		
-		this.recipeList.add(recipe);
+		this.addRecipe(output, 0, input, 0);
 	}
 	
 	public void removeRecipeByOutput(Block output) {
 		
 		this.recipeList.removeIf(recipe -> (recipe.getOutput() == output));
+	}
+	
+	public void removeRecipeByOutput(Block output, int outputMeta) {
+		
+		if (outputMeta == 0) {
+			this.removeRecipeByOutput(output);
+			return;
+		} else {
+			this.recipeList.removeIf(recipe -> (
+					recipe.getOutput() == output &&
+					recipe.getOutputMeta() == outputMeta
+					));
+		}
 	}
 	
 	@Nullable

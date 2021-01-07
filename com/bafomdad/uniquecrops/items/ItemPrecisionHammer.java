@@ -1,17 +1,23 @@
 package com.bafomdad.uniquecrops.items;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.world.World;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 public class ItemPrecisionHammer extends ItemTool {
@@ -26,6 +32,13 @@ public class ItemPrecisionHammer extends ItemTool {
 		setMaxStackSize(1);
 		this.attackDamage = 3.0F + ToolMaterial.DIAMOND.getAttackDamage();
 		UCItems.items.add(this);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> list, ITooltipFlag whatisthis) {
+		
+		super.addInformation(stack, player, list, whatisthis);
+		list.add(I18n.format(UCStrings.TOOLTIP + "precisionhammer"));
 	}
 	
 	@Override
@@ -52,7 +65,8 @@ public class ItemPrecisionHammer extends ItemTool {
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
     	
 		boolean sametool = toRepair.getItem() == repair.getItem();
-		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 8;
+		boolean flag = ItemStack.areItemsEqual(repair, EnumItems.PREGEM.createStack());
+//		boolean flag = repair.getItem() == UCItems.generic && repair.getItemDamage() == 8;
 		return sametool || flag;
     }
 }

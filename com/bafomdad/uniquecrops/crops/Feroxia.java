@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -47,6 +48,13 @@ public class Feroxia extends BlockCropsBase {
 		return UCItems.generic;
 	}
 	
+	@Override
+	public boolean canPlantCrop(World world, EntityPlayer player, EnumFacing side, BlockPos pos, ItemStack stack) {
+		
+		this.onBlockPlacedBy(world, pos.offset(side), getDefaultState(), player, stack);
+		return super.canPlantCrop(world, player, side, pos, stack);
+	}
+	
     public int quantityDropped(IBlockState state, int fortune, Random random) {
         
     	if (this.getAge(state) < getMaxAge())
@@ -62,11 +70,6 @@ public class Feroxia extends BlockCropsBase {
 			return 1;
 		
 		return 9;
-	}
-	
-	public boolean isFullyGrown(World world, BlockPos pos, IBlockState state) {
-		
-		return this.getAge(state) >= this.getMaxAge();
 	}
 	
 	@Override
@@ -105,7 +108,7 @@ public class Feroxia extends BlockCropsBase {
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     
-    	world.setBlockState(pos, state.getBlock().getDefaultState(), 2);
+    	world.setBlockState(pos, state, 2);
     	TileEntity te = world.getTileEntity(pos);
     	if (te instanceof TileFeroxia) {
     		world.playEvent(2001, pos, Block.getStateId(state));
@@ -144,8 +147,8 @@ public class Feroxia extends BlockCropsBase {
 		
 		TileFeroxia te = (TileFeroxia)tile;
 		if (te.getOwner() == null || (te.getOwner() != null && UCUtils.getPlayerFromUUID(te.getOwner().toString()) == null)) return -1;
-		
-		NBTTagList taglist = UCUtils.getServerTaglist(UCUtils.getPlayerFromUUID(te.getOwner().toString()).getEntityId());
+
+		NBTTagList taglist = UCUtils.getServerTaglist(te.getOwner());
 		if (taglist == null) return -1;
 		
 		NBTTagCompound tag = taglist.getCompoundTagAt(this.getAge(state));

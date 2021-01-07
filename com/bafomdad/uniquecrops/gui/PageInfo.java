@@ -24,6 +24,7 @@ public class PageInfo extends Page {
 		gui.mc.fontRenderer.drawSplitString("Can Bonemeal: " + colorBoolean(crop.getCanBonemeal()), this.drawX, this.drawY + offset, this.wordWrap, 0);
 		gui.mc.fontRenderer.drawSplitString("Can click harvest: " + colorBoolean(crop.getCanClickHarvest()), this.drawX, this.drawY + (offset * 2), this.wordWrap, 0);
 		gui.mc.fontRenderer.drawSplitString("Can drop extra: " + colorBoolean(crop.getCanDropExtra()), this.drawX, this.drawY + (offset * 3), this.wordWrap, 0);
+		gui.mc.fontRenderer.drawSplitString("Can ignore growth restrictions: " + colorBoolean(crop.ignoresGrowthRestrictions()), this.drawX, this.drawY + (offset * 4), this.wordWrap, 0);
 	}
 	
 	private String colorBoolean(boolean bool) {

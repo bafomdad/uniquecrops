@@ -40,6 +40,9 @@ public class UCEnchanterWrapper implements IRecipeWrapper {
 		final String text = new TextComponentTranslation(recipe.getEnchantment().getName()).getFormattedText() + " " + recipe.getEnchantment().getMaxLevel();
 		int stringWidth = minecraft.fontRenderer.getStringWidth(text);
 		minecraft.fontRenderer.drawString(text, 50 - stringWidth / 2, -20, Color.GRAY.getRGB());
+		final String cost = "Cost: " + recipe.getCost();
+		int costWidth = minecraft.fontRenderer.getStringWidth(cost);
+		minecraft.fontRenderer.drawString(cost, 50 - costWidth / 2, 95, Color.GRAY.getRGB());
 	}
 
 	@Override

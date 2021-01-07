@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.integration.jei;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.bafomdad.uniquecrops.crafting.HourglassRecipe;
@@ -19,8 +20,8 @@ public class UCHourglassWrapper implements IRecipeWrapper {
 		this.inputs = new ArrayList();
 		this.outputs = new ArrayList();
 		
-		this.inputs.add(new ItemStack(recipe.getInput()));
-		this.outputs.add(new ItemStack(recipe.getOutput()));
+		this.inputs.add(new ItemStack(recipe.getInput(), 1, recipe.getInputMeta()));
+		this.outputs.add(new ItemStack(recipe.getOutput(), 1, recipe.getOutputMeta()));
 	}
 
 	@Override

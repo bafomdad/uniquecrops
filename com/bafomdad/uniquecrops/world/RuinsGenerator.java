@@ -33,11 +33,10 @@ public class RuinsGenerator implements IWorldGenerator {
 		int x = chunkX * 16 + random.nextInt(8);
 		int z = chunkZ * 16 + random.nextInt(8);
 		
-		BlockPos pos = new BlockPos(x, 1, z);
+		BlockPos pos = new BlockPos(x, 10, z);
 		Biome biome = world.getBiomeForCoordsBody(pos);
 		if (biome != Biomes.OCEAN && biome != Biomes.DEEP_OCEAN) {
 			if (random.nextInt(UCConfig.worldGenerationRuinsWeight) == 0) {
-				pos = new BlockPos(pos.getX(), 11, pos.getZ());
 				generateRuins(serverWorld, random, pos);
 			}
 		}

@@ -3,21 +3,18 @@
     "item": "uniquecrops:bookmultiblock"
   },
   "pattern": [
-    "N",
-    "B",
-    "P"
+    " D ",
+    "DBD",
+    " D "
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "P": {
-      "item": "uniquecrops:generic",
-	  "data": 9
-    },
     "B": {
-      "item": "minecraft:book"
+      "item": "uniquecrops:generic",
+	  "data": 0
     },
-    "N": {
-      "item": "uniquecrops:seedferoxia"
+    "D": {
+      "item": "uniquecrops:seeddyeius"
     }
   }
 }

@@ -16,16 +16,10 @@ public class PacketSendKey implements IMessage {
 	public PacketSendKey() {}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void fromBytes(ByteBuf buf) {}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void toBytes(ByteBuf buf) {}
 	
 	public static class Handler implements IMessageHandler<PacketSendKey, IMessage> {
 

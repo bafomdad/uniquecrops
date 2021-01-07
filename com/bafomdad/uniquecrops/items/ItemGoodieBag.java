@@ -5,6 +5,7 @@ import java.time.Month;
 import java.util.Random;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.AdventTracker;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.block.Block;
@@ -41,13 +42,18 @@ public class ItemGoodieBag extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		
+		// TODO: put this off until next november
 		ItemStack stack = player.getHeldItem(hand);
-		Random rand = new Random(world.getSeed() + LocalDateTime.now().getDayOfMonth());
-		if (!stack.isEmpty() && stack.getItem() == this) {
+		if (stack.getItem() == this) {
+			int trackedDay = AdventTracker.getTrackedDay(player);
+			if (trackedDay == -1) {
+				return ActionResult.newResult(EnumActionResult.PASS, stack);
+			}
+			Random rand = new Random(world.getSeed() + trackedDay);
 			ItemStack prize = getHolidayItem(rand);
 			if (!world.isRemote) {
-				if (world.rand.nextBoolean())
-					ItemHandlerHelper.giveItemToPlayer(player, prize);
+				AdventTracker.trackAdvent(player);
+				ItemHandlerHelper.giveItemToPlayer(player, prize);
 				stack.shrink(1);
 			}
 			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
@@ -66,7 +72,7 @@ public class ItemGoodieBag extends Item {
 			if (!stack.isEmpty())
 				return stack;
 		}
-		return new ItemStack(Items.COAL);
+		return new ItemStack(UCItems.uselessLump);
 	}
 	
 	public static boolean isHoliday() {

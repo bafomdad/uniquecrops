@@ -22,12 +22,13 @@ public abstract class BlockSuperCropsBase extends BlockBush {
 		setHardness(5.0F);
 		setResistance(1000.0F);
 		setSoundType(SoundType.PLANT);
+		setCreativeTab(UniqueCrops.TAB);
 		UCBlocks.blocks.add(this);
 	}
 	
 	@Override
     public boolean canSustainBush(IBlockState state) {
         
-    	return state.getBlock() == Blocks.FARMLAND;
+    	return super.canSustainBush(state);
     }
 }

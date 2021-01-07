@@ -17,6 +17,7 @@ public class UCEnergyStorage extends EnergyStorage {
 			return 0;
 		
 		int energy = this.getEnergyStored();
+		
 		int energyReceived = Math.min(this.capacity - energy, Math.min(this.maxReceive, maxReceive));
 		if (!simulate)
 			this.setEnergyStored(energy + energyReceived);
@@ -30,6 +31,7 @@ public class UCEnergyStorage extends EnergyStorage {
 		if (!this.canExtract())
 			return 0;
 		
+		int energy = this.getEnergyStored();
 		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
 		if (!simulate)
 			this.setEnergyStored(energy - energyExtracted);

@@ -16,7 +16,7 @@ public class UCStrings {
 	public static final String TAG_OCT = "UC_tagOctave";
 	public static final String TAG_TIME = "UC_tagWorldtime";
 	
-	// MISC
+	// MISC TAGS
 	public static final String BLACKLIST_EFFECT = "blacklistPotionEffect";
 	public static final String TAG_LOCK = "UC_tagLock";
 	public static final String TAG_GROWTHSTAGES = "UC_FeroxiaGrowth";
@@ -29,6 +29,12 @@ public class UCStrings {
 	public static final String TAG_CUBE_ROTATION = "UC_RubiksCubeRotation";
 	public static final String TAG_CUBE_SAVEDPOS = "UC_RubiksCubeSavedPos";
 	public static final String LAST_POSITION = "UC:LastTeleportPosition";
+	public static final String TAG_UPGRADE = "UC_tagUpgrade";
+	public static final String SAVED_ITEMS = "UC:ankhList";
+	public static final String ITEM_ACTIVATED = "UC:isEnabled";
+	public static final String SPRINTING_TICKS = "UC:sprintingTicks";
+	public static final String SPEED_MODIFIER = "UC:speedModifier";
+	public static final String TAG_ADVENT = "UC:adventCalendar";
 	
 	// BOOK
 	private static final String BOOK = BASE + ".book";
@@ -74,6 +80,7 @@ public class UCStrings {
 		"exedo.json",
 		"fascino.json",
 		"itero.json",
+		"lignator.json",
 		"portal.json",
 		"weatherflesia.json"
 	};

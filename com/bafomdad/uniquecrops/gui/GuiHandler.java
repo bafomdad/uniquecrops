@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import com.bafomdad.uniquecrops.blocks.tiles.TileBarrel;
+import com.bafomdad.uniquecrops.blocks.tiles.TileCraftyPlant;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -17,7 +18,7 @@ public class GuiHandler implements IGuiHandler {
 		TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
 		switch (ID) {
 			case 2: if (tile instanceof TileBarrel) return new ContainerBarrel(player.inventory, (TileBarrel)tile);
-			case 4: return new ContainerCraftyPlant(player.inventory, world);
+			case 4: if (tile instanceof TileCraftyPlant) return new ContainerCraftyPlant(player, (TileCraftyPlant)tile);
 		}
 		return null;
 	}
@@ -32,7 +33,7 @@ public class GuiHandler implements IGuiHandler {
 			case 1: return new GuiBookEula(player);
 			case 2: if (tile instanceof TileBarrel) return new GuiBarrel(player.inventory, (TileBarrel)tile);
 			case 3: return new GuiBookMultiblocks(player, player.getHeldItemMainhand());
-			case 4: return new GuiCrafting(player.inventory, world);
+			case 4: if (tile instanceof TileCraftyPlant) return new GuiCraftyPlant(new ContainerCraftyPlant(player, (TileCraftyPlant)tile));
 			case 5: return new GuiColorfulCubes();
 		}	
 		return null;

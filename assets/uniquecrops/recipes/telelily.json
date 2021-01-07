@@ -10,7 +10,8 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "P": {
-      "item": "minecraft:ender_pearl"
+      "item": "uniquecrops:generic",
+	  "data": 5
     },
     "L": {
       "item": "minecraft:waterlily"

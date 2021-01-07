@@ -39,7 +39,8 @@ public enum EnumCrops implements IStringSerializable {
 	UNSTABLE("instabilis", CropConfig.cropInstabilis),
 	VAMPIRE("succo", CropConfig.cropVampire),
 	ADVENTUS("adventus", CropConfig.cropAdventus),
-	HOLY("blessed", CropConfig.cropHoly);
+	HOLY("blessed", CropConfig.cropHoly),
+	MAGNETS("magnes", CropConfig.cropMagnets);
 	
 	final String name;
 	final boolean config;
@@ -56,7 +57,7 @@ public enum EnumCrops implements IStringSerializable {
 		return name;
 	}
 	
-	public boolean getConfig() {
+	public boolean configCanPlant() {
 		
 		return config;
 	}

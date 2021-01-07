@@ -13,9 +13,11 @@ import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.bafomdad.uniquecrops.capabilities.CPProvider;
+import com.bafomdad.uniquecrops.commands.CommandsUC;
 import com.bafomdad.uniquecrops.core.IMCHandler;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCTab;
@@ -50,7 +52,7 @@ public class UniqueCrops {
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		
+
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		UCPacketHandler.init();
 		CPProvider.register();
@@ -77,6 +79,12 @@ public class UniqueCrops {
 			CraftTweakerPlugin.apply();
 			UniqueCropsAPI.COBBLONIA_DROPS_REGISTRY.setupDropChances();
 		}
+	}
+	
+	@Mod.EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
+		
+		event.registerServerCommand(new CommandsUC());
 	}
 	
 	@Mod.EventHandler

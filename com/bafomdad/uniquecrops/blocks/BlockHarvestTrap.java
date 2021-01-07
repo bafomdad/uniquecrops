@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.tiles.TileHarvestTrap;
 import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.core.enums.EnumItems;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 
@@ -106,9 +107,17 @@ public class BlockHarvestTrap extends BlockBaseUC {
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof TileHarvestTrap) {
 			TileHarvestTrap trap = (TileHarvestTrap)tile;
-			if (trap.hasSpirit() && !trap.isCollected()) { 
+			if (!trap.hasSpirit() && !trap.isCollected()) {
+				if (player.getHeldItem(hand).getItem() == EnumItems.SPIRIT_BAIT.createStack().getItem()) {
+					trap.setBaitPower(3);
+					player.getHeldItem(hand).shrink(1);
+					return true;
+				}
+			}
+			if (trap.hasSpirit() && !trap.isCollected()) {
 				trap.setSpiritTime(100);
 				trap.setCollected();
+				trap.setBaitPower(0);
 				return true;
 			}
 		}
@@ -129,7 +138,7 @@ public class BlockHarvestTrap extends BlockBaseUC {
 			TileHarvestTrap trap = (TileHarvestTrap)tile;
 			if (trap.hasSpirit()) return;
 			
-			if (rand.nextInt(5) == 0) {
+			if (rand.nextInt(5 - trap.getBaitPower()) == 0) {
 				trap.setSpiritTime(200);
 			} else {
 				trap.tickCropGrowth();

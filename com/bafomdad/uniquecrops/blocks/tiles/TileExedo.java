@@ -136,7 +136,7 @@ public class TileExedo extends TileBaseRenderUC implements ITickable {
 	private EntityLivingBase getTargetedEntity() {
 		
 		if (!world.isRemote) {
-			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(5, 1, 5)));
+			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(5, 2, 5)));
 			for (EntityLivingBase elb : entities) {
 				if (!(elb instanceof EntityPlayer) && !elb.isEntityInvulnerable(DamageSource.OUT_OF_WORLD)) {
 					entityId = elb.getPersistentID();

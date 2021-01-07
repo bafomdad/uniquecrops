@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedquarry"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingFossura"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingFossura.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_petramia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedquarry"
+          }
+        ]
+      }
+    }
+  }
+}

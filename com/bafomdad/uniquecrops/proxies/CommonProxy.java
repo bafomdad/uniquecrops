@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.proxies;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -41,7 +42,8 @@ public class CommonProxy {
 		MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsNormal), UCConfig.dropRate);
 		if (ItemGoodieBag.isHoliday())
 			MinecraftForge.addGrassSeed(new ItemStack(UCItems.seedsAdventus), UCConfig.dropRate);
-		GameRegistry.registerWorldGenerator(new RuinsGenerator(), 1);
+		if (UCConfig.ruinsGeneration)
+			GameRegistry.registerWorldGenerator(new RuinsGenerator(), 1);
 		GameRegistry.registerWorldGenerator(new CropIslandGenerator(), 0);
 		MinecraftForge.ORE_GEN_BUS.register(new UCOreGen());
 		UCConfig.syncMultiblocks();

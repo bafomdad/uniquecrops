@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedsucco"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingSucco"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingSucco.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_invisibilia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedsucco"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,24 +1,22 @@
 package com.bafomdad.uniquecrops.core;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
-import com.bafomdad.uniquecrops.UniqueCrops;
-import com.bafomdad.uniquecrops.items.ItemGoodieBag;
-import com.google.gson.reflect.TypeToken;
-
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
 import net.minecraftforge.common.config.Config.RangeInt;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import org.apache.commons.io.FileUtils;
+
+import com.bafomdad.uniquecrops.UniqueCrops;
+import com.google.gson.reflect.TypeToken;
 
 @LangKey(UniqueCrops.MOD_ID + ".general")
 @Config(modid=UniqueCrops.MOD_ID)
@@ -45,9 +43,27 @@ public class UCConfig {
 	@Comment({"Cooldown time (in ticks) for rubik's cube between successful teleports."})
 	public static int cubeCooldown = 3600;
 	
+	@Comment({"Amount of energy gained per tick while the Industria crop grows."})
+	public static int energyPerTick = 20;
+	
+	@Comment({"Max capacity of the battery beans that will be dropped."})
+	public static int beanBatteryCapacity = 500;
+	
+	@Comment({"Set to false to disable generation of ruins, full stop."})
+	public static boolean ruinsGeneration = true;
+	
 	@Comment({"Weight chance for underground ruins to generate in overworld. The lower the number, the higher the chance."})
 	@RangeInt(min=6, max=600)
 	public static int worldGenerationRuinsWeight = 40;
+	
+	@Comment({"List of items that will be randomly dropped by the Normie crop on harvest. Items only, no damage values."})
+	public static String[] randomDrops = new String[] {
+		"minecraft:wheat",
+		"minecraft:carrot",
+		"minecraft:potato",
+		"minecraft:beetroot",
+		"minecraft:melon"
+	};
 	
 	@LangKey(UniqueCrops.MOD_ID + ".crops")
 	@Config(modid=UniqueCrops.MOD_ID, category="crops")
@@ -154,6 +170,9 @@ public class UCConfig {
 		
 		@Comment({"Can plant Blessed Seeds"})
 		public static boolean cropHoly = true;
+		
+		@Comment({"Can plant Magnet Seeds"})
+		public static boolean cropMagnets = true;
 	}
 	
 	@LangKey(UniqueCrops.MOD_ID + ".conditions")

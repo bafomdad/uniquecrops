@@ -7,18 +7,22 @@
 	"power": 80
   },
   "shape": [
-    "PRP",
-    "RCR",
-    "PRP"
+    "PRRRP",
+	"R   R",
+    "R C R",
+	"R   R",
+    "PRRRP"
   ],
   "shaperesult": [
-	"P P",
-	" I ",
-	"P P"
+    "P   P",
+	"     ",
+    "  I  ",
+	"     ",
+    "P   P"
   ],
   "origin": {
-    "x": 1,
-    "y": 1
+    "x": 2,
+    "y": 2
   },
   "definition": {
     "P": {

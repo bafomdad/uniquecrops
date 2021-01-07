@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "uniquecrops:bootsleague"
+  },
+  "pattern": [
+    "SES",
+	"LBL",
+	"SLS"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "L": {
+      "item": "uniquecrops:impregnated_leather",
+	  "data": 1
+    },
+    "E": {
+      "item": "uniquecrops:emeradic_diamond"
+    },
+	"B": {
+	  "item": "minecraft:leather_boots"
+	},
+	"S": {
+	  "item": "minecraft:string"
+	}
+  }
+}

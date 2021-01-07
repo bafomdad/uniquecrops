@@ -22,7 +22,7 @@ public class RenderSunBlock extends TileEntitySpecialRenderer<TileSunBlock> {
 	public void render(TileSunBlock tile, double x, double y, double z, float partialTicks, int digProgress, float partialTick) {
 		
 		GlStateManager.pushMatrix();
-		GlStateManager.translate((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F);
+		GlStateManager.translate((float)x + 0.5F, (float)y + 0.1F, (float)z + 0.5F);
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(TEX);
 		Tessellator tess = Tessellator.getInstance();

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import com.bafomdad.uniquecrops.core.enums.EnumGrowthSteps;
@@ -86,18 +87,17 @@ public class UCUtils {
 		return null;
 	}
 	
-	public static NBTTagList getServerTaglist(int id) {
+	public static NBTTagList getServerTaglist(UUID uuid) {
 		
 		MinecraftServer ms = FMLCommonHandler.instance().getMinecraftServerInstance();
 		if (ms == null)
 			return null;
-		EntityPlayer player = (EntityPlayer)ms.getEntityWorld().getEntityByID(id);
+		EntityPlayer player = (EntityPlayer)ms.getEntityFromUuid(uuid);
+//		EntityPlayer player = (EntityPlayer)ms.getEntityWorld().getEntityByID(id);
 		if (player != null) {
 			NBTTagCompound tag = player.getEntityData();
 			if (tag.hasKey(UCStrings.TAG_GROWTHSTAGES)) 
-			{
 				return tag.getTagList(UCStrings.TAG_GROWTHSTAGES, 10);
-			}
 		}
 		return null;
 	}
@@ -107,12 +107,14 @@ public class UCUtils {
 		if (!player.inventory.hasItemStack(EnumItems.GUIDE.createStack()))
 			return;
 		
-		NBTTagList taglist = UCUtils.getServerTaglist(player.getEntityId());
+		NBTTagList taglist = getServerTaglist(player.getUniqueID());
 		if (taglist != null) {
 			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 				ItemStack book = player.inventory.mainInventory.get(i);
-				if (!book.isEmpty() && book.getItem() == UCItems.generic && book.getItemDamage() == EnumItems.GUIDE.ordinal()) 
+				if (!book.isEmpty() && book.getItem() == UCItems.generic && book.getItemDamage() == EnumItems.GUIDE.ordinal()) {
+					if (book.hasTagCompound() && book.getTagCompound().hasKey(UCStrings.TAG_GROWTHSTAGES)) book.getTagCompound().removeTag(UCStrings.TAG_GROWTHSTAGES);
 					book.setTagInfo(UCStrings.TAG_GROWTHSTAGES, taglist);
+				}
 			}
 		}
 	}
@@ -192,5 +194,10 @@ public class UCUtils {
 			Collections.shuffle(list);
 		
 		return list;
+	}
+	
+	public static <T> T selectRandom(Random rand, T... type) {
+		
+		return type[rand.nextInt(type.length)];
 	}
 }

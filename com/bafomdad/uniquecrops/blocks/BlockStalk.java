@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.blocks.tiles.TileCraftyPlant;
 import com.bafomdad.uniquecrops.core.enums.EnumDirectional;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 
@@ -20,13 +21,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockStalk extends BlockBaseStalk {
 	
@@ -38,6 +42,7 @@ public class BlockStalk extends BlockBaseStalk {
 		setTranslationKey(UniqueCrops.MOD_ID + ".stalk");
 		setDefaultState(blockState.getBaseState().withProperty(STALKS, EnumDirectional.NORTH));
 		setTickRandomly(true);
+		GameRegistry.registerTileEntity(TileCraftyPlant.class, new ResourceLocation(UniqueCrops.MOD_ID, "craftyplant"));
 	}
 	
 	@Override
@@ -52,9 +57,9 @@ public class BlockStalk extends BlockBaseStalk {
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if (getMetaFromState(state) == EnumDirectional.UP.ordinal()) {
-			// TODO
-			player.openGui(UniqueCrops.instance, 4, world, 0, 0, 0);
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof TileCraftyPlant) {
+			player.openGui(UniqueCrops.instance, 4, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 		return false;
@@ -91,6 +96,12 @@ public class BlockStalk extends BlockBaseStalk {
 					world.destroyBlock(pos, false);
 					return;
 				}
+			}
+		}
+		if (getMetaFromState(state) == EnumDirectional.UP.ordinal()) {
+			if (world.isAirBlock(pos.down())) {
+				world.destroyBlock(pos, true);
+				return;
 			}
 		}
 		if (isNeighborStalkMissing(world, pos, state)) {
@@ -137,5 +148,17 @@ public class BlockStalk extends BlockBaseStalk {
 	public int getMetaFromState(IBlockState state) {
 		
 		return ((EnumDirectional)state.getValue(STALKS)).ordinal();
+	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		
+		return getMetaFromState(state) == EnumDirectional.UP.ordinal();
+	}
+	
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		
+		return new TileCraftyPlant();
 	}
 }

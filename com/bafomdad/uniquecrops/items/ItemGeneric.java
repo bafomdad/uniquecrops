@@ -61,7 +61,6 @@ public class ItemGeneric extends Item {
 	private static final String[] FIELD_G = new String[] { "attackCooldown", "field_188501_c", "uo" };
 	private static final String[] FUSETIME = new String[] { "fuseTime", "field_82225_f", "yp" };
 	public static String TAG_DISCOUNT = "UC_tagDiscount";
-	public static String TAG_UPGRADE = "UC_tagUpgrade";
 	public static String TAG_OVERCLUCK = "UC_tagEggUpgrade";
 	public static String TAG_BINDED = "UC_tagLegallyBound";
 	private int range = 5;
@@ -151,6 +150,7 @@ public class ItemGeneric extends Item {
 						if (ei.getItem().getCount() > 3) {
 							UCPacketHandler.sendToNearbyPlayers(ei.world, ei.getPosition(), new PacketUCEffect(EnumParticleTypes.LAVA, ei.posX, ei.posY + 0.1, ei.posZ, 6));
 							ei.world.setBlockState(ei.getPosition(), Blocks.LAVA.getDefaultState(), 3);
+							ei.setDead();
 						}
 					}
 				}

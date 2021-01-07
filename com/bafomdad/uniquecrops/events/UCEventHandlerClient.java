@@ -12,17 +12,18 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -50,11 +51,11 @@ import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCDyePlantStitch;
 import com.bafomdad.uniquecrops.core.UCInvisibiliaStitch;
-import com.bafomdad.uniquecrops.core.enums.EnumItems;
-import com.bafomdad.uniquecrops.data.UCOreHandler;
+import com.bafomdad.uniquecrops.core.enums.*;
 import com.bafomdad.uniquecrops.entities.EntityBattleCrop;
 import com.bafomdad.uniquecrops.entities.EntityItemCooking;
 import com.bafomdad.uniquecrops.entities.EntityMirror;
+import com.bafomdad.uniquecrops.entities.EntityMovingCrop;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCKeys;
@@ -67,6 +68,7 @@ import com.bafomdad.uniquecrops.render.UCParticleSpawner;
 import com.bafomdad.uniquecrops.render.entity.RenderBattleCropEntity;
 import com.bafomdad.uniquecrops.render.entity.RenderCookingItem;
 import com.bafomdad.uniquecrops.render.entity.RenderMirrorEntity;
+import com.bafomdad.uniquecrops.render.entity.RenderMovingCrop;
 
 public class UCEventHandlerClient {
 	
@@ -92,7 +94,6 @@ public class UCEventHandlerClient {
 		if (UCKeys.pixelKey.isPressed()) {
 			EntityPlayer player = Minecraft.getMinecraft().player;
 			if (player instanceof FakePlayer) return;
-			if (player.inventory.armorItemInSlot(3) == null) return;
 			if (player.inventory.armorItemInSlot(3).getItem() != UCItems.pixelGlasses) return;
 			
 			UCPacketHandler.INSTANCE.sendToServer(new PacketSendKey());
@@ -115,26 +116,27 @@ public class UCEventHandlerClient {
     @SubscribeEvent
     public void renderWorldLast(RenderWorldLastEvent event) {
     	
-    	Profiler profiler = Minecraft.getMinecraft().profiler;
+    	Minecraft mc = Minecraft.getMinecraft();
+    	Profiler profiler = mc.profiler;
     	
     	profiler.startSection("uniquecrops-particles");
     	UCParticleSpawner.dispatch();
     	profiler.endSection();
-    	
-    	Minecraft mc = Minecraft.getMinecraft();
+
     	EntityPlayer player = mc.player;
-    	if (player.inventory.armorItemInSlot(3).getItem() == UCItems.pixelGlasses) {
-    		boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
-    		boolean flag2 = ((IBookUpgradeable)UCItems.pixelGlasses).isMaxLevel(player.inventory.armorItemInSlot(3));
+    	ItemStack glasses = player.inventory.armorItemInSlot(3);
+    	if (glasses.getItem() == UCItems.pixelGlasses) {
+    		boolean flag = NBTUtils.getBoolean(glasses, "isActive", false);
+    		boolean flag2 = ((IBookUpgradeable)UCItems.pixelGlasses).isMaxLevel(glasses);
     		if (flag && flag2) {
         		GlStateManager.pushMatrix();
         		GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
         		GlStateManager.disableDepth();
         		GlStateManager.enableBlend();
         		
-        		ChunkPos cPos = new ChunkPos(player.getPosition());
-        		if (UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
-        			BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
+        		BlockPos pos = BlockPos.fromLong(NBTUtils.getLong(glasses, "orePos", BlockPos.ORIGIN.toLong()));
+        		if (!pos.equals(BlockPos.ORIGIN)) {
+        			player.getEntityData().setLong("orePos", pos.toLong());
         			renderOres(pos, mc);
         		}
         		GlStateManager.enableDepth();
@@ -180,7 +182,8 @@ public class UCEventHandlerClient {
     @SubscribeEvent
     public void registerColors(ColorHandlerEvent.Item event) {
     	
-    	event.getItemColors().registerItemColorHandler(new IItemColor() {	
+    	ItemColors ic = event.getItemColors();
+    	ic.registerItemColorHandler(new IItemColor() {	
     		
 			@Override
 			public int colorMultiplier(ItemStack stack, int tintIndex) {
@@ -198,6 +201,14 @@ public class UCEventHandlerClient {
 				return 0xffffff;
 			}
 		}, UCItems.generic, UCItems.potionReverse, UCItems.potionEnnui);
+    	ic.registerItemColorHandler(new IItemColor() {
+    		
+    		@Override
+    		public int colorMultiplier(ItemStack stack, int tintIndex) {
+    			
+    			return EnumDyeColor.byDyeDamage(stack.getItemDamage()).getColorValue();
+    		}
+    	}, UCItems.dyedBonemeal);
     }
     
     @SubscribeEvent
@@ -262,15 +273,20 @@ public class UCEventHandlerClient {
 		registerCustomBlockModel(UCBlocks.flywoodLeaves, BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE);
 		registerBlockModel(UCBlocks.flywoodSapling);
 		registerBlockModel(UCBlocks.flywoodPlank);
+		registerBlockModel(UCBlocks.eggBasket);
+		registerBlockModel(UCBlocks.precisionBlock);
+		registerBlockModel(UCBlocks.cinderTorch);
 		
 		// ITEMS
 		for (Item item : UCItems.items)
 			registerItemModel(item);
-		
+		ModelLoader.setCustomModelResourceLocation(UCItems.impregnatedLeather, 1, new ModelResourceLocation(UCItems.impregnatedLeather.getRegistryName(), "inventory"));
+
 		// ENTITIES
 		RenderingRegistry.registerEntityRenderingHandler(EntityMirror.class, RenderMirrorEntity.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBattleCrop.class, RenderBattleCropEntity.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemCooking.class, RenderCookingItem.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(EntityMovingCrop.class, RenderMovingCrop.FACTORY);
 	}
 	
 	private void registerBlockModel(Block block) {
@@ -296,6 +312,10 @@ public class UCEventHandlerClient {
 		if (item == UCItems.generic) {
 			for (int i = 0; i < EnumItems.values().length; i++)
 				ModelLoader.setCustomModelResourceLocation(UCItems.generic, i, new ModelResourceLocation(UCItems.generic.getRegistryName() + "." + EnumItems.values()[i].getName(), "inventory"));
+		}
+		if (item == UCItems.dyedBonemeal) {
+			for (int i = 0; i < EnumDyeColor.values().length; i++)
+				ModelLoader.setCustomModelResourceLocation(UCItems.dyedBonemeal, i, new ModelResourceLocation(UCItems.dyedBonemeal.getRegistryName(), "inventory"));
 		}
 		else if (item != UCItems.generic)
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));

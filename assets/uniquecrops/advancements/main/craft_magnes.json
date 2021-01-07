@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedmagnes"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingMagnes"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingMagnes.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_industria",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedmagnes"
+          }
+        ]
+      }
+    }
+  }
+}

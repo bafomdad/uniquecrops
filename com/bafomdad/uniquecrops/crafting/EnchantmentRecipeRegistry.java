@@ -28,6 +28,7 @@ public class EnchantmentRecipeRegistry {
 		
 		Ingredient[] ingredients = new Ingredient[inputs.length];
 		for (int i = 0; i < ingredients.length; i++) {
+			if (i >= 5) break;
 			ingredients[i] = Ingredient.fromStacks(inputs[i]);
 		}
 		this.addRecipe(enchantmentLocation, cost, ingredients);

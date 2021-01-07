@@ -61,7 +61,8 @@ public class UCItems {
 		seedsInstabilis,
 		seedsSucco,
 		seedsAdventus,
-		seedsBlessed;
+		seedsBlessed,
+		seedsMagnets;
 	
 	public static ItemGeneric generic;
 	
@@ -101,7 +102,10 @@ public class UCItems {
 		bookMultiblock,
 		pixelBrush,
 		rubiksCube,
-		boiledMilk;
+		boiledMilk,
+		itemMagnet,
+		impregnatedLeather,
+		dyedBonemeal;
 	
 	public static ItemArmor glasses3D;
 	public static ItemArmor pixelGlasses;
@@ -114,6 +118,7 @@ public class UCItems {
 	public static ItemSword precisionSword;
 	public static Item precisionHammer;
 	public static ItemArmor cactusBoots, cactusLeggings, cactusPlate, cactusHelm;
+	public static ItemArmor bootsLeague;
 	public static Item impactShield;
 	public static ItemSword brassKnuckles;
 	
@@ -128,6 +133,7 @@ public class UCItems {
 	public static final ItemArmor.ArmorMaterial slipperMaterial = EnumHelper.addArmorMaterial("slippers", "uniquecrops:slippers", 90, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0F);
 	public static final ItemArmor.ArmorMaterial cactusMaterial = EnumHelper.addArmorMaterial("cactus", "uniquecrops:cactus", 13, new int[] { 1, 4, 5, 2 }, 8, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	public static final ItemArmor.ArmorMaterial thunderMaterial = EnumHelper.addArmorMaterial("thunder", "uniquecrops:thunderpantz", 15, new int[] { 1, 4, 5, 2 }, 6, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
+	public static final ItemArmor.ArmorMaterial leagueMaterial = EnumHelper.addArmorMaterial("bootsleague", "uniquecrops:bootsleague", 200, new int[] { 0, 0, 0, 0 }, 1, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0F);
 	
 	public static void init() {
 		
@@ -168,6 +174,7 @@ public class UCItems {
 		seedsQuarry = new ItemSeedsUC(UCBlocks.cropQuarry);
 		seedsAdventus = new ItemSeedsUC(UCBlocks.cropAdventus);
 		seedsBlessed = new ItemSeedsUC(UCBlocks.cropHoly);
+		seedsMagnets = new ItemSeedsUC(UCBlocks.cropMagnets);
 		
 		generic = new ItemGeneric();
 		largeplum = new ItemGenericFood(EnumFoodstuffs.LARGEPLUM);
@@ -204,12 +211,16 @@ public class UCItems {
 		bookMultiblock = new ItemBookMultiblock();
 		boiledMilk = new Item().setRegistryName("boiled_milk").setTranslationKey(UniqueCrops.MOD_ID + ".boiled_milk").setCreativeTab(UniqueCrops.TAB).setMaxStackSize(1).setContainerItem(Items.BUCKET);
 		items.add(boiledMilk);
+		itemMagnet = new ItemMagnet();
+		impregnatedLeather = new ItemImpregnatedLeather();
+		dyedBonemeal = new ItemDyedBonemeal();
 		
 		glasses3D = new Item3DGlasses(glassesMaterial, 1, EntityEquipmentSlot.HEAD);
 		pixelGlasses = new ItemPixelGlasses(pixelMaterial, 1, EntityEquipmentSlot.HEAD);
 		poncho = new ItemPoncho(ponchoMaterial, 1, EntityEquipmentSlot.CHEST);
 		slippers = new ItemGlassSlippers(slipperMaterial, 2, EntityEquipmentSlot.FEET);
 		thunderPantz = new ItemThunderpants(thunderMaterial, 2, EntityEquipmentSlot.LEGS);
+		bootsLeague = new ItemBootsLeague(leagueMaterial, 2, EntityEquipmentSlot.FEET);
 		precisionPick = new ItemPrecisionPick();
 		precisionAxe = new ItemPrecisionAxe();
 		precisionShovel = new ItemPrecisionShovel();

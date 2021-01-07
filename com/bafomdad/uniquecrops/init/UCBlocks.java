@@ -68,7 +68,8 @@ public class UCBlocks {
 		cropInstabilis,
 		cropSucco,
 		cropAdventus,
-		cropHoly;
+		cropHoly,
+		cropMagnets;
 	
 	// SUPERCROPS
 	public static Block 
@@ -76,7 +77,8 @@ public class UCBlocks {
 		cocito, 
 		itero,
 		fascino,
-		weatherflesia;
+		weatherflesia,
+		lignator;
 	
 	// OTHERS
 	public static Block 
@@ -112,12 +114,15 @@ public class UCBlocks {
 		flywoodLog,
 		flywoodLeaves,
 		flywoodSapling,
-		flywoodPlank;
+		flywoodPlank,
+		eggBasket,
+		precisionBlock,
+		cinderTorch;
 	
 	public static void init() {
 		
 		cropNormal = CropBuilder.create(new Normal()).build();
-		cropArtisia = CropBuilder.create(new Artisia()).setExtraDrops(false).build();
+		cropArtisia = CropBuilder.create(new Artisia()).setExtraDrops(false).setClickHarvest(false).build();
 		cropPrecision = CropBuilder.create(new Precision()).setExtraDrops(false).setBonemealable(false).setClickHarvest(false).build();
 		cropKnowledge = CropBuilder.create(new Knowledge()).setBonemealable(false).setIgnoreGrowth(true).build();
 		cropDirigible = CropBuilder.create(new Dirigible()).setExtraDrops(false).setBonemealable(false).build();
@@ -128,7 +133,7 @@ public class UCBlocks {
 		cropMaryjane = CropBuilder.create(new MaryJane()).setClickHarvest(false).setIgnoreGrowth(true).build();
 		cropWeepingbells = CropBuilder.create(new WeepingBells()).setExtraDrops(false).setBonemealable(false).build();
 		cropMusica = CropBuilder.create(new Musica()).setExtraDrops(false).setBonemealable(false).setIgnoreGrowth(true).build();
-		cropCinderbella = CropBuilder.create(new Cinderbella()).setBonemealable(false).setIgnoreGrowth(true).build();
+		cropCinderbella = CropBuilder.create(new Cinderbella()).setBonemealable(true).setIgnoreGrowth(true).build();
 		cropMerlinia = CropBuilder.create(new Merlinia()).build();
 		cropEula = CropBuilder.create(new Eula()).setExtraDrops(false).build();
 		cropCobblonia = CropBuilder.create(new Cobblonia()).setExtraDrops(false).setClickHarvest(false).build();
@@ -149,6 +154,7 @@ public class UCBlocks {
 		cropSucco = CropBuilder.create(new Succo()).setExtraDrops(false).setBonemealable(false).setClickHarvest(false).build();
 		cropAdventus = CropBuilder.create(new Adventus()).setExtraDrops(false).build();
 		cropHoly = CropBuilder.create(new HolyCrop()).setExtraDrops(false).setClickHarvest(false).build();
+		cropMagnets = CropBuilder.create(new Magnes()).setExtraDrops(false).setClickHarvest(false).build();
 		cropFeroxia = CropBuilder.create(new Feroxia()).setClickHarvest(false).setExtraDrops(false).setBonemealable(true).setIgnoreGrowth(true).build();
 		
 		exedo = new Exedo();
@@ -156,6 +162,7 @@ public class UCBlocks {
 		itero = new Itero();
 		fascino = new Fascino();
 		weatherflesia = new Weatherflesia();
+		lignator = new Lignator();
 		
 		oldCobble = new BlockOldStone("cobble");
 		oldCobbleMoss = new BlockOldStone("cobblemoss");
@@ -190,6 +197,9 @@ public class UCBlocks {
 		flywoodLeaves = new BlockFlywoodLeaves();
 		flywoodSapling = new BlockFlywoodSapling();
 		flywoodPlank = new BlockBaseUC("flywood_plank", Material.WOOD, SoundType.WOOD).setHardness(2.0F).setResistance(5.0F);
+		eggBasket = new BlockEggBasket();
+		precisionBlock = new BlockBaseUC("precision_block", Material.IRON, SoundType.METAL).setHardness(5.0F).setResistance(15.0F);
+		cinderTorch = new BlockCinderTorch();
 	}
 	
 	@SideOnly(Side.CLIENT)

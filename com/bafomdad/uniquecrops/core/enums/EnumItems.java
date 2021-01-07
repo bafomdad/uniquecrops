@@ -38,7 +38,9 @@ public enum EnumItems implements IStringSerializable {
 	ESCAPEROPE("escaperope"),
 	SUNDIAL("sundial"),
 	CUBEY("cubeythingy"),
-	UNCOOKEDWAFFLE("uncookedwaffle");
+	UNCOOKEDWAFFLE("uncookedwaffle"),
+	FERROMAGNETIC_IRON("ferromagneticiron"),
+	SPIRIT_BAIT("spiritbait");
 
 	final String name;
 	

@@ -84,7 +84,7 @@ public class BlockHourglass extends BlockBaseUC {
 					if (flag) {
 						HourglassRecipe recipe = UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.findRecipe(loopState);
 						if (recipe != null) {
-							EntityItemHourglass.convertBlock(world, posit, recipe.getOutput());
+							EntityItemHourglass.convertBlock(world, posit, recipe.getOutput(), recipe.getOutputMeta());
 						}
 					}
 				}

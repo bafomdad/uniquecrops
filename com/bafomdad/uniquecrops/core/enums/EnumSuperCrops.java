@@ -8,7 +8,8 @@ public enum EnumSuperCrops implements IStringSerializable {
 	COCITO("cocito"),
 	ITERO("itero"),
 	FASCINO("fascino"),
-	WEATHER("weatherflesia");
+	WEATHER("weatherflesia"),
+	LIGNATOR("treecutter");
 	
 	final String name;
 	

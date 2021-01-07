@@ -36,8 +36,8 @@ public class Itero extends BlockSuperCropsBase {
     private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
     
 	public static final BlockPos[] PLATES =  {
-		new BlockPos(-1, 0, -1), new BlockPos(1, 0, 1),
-		new BlockPos(-1, 0, 1), new BlockPos(1, 0, -1)
+		new BlockPos(-2, 0, -2), new BlockPos(2, 0, 2),
+		new BlockPos(-2, 0, 2), new BlockPos(2, 0, -2)
 	};
 
 	public Itero() {
@@ -94,8 +94,9 @@ public class Itero extends BlockSuperCropsBase {
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if (getAge(state) >= getMaxAge()) {
-			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, EnumItems.CUBEY.createStack(1 + world.rand.nextInt(1)));
+		if (getAge(state) >= getMaxAge() && !world.isRemote) {
+			int num = 1 + world.rand.nextInt(2);
+			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, EnumItems.CUBEY.createStack(num));
 			world.setBlockState(pos, this.getDefaultState(), 2);
 			return true;
 		}

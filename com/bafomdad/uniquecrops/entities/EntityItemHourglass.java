@@ -55,7 +55,7 @@ public class EntityItemHourglass extends EntityItem {
 					if (flag) {
 						HourglassRecipe recipe = UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.findRecipe(loopState);
 						if (recipe != null) {
-							this.convertBlock(world, posit, recipe.getOutput());
+							this.convertBlock(world, posit, recipe.getOutput(), recipe.getOutputMeta());
 						}
 					}
 				}
@@ -63,9 +63,9 @@ public class EntityItemHourglass extends EntityItem {
 		}
 	}
 	
-	public static void convertBlock(World world, BlockPos pos, Block block) {
+	public static void convertBlock(World world, BlockPos pos, Block output, int outputMeta) {
 		
-		world.setBlockState(pos, block.getDefaultState(), 2);
+		world.setBlockState(pos, output.getStateFromMeta(outputMeta), 2);
 		UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticleTypes.EXPLOSION_NORMAL, pos.getX() + 0.5D, pos.getY() + 1, pos.getZ() + 0.5D, 3));
 	}
 }

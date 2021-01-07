@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "uniquecrops:item_magnet"
+  },
+  "pattern": [
+    "EEE",
+    "E E",
+    "E E"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "uniquecrops:generic",
+	  "data": 32
+    }
+  }
+}

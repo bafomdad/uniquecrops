@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.init.UCItems;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,8 +16,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
 public class ItemAnkh extends Item {
-	
-	private static final String SAVED_ITEMS = "UC:ankhList";
 	
 	private static final int[][] INV = new int[][] {
 		{ 9, 10, 11, 12, 13, 14, 15, 16, 17 },
@@ -58,8 +58,8 @@ public class ItemAnkh extends Item {
 	public static void saveAnkhItems(EntityPlayer player) {
 		
 		NBTTagCompound playerTag = player.getEntityData();
-		if (playerTag.hasKey(SAVED_ITEMS))
-			playerTag.removeTag(SAVED_ITEMS);
+		if (playerTag.hasKey(UCStrings.SAVED_ITEMS))
+			playerTag.removeTag(UCStrings.SAVED_ITEMS);
 		
 		NBTTagList tagList = new NBTTagList();
 		for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
@@ -82,13 +82,13 @@ public class ItemAnkh extends Item {
 				break;
 			}
 		}
-		playerTag.setTag(SAVED_ITEMS, tagList);
+		playerTag.setTag(UCStrings.SAVED_ITEMS, tagList);
 	}
 	
 	public static void putAnkhItems(EntityPlayer oldPlayer, EntityPlayer newPlayer) {
 		
 		NBTTagCompound playerTag = oldPlayer.getEntityData();
-		NBTTagList tagList = playerTag.getTagList(SAVED_ITEMS, Constants.NBT.TAG_COMPOUND);
+		NBTTagList tagList = playerTag.getTagList(UCStrings.SAVED_ITEMS, Constants.NBT.TAG_COMPOUND);
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			NBTTagCompound tag = tagList.getCompoundTagAt(i);
 			int slot = tag.getInteger("Slot");
@@ -98,4 +98,10 @@ public class ItemAnkh extends Item {
 			newPlayer.inventory.mainInventory.set(slot, newStack);
 		}
 	}
+	
+	@Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    	
+        return repair.getItem() == Items.FLINT;
+    }
 }

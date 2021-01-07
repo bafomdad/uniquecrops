@@ -1,6 +1,15 @@
 package com.bafomdad.uniquecrops.gui;
 
-import java.awt.Color;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.profiler.Profiler;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import org.lwjgl.opengl.GL11;
 
@@ -8,20 +17,6 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.capabilities.CPCapability;
 import com.bafomdad.uniquecrops.capabilities.CPProvider;
 import com.bafomdad.uniquecrops.core.UCConfig;
-import com.bafomdad.uniquecrops.core.UCStrings;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.profiler.Profiler;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiStaffOverlay extends Gui {
 
@@ -87,6 +82,8 @@ public class GuiStaffOverlay extends Gui {
 	
 	private void renderLeafBar(ScaledResolution res, int currentPower, int capacity) {
 		
+		if (capacity <= 0) return;
+		
 		int x = res.getScaledWidth() / 2 + UCConfig.guiWidth;
 		int y = res.getScaledHeight() + UCConfig.guiHeight;
 		
@@ -95,6 +92,8 @@ public class GuiStaffOverlay extends Gui {
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
 		int count = 5;
+		if (capacity < count)
+			count = capacity;
 		double start = Math.PI / 2;
 		int direction = -1;
 		int radius = 15;

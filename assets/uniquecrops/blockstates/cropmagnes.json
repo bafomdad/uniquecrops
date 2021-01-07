@@ -1,0 +1,27 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {"crop":"uniquecrops:blocks/magnet1"},
+        "model":"uniquecrops:crossuc",
+        "transform":"forge:default-block"
+     },
+    "variants": {
+        "inventory": [{}],
+		"age=0,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet1"}},
+		"age=0,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet1"}},
+		"age=1,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet2"}},
+		"age=1,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet2"}},
+		"age=2,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet2"}},
+		"age=2,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet2"}},
+		"age=3,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet3"}},
+		"age=3,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet3"}},
+		"age=4,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet3"}},
+		"age=4,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet3"}},
+		"age=5,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet4"}},
+		"age=5,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet4"}},
+		"age=6,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet4"}},
+		"age=6,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet4"}},
+		"age=7,polarity=false": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet_red"}},
+		"age=7,polarity=true": {"model":"uniquecrops:crossuc", "textures": {"crop":"uniquecrops:blocks/magnet_blue"}}
+    }
+}

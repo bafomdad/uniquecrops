@@ -1,0 +1,42 @@
+{
+  "name": "Lignator",
+  "description": "uniquecrops.bookmultiblocks.page.lignator",
+  "catalyst": {
+    "item": "uniquecrops:emeradic_diamond",
+    "data": 0,
+	"power": 0
+  },
+  "shape": [
+    " I ",
+	"IMI",
+	" I "
+  ],
+  "shaperesult": [
+    "   ",
+	" D ",
+	"   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "M": {
+      "states": [
+        "minecraft:melon_block"
+      ]
+    },
+	"I": {
+	  "states": [
+	    "minecraft:iron_bars"
+	  ]
+	}
+  },
+  "definitionresult": {
+	"D": {
+	  "states": [
+	    "uniquecrops:treecutter"
+	  ]
+	}
+  }
+}

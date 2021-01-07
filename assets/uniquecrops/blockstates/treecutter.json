@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"diagonal=true": { "model": "uniquecrops:tree_cutter", "y": 90 },
+		"diagonal=false": { "model": "uniquecrops:tree_cutter" }
+	}
+}

@@ -35,8 +35,9 @@ public class Cocito extends BlockSuperCropsBase {
 	}
 	
 	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		
+		super.onBlockAdded(world, pos, state);
 		world.scheduleUpdate(pos, this, 20);
 	}
 	

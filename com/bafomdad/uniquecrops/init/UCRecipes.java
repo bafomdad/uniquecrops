@@ -19,7 +19,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.enums.EnumItems;
+import com.bafomdad.uniquecrops.crops.Normal;
 
 public class UCRecipes {
 	
@@ -28,6 +30,7 @@ public class UCRecipes {
 	public static void init() {
 		
 		initEdibleMetals();
+		Normal.initDrops(UCConfig.randomDrops);
 		
 		FurnaceRecipes.instance().addSmeltingRecipe(EnumItems.UNCOOKEDWAFFLE.createStack(), new ItemStack(UCItems.waffle), 0.35F);
 		FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(Items.MILK_BUCKET), new ItemStack(UCItems.boiledMilk), 0F);
@@ -41,6 +44,7 @@ public class UCRecipes {
 		
 		for (EnumDyeColor dye : EnumDyeColor.values()) {
 			UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(getDyeCraftingResult(dye.getDyeDamage()), new ItemStack(Items.DYE, 1, dye.getMetadata()), EnumItems.ESSENCE.createStack(), EnumItems.ESSENCE.createStack());
+			UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.dyedBonemeal, 3, dye.getDyeDamage()), new ItemStack(Items.DYE, 1, dye.getDyeDamage()), new ItemStack(Items.BONE), new ItemStack(Items.BONE));
 		}
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsCinderbella), new ItemStack(Items.SUGAR), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(UCItems.seedsNormal));
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsCollis), new ItemStack(Items.SUGAR), new ItemStack(UCItems.seedsNormal), new ItemStack(UCItems.seedsCinderbella));
@@ -72,6 +76,7 @@ public class UCRecipes {
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsIndustria), new ItemStack(UCItems.seedsInstabilis), new ItemStack(Blocks.DOUBLE_PLANT, 1, BlockDoublePlant.EnumPlantType.SUNFLOWER.ordinal()), new ItemStack(Items.POTATO));
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsSucco), healpotion, new ItemStack(Items.GHAST_TEAR), new ItemStack(UCItems.seedsInvisibilia));
 		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsDonuts), new ItemStack(Items.CAKE), new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()), new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 0));
+		UniqueCropsAPI.SEED_RECIPE_REGISTRY.addRecipe(new ItemStack(UCItems.seedsMagnets), new ItemStack(UCItems.seedsIndustria), new ItemStack(UCItems.beanBattery), new ItemStack(Items.IRON_INGOT));
 		
 		UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.addRecipe(UCBlocks.oldGrass, Blocks.GRASS);
 		UniqueCropsAPI.HOURGLASS_RECIPE_REGISTRY.addRecipe(UCBlocks.oldCobble, Blocks.COBBLESTONE);
@@ -84,24 +89,31 @@ public class UCRecipes {
 		UniqueCropsAPI.MASSHEATER_REGISTRY.addRecipe(new ItemStack(UCItems.teriyaki), new ItemStack(Items.COOKED_CHICKEN));
 		UniqueCropsAPI.MASSHEATER_REGISTRY.addRecipe(new ItemStack(Blocks.PACKED_ICE), new ItemStack(Blocks.ICE));
 		
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROTECTION, 80, new ItemStack(UCBlocks.darkBlock), new ItemStack(UCBlocks.darkBlock), new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.GOLD_BLOCK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_PROTECTION, 40, EnumItems.CINDERLEAF.createStack(), new ItemStack(Items.LAVA_BUCKET), EnumItems.CINDERLEAF.createStack(), new ItemStack(Blocks.BRICK_BLOCK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FEATHER_FALLING, 40, EnumItems.INVISIFEATHER.createStack(), new ItemStack(Items.FEATHER), new ItemStack(UCItems.cactusBoots));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BLAST_PROTECTION, 40, new ItemStack(Blocks.TNT), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.FLINT_AND_STEEL), new ItemStack(Blocks.OBSIDIAN));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROJECTILE_PROTECTION, 60, new ItemStack(Items.SHIELD), new ItemStack(Items.ARROW), new ItemStack(Items.ARMOR_STAND));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.RESPIRATION, 20, new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS), new ItemStack(Blocks.PRISMARINE));
+		// TODO: aqua affinity
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.THORNS, 20, new ItemStack(UCItems.cactusBoots), new ItemStack(UCItems.cactusHelm), new ItemStack(UCItems.cactusLeggings), new ItemStack(UCItems.cactusPlate));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.DEPTH_STRIDER, 40, new ItemStack(Blocks.SPONGE), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.WATER_BUCKET));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FROST_WALKER, 30, getEnchantedBook(Enchantments.DEPTH_STRIDER), new ItemStack(Blocks.ICE), new ItemStack(Blocks.ICE));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BLAST_PROTECTION, 40, new ItemStack(Blocks.TNT), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.FLINT_AND_STEEL), new ItemStack(Blocks.OBSIDIAN));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.EFFICIENCY, 50, new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Items.REDSTONE), new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Blocks.REDSTONE_TORCH), new ItemStack(Items.BEETROOT));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FEATHER_FALLING, 40, EnumItems.INVISIFEATHER.createStack(), new ItemStack(Items.FEATHER), new ItemStack(UCItems.cactusBoots));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SILK_TOUCH, 40, new ItemStack(Blocks.WEB), EnumItems.PREGEM.createStack(), EnumItems.PREGEM.createStack(), new ItemStack(Items.SHEARS));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SHARPNESS, 90, new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.IRON_SWORD), new ItemStack(Items.GOLDEN_SWORD));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SMITE, 30, new ItemStack(UCItems.impregnatedLeather, 1, 1), new ItemStack(Items.LEATHER_CHESTPLATE), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.WATER_BUCKET));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BANE_OF_ARTHROPODS, 30, new ItemStack(Items.IRON_SWORD), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE));
+		// TODO: knockback
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_ASPECT, 50, new ItemStack(Items.IRON_SWORD), new ItemStack(UCItems.seedsMaryjane), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.LOOTING, 70, new ItemStack(UCItems.emeradicDiamond), new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Blocks.TNT), new ItemStack(Blocks.WEB), new ItemStack(Blocks.SOUL_SAND));
+		// TODO: sweeping
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.EFFICIENCY, 50, new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Items.REDSTONE), new ItemStack(Blocks.REDSTONE_BLOCK), new ItemStack(Blocks.REDSTONE_TORCH), new ItemStack(Items.BEETROOT));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SILK_TOUCH, 40, new ItemStack(Blocks.WEB), EnumItems.PREGEM.createStack(), EnumItems.PREGEM.createStack(), new ItemStack(Items.SHEARS));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.UNBREAKING, 50, new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.OBSIDIAN), EnumItems.TIMEDUST.createStack(), new ItemStack(Blocks.NETHER_BRICK), new ItemStack(Blocks.NETHER_BRICK));
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FORTUNE, 80, EnumItems.ESSENCE.createStack(), new ItemStack(Items.DIAMOND_PICKAXE), EnumItems.PREGEM.createStack());
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.POWER, 60, new ItemStack(Items.BOW), new ItemStack(Items.ARROW), new ItemStack(Items.ARROW), EnumItems.WEEPINGTEAR.createStack());
+		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PUNCH, 40, new ItemStack(Blocks.PISTON), new ItemStack(Blocks.STICKY_PISTON), new ItemStack(Items.BOW));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FLAME, 40, new ItemStack(Items.BOW), new ItemStack(UCItems.seedsMaryjane), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), new ItemStack(UCItems.seedsMaryjane));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.INFINITY, 10, new ItemStack(Items.BOW), EnumItems.DOGRESIDUE.createStack(), EnumItems.DOGRESIDUE.createStack(), EnumItems.DOGRESIDUE.createStack(), EnumItems.DOGRESIDUE.createStack());
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.BANE_OF_ARTHROPODS, 30, new ItemStack(Items.IRON_SWORD), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Items.FERMENTED_SPIDER_EYE));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FORTUNE, 80, EnumItems.ESSENCE.createStack(), new ItemStack(Items.DIAMOND_PICKAXE), EnumItems.PREGEM.createStack());
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_PROTECTION, 40, EnumItems.CINDERLEAF.createStack(), new ItemStack(Items.LAVA_BUCKET), EnumItems.CINDERLEAF.createStack(), new ItemStack(Blocks.BRICK_BLOCK));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.THORNS, 20, new ItemStack(UCItems.cactusBoots), new ItemStack(UCItems.cactusHelm), new ItemStack(UCItems.cactusLeggings), new ItemStack(UCItems.cactusPlate));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROTECTION, 80, new ItemStack(UCBlocks.darkBlock), new ItemStack(UCBlocks.darkBlock), new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.GOLD_BLOCK));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.PROJECTILE_PROTECTION, 60, new ItemStack(Items.SHIELD), new ItemStack(Items.ARROW), new ItemStack(Items.ARMOR_STAND));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.FIRE_PROTECTION, 40, new ItemStack(Items.WATER_BUCKET), new ItemStack(Blocks.ICE), new ItemStack(Blocks.NETHER_WART_BLOCK));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.SHARPNESS, 90, new ItemStack(Items.WOODEN_SWORD), new ItemStack(Items.IRON_SWORD), new ItemStack(Items.GOLDEN_SWORD));
-		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.RESPIRATION, 20, new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS), new ItemStack(Blocks.PRISMARINE));
 		UniqueCropsAPI.ENCHANTER_REGISTRY.addRecipe(Enchantments.MENDING, 90, new ItemStack(Items.EXPERIENCE_BOTTLE), new ItemStack(Blocks.ANVIL), new ItemStack(UCItems.potionReverse));
 	}
 	

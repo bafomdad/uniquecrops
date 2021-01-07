@@ -7,6 +7,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCEnergyStorage;
 import com.bafomdad.uniquecrops.init.UCBlocks;
 
@@ -22,7 +23,7 @@ public class TileIndustria extends TileBaseUC implements ITickable {
 		if (!world.isRemote && world.isDaytime()) {
 			if (!energy.canReceive()) return;
 			
-			energy.receiveEnergy(20, false);
+			energy.receiveEnergy(UCConfig.energyPerTick, false);
 			int age = energy.getEnergyStored() / 5000;
 			if (Math.min(age, 7) != world.getBlockState(pos).getValue(BlockCrops.AGE))
 				world.setBlockState(pos, UCBlocks.cropIndustria.withAge(Math.min(age, 7)));
