@@ -43,30 +43,41 @@ public class Instabilis extends BlockCropsBase {
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		
-		boolean canGrow = true;
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			IBlockState loopState = world.getBlockState(pos.offset(facing));
-			if (loopState.getBlock() != this) {
-				canGrow = false;
-				break;
-			}
-		}
-		if (canGrow) {
+		if (canGrow(world, pos)) {
 			super.updateTick(world, pos, state, rand);
 			return;
 		}
 		this.checkAndDropBlock(world, pos, state);
 	}
+	
+    @Override
+    public void grow(World world, BlockPos pos, IBlockState state) {
+    	
+    	if (!canGrow(world, pos)) return;
+    	
+    	super.grow(world, pos, state);
+    }
+    
+    private boolean canGrow(World world, BlockPos pos) {
+    	
+    	for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+    		IBlockState loopState = world.getBlockState(pos.offset(facing));
+    		if (loopState.getBlock() != this)
+    			return false;
+    	}
+    	return true;
+    }
     
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
     	
     	ItemStack stack = player.getHeldItemMainhand();
-    	if (!stack.isEmpty() && stack.getItem() instanceof ItemShears) {
+    	if (stack.getItem() instanceof ItemShears) {
     		if (!world.isRemote) {
     			if (!player.capabilities.isCreativeMode)
     				stack.damageItem(1, player);
-    			world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(UCBlocks.demoCord, world.rand.nextInt(3) + 1)));
+    			if (this.getAge(state) > this.getMaxAge())
+    				world.spawnEntity(new EntityItem(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, new ItemStack(UCBlocks.demoCord, world.rand.nextInt(3) + 1)));
     		}
     		return willHarvest;
     	}
