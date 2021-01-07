@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+	"data": 33
+  },
+  "pattern": [
+    "V V",
+    " V ",
+    "V V"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "V": {
+      "item": "minecraft:vine"
+    }
+  }
+}
