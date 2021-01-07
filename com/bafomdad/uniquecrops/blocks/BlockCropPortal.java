@@ -82,8 +82,10 @@ public class BlockCropPortal extends BlockBaseUC {
     				}
     			}
     		}
-    		lastTelePos.setLong(UCStrings.LAST_POSITION, pos.toLong());
-    		entity.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, lastTelePos);
+    		data.setLong(UCStrings.LAST_POSITION, pos.toLong());
+    		entity.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, data);
+//    		lastTelePos.setLong(UCStrings.LAST_POSITION, pos.toLong());
+ //   		entity.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, lastTelePos);
     	}
     }
     

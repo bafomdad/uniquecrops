@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.events;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -10,6 +11,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.bafomdad.uniquecrops.init.UCDimension;
 
 public class UCWorldEvents {
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onBlockAttemptBreak(PlayerEvent.BreakSpeed event) {
+		
+		if (event.getEntityLiving().world.provider.getDimension() == UCDimension.dimID)
+			event.setCanceled(true);
+	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
