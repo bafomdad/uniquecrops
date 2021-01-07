@@ -2,9 +2,9 @@ package com.bafomdad.uniquecrops.crops;
 
 import java.util.Random;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,17 +22,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.blocks.BlockCropsBase;
-import com.bafomdad.uniquecrops.blocks.tiles.TileCinderbella;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.enums.EnumCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 
-public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
+public class Cinderbella extends BlockCropsBase {
 
 	public Cinderbella() {
 		
 		super(EnumCrops.CINDERBELLA);
-		GameRegistry.registerTileEntity(TileCinderbella.class, new ResourceLocation(UniqueCrops.MOD_ID, "cinderbella"));
 	}
 	
 	@Override
@@ -45,6 +43,15 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 	public Item getCrop() {
 		
 		return UCItems.generic;
+	}
+	
+	@Override
+	public boolean canPlantCrop(World world, EntityPlayer player, EnumFacing side, BlockPos pos, ItemStack stack) {
+	
+		if (this.canPlantOrGrow(world, pos.up())) {
+			this.onBlockPlacedBy(world, pos.offset(side), getDefaultState(), player, stack);
+		}
+		return super.canPlantCrop(world, player, side, pos, stack);
 	}
 	
 	@Override
@@ -63,14 +70,9 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
 			super.updateTick(world, pos, state, rand);
 			return;
 		}
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileCinderbella) {
-			TileCinderbella tile = (TileCinderbella)te;
-			long time = world.getWorldTime() % 24000L;
-			if (tile.plantedCorrect && tile.timePlanted >= (time - 6000)) {
-				super.updateTick(world, pos, state, rand);
-				return;
-			}
+		if (this.canPlantOrGrow(world, pos)) {
+			super.updateTick(world, pos, state, rand);
+			return;
 		}
 		world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
 	}
@@ -78,38 +80,20 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
     @Override
     public void grow(World world, BlockPos pos, IBlockState state) {
     	
-    	TileEntity te = world.getTileEntity(pos);
-    	if (te instanceof TileCinderbella) {
-    		TileCinderbella tile = (TileCinderbella)te;
-    		if (!world.isRemote && !tile.plantedCorrect) {
-    			world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
-    			return;
-    		}
+    	if (this.canIgnoreGrowthRestrictions(world, pos)) {
+    		super.grow(world, pos, state);
+    		return;
     	}
-    	else if (te == null)
+    	if (!world.isRemote && !this.canPlantOrGrow(world, pos)) {
     		world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState(), 2);
-    	
+    		return;
+    	}
     	super.grow(world, pos, state);
     }
 	
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    	
-    	world.setBlockState(pos, state.getBlock().getDefaultState(), 3);
-    	TileEntity te = world.getTileEntity(pos);
-    	if (te instanceof TileCinderbella) {
-    		((TileCinderbella)te).setAbleToGrow(world);
-    	}
-    }
-
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-
-		return new TileCinderbella();
-	}
-	
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
     	
         return BlockRenderLayer.TRANSLUCENT;
     }
@@ -130,5 +114,22 @@ public class Cinderbella extends BlockCropsBase implements ITileEntityProvider {
     public boolean isFullBlock(IBlockState state) {
     	
     	return false;
+    }
+    
+    public boolean canPlantOrGrow(World world, BlockPos pos) {
+
+    	if (world.getWorldTime() >= 18500L || world.getWorldTime() <= 12542L) return false;
+		
+		int pumpkins = 0;
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			IBlockState pumpkin = world.getBlockState(pos.offset(facing));
+			if (pumpkin.getBlock() == Blocks.PUMPKIN) {
+				pumpkins++;
+			}
+		}
+		if (pumpkins < 4)
+			return false;
+
+		return true;
     }
 }
