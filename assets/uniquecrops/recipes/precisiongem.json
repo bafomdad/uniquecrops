@@ -1,0 +1,13 @@
+{
+  "result": {
+    "item": "uniquecrops:generic",
+	"data": 8,
+	"count": 9
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:precision_block"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}
