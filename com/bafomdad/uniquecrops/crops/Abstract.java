@@ -28,6 +28,6 @@ public class Abstract extends BlockCropsBase {
 		if (!player.world.isRemote)
 			SeedBehavior.setAbstractCropGrowth(player, world.rand.nextInt(2) + 1);
 		
-		return super.canPlantCrop(world, player, side, pos, stack);
+		return false;
 	}
 }
