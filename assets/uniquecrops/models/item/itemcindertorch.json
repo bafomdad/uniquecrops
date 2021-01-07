@@ -1,0 +1,5 @@
+{
+  "parent": "uniquecrops:block/cindertorch",
+
+    "ambientocclusion": false
+}

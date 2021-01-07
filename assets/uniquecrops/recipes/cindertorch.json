@@ -1,12 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+    "S",
     "X",
-    "#"
+    "S"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
+    "S": {
+      "item": "minecraft:stone_slab",
+	  "data": 0
     },
     "X": [
       {
@@ -16,7 +18,7 @@
     ]
   },
   "result": {
-    "item": "minecraft:torch",
-    "count": 16
+    "item": "uniquecrops:cindertorch",
+    "count": 4
   }
 }
