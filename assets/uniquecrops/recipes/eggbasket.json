@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "uniquecrops:eggbasket"
+  },
+  "pattern": [
+    "EEE",
+    "EEE",
+    "EEE"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:egg"
+    }
+  }
+}
