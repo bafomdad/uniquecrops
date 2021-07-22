@@ -1,0 +1,16 @@
+{
+    "name": "block.uniquecrops.itero",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/itero",
+			"text": "Simon says"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.itero"
+        }
+    ]
+}

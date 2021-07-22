@@ -1,0 +1,69 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 50
+  },
+  "shape": [
+    "CRRRC",
+    "R   R",
+    "R 0 R",
+    "R   R",
+    "CRRRC"
+  ],
+  "shaperesult": [
+    "CRRRC",
+    "RPPPR",
+    "RPPPR",
+    "RPPPR",
+    "CRRRC"
+  ],
+  "origin": {
+    "x": 2,
+    "y": 2
+  },
+  "definition": {
+    "0": {
+      "states": [
+        "minecraft:emerald_block"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "R": {
+      "states": [
+        "uniquecrops:ruinedbricks"
+      ]
+    },
+    "C": {
+      "states": [
+        "uniquecrops:ruinedbrickscarved"
+      ]
+    }
+  },
+  "definitionresult": {
+    "P": {
+      "states": [
+        "uniquecrops:crop_portal"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "R": {
+      "states": [
+        "uniquecrops:ruinedbricks"
+      ]
+    },
+    "C": {
+      "states": [
+        "uniquecrops:ruinedbrickscarved"
+      ]
+    }
+  }
+}

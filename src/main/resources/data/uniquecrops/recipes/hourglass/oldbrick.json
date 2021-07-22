@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:bricks"
+  },
+  "output": {
+    "name": "uniquecrops:oldbrick"
+  }
+}

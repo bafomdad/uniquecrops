@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " L ",
+    "LBL",
+    " L "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "L": {
+      "item": "uniquecrops:legalstuff"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:book_eula"
+  }
+}

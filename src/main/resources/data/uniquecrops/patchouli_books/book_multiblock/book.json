@@ -1,0 +1,14 @@
+{
+	"name": "item.uniquecrops.book_multiblock",
+	"landing_text": "Guide to the multiblocks created by this mod.",
+	"version": 1,
+	"book_texture": "uniquecrops:textures/gui/book_lime.png",
+	"model": "uniquecrops:book_multiblock",
+	"creative_tab": "uniquecrops",
+	"dont_generate_book": true,
+	"custom_book_item": "uniquecrops:book_multiblock",
+	"show_progress": false,
+	"show_toasts": false,
+	"i18n": true,
+	"pause_game": false
+}

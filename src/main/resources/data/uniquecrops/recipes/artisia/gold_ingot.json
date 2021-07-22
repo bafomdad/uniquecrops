@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "minecraft:gold_ingot"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "minecraft:yellow_dye"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    }
+  ]
+}

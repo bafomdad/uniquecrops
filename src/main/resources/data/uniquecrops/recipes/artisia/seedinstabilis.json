@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedinstabilis"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "uniquecrops:seedprecision"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "block.uniquecrops.crop_feroxia",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:seeds",
+    "pages": [
+        {
+            "type": "uniquecrops:cropimage",
+            "blockstate": "uniquecrops:crop_feroxia[age=7]"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.book.pageferoxia"
+        },
+        {
+            "type": "uniquecrops:growthsteps",
+            "text": "Feroxia Growth Steps"
+        }
+    ]
+}

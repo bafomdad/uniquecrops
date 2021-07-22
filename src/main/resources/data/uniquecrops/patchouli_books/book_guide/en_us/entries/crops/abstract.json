@@ -1,0 +1,15 @@
+{
+    "name": "block.uniquecrops.crop_abstract",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:seeds",
+    "pages": [
+        {
+            "type": "uniquecrops:cropimage",
+            "blockstate": "uniquecrops:crop_abstract[age=7]"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.book.pageabstract"
+        }
+    ]
+}

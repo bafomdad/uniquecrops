@@ -1,0 +1,36 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "minecraft:cyan_terracotta",
+    "count": 16
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "minecraft:cyan_dye"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "minecraft:fire_charge",
+    "count": 8
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "minecraft:orange_dye"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    }
+  ]
+}

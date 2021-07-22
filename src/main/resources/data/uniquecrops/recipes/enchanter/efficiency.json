@@ -1,0 +1,24 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:efficiency",
+  "cost": 50,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:redstone_block"
+      },
+      {
+        "item": "minecraft:redstone"
+      },
+      {
+        "item": "minecraft:redstone_block"
+      },
+      {
+        "item": "minecraft:redstone_torch"
+      },
+      {
+        "item": "minecraft:beetroot"
+      }
+    ]
+  ]
+}

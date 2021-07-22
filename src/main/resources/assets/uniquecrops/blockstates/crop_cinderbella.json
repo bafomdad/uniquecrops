@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uniquecrops:block/cinderbella1"
+    },
+    "age=1": {
+      "model": "uniquecrops:block/cinderbella2"
+    },
+    "age=2": {
+      "model": "uniquecrops:block/cinderbella2"
+    },
+    "age=3": {
+      "model": "uniquecrops:block/cinderbella3"
+    },
+    "age=4": {
+      "model": "uniquecrops:block/cinderbella3"
+    },
+    "age=5": {
+      "model": "uniquecrops:block/cinderbella4"
+    },
+    "age=6": {
+      "model": "uniquecrops:block/cinderbella4"
+    },
+    "age=7": {
+      "model": "uniquecrops:block/cinderbella5"
+    }
+  }
+}

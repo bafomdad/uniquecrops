@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "age=0,polarity=false": { "model": "uniquecrops:block/magnes1" },
+	"age=0,polarity=true": { "model": "uniquecrops:block/magnes1" },
+	"age=1,polarity=false": { "model": "uniquecrops:block/magnes2" },
+	"age=1,polarity=true": { "model": "uniquecrops:block/magnes2" },
+	"age=2,polarity=false": { "model": "uniquecrops:block/magnes2" },
+	"age=2,polarity=true": { "model": "uniquecrops:block/magnes2" },
+	"age=3,polarity=false": { "model": "uniquecrops:block/magnes3" },
+	"age=3,polarity=true": { "model": "uniquecrops:block/magnes3" },
+	"age=4,polarity=false": { "model": "uniquecrops:block/magnes3" },
+	"age=4,polarity=true": { "model": "uniquecrops:block/magnes3" },
+	"age=5,polarity=false": { "model": "uniquecrops:block/magnes4" },
+	"age=5,polarity=true": { "model": "uniquecrops:block/magnes4" },
+	"age=6,polarity=false": { "model": "uniquecrops:block/magnes4" },
+	"age=6,polarity=true": { "model": "uniquecrops:block/magnes4" },
+	"age=7,polarity=false": { "model": "uniquecrops:block/magnes_red" },
+	"age=7,polarity=true": { "model": "uniquecrops:block/magnes_blue" }
+  }
+}

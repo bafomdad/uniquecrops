@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gGg",
+    "GDG",
+    "gGg"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "G": {
+      "tag": "forge:storage_blocks/gold"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_scarab"
+  }
+}

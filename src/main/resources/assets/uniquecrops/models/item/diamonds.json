@@ -1,0 +1,13 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "uniquecrops:items/diamonds6"
+	},
+	"overrides": [
+		{ "predicate": { "uniquecrops:diamonds": 0.0 }, "model": "uniquecrops:item/diamonds" },
+		{ "predicate": { "uniquecrops:diamonds": 1.0 }, "model": "uniquecrops:item/diamonds_1" },
+		{ "predicate": { "uniquecrops:diamonds": 2.0 }, "model": "uniquecrops:item/diamonds_2" },
+		{ "predicate": { "uniquecrops:diamonds": 3.0 }, "model": "uniquecrops:item/diamonds_3" },
+		{ "predicate": { "uniquecrops:diamonds": 4.0 }, "model": "uniquecrops:item/diamonds_4" }
+	]
+}

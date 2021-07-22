@@ -1,0 +1,24 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:unbreaking",
+  "cost": 50,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:obsidian"
+      },
+      {
+        "item": "minecraft:obsidian"
+      },
+      {
+        "item": "uniquecrops:timedust"
+      },
+      {
+        "item": "minecraft:nether_bricks"
+      },
+      {
+        "item": "minecraft:nether_bricks"
+      }
+    ]
+  ]
+}

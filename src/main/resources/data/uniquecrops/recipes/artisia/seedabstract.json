@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedabstract"
+  },
+  "ingredients": [
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "item": "minecraft:sugar_cane"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "minecraft:terracotta"
+    },
+    {
+      "tag": "minecraft:wool"
+    }
+  ]
+}

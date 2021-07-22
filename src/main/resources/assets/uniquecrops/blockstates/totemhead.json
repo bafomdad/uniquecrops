@@ -1,0 +1,8 @@
+{
+  "variants": {
+        "facing=west": { "model": "uniquecrops:block/totemhead", "y": 90 },
+        "facing=south": { "model": "uniquecrops:block/totemhead" },
+        "facing=east": { "model": "uniquecrops:block/totemhead", "y": 90 },
+        "facing=north": { "model": "uniquecrops:block/totemhead" }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  E",
+    " G ",
+    "S  "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "E": {
+      "item": "uniquecrops:millenniumeye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:handmirror"
+  }
+}

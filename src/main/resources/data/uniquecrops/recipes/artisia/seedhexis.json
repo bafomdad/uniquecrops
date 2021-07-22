@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedhexis"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "minecraft:wooden_sword"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "minecraft:wooden_sword"
+    },
+    {
+      "item": "uniquecrops:seedmalleatoris"
+    },
+    {
+      "item": "minecraft:wooden_sword"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "minecraft:wooden_sword"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ]
+}

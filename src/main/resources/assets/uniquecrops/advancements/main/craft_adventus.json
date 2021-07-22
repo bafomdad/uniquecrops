@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedadventus"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingAdventus"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingAdventus.desc"
+    }
+  },
+  "parent": "uniquecrops:main/seed_pickup",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedadventus"
+          }
+        ]
+      }
+    }
+  }
+}

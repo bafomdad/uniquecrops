@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingCinderbella"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingCinderbella.desc"
+    }
+  },
+  "parent": "uniquecrops:main/artisia_craft",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedcinderbella"
+          }
+        ]
+      }
+    }
+  }
+}

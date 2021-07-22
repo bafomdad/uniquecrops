@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:knockback",
+  "cost": 40,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:iron_sword"
+      }
+    ]
+  ]
+}

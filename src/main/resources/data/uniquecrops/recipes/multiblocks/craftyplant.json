@@ -1,0 +1,104 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 20
+  },
+  "shape": [
+    "AAA",
+    "A0A",
+    "AAA"
+  ],
+  "shaperesult": [
+    "HNP",
+    "WCE",
+    "DSG"
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "0": {
+      "states": [
+        "uniquecrops:crop_artisia[age-0]",
+        "uniquecrops:crop_artisia[age-3]",
+        "uniquecrops:crop_artisia[age-4]",
+        "uniquecrops:crop_artisia[age-6]",
+        "uniquecrops:crop_artisia[age-1]",
+        "uniquecrops:crop_artisia[age-5]",
+        "uniquecrops:crop_artisia[age-2]",
+        "uniquecrops:crop_artisia[age-7]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "A": {
+      "states": [
+        "uniquecrops:crop_artisia[age-0]",
+        "uniquecrops:crop_artisia[age-3]",
+        "uniquecrops:crop_artisia[age-4]",
+        "uniquecrops:crop_artisia[age-6]",
+        "uniquecrops:crop_artisia[age-1]",
+        "uniquecrops:crop_artisia[age-5]",
+        "uniquecrops:crop_artisia[age-2]",
+        "uniquecrops:crop_artisia[age-7]"
+      ]
+    }
+  },
+  "definitionresult": {
+    "P": {
+      "states": [
+        "uniquecrops:stalk[stalk-northeast]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "C": {
+      "states": [
+        "uniquecrops:stalk[stalk-down]"
+      ]
+    },
+    "S": {
+      "states": [
+        "uniquecrops:stalk[stalk-south]"
+      ]
+    },
+    "D": {
+      "states": [
+        "uniquecrops:stalk[stalk-southwest]"
+      ]
+    },
+    "E": {
+      "states": [
+        "uniquecrops:stalk[stalk-east]"
+      ]
+    },
+    "W": {
+      "states": [
+        "uniquecrops:stalk[stalk-west]"
+      ]
+    },
+    "G": {
+      "states": [
+        "uniquecrops:stalk[stalk-southeast]"
+      ]
+    },
+    "H": {
+      "states": [
+        "uniquecrops:stalk[stalk-northwest]"
+      ]
+    },
+    "N": {
+      "states": [
+        "uniquecrops:stalk[stalk-north]"
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "uniquecrops:block/ruinedbricks_slab_top"
+    },
+    "type=bottom": {
+      "model": "uniquecrops:block/ruinedbricks_slab"
+    },
+    "type=double": {
+      "model": "uniquecrops:block/ruinedbricks"
+    }
+  }
+}

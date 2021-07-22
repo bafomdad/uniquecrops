@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seednormal"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:seedPickup"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:seedPickup.desc"
+    }
+  },
+  "parent": "uniquecrops:main/root",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seednormal"
+          }
+        ]
+      }
+    }
+  }
+}

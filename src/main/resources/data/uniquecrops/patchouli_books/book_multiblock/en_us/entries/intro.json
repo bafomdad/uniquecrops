@@ -1,0 +1,16 @@
+{
+    "name": "Introduction",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "priority": true,
+    "pages": [
+        {
+            "type": "patchouli:image",
+			"images": [ "uniquecrops:textures/gui/titlepage2.png" ]
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.intro"
+        }
+    ]
+}

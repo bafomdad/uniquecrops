@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BSB",
+    "ODO",
+    "OOO"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:snowball"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    },
+    "B": {
+      "item": "minecraft:fire_charge"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_weight"
+  }
+}

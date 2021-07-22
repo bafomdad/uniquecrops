@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "BBB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:feather"
+    },
+    "B": {
+      "item": "uniquecrops:invisitwine"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:invisifeather"
+  }
+}

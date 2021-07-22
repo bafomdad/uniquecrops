@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "uniquecrops:precision_axe"
+  },
+  "pattern": [
+    "PP ",
+    "PS ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "uniquecrops:pregem"
+    }
+  }
+}

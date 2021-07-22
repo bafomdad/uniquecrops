@@ -1,0 +1,24 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:infinity",
+  "cost": 10,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:bow"
+      },
+      {
+        "item": "uniquecrops:dogresidue"
+      },
+      {
+        "item": "uniquecrops:dogresidue"
+      },
+      {
+        "item": "uniquecrops:dogresidue"
+      },
+      {
+        "item": "uniquecrops:dogresidue"
+      }
+    ]
+  ]
+}

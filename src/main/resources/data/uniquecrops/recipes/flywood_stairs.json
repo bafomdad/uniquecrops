@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  S",
+    " SS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "uniquecrops:flywood_planks"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:flywood_stairs",
+    "count": 4
+  }
+}

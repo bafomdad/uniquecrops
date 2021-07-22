@@ -1,0 +1,12 @@
+{
+  "processor": "com.bafomdad.uniquecrops.integration.patchouli.processor.CropProcessor",
+  "components": [
+    {
+      "type": "custom",
+      "class": "com.bafomdad.uniquecrops.integration.patchouli.component.CropComponent",
+      "x": 0,
+      "y": 90,
+      "blockstate": "#blockstate"
+    }
+  ]
+}

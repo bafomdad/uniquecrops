@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "minecraft:chorus_fruit"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "minecraft:purple_dye"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    }
+  ]
+}

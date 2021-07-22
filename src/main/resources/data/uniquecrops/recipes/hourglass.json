@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DGD",
+    "PDP",
+    "DGD"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:glass_panes"
+    },
+    "D": {
+      "item": "uniquecrops:timedust"
+    },
+    "G": {
+      "tag": "forge:storage_blocks/gold"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:hourglass"
+  }
+}

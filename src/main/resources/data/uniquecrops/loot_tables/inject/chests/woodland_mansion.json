@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "n": 1,
+        "p": 0.1,
+        "type": "minecraft:binomial"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "uniquecrops:potionennui"
+        }
+      ]
+    }
+  ]
+}

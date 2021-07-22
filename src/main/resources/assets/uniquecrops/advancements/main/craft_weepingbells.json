@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedweepingbells"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingWeepingbells"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingWeepingbells.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_enderlily",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedweepingbells"
+          }
+        ]
+      }
+    }
+  }
+}

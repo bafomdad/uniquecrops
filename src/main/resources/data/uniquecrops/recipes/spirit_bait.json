@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "V V",
+    " V ",
+    "V V"
+  ],
+  "key": {
+    "V": {
+      "item": "minecraft:vine"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:spirit_bait"
+  }
+}

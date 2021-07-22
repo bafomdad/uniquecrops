@@ -1,0 +1,8 @@
+{
+  "variants": {
+		"facing=north": { "model": "uniquecrops:block/abstractbarrel", "y": 0 },
+		"facing=south": { "model": "uniquecrops:block/abstractbarrel", "y": 180 },
+		"facing=east": { "model": "uniquecrops:block/abstractbarrel", "y": 90 },
+		"facing=west": { "model": "uniquecrops:block/abstractbarrel", "y": 270 }
+  }
+}

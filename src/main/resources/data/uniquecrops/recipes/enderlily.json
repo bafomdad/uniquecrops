@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " E ",
+    "PLP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "uniquecrops:lilytwine"
+    },
+    "L": {
+      "item": "minecraft:lily_pad"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:enderlily"
+  }
+}

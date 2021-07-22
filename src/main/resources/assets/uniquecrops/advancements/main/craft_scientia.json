@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedknowledge"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingKnowledge"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingKnowledge.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_invisibilia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedknowledge"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:generic",
+	  "data": 9
+    },
+    "title": {
+      "translate": "itemGroup.uniquecrops"
+    },
+    "description": {
+      "translate": "uniquecrops.desc"
+    },
+    "background": "uniquecrops:textures/blocks/ancient_gravel.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seednormal"
+          }
+        ]
+      }
+    }
+  }
+}

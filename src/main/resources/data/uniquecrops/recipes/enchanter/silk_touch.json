@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:silk_touch",
+  "cost": 40,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:cobweb"
+      },
+      {
+        "item": "uniquecrops:pregem"
+      },
+      {
+        "item": "uniquecrops:pregem"
+      },
+      {
+        "item": "minecraft:shears"
+      }
+    ]
+  ]
+}

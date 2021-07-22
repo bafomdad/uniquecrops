@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:punch",
+  "cost": 40,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:piston"
+      },
+      {
+        "item": "minecraft:sticky_piston"
+      },
+      {
+        "item": "minecraft:bow"
+      }
+    ]
+  ]
+}

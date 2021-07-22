@@ -1,0 +1,36 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "uniquecrops:items/impact_shield"
+  },
+  "display": {
+        "thirdperson_righthand": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 2, -2, 2 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 2, -2, 2 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 180, 5 ],
+            "translation": [ 10, -4, -10 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 180, 5 ],
+            "translation": [ 10, -4, -10 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "uniquecrops:blocking": 1
+            },
+            "model": "uniquecrops:item/impactshield_blocking"
+        }
+    ]
+}

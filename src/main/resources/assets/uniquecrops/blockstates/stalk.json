@@ -1,0 +1,14 @@
+{
+  "variants": {
+		"stalk=north": { "model": "uniquecrops:block/benchstalk", "y": 0 },
+		"stalk=south": { "model": "uniquecrops:block/benchstalk", "y": 180 },
+		"stalk=east": { "model": "uniquecrops:block/benchstalk", "y": 90 },
+		"stalk=west": { "model": "uniquecrops:block/benchstalk", "y": 270 },
+		"stalk=northeast": { "model": "uniquecrops:block/diagstalk", "y": 90 },
+		"stalk=northwest": { "model": "uniquecrops:block/diagstalk", "y": 0 },
+		"stalk=southeast": { "model": "uniquecrops:block/diagstalk", "y": 180 },
+		"stalk=southwest": { "model": "uniquecrops:block/diagstalk", "y": 270 },
+		"stalk=up": { "model": "uniquecrops:block/craftstalk" },
+		"stalk=down": { "model": "uniquecrops:block/centerstalk" }
+  }
+}

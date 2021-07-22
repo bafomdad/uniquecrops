@@ -1,0 +1,16 @@
+{
+    "name": "block.uniquecrops.cocito",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/cocito",
+			"text": "Mass cooker"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.cocito"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "CLC",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:coal"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:impregnated_leather"
+  }
+}

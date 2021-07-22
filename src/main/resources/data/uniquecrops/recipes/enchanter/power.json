@@ -1,0 +1,24 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:power",
+  "cost": 60,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:bow"
+      },
+      {
+        "item": "minecraft:arrow"
+      },
+      {
+        "item": "minecraft:crossbow"
+      },
+      {
+        "item": "minecraft:arrow"
+      },
+      {
+        "item": "uniquecrops:weepingtear"
+      }
+    ]
+  ]
+}

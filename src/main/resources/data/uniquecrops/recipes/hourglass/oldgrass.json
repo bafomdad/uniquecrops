@@ -1,0 +1,12 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:grass_block",
+    "properties": {
+      "snowy": "false"
+    }
+  },
+  "output": {
+    "name": "uniquecrops:oldgrass"
+  }
+}

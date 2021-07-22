@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " D ",
+    "DBD",
+    " D "
+  ],
+  "key": {
+    "D": {
+      "item": "uniquecrops:seeddyeius"
+    },
+    "B": {
+      "item": "uniquecrops:book_guide"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:book_multiblock"
+  }
+}

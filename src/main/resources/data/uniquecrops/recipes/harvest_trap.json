@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IDI",
+    "SPS",
+    "SPS"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:logs"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "D": {
+      "tag": "forge:storage_blocks/iron"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:harvest_trap"
+  }
+}

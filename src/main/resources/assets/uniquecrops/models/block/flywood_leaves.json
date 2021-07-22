@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "uniquecrops:block/flywood_leaves"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "minecraft:slime_ball",
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "minecraft:lime_dye"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    },
+    {
+      "item": "uniquecrops:savageessence"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:looting",
+  "cost": 70,
+  "ingredients": [
+    [
+      {
+        "item": "uniquecrops:emeradic_diamond"
+      },
+      {
+        "item": "minecraft:bone_block"
+      },
+      {
+        "item": "minecraft:tnt"
+      },
+      {
+        "item": "minecraft:cobweb"
+      },
+      {
+        "item": "minecraft:soul_soil"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "snowy=false": { "model": "uniquecrops:block/oldgrass" },
+        "snowy=true": { "model":  "minecraft:block/grass_block_snow" }
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "uniquecrops:abstract"
+    },
+    {
+      "item": "uniquecrops:abstract"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "uniquecrops:diet_pills"
+  }
+}

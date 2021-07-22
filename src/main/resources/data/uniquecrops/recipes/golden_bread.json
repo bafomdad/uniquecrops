@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "item": "uniquecrops:goldenrods"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:golden_bread"
+  }
+}

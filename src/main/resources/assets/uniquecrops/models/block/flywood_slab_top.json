@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "uniquecrops:block/flywood_planks",
+    "bottom": "uniquecrops:block/flywood_planks",
+    "top": "uniquecrops:block/flywood_planks"
+  }
+}

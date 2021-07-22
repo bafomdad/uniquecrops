@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedeula"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingEula"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingEula.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_cobblonia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedeula"
+          }
+        ]
+      }
+    }
+  }
+}

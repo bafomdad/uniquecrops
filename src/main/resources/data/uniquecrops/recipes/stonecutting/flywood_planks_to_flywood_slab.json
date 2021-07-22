@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "uniquecrops:flywood_planks"
+  },
+  "result": "uniquecrops:flywood_slab",
+  "count": 2
+}

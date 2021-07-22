@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "uniquecrops:block/ruinedbrickscarved_slab_top"
+    },
+    "type=bottom": {
+      "model": "uniquecrops:block/ruinedbrickscarved_slab"
+    },
+    "type=double": {
+      "model": "uniquecrops:block/ruinedbricksmooth"
+    }
+  }
+}

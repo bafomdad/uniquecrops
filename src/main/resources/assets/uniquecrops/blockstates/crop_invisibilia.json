@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uniquecrops:block/invisibilia1"
+    },
+    "age=1": {
+      "model": "uniquecrops:block/invisibilia2"
+    },
+    "age=2": {
+      "model": "uniquecrops:block/invisibilia2"
+    },
+    "age=3": {
+      "model": "uniquecrops:block/invisibilia3"
+    },
+    "age=4": {
+      "model": "uniquecrops:block/invisibilia3"
+    },
+    "age=5": {
+      "model": "uniquecrops:block/invisibilia4"
+    },
+    "age=6": {
+      "model": "uniquecrops:block/invisibilia4"
+    },
+    "age=7": {
+      "model": "uniquecrops:block/invisibilia5"
+    }
+  }
+}

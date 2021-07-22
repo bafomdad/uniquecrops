@@ -1,0 +1,76 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 40
+  },
+  "shape": [
+    " D ",
+    "D0D",
+    " D "
+  ],
+  "shaperesult": [
+    "   ",
+    " E ",
+    "   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "0": {
+      "states": [
+        "uniquecrops:crop_devilsnare[age-4]",
+        "uniquecrops:crop_devilsnare[age-3]",
+        "uniquecrops:crop_devilsnare[age-2]",
+        "uniquecrops:crop_devilsnare[age-6]",
+        "uniquecrops:crop_devilsnare[age-5]",
+        "uniquecrops:crop_devilsnare[age-1]",
+        "uniquecrops:crop_devilsnare[age-0]",
+        "uniquecrops:crop_devilsnare[age-7]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "D": {
+      "states": [
+        "uniquecrops:crop_devilsnare[age-4]",
+        "uniquecrops:crop_devilsnare[age-3]",
+        "uniquecrops:crop_devilsnare[age-2]",
+        "uniquecrops:crop_devilsnare[age-6]",
+        "uniquecrops:crop_devilsnare[age-5]",
+        "uniquecrops:crop_devilsnare[age-1]",
+        "uniquecrops:crop_devilsnare[age-0]",
+        "uniquecrops:crop_devilsnare[age-7]"
+      ]
+    },
+    "W": {
+      "states": [
+        "uniquecrops:crop_weepingbells[age-7]",
+        "uniquecrops:crop_weepingbells[age-0]",
+        "uniquecrops:crop_weepingbells[age-6]",
+        "uniquecrops:crop_weepingbells[age-4]",
+        "uniquecrops:crop_weepingbells[age-5]",
+        "uniquecrops:crop_weepingbells[age-3]",
+        "uniquecrops:crop_weepingbells[age-2]",
+        "uniquecrops:crop_weepingbells[age-1]"
+      ]
+    }
+  },
+  "definitionresult": {
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "E": {
+      "states": [
+        "uniquecrops:exedo"
+      ]
+    }
+  }
+}

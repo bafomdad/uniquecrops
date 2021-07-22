@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "uniquecrops:emblem_transformation",
+	"uniquecrops:emblem_scarab",
+    "uniquecrops:emblem_ironstomach",
+    "uniquecrops:emblem_bookworm",
+    "uniquecrops:emblem_melee",
+    "uniquecrops:emblem_defense",
+    "uniquecrops:emblem_rainbow",
+    "uniquecrops:emblem_powerfist",
+    "uniquecrops:emblem_blacksmith",
+    "uniquecrops:emblem_weight",
+    "uniquecrops:emblem_leaf",
+    "uniquecrops:emblem_pacifism"
+  ]
+}

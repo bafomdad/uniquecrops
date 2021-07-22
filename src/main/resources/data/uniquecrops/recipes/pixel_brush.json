@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "ISI",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "uniquecrops:pixels"
+    },
+    "I": {
+      "item": "uniquecrops:invisitwine"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:pixel_brush"
+  }
+}

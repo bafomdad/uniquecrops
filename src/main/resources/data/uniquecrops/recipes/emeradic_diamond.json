@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DED"
+  ],
+  "key": {
+    "D": {
+      "item": "uniquecrops:pregem"
+    },
+    "E": {
+      "tag": "forge:gems/emerald"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emeradic_diamond"
+  }
+}

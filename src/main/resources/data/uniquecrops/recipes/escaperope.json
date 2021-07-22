@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EI",
+    "IE",
+    "EI"
+  ],
+  "key": {
+    "E": {
+      "item": "uniquecrops:lilytwine"
+    },
+    "I": {
+      "item": "uniquecrops:invisitwine"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:escaperope",
+    "count": 2
+  }
+}

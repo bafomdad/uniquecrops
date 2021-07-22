@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedcollis"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "CLC",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "uniquecrops:cinderleaf"
+    },
+    "L": {
+      "item": "minecraft:lily_pad"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:lavalily"
+  }
+}

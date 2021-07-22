@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedknowledge"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:heater",
+  "output": {
+    "item": "uniquecrops:rosewood_planks"
+  },
+  "input": {
+    "item": "uniquecrops:flywood_planks"
+  }
+}

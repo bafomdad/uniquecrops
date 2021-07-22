@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:gravel"
+  },
+  "output": {
+    "name": "uniquecrops:oldgravel"
+  }
+}

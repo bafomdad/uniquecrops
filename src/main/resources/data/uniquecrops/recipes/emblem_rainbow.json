@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WDW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_rainbow"
+  }
+}

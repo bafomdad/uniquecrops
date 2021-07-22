@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:thorns",
+  "cost": 20,
+  "ingredients": [
+    [
+      {
+        "item": "uniquecrops:cactus_boots"
+      },
+      {
+        "item": "uniquecrops:cactus_plate"
+      },
+      {
+        "item": "uniquecrops:cactus_helm"
+      },
+      {
+        "item": "uniquecrops:cactus_leggings"
+      }
+    ]
+  ]
+}

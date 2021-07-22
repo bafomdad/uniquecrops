@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " p ",
+    "BDB",
+    " b "
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "b": {
+      "item": "minecraft:blaze_powder"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_powerfist"
+  }
+}

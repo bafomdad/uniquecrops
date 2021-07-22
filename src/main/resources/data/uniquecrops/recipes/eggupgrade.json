@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IEI",
+    "EME",
+    "IEI"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "M": {
+      "item": "uniquecrops:millenniumeye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:eggupgrade"
+  }
+}

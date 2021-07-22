@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    " R ",
+    " B "
+  ],
+  "key": {
+    "F": {
+      "tag": "forge:fence_gates/wooden"
+    },
+    "R": {
+      "item": "uniquecrops:escaperope"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:bucketrope"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedmaryjane"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingMaryjane"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingMaryjane.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_collis",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedmaryjane"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedlacusia"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:hopper"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ]
+}

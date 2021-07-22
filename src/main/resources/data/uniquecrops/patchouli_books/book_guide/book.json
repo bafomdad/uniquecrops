@@ -1,0 +1,14 @@
+{
+	"name": "item.uniquecrops.book_guide",
+	"landing_text": "Guide book to learning of the many crops included in this mod.",
+	"version": 1,
+	"book_texture": "uniquecrops:textures/gui/book_orange.png",
+	"model": "uniquecrops:book_guide",
+	"creative_tab": "uniquecrops",
+	"dont_generate_book": true,
+	"custom_book_item": "uniquecrops:book_guide",
+	"show_progress": false,
+	"show_toasts": false,
+	"i18n": true,
+	"pause_game": false
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "uniquecrops:block/old_gold_side",
+    "bottom": "uniquecrops:block/old_gold_bottom",
+    "top": "uniquecrops:block/old_gold_top"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.bafomdad.uniquecrops.mixin",
+  "refmap": "uniquecrops.refmap.json",
+  "mixins": [
+    "AccessorRecipeManager",
+    "MixinItemFood",
+    "MixinFoodStats"
+  ],
+  "client": [
+	"MixinTextureStitch",
+    "MixinClientAdvancement"
+  ],
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

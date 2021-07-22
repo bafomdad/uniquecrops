@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " d ",
+    "gDi",
+    " w "
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond_sword"
+    },
+    "g": {
+      "item": "minecraft:golden_sword"
+    },
+    "i": {
+      "item": "minecraft:iron_sword"
+    },
+    "w": {
+      "item": "minecraft:wooden_sword"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_melee"
+  }
+}

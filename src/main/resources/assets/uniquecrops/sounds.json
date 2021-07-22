@@ -1,0 +1,7 @@
+{
+	"oof": { "sounds":["uniquecrops:oof"], "subtitle": "uniquecrops.subtitle.oof" },
+	"neonsigns": { "sounds":[{"name": "uniquecrops:neonsigns", "stream": true}] },
+	"taxi": { "sounds":[{"name": "uniquecrops:taxi", "stream": true}] },
+	"simply": { "sounds":[{"name": "uniquecrops:simply", "stream": true}] },
+	"faraway": { "sounds":[{"name": "uniquecrops:faraway", "stream": true}] }
+}

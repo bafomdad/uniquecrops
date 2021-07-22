@@ -1,0 +1,16 @@
+{
+    "name": "Crafty Stalks",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/craftyplant",
+			"text": "Slightly improved crafting"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.craftystalks"
+        }
+    ]
+}

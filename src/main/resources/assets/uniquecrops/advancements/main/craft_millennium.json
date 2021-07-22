@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedmillennium"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingMillennium"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingMillennium.desc"
+    }
+  },
+  "parent": "uniquecrops:main/craft_merlinia",
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "uniquecrops:seedmillennium"
+          }
+        ]
+      }
+    }
+  }
+}

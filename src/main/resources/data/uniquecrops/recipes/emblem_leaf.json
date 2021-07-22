@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lLl",
+    "LDL",
+    "lLl"
+  ],
+  "key": {
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "l": {
+      "tag": "minecraft:leaves"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_leaf"
+  }
+}

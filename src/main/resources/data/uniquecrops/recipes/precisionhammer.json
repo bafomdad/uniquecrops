@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "uniquecrops:precision_hammer"
+  },
+  "pattern": [
+    "XP",
+    "SW"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "uniquecrops:precision_shovel"
+    },
+    "P": {
+      "item": "uniquecrops:precision_pick"
+    },
+	"W": {
+	  "item": "uniquecrops:precision_sword"
+	},
+	"X": {
+	  "item": "uniquecrops:precision_axe"
+	}
+  }
+}

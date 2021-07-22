@@ -1,0 +1,15 @@
+{
+    "name": "block.uniquecrops.crop_instabilis",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:seeds",
+    "pages": [
+        {
+            "type": "uniquecrops:cropimage",
+            "blockstate": "uniquecrops:crop_instabilis[age=7]"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.book.pageinstabilis"
+        }
+    ]
+}

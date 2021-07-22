@@ -1,0 +1,14 @@
+{
+  "variants": {
+		"rafflesia=north": { "model": "uniquecrops:block/weatherflesia_petal", "y": 0 },
+		"rafflesia=south": { "model": "uniquecrops:block/weatherflesia_petal", "y": 180 },
+		"rafflesia=east": { "model": "uniquecrops:block/weatherflesia_petal", "y": 90 },
+		"rafflesia=west": { "model": "uniquecrops:block/weatherflesia_petal", "y": 270 },
+		"rafflesia=northeast": { "model": "uniquecrops:block/weatherflesia_petalcorner", "y": 90 },
+		"rafflesia=northwest": { "model": "uniquecrops:block/weatherflesia_petalcorner", "y": 0 },
+		"rafflesia=southeast": { "model": "uniquecrops:block/weatherflesia_petalcorner", "y": 180 },
+		"rafflesia=southwest": { "model": "uniquecrops:block/weatherflesia_petalcorner", "y": 270 },
+		"rafflesia=up": { "model": "uniquecrops:block/weatherflesia_center" },
+		"rafflesia=down": { "model": "uniquecrops:block/weatherflesia_center" }
+  }
+}

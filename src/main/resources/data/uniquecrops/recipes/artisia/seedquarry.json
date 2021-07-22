@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedquarry"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedhexis"
+    },
+    {
+      "item": "uniquecrops:seedpetramia"
+    },
+    {
+      "item": "uniquecrops:seedhexis"
+    },
+    {
+      "item": "uniquecrops:seedpetramia"
+    },
+    {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    {
+      "item": "uniquecrops:seedpetramia"
+    },
+    {
+      "item": "uniquecrops:seedhexis"
+    },
+    {
+      "item": "uniquecrops:seedpetramia"
+    },
+    {
+      "item": "uniquecrops:seedhexis"
+    }
+  ]
+}

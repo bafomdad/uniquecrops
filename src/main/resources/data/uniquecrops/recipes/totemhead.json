@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "LML",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "M": {
+      "item": "uniquecrops:millenniumeye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:totemhead"
+  }
+}

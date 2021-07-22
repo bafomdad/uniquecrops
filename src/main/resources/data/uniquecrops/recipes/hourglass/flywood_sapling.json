@@ -1,0 +1,15 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:birch_sapling",
+    "properties": {
+      "stage": "0"
+    }
+  },
+  "output": {
+    "name": "uniquecrops:flywood_sapling",
+    "properties": {
+      "stage": "0"
+    }
+  }
+}

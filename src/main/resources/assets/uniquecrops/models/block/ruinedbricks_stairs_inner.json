@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "uniquecrops:block/ruinedbricks",
+    "bottom": "uniquecrops:block/ruinedbricks",
+    "top": "uniquecrops:block/ruinedbricks"
+  }
+}
