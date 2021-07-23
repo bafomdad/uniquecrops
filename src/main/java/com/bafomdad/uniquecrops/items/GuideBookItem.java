@@ -61,6 +61,7 @@ public class GuideBookItem extends ItemBaseUC {
 
         if (stack.getItem() == this && isSelected) {
             if (stack.hasTag() && stack.getTag().contains(UCStrings.TAG_GROWTHSTAGES)) return;
+            if (world.isRemote) return;
             ListNBT tagList = UCUtils.getServerTaglist(entity.getUniqueID());
             if (tagList != null)
                 stack.setTagInfo(UCStrings.TAG_GROWTHSTAGES, tagList);
