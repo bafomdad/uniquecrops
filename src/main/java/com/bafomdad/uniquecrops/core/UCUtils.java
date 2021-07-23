@@ -96,9 +96,10 @@ public class UCUtils {
             CompoundNBT charTag = new CompoundNBT();
             int[] states = map.getValue().states.stream().mapToInt(s -> Block.getStateId(s)).toArray();
             charTag.putIntArray(map.getKey().toString(), states);
+            list.add(charTag);
         }
         nbt.put(name, list);
-        UniqueCrops.LOGGER.info("Serializing: " + name);
+        UniqueCrops.LOGGER.debug("Serializing: " + nbt);
         return nbt;
     }
 
@@ -106,7 +107,7 @@ public class UCUtils {
 
         Map<Character, RecipeMultiblock.Slot> map = new HashMap<>();
         if (nbt.contains(name)) {
-            ListNBT list = nbt.getList(name, Constants.NBT.TAG_LIST);
+            ListNBT list = nbt.getList(name, 10);
             for (int i = 0; i < list.size(); i++) {
                 CompoundNBT tag = list.getCompound(i);
                 for (String str : tag.keySet()) {
@@ -116,7 +117,7 @@ public class UCUtils {
                 }
             }
         }
-        UniqueCrops.LOGGER.info("Deserializing: " + name);
+        UniqueCrops.LOGGER.debug("Deserializing: " + nbt);
         return map;
     }
 
