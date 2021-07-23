@@ -16,7 +16,7 @@ public class InvisibiliaGlass extends AbstractGlassBlock {
 
     public InvisibiliaGlass() {
 
-        super(Properties.from(Blocks.GLASS));
+        super(Properties.from(Blocks.GLASS).setBlocksVision((state, reader, pos) -> false).setSuffocates((state, reader, pos) -> false));
     }
 
     @Override
