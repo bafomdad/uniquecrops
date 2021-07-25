@@ -31,7 +31,7 @@ public class RenderSundial extends TileEntityRenderer<TileSundial> {
         ms.rotate(Vector3f.XP.rotationDegrees(180.0F));
         Minecraft.getInstance().textureManager.bindTexture(RES);
 
-        model.DialRedstone.showModel = te.savedTime < 0;
+        model.DialRedstone.showModel = te.savedTime > 0;
         model.DialRedstone.rotateAngleY = te.savedRotation;
         model.Dial.rotateAngleY = te.rotation;
 
