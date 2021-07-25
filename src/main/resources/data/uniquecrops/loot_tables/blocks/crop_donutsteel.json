@@ -2,48 +2,10 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "uniquecrops:crop_donutsteel",
-                  "properties": {
-                    "age": "7"
-                  }
-                }
-              ],
-              "name": "uniquecrops:seeddonutsteel"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "uniquecrops:steel_donut"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:apply_bonus",
-              "enchantment": "minecraft:fortune",
-              "formula": "minecraft:binomial_with_bonus_count",
-              "parameters": {
-                "extra": 3,
-                "probability": 0.5714286
-              }
-            }
-          ],
           "name": "uniquecrops:steel_donut"
         }
       ],
@@ -54,7 +16,18 @@
           "properties": {
             "age": "7"
           }
-        },
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "uniquecrops:seeddonutsteel"
+        }
+      ],
+      "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }

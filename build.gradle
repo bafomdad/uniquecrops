@@ -22,14 +22,14 @@ mixin {
     add sourceSets.main, "uniquecrops.refmap.json"
 }
 version = '0.1.2-1.16.5'
-group = 'com.bafomdad.uniquecrops' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.bafomdad.uniquecrops'
 archivesBaseName = 'uniquecrops'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-//    mappings channel: 'official', version: '1.16.5'
+
     mappings channel: 'snapshot', version: "20201028-1.16.3"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -38,7 +38,6 @@ minecraft {
             workingDirectory project.file('run')
             arg "-mixin.config=uniquecrops.mixins.json"
 
-//            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             property 'mixin.env.remapRefMap', 'true'
@@ -54,7 +53,6 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-//            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"

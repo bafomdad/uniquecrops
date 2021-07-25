@@ -2,13 +2,13 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:alternatives",
           "children": [
             {
-              "type": "minecraft:item",
+              "type": "minecraft:tag",
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
@@ -18,11 +18,8 @@
                   }
                 }
               ],
-              "name": "uniquecrops:seednormal"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "minecraft:wheat"
+              "name": "c:normal_drops",
+              "expand": true
             }
           ]
         }
@@ -39,22 +36,15 @@
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:binomial_with_bonus_count",
               "parameters": {
-                "extra": 3,
+                "extra": 1,
                 "probability": 0.5714286
               }
             }
           ],
-          "name": "minecraft:beetroot"
+          "name": "uniquecrops:seednormal"
         }
       ],
       "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "uniquecrops:crop_normal",
-          "properties": {
-            "age": "7"
-          }
-        },
         {
           "condition": "minecraft:survives_explosion"
         }

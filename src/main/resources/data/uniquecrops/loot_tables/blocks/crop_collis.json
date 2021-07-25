@@ -2,11 +2,48 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "main",
-      "rolls": 1,
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "uniquecrops:crop_collis",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "uniquecrops:seedcollis"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "uniquecrops:goldenrods"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:binomial_with_bonus_count",
+              "parameters": {
+                "extra": 1,
+                "probability": 0.5714286
+              }
+            }
+          ],
           "name": "uniquecrops:goldenrods"
         }
       ],
@@ -17,21 +54,13 @@
           "properties": {
             "age": "7"
           }
-        }
-      ]
-    },
-    {
-      "name": "main",
-      "rolls": 1,
-      "entries": [
+        },
         {
-          "type": "minecraft:item",
-          "name": "uniquecrops:seedcollis"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
+          "condition": "minecraft:block_state_property",
+          "block": "uniquecrops:crop_collis",
+          "properties": {
+            "age": "7"
+          }
         }
       ]
     }
