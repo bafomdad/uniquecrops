@@ -164,13 +164,13 @@
 
     "_comment": "MUSIC DISCS",
     "item.uniquecrops.record_neonsigns": "Music Disc - 「サンセット Ｎｅｔｗｏｒｋ❾❶」",
-    "item.uniquecrops:record_neonsigns.desc": "roadtrip - neon signs",
+    "item.uniquecrops.record_neonsigns.desc": "roadtrip - neon signs",
     "item.uniquecrops.record_faraway": "Music Disc - Infinity Frequencies",
-    "item.uniquecrops:record_faraway.desc": "Into the light - Far away",
+    "item.uniquecrops.record_faraway.desc": "Into the light - Far away",
     "item.uniquecrops.record_simply": "Music Disc - luxury elite",
-    "item.uniquecrops:record_simply.desc": "101.7 WAVE II - simply",
+    "item.uniquecrops.record_simply.desc": "101.7 WAVE II - simply",
     "item.uniquecrops.record_taxi": "Music Disc - glaciære",
-    "item.uniquecrops:record_taxi.desc": "Water Slide - Taxi Ride Home",
+    "item.uniquecrops.record_taxi.desc": "Water Slide - Taxi Ride Home",
 
     "_comment": "POTIONS",
     "effect.uniquecrops.ennui": "Potion of Boredom",
