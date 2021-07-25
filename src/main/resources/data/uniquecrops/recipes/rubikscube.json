@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "uniquecrops:rubiks_cube"
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+	"PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:cubeythingy"
+    }
+  }
+}
