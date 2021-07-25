@@ -16,27 +16,29 @@ import com.bafomdad.uniquecrops.init.UCFeatures;
 import com.bafomdad.uniquecrops.items.DyedBonemealItem;
 import com.bafomdad.uniquecrops.network.PacketSyncCap;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.loot.LootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.TableLootEntry;
+import net.minecraft.loot.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -44,8 +46,10 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 public class UCEventHandlerCommon {
@@ -116,6 +120,21 @@ public class UCEventHandlerCommon {
         if (elb instanceof PlayerEntity) {
             if (elb.world.getBlockState(elb.getPosition()).getBlock() == UCBlocks.LILY_ENDER.get()) {
                 EnumLily.searchNearbyPads(elb.world, elb.getPosition(), elb, Direction.UP);
+            }
+        }
+    }
+
+    public static void addSeed(BlockEvent.BreakEvent event) {
+
+        if (event.getState().isIn(Blocks.GRASS) || event.getState().isIn(Blocks.TALL_GRASS) || event.getState().isIn(Blocks.FERN) || event.getState().isIn(Blocks.LARGE_FERN)) {
+            if (event.getWorld() instanceof ServerWorld) {
+                ServerWorld serverworld = (ServerWorld)event.getWorld();
+                BlockPos pos = event.getPos();
+                List<ItemStack> stacks = event.getState().getDrops((new LootContext.Builder(serverworld)).withRandom(serverworld.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY));
+                float value = serverworld.rand.nextFloat();
+                if (value > 0.90F) {
+                    InventoryHelper.spawnItemStack(serverworld, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCItems.NORMAL_SEED.get()));
+                }
             }
         }
     }
