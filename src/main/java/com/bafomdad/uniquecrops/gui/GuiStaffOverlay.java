@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.gui;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.capabilities.CPProvider;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
@@ -70,8 +71,8 @@ public class GuiStaffOverlay {
 
         if (capacity <= 0) return;
 
-        int x = res.getScaledWidth() / 2 + -191;
-        int y = res.getScaledHeight() + -50;
+        int x = res.getScaledWidth() / 2 + UCConfig.CLIENT.guiWidth.get();
+        int y = res.getScaledHeight() + UCConfig.CLIENT.guiHeight.get();
 
         mc.getTextureManager().bindTexture(TEX);
         RenderSystem.enableBlend();

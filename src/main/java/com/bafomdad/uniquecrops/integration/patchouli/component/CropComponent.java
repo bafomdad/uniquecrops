@@ -53,7 +53,7 @@ public class CropComponent implements ICustomComponent {
         ms.scale(45, 45, 45);
         BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
         IRenderTypeBuffer.Impl renderBuffer = mc.getRenderTypeBuffers().getBufferSource();
-        brd.renderBlock(state, ms, renderBuffer, 0xF00000, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
+        brd.renderBlock(state, ms, renderBuffer, 15728880, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
         renderBuffer.finish();
         ms.pop();
     }

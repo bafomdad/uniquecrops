@@ -1,6 +1,7 @@
 package com.bafomdad.uniquecrops.blocks.tiles;
 
 import com.bafomdad.uniquecrops.blocks.BaseCropsBlock;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCTiles;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -30,7 +31,7 @@ public class TileIndustria extends BaseTileUC implements ITickableTileEntity {
         if (!world.isRemote && world.isDaytime()) {
             if (!energy.canReceive()) return;
 
-            energy.receiveEnergy(20, false);
+            energy.receiveEnergy(UCConfig.COMMON.energyPerTick.get(), false);
             int age = energy.getEnergyStored() / 5000;
             if (Math.min(age, 7) != getBlockState().get(BaseCropsBlock.AGE))
                 world.setBlockState(pos, getBlockState().with(BaseCropsBlock.AGE, Math.min(age, 7)));

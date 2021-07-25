@@ -55,27 +55,52 @@ public class UCLootProvider implements IDataProvider {
                 .acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withStringProp(StalkBlock.STALKS, "up")))
                 ))
         );
+        functionTable.put(UCBlocks.ARTISIA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.PRECISION_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.KNOWLEDGE_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.DIRIGIBLE_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.MILLENNIUM_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.ENDERLILY_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.COLLIS_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.INVISIBILIA_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.MARYJANE_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.WEEPINGBELLS_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.MUSICA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.EULA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.COBBLONIA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.ABSTRACT_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.WAFFLONIA_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.DEVILSNARE_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.PIXELSIUS_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.PETRAMIA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.MALLEATORIS_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.IMPERIA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.LACUSIA_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.HEXIS_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.INDUSTRIA_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.QUARRY_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.DONUTSTEEL_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.INSTABILIS_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.SUCCO_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.ADVENTUS_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.HOLY_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.MAGNES_CROP.get(), UCLootProvider::genCrops);
+        functionTable.put(UCBlocks.FEROXIA_CROP.get(), UCLootProvider::genCropsWithBonus);
+        functionTable.put(UCBlocks.NORMAL_CROP.get(), (block) -> LootTable.builder()
+                .addLootPool(LootPool.builder()
+                        .rolls(ConstantRange.of(1))
+                        .addEntry(AlternativesLootEntry.builder(TagLootEntry.getBuilder(UCItemTagsProvider.NORMAL_DROP)
+                        .acceptCondition(fullyGrown(block)))))
+                .addLootPool(seed(UCItems.NORMAL_SEED.get()))
+        );
         functionTable.put(UCBlocks.INVISIBILIA_GLASS.get(), UCLootProvider::genSilk);
         functionTable.put(UCBlocks.FLYWOOD_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.ROSEWOOD_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.RUINEDBRICKS_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.RUINEDBRICKSCARVED_SLAB.get(), UCLootProvider::genSlab);
-        functionTable.put(Blocks.GRASS, (block) -> LootTable.builder()
-                .addLootPool(LootPool.builder()
-                        .addEntry(ItemLootEntry.builder(UCItems.NORMAL_SEED.get())
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(RandomChance.builder(0.125F))
-                                .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE, 2))
-                        )));
-        functionTable.put(Blocks.FERN, (block) -> LootTable.builder()
-                .addLootPool(LootPool.builder()
-                        .addEntry(ItemLootEntry.builder(UCItems.NORMAL_SEED.get())
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(RandomChance.builder(0.25F))
-                                .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE, 2))
-                        )));
         functionTable.put(UCBlocks.DYEIUS_CROP.get(), (block) -> LootTable.builder()
                 .addLootPool(LootPool.builder()
+                        .acceptCondition(fullyGrown(block))
                         .addEntry(ItemLootEntry.builder(Items.WHITE_DYE)
                                 .acceptFunction(SetCount.builder(ConstantRange.of(1)))
                                 .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(0, 1500))))
@@ -124,7 +149,8 @@ public class UCLootProvider implements IDataProvider {
                         .addEntry(ItemLootEntry.builder(Items.BLACK_DYE)
                                 .acceptFunction(SetCount.builder(ConstantRange.of(1)))
                                 .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(22501, 23999))))
-                ));
+        )
+        .addLootPool(seed(UCItems.DYEIUS_SEED.get())));
     }
 
     @Override
@@ -134,14 +160,17 @@ public class UCLootProvider implements IDataProvider {
 
         for (Block block : Registry.BLOCK) {
             ResourceLocation id = Registry.BLOCK.getKey(block);
-            if (!id.getNamespace().equals(UniqueCrops.MOD_ID)) continue;
 
-            if (block instanceof BaseCropsBlock && block != UCBlocks.DYEIUS_CROP.get()) {
-                if (((BaseCropsBlock)block).isIncludeSeed())
-                    functionTable.put(block, UCLootProvider::genCropsWithBonus);
-                else
-                    functionTable.put(block, UCLootProvider::genCrops);
-            }
+            if (!id.getNamespace().equals(UniqueCrops.MOD_ID)) continue;
+            if (block == UCBlocks.FLYWOOD_LEAVES.get()) continue;
+            if (block == UCBlocks.DUMMY_CROP.get()) continue;
+
+//            if (block instanceof BaseCropsBlock && (block != UCBlocks.DYEIUS_CROP.get() || block != UCBlocks.NORMAL_CROP.get())) {
+//                if (((BaseCropsBlock)block).isIncludeSeed())
+//                    functionTable.put(block, UCLootProvider::genCropsWithBonus);
+//                else
+//                    functionTable.put(block, UCLootProvider::genCrops);
+//            }
             Function<Block, LootTable.Builder> func = functionTable.getOrDefault(block, UCLootProvider::genRegular);
             tables.put(id, func.apply(block));
         }
@@ -185,15 +214,15 @@ public class UCLootProvider implements IDataProvider {
                         .alternatively(ItemLootEntry.builder(crop.getCrop()))))
                 .addLootPool(LootPool.builder().acceptCondition(condition)
                  .addEntry(ItemLootEntry.builder(crop.getCrop())
-                        .acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3)))
-                        .acceptCondition(SurvivesExplosion.builder()));
+                        .acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 1)))
+                        .acceptCondition(condition));
 
         return builder;
     }
 
     private static LootTable.Builder droppingAndBonusWhen(Block block, Item itemConditional, Item withBonus, ILootCondition.IBuilder conditionBuilder) {
 
-        return LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(itemConditional).acceptCondition(conditionBuilder).alternatively(ItemLootEntry.builder(withBonus)))).addLootPool(LootPool.builder().acceptCondition(conditionBuilder).addEntry(ItemLootEntry.builder(withBonus).acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))));
+        return LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(itemConditional).acceptCondition(conditionBuilder).alternatively(ItemLootEntry.builder(withBonus)))).addLootPool(LootPool.builder().acceptCondition(conditionBuilder).addEntry(ItemLootEntry.builder(withBonus).acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 1))));
     }
 
     private static LootTable.Builder genSlab(Block block) {
@@ -216,6 +245,16 @@ public class UCLootProvider implements IDataProvider {
     private static LootTable.Builder genSilk(Block block) {
 
         return LootTable.builder().addLootPool(LootPool.builder().acceptCondition(SILK_TOUCH).rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)));
+    }
+
+    private static LootPool.Builder seed(Item item) {
+
+        return LootPool.builder().addEntry(ItemLootEntry.builder(item).acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))).acceptCondition(SurvivesExplosion.builder());
+    }
+
+    private static ILootCondition.IBuilder fullyGrown(Block block) {
+
+        return BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
     }
 
     @Override

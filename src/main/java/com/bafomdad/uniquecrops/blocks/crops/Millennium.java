@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.blocks.crops;
 
 import com.bafomdad.uniquecrops.blocks.BaseCropsBlock;
 import com.bafomdad.uniquecrops.blocks.tiles.TileMillennium;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.init.UCItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +31,7 @@ public class Millennium extends BaseCropsBlock {
                     mill.setTime();
                     return;
                 }
-                if (mill.calcTime() >= 10) {
+                if (mill.calcTime() >= UCConfig.COMMON.millenniumTime.get()) {
                     float f = getGrowthChance(this, world, pos);
                     if (rand.nextInt((int)(10.0F / f) + 1) == 0) {
                         world.setBlockState(pos, this.withAge(getAge(state) + 1), 2);

@@ -92,12 +92,12 @@ public class UCUtils {
 
         CompoundNBT nbt = new CompoundNBT();
         ListNBT list = new ListNBT();
-        for (Map.Entry<Character, RecipeMultiblock.Slot> map : recipe.entrySet()) {
+        recipe.forEach((key, value) -> {
             CompoundNBT charTag = new CompoundNBT();
-            int[] states = map.getValue().states.stream().mapToInt(s -> Block.getStateId(s)).toArray();
-            charTag.putIntArray(map.getKey().toString(), states);
+            int[] states = value.states.stream().mapToInt(Block::getStateId).toArray();
+            charTag.putIntArray(key.toString(), states);
             list.add(charTag);
-        }
+        });
         nbt.put(name, list);
         UniqueCrops.LOGGER.debug("Serializing: " + nbt);
         return nbt;
@@ -111,7 +111,7 @@ public class UCUtils {
             for (int i = 0; i < list.size(); i++) {
                 CompoundNBT tag = list.getCompound(i);
                 for (String str : tag.keySet()) {
-                    BlockState[] states = Arrays.stream(tag.getIntArray(str)).mapToObj(b -> Block.getStateById(b)).toArray(BlockState[]::new);
+                    BlockState[] states = Arrays.stream(tag.getIntArray(str)).mapToObj(Block::getStateById).toArray(BlockState[]::new);
                     RecipeMultiblock.Slot slot = new RecipeMultiblock.Slot(states);
                     map.put(str.charAt(0), slot);
                 }
@@ -127,7 +127,7 @@ public class UCUtils {
         for (TileEntity tile : world.loadedTileEntityList) {
             if (tile.getClass() == tileToFind && !pos.equals(tile.getPos())) {
                 double distance = tile.getPos().distanceSq(pos);
-                if (closest == null && distance <= dist) {
+                if (distance <= dist) {
                     closest = tile;
                     break;
                 }

@@ -36,35 +36,40 @@ public class RenderSucco extends TileEntityRenderer<TileSucco> {
 
         int age = te.getBlockState().get(BaseCropsBlock.AGE);
 
-        ms.push();
         if (buffers  == null)
-            buffers = initBuffers(Minecraft.getInstance().getRenderTypeBuffers().getCrumblingBufferSource());
+            buffers = initBuffers(Minecraft.getInstance().getRenderTypeBuffers().getBufferSource());
 
         BlockState renderState = UCBlocks.DUMMY_CROP.get().getDefaultState().with(BaseCropsBlock.AGE, age);
         BlockRendererDispatcher brd = Minecraft.getInstance().getBlockRendererDispatcher();
+        if (buffer instanceof IRenderTypeBuffer.Impl) {
+            ((IRenderTypeBuffer.Impl)buffer).finish();
+        }
         brd.renderBlock(renderState, ms, buffers, light, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
 
         buffers.finish();
-        ms.pop();
     }
 
     private static IRenderTypeBuffer.Impl initBuffers(IRenderTypeBuffer.Impl original) {
+
         BufferBuilder fallback = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "buffer");
         Map<RenderType, BufferBuilder> layerBuffers = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "fixedBuffers");
         Map<RenderType, BufferBuilder> remapped = new Object2ObjectLinkedOpenHashMap<>();
-        for (Map.Entry<RenderType, BufferBuilder> e : layerBuffers.entrySet()) {
+        for (Map.Entry<RenderType, BufferBuilder> e : layerBuffers.entrySet())
             remapped.put(GhostRenderType.remap(e.getKey()), e.getValue());
-        }
+
         return new GhostBuffers(fallback, remapped);
     }
 
     private static class GhostBuffers extends IRenderTypeBuffer.Impl {
+
         protected GhostBuffers(BufferBuilder fallback, Map<RenderType, BufferBuilder> layerBuffers) {
+
             super(fallback, layerBuffers);
         }
 
         @Override
         public IVertexBuilder getBuffer(RenderType type) {
+
             return super.getBuffer(GhostRenderType.remap(type));
         }
     }
@@ -101,6 +106,7 @@ public class RenderSucco extends TileEntityRenderer<TileSucco> {
         }
 
         public static RenderType remap(RenderType in) {
+
             if (in instanceof GhostRenderType) {
                 return in;
             } else {

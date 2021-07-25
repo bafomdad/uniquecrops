@@ -6,6 +6,7 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 public class UCItemTagsProvider extends ItemTagsProvider {
 
     public static final ITag.INamedTag<Item> STEEL_INGOT = forgeTag("ingots/steel");
+    public static final ITag.INamedTag<Item> NORMAL_DROP = cTag("normal_drops");
 
     public UCItemTagsProvider(DataGenerator gen, BlockTagsProvider provider, ExistingFileHelper helper) {
 
@@ -27,6 +29,7 @@ public class UCItemTagsProvider extends ItemTagsProvider {
     public void registerTags() {
 
         this.getOrCreateBuilder(STEEL_INGOT).addItemEntry(UCItems.STEEL_DONUT.get());
+        this.getOrCreateBuilder(NORMAL_DROP).add(Items.BEETROOT, Items.WHEAT, Items.CARROT, Items.POTATO);
     }
 
     @Override
@@ -38,6 +41,11 @@ public class UCItemTagsProvider extends ItemTagsProvider {
     private static ITag.INamedTag<Item> forgeTag(String name) {
 
         return getOrRegister(ItemTags.getAllTags(), loc -> ItemTags.makeWrapperTag(loc.toString()), new ResourceLocation("forge", name));
+    }
+
+    private static ITag.INamedTag<Item> cTag(String name) {
+
+        return getOrRegister(ItemTags.getAllTags(), loc -> ItemTags.makeWrapperTag(loc.toString()), new ResourceLocation("c", name));
     }
 
     private static <T> ITag.INamedTag<T> getOrRegister(List<? extends ITag.INamedTag<T>> list, Function<ResourceLocation, ITag.INamedTag<T>> register, ResourceLocation loc) {

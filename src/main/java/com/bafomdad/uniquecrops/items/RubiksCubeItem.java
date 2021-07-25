@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.items;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.items.base.ItemBaseUC;
 import net.minecraft.entity.player.PlayerEntity;
@@ -99,7 +100,7 @@ public class RubiksCubeItem extends ItemBaseUC {
             if (!pos.equals(BlockPos.ZERO)) {
                 player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                 player.world.playEvent(2003, pos, 0);
-                player.getCooldownTracker().setCooldown(this, 300);
+                player.getCooldownTracker().setCooldown(this, UCConfig.COMMON.cubeCooldown.get());
             } else {
                 player.sendStatusMessage(new StringTextComponent("No teleport position saved here!"), true);
             }
