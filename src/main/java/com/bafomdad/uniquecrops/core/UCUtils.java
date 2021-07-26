@@ -99,7 +99,6 @@ public class UCUtils {
             list.add(charTag);
         });
         nbt.put(name, list);
-        UniqueCrops.LOGGER.debug("Serializing: " + nbt);
         return nbt;
     }
 
@@ -117,7 +116,6 @@ public class UCUtils {
                 }
             }
         }
-        UniqueCrops.LOGGER.debug("Deserializing: " + nbt);
         return map;
     }
 

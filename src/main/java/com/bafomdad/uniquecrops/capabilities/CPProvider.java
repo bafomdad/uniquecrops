@@ -18,18 +18,21 @@ public class CPProvider implements ICapabilitySerializable<CompoundNBT> {
     @CapabilityInject(ICropPower.class)
     public static Capability<ICropPower> CROP_POWER = null;
 
-    protected final CPCapability cap;
+    private LazyOptional<ICropPower> instance;
+    private ICropPower crop;
 
     public CPProvider() {
 
-        cap = new CPCapability();
+        this.crop = CROP_POWER.getDefaultInstance();
+        this.instance = LazyOptional.of(() -> crop);
     }
 
     public CPProvider(int capacity, boolean ignoreCooldown) {
 
-        cap = new CPCapability();
-        cap.setCapacity(capacity);
-        cap.setIgnoreCooldown(ignoreCooldown);
+        this.crop = CROP_POWER.getDefaultInstance();
+        crop.setCapacity(capacity);
+        crop.setIgnoreCooldown(ignoreCooldown);
+        this.instance = LazyOptional.of(() -> crop);
     }
 
     public static void register() {
@@ -56,18 +59,18 @@ public class CPProvider implements ICapabilitySerializable<CompoundNBT> {
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
 
-        return cap == CROP_POWER ? LazyOptional.of(() -> this.cap).cast() : LazyOptional.empty();
+        return CROP_POWER.orEmpty(cap, instance);
     }
 
     @Override
     public CompoundNBT serializeNBT() {
 
-        return cap.serializeNBT();
+        return crop.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
 
-        cap.deserializeNBT(nbt);
+        crop.deserializeNBT(nbt);
     }
 }
