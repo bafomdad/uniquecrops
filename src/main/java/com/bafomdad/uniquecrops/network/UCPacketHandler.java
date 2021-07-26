@@ -26,6 +26,7 @@ public final class UCPacketHandler {
         INSTANCE.registerMessage(id++, PacketColorfulCube.class, PacketColorfulCube::encode, PacketColorfulCube::decode, PacketColorfulCube::handle);
         INSTANCE.registerMessage(id++, PacketUCEffect.class, PacketUCEffect::encode, PacketUCEffect::decode, PacketUCEffect::handle);
         INSTANCE.registerMessage(id++, PacketOpenBook.class, PacketOpenBook::encode, PacketOpenBook::decode, PacketOpenBook::handle);
+        INSTANCE.registerMessage(id++, PacketOpenCube.class, PacketOpenCube::encode, PacketOpenCube::decode, PacketOpenCube::handle);
     }
 
     public static void sendToNearbyPlayers(World world, BlockPos pos, Object toSend) {

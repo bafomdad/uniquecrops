@@ -1,11 +1,14 @@
 package com.bafomdad.uniquecrops.items;
 
-import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemBaseUC;
+import com.bafomdad.uniquecrops.network.PacketOpenCube;
+import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
@@ -20,10 +23,9 @@ import net.minecraft.world.World;
 
 public class RubiksCubeItem extends ItemBaseUC {
 
-    @Override
-    public Rarity getRarity(ItemStack stack) {
+    public RubiksCubeItem() {
 
-        return Rarity.EPIC;
+        super(UCItems.unstackable().rarity(Rarity.EPIC));
     }
 
     @Override
@@ -49,9 +51,9 @@ public class RubiksCubeItem extends ItemBaseUC {
 
         ItemStack cube = player.getHeldItemMainhand();
         if (cube.getItem() == this) {
-            if (!world.isRemote) {
-                UniqueCrops.proxy.openCube();
-            }
+            if (!world.isRemote)
+                UCPacketHandler.sendTo((ServerPlayerEntity)player, new PacketOpenCube(player.getEntityId()));
+
             return ActionResult.resultSuccess(cube);
         }
         return ActionResult.resultPass(cube);
