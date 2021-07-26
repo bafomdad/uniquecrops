@@ -41,15 +41,13 @@ public class Feroxia extends BaseCropsBlock {
     }
 
     @Override
-    protected void tickCrop(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
         if (isMaxAge(state)) return;
         if (this.canIgnoreGrowthRestrictions(world, pos)) {
             super.randomTick(state, world, pos, rand);
             return;
         }
-        if (world.isRemote) return;
-
         int stage = getStage(world, pos, state);
         if (stage == -1) return;
 
