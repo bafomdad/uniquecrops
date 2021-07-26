@@ -3,7 +3,6 @@ package com.bafomdad.uniquecrops.items;
 import com.bafomdad.uniquecrops.api.ICropPower;
 import com.bafomdad.uniquecrops.api.IItemBooster;
 import com.bafomdad.uniquecrops.blocks.tiles.TileDigger;
-import com.bafomdad.uniquecrops.capabilities.CPCapability;
 import com.bafomdad.uniquecrops.capabilities.CPProvider;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
@@ -45,7 +44,7 @@ public class WildwoodStaffItem extends ItemBaseUC {
 
     public WildwoodStaffItem() {
 
-        super(UCItems.defaultBuilder().maxStackSize(1));
+        super(UCItems.unstackable().rarity(Rarity.EPIC));
         MinecraftForge.EVENT_BUS.addListener(this::onCropGrowth);
     }
 
@@ -104,12 +103,6 @@ public class WildwoodStaffItem extends ItemBaseUC {
     }
 
     @Override
-    public Rarity getRarity(ItemStack stack) {
-
-        return Rarity.EPIC;
-    }
-
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
@@ -135,7 +128,7 @@ public class WildwoodStaffItem extends ItemBaseUC {
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
 
-        CompoundNBT tag = stack.hasTag() ? stack.getTag().copy() : new CompoundNBT();
+        CompoundNBT tag = stack.getOrCreateTag();
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
             tag.put(TEMP_CAP, CPProvider.CROP_POWER.writeNBT(crop, null));
         });
@@ -145,12 +138,14 @@ public class WildwoodStaffItem extends ItemBaseUC {
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
 
-        stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-            if (nbt.contains(TEMP_CAP, 10)) {
-                CPProvider.CROP_POWER.readNBT(crop, null, nbt);
-                nbt.remove(TEMP_CAP);
-            }
-        });
+        if (nbt != null) {
+            stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
+                if (nbt.contains(TEMP_CAP, 10)) {
+                    CPProvider.CROP_POWER.readNBT(crop, null, nbt.getCompound(TEMP_CAP));
+                    nbt.remove(TEMP_CAP);
+                }
+            });
+        }
         super.readShareTag(stack, nbt);
     }
 
@@ -163,6 +158,9 @@ public class WildwoodStaffItem extends ItemBaseUC {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+
+        if (CPProvider.CROP_POWER == null)
+            return null;
 
         return new CPProvider();
     }

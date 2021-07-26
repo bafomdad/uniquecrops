@@ -58,12 +58,14 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
 
-        stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-            if (nbt.contains(TEMP_CAP, 10)) {
-                CPProvider.CROP_POWER.readNBT(crop, null, nbt);
-                nbt.remove(TEMP_CAP);
-            }
-        });
+        if (nbt != null) {
+            stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
+                if (nbt.contains(TEMP_CAP, 10)) {
+                    CPProvider.CROP_POWER.readNBT(crop, null, nbt.getCompound(TEMP_CAP));
+                    nbt.remove(TEMP_CAP);
+                }
+            });
+        }
         super.readShareTag(stack, nbt);
     }
 
@@ -73,7 +75,7 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
         if (!(entity instanceof PlayerEntity)) return;
 
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-            if (crop.getPower() >= crop.getCapacity()) {
+            if (!world.isRemote && crop.getPower() >= crop.getCapacity()) {
                 stack.shrink(1);
                 ItemHandlerHelper.giveItemToPlayer((PlayerEntity)entity, new ItemStack(UCItems.ENCHANTED_LEATHER.get()));
             }
@@ -89,6 +91,9 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+
+        if (CPProvider.CROP_POWER == null)
+            return null;
 
         return new CPProvider(MAX_CAPACITY, true);
     }
