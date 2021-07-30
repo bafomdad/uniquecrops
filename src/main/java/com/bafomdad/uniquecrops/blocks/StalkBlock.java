@@ -8,7 +8,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -85,20 +87,34 @@ public class StalkBlock extends BaseStalkBlock {
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileCraftyPlant) {
+            TileCraftyPlant craft = (TileCraftyPlant)tile;
+            for (int i = 0; i < craft.getCraftingInventory().getSlots(); i++) {
+                ItemStack stack  = craft.getCraftingInventory().getStackInSlot(i);
+                if (!stack.isEmpty() && !world.isRemote)
+                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            }
+        }
+    }
+
+    @Override
+    public void checkAndDropBlock(World world, BlockPos pos, BlockState state) {
+
         if (state.get(STALKS) == EnumDirectional.DOWN) {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 BlockPos loopPos = pos.offset(dir);
                 if (world.isAirBlock(loopPos)) {
                     world.destroyBlock(pos, false);
-                    return;
                 }
             }
+            return;
         }
         if (state.get(STALKS) == EnumDirectional.UP) {
             if (world.isAirBlock(pos.down())) {
                 world.destroyBlock(pos, false);
-                return;
             }
+            return;
         }
         if (isNeighborStalkMissing(world, pos, state)) {
             world.destroyBlock(pos, false);
@@ -111,10 +127,12 @@ public class StalkBlock extends BaseStalkBlock {
 
         EnumDirectional prop = (EnumDirectional)state.get(STALKS);
         switch (prop) {
-            case NORTH: return isStalk(world, pos.east()) || isStalk(world, pos.west());
-            case SOUTH: return isStalk(world, pos.east()) || isStalk(world, pos.west());
-            case WEST: return isStalk(world, pos.north()) || isStalk(world, pos.south());
-            case EAST: return isStalk(world, pos.north()) || isStalk(world, pos.south());
+            case NORTH:
+            case SOUTH:
+                return isStalk(world, pos.east()) || isStalk(world, pos.west());
+            case WEST:
+            case EAST:
+                return isStalk(world, pos.north()) || isStalk(world, pos.south());
             case NORTHEAST: return isStalk(world, pos.south()) || isStalk(world, pos.west());
             case NORTHWEST: return isStalk(world, pos.south()) || isStalk(world, pos.east());
             case SOUTHEAST: return isStalk(world, pos.north()) || isStalk(world, pos.west());

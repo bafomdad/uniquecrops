@@ -53,7 +53,7 @@ public class UCBlocks {
     public static final RegistryObject<Block> RUINEDBRICKSCARVED = register("ruinedbrickscarved", () -> new Block(Properties.from(Blocks.CHISELED_STONE_BRICKS)));
     public static final RegistryObject<Block> RUINEDBRICKSRED = register("ruinedbricksred", () -> new Block(Properties.from(Blocks.STONE_BRICKS)));
     public static final RegistryObject<Block> HARVEST_TRAP = register("harvest_trap", HarvestTrapBlock::new);
-    public static final RegistryObject<Block> CROP_PORTAL = register("crop_portal", () -> new Block(Properties.from(Blocks.NETHER_PORTAL)), false);
+    public static final RegistryObject<Block> CROP_PORTAL = register("crop_portal", CropPortalBlock::new, false);
     public static final RegistryObject<Block> DEMO_CORD = register("demo_cord", DemoCordBlock::new);
     public static final RegistryObject<Block> TOTEMHEAD = register("totemhead", TotemheadBlock::new);
     public static final RegistryObject<Block> SUN_DIAL = register("sun_dial", SundialBlock::new);
