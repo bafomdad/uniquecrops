@@ -16,7 +16,6 @@ import com.bafomdad.uniquecrops.init.UCFeatures;
 import com.bafomdad.uniquecrops.items.DyedBonemealItem;
 import com.bafomdad.uniquecrops.network.PacketSyncCap;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.enchantment.Enchantment;

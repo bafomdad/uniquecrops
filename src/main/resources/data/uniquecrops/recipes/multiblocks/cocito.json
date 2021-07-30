@@ -21,14 +21,7 @@
   "definition": {
     "0": {
       "states": [
-        "uniquecrops:crop_maryjane[age-7]",
-        "uniquecrops:crop_maryjane[age-0]",
-        "uniquecrops:crop_maryjane[age-4]",
-        "uniquecrops:crop_maryjane[age-1]",
-        "uniquecrops:crop_maryjane[age-3]",
-        "uniquecrops:crop_maryjane[age-6]",
-        "uniquecrops:crop_maryjane[age-5]",
-        "uniquecrops:crop_maryjane[age-2]"
+        "uniquecrops:crop_maryjane[age-0]"
       ]
     },
     " ": {
@@ -38,26 +31,12 @@
     },
     "D": {
       "states": [
-        "uniquecrops:crop_industria[age-4]",
-        "uniquecrops:crop_industria[age-2]",
-        "uniquecrops:crop_industria[age-7]",
-        "uniquecrops:crop_industria[age-3]",
-        "uniquecrops:crop_industria[age-0]",
-        "uniquecrops:crop_industria[age-1]",
-        "uniquecrops:crop_industria[age-6]",
-        "uniquecrops:crop_industria[age-5]"
+        "uniquecrops:crop_industria[age-0]"
       ]
     },
     "M": {
       "states": [
-        "uniquecrops:crop_maryjane[age-7]",
-        "uniquecrops:crop_maryjane[age-0]",
-        "uniquecrops:crop_maryjane[age-4]",
-        "uniquecrops:crop_maryjane[age-1]",
-        "uniquecrops:crop_maryjane[age-3]",
-        "uniquecrops:crop_maryjane[age-6]",
-        "uniquecrops:crop_maryjane[age-5]",
-        "uniquecrops:crop_maryjane[age-2]"
+        "uniquecrops:crop_maryjane[age-0]"
       ]
     }
   },

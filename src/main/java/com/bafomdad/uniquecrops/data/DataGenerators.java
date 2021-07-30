@@ -10,7 +10,7 @@ public class DataGenerators {
 
         ExistingFileHelper helper = event.getExistingFileHelper();
         if (event.includeServer()) {
-            event.getGenerator().addProvider(new UCLootProvider(event.getGenerator()));
+//            event.getGenerator().addProvider(new UCLootProvider(event.getGenerator()));
 //            UCBlockTagsProvider blockTagsProvider = new UCBlockTagsProvider(event.getGenerator(), helper);
 //            event.getGenerator().addProvider(blockTagsProvider);
 //            event.getGenerator().addProvider(new UCItemTagsProvider(event.getGenerator(), blockTagsProvider, helper));
@@ -21,7 +21,7 @@ public class DataGenerators {
 //            event.getGenerator().addProvider(new HourglassProvider(event.getGenerator()));
 //            event.getGenerator().addProvider(new EnchanterProvider(event.getGenerator()));
 //            event.getGenerator().addProvider(new HeaterProvider(event.getGenerator()));
-//            event.getGenerator().addProvider(new MultiblockProvider(event.getGenerator()));
+            event.getGenerator().addProvider(new MultiblockProvider(event.getGenerator()));
         }
         if (event.includeClient()) {
 //            event.getGenerator().addProvider(new UCBlockStateProvider(event.getGenerator(), helper));

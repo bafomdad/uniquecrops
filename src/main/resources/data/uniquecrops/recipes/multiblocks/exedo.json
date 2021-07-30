@@ -21,14 +21,7 @@
   "definition": {
     "0": {
       "states": [
-        "uniquecrops:crop_devilsnare[age-4]",
-        "uniquecrops:crop_devilsnare[age-3]",
-        "uniquecrops:crop_devilsnare[age-2]",
-        "uniquecrops:crop_devilsnare[age-6]",
-        "uniquecrops:crop_devilsnare[age-5]",
-        "uniquecrops:crop_devilsnare[age-1]",
-        "uniquecrops:crop_devilsnare[age-0]",
-        "uniquecrops:crop_devilsnare[age-7]"
+        "uniquecrops:crop_devilsnare[age-0]"
       ]
     },
     " ": {
@@ -38,26 +31,12 @@
     },
     "D": {
       "states": [
-        "uniquecrops:crop_devilsnare[age-4]",
-        "uniquecrops:crop_devilsnare[age-3]",
-        "uniquecrops:crop_devilsnare[age-2]",
-        "uniquecrops:crop_devilsnare[age-6]",
-        "uniquecrops:crop_devilsnare[age-5]",
-        "uniquecrops:crop_devilsnare[age-1]",
-        "uniquecrops:crop_devilsnare[age-0]",
-        "uniquecrops:crop_devilsnare[age-7]"
+        "uniquecrops:crop_devilsnare[age-0]"
       ]
     },
     "W": {
       "states": [
-        "uniquecrops:crop_weepingbells[age-7]",
-        "uniquecrops:crop_weepingbells[age-0]",
-        "uniquecrops:crop_weepingbells[age-6]",
-        "uniquecrops:crop_weepingbells[age-4]",
-        "uniquecrops:crop_weepingbells[age-5]",
-        "uniquecrops:crop_weepingbells[age-3]",
-        "uniquecrops:crop_weepingbells[age-2]",
-        "uniquecrops:crop_weepingbells[age-1]"
+        "uniquecrops:crop_weepingbells[age-0]"
       ]
     }
   },

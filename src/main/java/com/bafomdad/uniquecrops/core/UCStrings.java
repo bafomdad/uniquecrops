@@ -65,16 +65,5 @@ public class UCStrings {
     public static final String LIKESCHECKERS = COND + ".likescheckers";
     public static final String DONTBONEMEAL = COND + ".dontbonemeal";
     public static final String SELFSACRIFICE = COND + ".selfsacrifice";
-
-    public static final String[] DEFAULT_MULTIBLOCKS = new String[] {
-            "artisia.json",
-            "cocito.json",
-            "exedo.json",
-            "fascino.json",
-            "itero.json",
-            "lignator.json",
-            "portal.json",
-            "weatherflesia.json"
-    };
 }
 

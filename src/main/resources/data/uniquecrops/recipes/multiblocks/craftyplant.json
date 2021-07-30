@@ -21,14 +21,7 @@
   "definition": {
     "0": {
       "states": [
-        "uniquecrops:crop_artisia[age-0]",
-        "uniquecrops:crop_artisia[age-3]",
-        "uniquecrops:crop_artisia[age-4]",
-        "uniquecrops:crop_artisia[age-6]",
-        "uniquecrops:crop_artisia[age-1]",
-        "uniquecrops:crop_artisia[age-5]",
-        "uniquecrops:crop_artisia[age-2]",
-        "uniquecrops:crop_artisia[age-7]"
+        "uniquecrops:crop_artisia[age-0]"
       ]
     },
     " ": {
@@ -38,14 +31,7 @@
     },
     "A": {
       "states": [
-        "uniquecrops:crop_artisia[age-0]",
-        "uniquecrops:crop_artisia[age-3]",
-        "uniquecrops:crop_artisia[age-4]",
-        "uniquecrops:crop_artisia[age-6]",
-        "uniquecrops:crop_artisia[age-1]",
-        "uniquecrops:crop_artisia[age-5]",
-        "uniquecrops:crop_artisia[age-2]",
-        "uniquecrops:crop_artisia[age-7]"
+        "uniquecrops:crop_artisia[age-0]"
       ]
     }
   },

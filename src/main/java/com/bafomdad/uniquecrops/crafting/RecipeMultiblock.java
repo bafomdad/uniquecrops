@@ -159,11 +159,15 @@ public class RecipeMultiblock implements IMultiblockRecipe {
 
         public Slot(Block block) {
 
-            this(block.getStateContainer().getValidStates().toArray(new BlockState[0]));
+            this(block.getDefaultState());
+//            this(block.getStateContainer().getValidStates().toArray(new BlockState[0]));
         }
 
         @Override
         public boolean test(BlockState state) {
+
+            if (getFirstState().equals(state.getBlock().getDefaultState()))
+                return true;
 
             return states.contains(state);
         }

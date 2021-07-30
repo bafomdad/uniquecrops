@@ -31,26 +31,12 @@
     },
     "T": {
       "states": [
-        "uniquecrops:crop_industria[age-4]",
-        "uniquecrops:crop_industria[age-2]",
-        "uniquecrops:crop_industria[age-7]",
-        "uniquecrops:crop_industria[age-3]",
-        "uniquecrops:crop_industria[age-0]",
-        "uniquecrops:crop_industria[age-1]",
-        "uniquecrops:crop_industria[age-6]",
-        "uniquecrops:crop_industria[age-5]"
+        "uniquecrops:crop_industria[age-0]"
       ]
     },
     "K": {
       "states": [
-        "uniquecrops:crop_knowledge[age-4]",
-        "uniquecrops:crop_knowledge[age-5]",
-        "uniquecrops:crop_knowledge[age-7]",
-        "uniquecrops:crop_knowledge[age-0]",
-        "uniquecrops:crop_knowledge[age-3]",
-        "uniquecrops:crop_knowledge[age-6]",
-        "uniquecrops:crop_knowledge[age-2]",
-        "uniquecrops:crop_knowledge[age-1]"
+        "uniquecrops:crop_knowledge[age-0]"
       ]
     }
   },

@@ -14,7 +14,6 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
 import net.minecraft.command.arguments.BlockStateParser;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -43,26 +42,10 @@ public class MultiblockProvider extends RecipeProvider {
         super(gen);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-//        consumer.accept(create("diamond",
-//                UCItems.EMERADIC_DIAMOND.get(),
-//                0,
-//                new String[] {
-//                        "o"
-//                },
-//                new String[] {
-//                        "d"
-//                },
-//                new Point(0, 0),
-//                new HashMap<Character, Slot>() {{
-//                        put('o', new Slot(Blocks.OAK_LOG.getDefaultState(), Blocks.WHEAT.getDefaultState().with(CropsBlock.AGE, 7)));
-//                }},
-//                new HashMap<Character, Slot>() {{
-//                    put('d', new Slot(Blocks.DIAMOND_BLOCK));
-//                }}
-//                ));
         consumer.accept(create("craftyplant",
                 UCItems.WILDWOOD_STAFF.get(),
                 20,
