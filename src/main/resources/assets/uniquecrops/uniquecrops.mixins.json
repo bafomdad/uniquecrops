@@ -10,7 +10,7 @@
   ],
   "client": [
 	"MixinTextureStitch",
-    "MixinClientAdvancement"
+    "MixinRecipeLoad"
   ],
   "minVersion": "0.8",
   "injectors": {

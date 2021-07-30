@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 public final class PatchouliUtils {
 
-    private static boolean hasRegistered = false;
     private static final Function<Map.Entry<Property<?>, Comparable<?>>, String> PROPERTIES_COMPARABLE = new Function<Map.Entry<Property<?>, Comparable<?>>, String>() {
 
         public String apply(@Nullable Map.Entry<Property<?>, Comparable<?>> entry) {
@@ -76,7 +75,6 @@ public final class PatchouliUtils {
 
     public static void registerMultiblocks() {
 
-        if (hasRegistered) return;
         JEIPluginUC.loadType(UCRecipes.MULTIBLOCK_TYPE).forEach(recipe -> {
             ResourceLocation id = recipe.getId();
             String[][] shape = new String[1][];
@@ -89,6 +87,5 @@ public final class PatchouliUtils {
             IMultiblock mb = PatchouliAPI.get().makeMultiblock(shape, objects.toArray());
             PatchouliAPI.get().registerMultiblock(id, mb);
         });
-        hasRegistered = true;
     }
 }
