@@ -68,8 +68,8 @@ public class UCClient {
         RenderTypeLookup.setRenderLayer(UCBlocks.LILY_LAVA.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(UCBlocks.SUN_BLOCK.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(UCBlocks.DEMO_CORD.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.ITERO.get(), RenderType.getCutout());
 
-//        RenderTypeLookup.setRenderLayer(UCBlocks.CINDERBELLA_CROP.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(UCBlocks.CROP_PORTAL.get(), RenderType.getTranslucent());
     }
 

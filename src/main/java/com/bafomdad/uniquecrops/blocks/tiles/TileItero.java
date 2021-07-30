@@ -32,7 +32,7 @@ public class TileItero extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (!world.isRemote && world.getGameTime() % 20 == 0 && showDemo) {
+        if (!world.isRemote && world.getGameTime() % 40 == 0 && showDemo) {
             if (gameCombos != null && gameCombos.length > 0) {
                 if (gameIndex >= gameCombos.length) {
                     gameIndex = 0;

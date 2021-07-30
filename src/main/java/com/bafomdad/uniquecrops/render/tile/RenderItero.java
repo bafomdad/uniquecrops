@@ -29,6 +29,7 @@ public class RenderItero extends TileEntityRenderer<TileItero> {
         super(manager);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void render(TileItero te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 

@@ -3,11 +3,14 @@ package com.bafomdad.uniquecrops.blocks.supercrops;
 import com.bafomdad.uniquecrops.blocks.BaseCropsBlock;
 import com.bafomdad.uniquecrops.blocks.BaseSuperCropsBlock;
 import com.bafomdad.uniquecrops.blocks.tiles.TileItero;
+import com.bafomdad.uniquecrops.init.UCItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -74,6 +77,20 @@ public class Itero extends BaseSuperCropsBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
+        if (isMaxAge(state)) {
+            if (!world.isRemote) {
+                int num = 1 + world.rand.nextInt(2);
+                InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(UCItems.CUBEYTHINGY.get(), num));
+                world.setBlockState(pos, this.getDefaultState(), 2);
+            }
+            return ActionResultType.SUCCESS;
+        }
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileItero && !world.isRemote) {
+            TileItero itero = (TileItero)tile;
+            itero.tryShowDemo();
+            itero.createCombos(state.get(AGE));
+        }
         return ActionResultType.PASS;
     }
 
