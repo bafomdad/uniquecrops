@@ -11,6 +11,12 @@
         {
             "type": "patchouli:text",
             "text": "uniquecrops.bookmultiblocks.page.lignator"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "uniquecrops:emeradic_diamond",
+            "title": "Catalyst",
+            "text": "Consumable"
         }
     ]
 }

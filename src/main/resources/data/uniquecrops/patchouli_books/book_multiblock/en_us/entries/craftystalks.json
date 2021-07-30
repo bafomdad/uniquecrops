@@ -11,6 +11,12 @@
         {
             "type": "patchouli:text",
             "text": "uniquecrops.bookmultiblocks.page.craftystalks"
+        },
+        {
+            "type": "patchouli:spotlight",
+            "item": "uniquecrops:wildwood_staff",
+            "title": "Catalyst",
+            "text": "Cost: 20"
         }
     ]
 }
