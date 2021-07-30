@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "uniquecrops:generic",
-	  "data": 9
+      "item": "uniquecrops:book_guide"
     },
     "title": {
       "translate": "itemGroup.uniquecrops"
@@ -10,7 +9,7 @@
     "description": {
       "translate": "uniquecrops.desc"
     },
-    "background": "uniquecrops:textures/blocks/ancient_gravel.png",
+    "background": "uniquecrops:textures/block/oldgravel.png",
     "show_toast": false,
     "announce_to_chat": false
   },
