@@ -6,6 +6,7 @@ import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.enums.EnumArmorMaterial;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemArmorUC;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.util.ArrayList;
@@ -29,9 +31,9 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
 
     public LeagueBootsItem() {
 
-        //TODO: fix fall damage
         super(EnumArmorMaterial.BOOTS_LEAGUE, EquipmentSlotType.FEET);
         MinecraftForge.EVENT_BUS.addListener(this::onPlayerJump);
+        MinecraftForge.EVENT_BUS.addListener(this::onPlayerFall);
         MinecraftForge.EVENT_BUS.addListener(this::playerTick);
         MinecraftForge.EVENT_BUS.addListener(this::playerLoggedOut);
     }
@@ -47,6 +49,17 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
         }
     }
 
+    private void onPlayerFall(LivingFallEvent event) {
+
+        LivingEntity entity = event.getEntityLiving();
+        if (entity instanceof PlayerEntity) {
+            ItemStack boots = entity.getItemStackFromSlot(EquipmentSlotType.FEET);
+            if (boots.getItem() == this) {
+                event.setDistance(Math.max(0, event.getDistance() - FALL_BUFFER));
+            }
+        }
+    }
+
     private void playerTick(LivingEvent.LivingUpdateEvent event) {
 
         if (event.getEntityLiving() instanceof PlayerEntity) {
@@ -54,7 +67,7 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
             String name = getPlayerStr(player);
             if (CMONSTEPITUP.contains(name)) {
                 ItemStack boots = player.getItemStackFromSlot(EquipmentSlotType.FEET);
-                if (boots.getItem() != UCItems.SEVEN_LEAGUE_BOOTS.get()) {
+                if (boots.getItem() != this) {
                     player.stepHeight = 0.6F;
                     CMONSTEPITUP.remove(name);
                 }
