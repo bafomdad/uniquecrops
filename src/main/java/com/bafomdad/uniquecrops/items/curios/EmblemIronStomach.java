@@ -18,7 +18,7 @@ public class EmblemIronStomach extends ItemCurioUC {
 
     static {
         STRANGE_FOODS.put(Tags.Items.NUGGETS, UCFoods.EDIBLE_NUGGET);
-        STRANGE_FOODS.put(Tags.Items.INGOTS, UCFoods.EDIBLE_NUGGET);
+        STRANGE_FOODS.put(Tags.Items.INGOTS, UCFoods.EDIBLE_INGOT);
         STRANGE_FOODS.put(Tags.Items.GEMS, UCFoods.EDIBLE_GEM);
         STRANGE_FOODS.put(Tags.Items.INGOTS_GOLD, UCFoods.EDIBLE_GOLD);
         STRANGE_FOODS.put(Tags.Items.GEMS_DIAMOND, UCFoods.EDIBLE_DIAMOND);

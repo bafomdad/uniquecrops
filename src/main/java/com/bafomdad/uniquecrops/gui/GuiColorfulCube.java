@@ -12,8 +12,6 @@ import net.minecraft.client.gui.DialogTexts;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
@@ -152,7 +150,7 @@ public class GuiColorfulCube extends Screen {
         Direction facing = Direction.byIndex(i);
         if (facing != Direction.UP && facing != Direction.DOWN)
             updateCube(Direction.UP.ordinal());
-        if (facing != Direction.UP && facing == Direction.DOWN) {
+        if (facing == Direction.DOWN) {
             updateCube(Direction.NORTH.ordinal());
         }
     }
@@ -162,7 +160,7 @@ public class GuiColorfulCube extends Screen {
         Direction facing = Direction.byIndex(i);
         if (facing != Direction.DOWN && facing != Direction.UP)
             updateCube(Direction.DOWN.ordinal());
-        if (facing != Direction.DOWN && facing == Direction.UP) {
+        if (facing == Direction.UP) {
             updateCube(Direction.NORTH.ordinal());
         }
     }
