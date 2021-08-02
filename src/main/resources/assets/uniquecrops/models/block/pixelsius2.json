@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/crop",
+  "parent": "uniquecrops:block/crossuc",
   "textures": {
     "crop": "uniquecrops:block/pixelsius2"
   }
