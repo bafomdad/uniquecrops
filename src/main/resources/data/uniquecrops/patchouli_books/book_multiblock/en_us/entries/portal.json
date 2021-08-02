@@ -13,10 +13,8 @@
             "text": "uniquecrops.bookmultiblocks.page.portal"
         },
         {
-            "type": "patchouli:spotlight",
-            "item": "uniquecrops:wildwood_staff",
-            "title": "Catalyst",
-            "text": "Cost: 50"
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/cropworldportal"
         }
     ]
 }

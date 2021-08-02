@@ -1,0 +1,12 @@
+{
+  "processor": "com.bafomdad.uniquecrops.integration.patchouli.processor.CostProcessor",
+  "components": [
+    {
+      "type": "custom",
+      "class": "com.bafomdad.uniquecrops.integration.patchouli.component.CostComponent",
+      "x": 0,
+      "y": 50,
+      "multiblock": "#multiblock"
+    }
+  ]
+}

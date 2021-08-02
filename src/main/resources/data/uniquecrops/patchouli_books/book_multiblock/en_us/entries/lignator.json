@@ -13,10 +13,8 @@
             "text": "uniquecrops.bookmultiblocks.page.lignator"
         },
         {
-            "type": "patchouli:spotlight",
-            "item": "uniquecrops:emeradic_diamond",
-            "title": "Catalyst",
-            "text": "Consumable"
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/lignator"
         }
     ]
 }
