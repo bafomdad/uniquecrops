@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Consumer;
 
 public class UCRecipeProvider extends RecipeProvider {
@@ -23,6 +24,7 @@ public class UCRecipeProvider extends RecipeProvider {
         super(gen);
     }
 
+    @ParametersAreNonnullByDefault
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
@@ -96,32 +98,36 @@ public class UCRecipeProvider extends RecipeProvider {
                 .patternLine(" B ")
                 .addCriterion("has_item", hasItem(UCItems.ESCAPEROPE.get()))
                 .build(consumer);
-//        recipe(UCItems.CACTUS_BOOTS.get(), 1)
-//                .key('C', Blocks.CACTUS)
-//                .key('I', Items.IRON_BOOTS)
-//                .patternLine("CIC")
-//                .patternLine("C C")
-//                .build(consumer);
-//        recipe(UCItems.CACTUS_CHESTPLATE.get(), 1)
-//                .key('C', Blocks.CACTUS)
-//                .key('I', Items.IRON_CHESTPLATE)
-//                .patternLine("C C")
-//                .patternLine("CIC")
-//                .patternLine("CCC")
-//                .build(consumer);
-//        recipe(UCItems.CACTUS_HELM.get(), 1)
-//                .key('C', Blocks.CACTUS)
-//                .key('I', Items.IRON_HELMET)
-//                .patternLine("CCC")
-//                .patternLine("CIC")
-//                .build(consumer);
-//        recipe(UCItems.CACTUS_LEGGINGS.get(), 1)
-//                .key('C', Blocks.CACTUS)
-//                .key('I', Items.IRON_LEGGINGS)
-//                .patternLine("CCC")
-//                .patternLine("CIC")
-//                .patternLine("C C")
-//                .build(consumer);
+        recipe(UCItems.CACTUS_BOOTS.get(), 1)
+                .key('C', Blocks.CACTUS)
+                .key('I', Items.IRON_BOOTS)
+                .patternLine("CIC")
+                .patternLine("C C")
+                .addCriterion("has_item", hasItem(Blocks.CACTUS))
+                .build(consumer);
+        recipe(UCItems.CACTUS_CHESTPLATE.get(), 1)
+                .key('C', Blocks.CACTUS)
+                .key('I', Items.IRON_CHESTPLATE)
+                .patternLine("C C")
+                .patternLine("CIC")
+                .patternLine("CCC")
+                .addCriterion("has_item", hasItem(Blocks.CACTUS))
+                .build(consumer);
+        recipe(UCItems.CACTUS_HELM.get(), 1)
+                .key('C', Blocks.CACTUS)
+                .key('I', Items.IRON_HELMET)
+                .patternLine("CCC")
+                .patternLine("CIC")
+                .addCriterion("has_item", hasItem(Blocks.CACTUS))
+                .build(consumer);
+        recipe(UCItems.CACTUS_LEGGINGS.get(), 1)
+                .key('C', Blocks.CACTUS)
+                .key('I', Items.IRON_LEGGINGS)
+                .patternLine("CCC")
+                .patternLine("CIC")
+                .patternLine("C C")
+                .addCriterion("has_item", hasItem(Blocks.CACTUS))
+                .build(consumer);
         recipe(UCBlocks.CINDER_TORCH.get(), 4)
                 .key('S', Blocks.SMOOTH_STONE_SLAB)
                 .key('X', UCItems.CINDERLEAF.get())
@@ -577,12 +583,23 @@ public class UCRecipeProvider extends RecipeProvider {
                 .patternLine("R")
                 .addCriterion("has_item", hasItem(UCBlocks.RUINEDBRICKS_SLAB.get()))
                 .build(consumer);
+        recipe(UCBlocks.OBTUSE_PLATFORM.get(), 1)
+                .key('D', UCBlocks.DARK_BLOCK.get())
+                .key('G', UCBlocks.INVISIBILIA_GLASS.get())
+                .key('T', UCItems.LILYTWINE.get())
+                .patternLine("TGT")
+                .patternLine("GDG")
+                .patternLine("TGT")
+                .addCriterion("has_item", hasItem(UCBlocks.DARK_BLOCK.get()))
+                .build(consumer);
     }
 
+    @SuppressWarnings("deprecation")
     private void specialRecipe(Consumer<IFinishedRecipe> consumer, SpecialRecipeSerializer<?> serializer) {
 
         ResourceLocation name = Registry.RECIPE_SERIALIZER.getKey(serializer);
-        CustomRecipeBuilder.customRecipe(serializer).build(consumer, UniqueCrops.MOD_ID + ":dynamic/" + name.getPath());
+        if (name != null)
+            CustomRecipeBuilder.customRecipe(serializer).build(consumer, UniqueCrops.MOD_ID + ":dynamic/" + name.getPath());
     }
 
     private ShapedRecipeBuilder recipe(IItemProvider output, int count) {

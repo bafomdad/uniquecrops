@@ -21,7 +21,7 @@ public class DataGenerators {
 //            event.getGenerator().addProvider(new HourglassProvider(event.getGenerator()));
 //            event.getGenerator().addProvider(new EnchanterProvider(event.getGenerator()));
 //            event.getGenerator().addProvider(new HeaterProvider(event.getGenerator()));
-            event.getGenerator().addProvider(new MultiblockProvider(event.getGenerator()));
+//            event.getGenerator().addProvider(new MultiblockProvider(event.getGenerator()));
         }
         if (event.includeClient()) {
 //            event.getGenerator().addProvider(new UCBlockStateProvider(event.getGenerator(), helper));
