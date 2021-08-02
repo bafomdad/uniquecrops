@@ -89,7 +89,7 @@ public class UCBlocks {
     public static final RegistryObject<BaseCropsBlock> MUSICA_CROP = registerCrop("musica", Musica::new);
     public static final RegistryObject<BaseCropsBlock> CINDERBELLA_CROP = registerCrop("cinderbella", Cinderbella::new);
     public static final RegistryObject<BaseCropsBlock> MERLINIA_CROP = registerCrop("merlinia", Merlinia::new);
-    public static final RegistryObject<BaseCropsBlock> EULA_CROP = registerCrop("eula", () -> new BaseCropsBlock(UCItems.LEGALSTUFF, UCItems.EULA_SEED));
+    public static final RegistryObject<BaseCropsBlock> EULA_CROP = registerCrop("eula", Eula::new);
     public static final RegistryObject<BaseCropsBlock> COBBLONIA_CROP = registerCrop("cobblonia", Cobblonia::new);
     public static final RegistryObject<BaseCropsBlock> DYEIUS_CROP = registerCrop("dyeius", Dyeius::new);
     public static final RegistryObject<BaseCropsBlock> ABSTRACT_CROP = registerCrop("abstract", Abstract::new);

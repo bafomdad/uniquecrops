@@ -27,14 +27,7 @@ public class EulaBookItem extends ItemBaseUC {
         }
         if (!player.isCreative())
             book.shrink(1);
-//        if (book.getItem() == this) {
-//            if (!world.isRemote) {
-//                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-//                    Minecraft.getInstance().displayGuiScreen(new GuiEulaBook());
-//                });
-//            }
-//            return ActionResult.resultSuccess(book);
-//        }
+
         return ActionResult.func_233538_a_(book, world.isRemote());
     }
 }
