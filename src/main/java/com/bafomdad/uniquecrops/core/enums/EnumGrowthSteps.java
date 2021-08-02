@@ -2,6 +2,7 @@ package com.bafomdad.uniquecrops.core.enums;
 
 import com.bafomdad.uniquecrops.blocks.BaseLilyBlock;
 import com.bafomdad.uniquecrops.blocks.tiles.TileFeroxia;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public enum EnumGrowthSteps {
 
-    MOONPHASE(UCStrings.MOON, true) {
+    MOONPHASE(UCStrings.MOON, UCConfig.COMMON.moonPhase.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -44,7 +45,7 @@ public enum EnumGrowthSteps {
             return world.getMoonFactor() == 1.0F;
         }
     },
-    HASTORCH(UCStrings.HASTORCH, true) {
+    HASTORCH(UCStrings.HASTORCH, UCConfig.COMMON.hasTorch.get()) {
 
         final int range = 10;
 
@@ -66,7 +67,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    LIKESDARKNESS(UCStrings.DARKNESS, true) {
+    LIKESDARKNESS(UCStrings.DARKNESS, UCConfig.COMMON.likesDarkness.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -74,7 +75,7 @@ public enum EnumGrowthSteps {
             return world.getLight(pos.up()) < 3 && world.isAirBlock(pos.up());
         }
     },
-    DRYFARMLAND(UCStrings.DRYFARMLAND, true) {
+    DRYFARMLAND(UCStrings.DRYFARMLAND, UCConfig.COMMON.dryFarmland.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -82,7 +83,7 @@ public enum EnumGrowthSteps {
             return world.getBlockState(pos.down()).getBlock() == Blocks.FARMLAND && world.getBlockState(pos.down()).get(FarmlandBlock.MOISTURE) < 7;
         }
     },
-    UNDERFARMLAND(UCStrings.UNDERFARMLAND, true) {
+    UNDERFARMLAND(UCStrings.UNDERFARMLAND, UCConfig.COMMON.underFarmland.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -90,7 +91,7 @@ public enum EnumGrowthSteps {
             return world.getBlockState(pos.up()).getBlock() == Blocks.FARMLAND;
         }
     },
-    BURNINGPLAYER(UCStrings.BURNINGPLAYER, true) {
+    BURNINGPLAYER(UCStrings.BURNINGPLAYER, UCConfig.COMMON.burningPlayer.get()) {
 
         int range = 10;
 
@@ -110,7 +111,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    HELLWORLD(UCStrings.HELLWORLD, true) {
+    HELLWORLD(UCStrings.HELLWORLD, UCConfig.COMMON.hellWorld.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -118,7 +119,7 @@ public enum EnumGrowthSteps {
             return world.getDimensionKey() == World.THE_NETHER;
         }
     },
-    LIKESHEIGHTS(UCStrings.LIKESHEIGHTS, true) {
+    LIKESHEIGHTS(UCStrings.LIKESHEIGHTS, UCConfig.COMMON.likesHeights.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -126,7 +127,7 @@ public enum EnumGrowthSteps {
             return pos.getY() > 100;
         }
     },
-    LIKESLILYPADS(UCStrings.LILYPADS, true) {
+    LIKESLILYPADS(UCStrings.LILYPADS, UCConfig.COMMON.likesLilypads.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -140,7 +141,7 @@ public enum EnumGrowthSteps {
             return lilypads >= 4;
         }
     },
-    THIRSTYPLANT(UCStrings.THIRSTYPLANT, true) {
+    THIRSTYPLANT(UCStrings.THIRSTYPLANT, UCConfig.COMMON.thirstyPlant.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -159,7 +160,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    HUNGRYPLANT(UCStrings.HUNGRYPLANT, true) {
+    HUNGRYPLANT(UCStrings.HUNGRYPLANT, UCConfig.COMMON.hungryPlant.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -179,7 +180,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    LIKESCHICKEN(UCStrings.LIKESCHICKEN, true) {
+    LIKESCHICKEN(UCStrings.LIKESCHICKEN, UCConfig.COMMON.likesChicken.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -220,7 +221,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    REQUIRESREDSTONE(UCStrings.REDSTONE, true) {
+    REQUIRESREDSTONE(UCStrings.REDSTONE, UCConfig.COMMON.likesRedstone.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -233,7 +234,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    VAMPIREPLANT(UCStrings.VAMPIREPLANT, true) {
+    VAMPIREPLANT(UCStrings.VAMPIREPLANT, UCConfig.COMMON.vampirePlant.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -242,7 +243,7 @@ public enum EnumGrowthSteps {
             return sunlight == 0;
         }
     },
-    FULLBRIGHTNESS(UCStrings.FULLBRIGHTNESS, true) {
+    FULLBRIGHTNESS(UCStrings.FULLBRIGHTNESS, UCConfig.COMMON.fullBrightness.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -251,7 +252,7 @@ public enum EnumGrowthSteps {
             return light >= 13;
         }
     },
-    LIKESWARTS(UCStrings.LIKESWARTS, true) {
+    LIKESWARTS(UCStrings.LIKESWARTS, UCConfig.COMMON.likesWarts.get()) {
 
         int range = 1;
 
@@ -270,7 +271,7 @@ public enum EnumGrowthSteps {
             return warts == 8;
         }
     },
-    LIKESCOOKING(UCStrings.LIKESCOOKING, true) {
+    LIKESCOOKING(UCStrings.LIKESCOOKING, UCConfig.COMMON.likesCooking.get()) {
 
         int range = 6;
 
@@ -290,7 +291,7 @@ public enum EnumGrowthSteps {
             return flag;
         }
     },
-    LIKESBREWING(UCStrings.LIKESBREWING, true) {
+    LIKESBREWING(UCStrings.LIKESBREWING, UCConfig.COMMON.likesBrewing.get()) {
 
         int range = 6;
 
@@ -317,7 +318,7 @@ public enum EnumGrowthSteps {
             return false;
         }
     },
-    CHECKERBOARD(UCStrings.LIKESCHECKERS, true) {
+    CHECKERBOARD(UCStrings.LIKESCHECKERS, UCConfig.COMMON.likesCheckers.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -336,7 +337,7 @@ public enum EnumGrowthSteps {
             return crops == 4;
         }
     },
-    NOBONEMEAL(UCStrings.DONTBONEMEAL, true) {
+    NOBONEMEAL(UCStrings.DONTBONEMEAL, UCConfig.COMMON.dontBonemeal.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
@@ -344,7 +345,7 @@ public enum EnumGrowthSteps {
             return true;
         }
     },
-    SELFSACRIFICE(UCStrings.SELFSACRIFICE, true) {
+    SELFSACRIFICE(UCStrings.SELFSACRIFICE, UCConfig.COMMON.selfSacrifice.get()) {
 
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {

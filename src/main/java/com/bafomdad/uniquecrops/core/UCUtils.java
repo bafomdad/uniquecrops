@@ -172,7 +172,7 @@ public class UCUtils {
     public static void generateSteps(PlayerEntity player) {
 
         CompoundNBT tag = player.getPersistentData();
-        if (player.getEntityWorld().rand.nextInt(200) == 0) {
+        if (UCConfig.COMMON.selfSacrifice.get() && player.getEntityWorld().rand.nextInt(200) == 0) {
             if (tag.contains(UCStrings.TAG_GROWTHSTAGES))
                 tag.remove(UCStrings.TAG_GROWTHSTAGES);
 
