@@ -47,9 +47,10 @@ public class Enderlily extends BaseCropsBlock {
     }
 
     @Override
-    public void tickCrop(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
         this.enderlilyTele(world, pos, state);
+        super.randomTick(state, world, pos, rand);
     }
 
     @Override
@@ -70,6 +71,8 @@ public class Enderlily extends BaseCropsBlock {
     }
 
     private void enderlilyTele(ServerWorld world, BlockPos pos, BlockState state) {
+
+        if (isMaxAge(state)) return;
 
         List<BlockPos> targetList = new ArrayList<>();
         for (BlockPos loopPos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 0, 4))) {

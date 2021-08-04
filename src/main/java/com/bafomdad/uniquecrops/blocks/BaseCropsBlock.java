@@ -182,14 +182,9 @@ public class BaseCropsBlock extends Block implements IGrowable, IPlantable {
                 if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
                     worldIn.setBlockState(pos, this.withAge(i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
-                    this.tickCrop(state, worldIn, pos, random);
                 }
             }
         }
-    }
-
-    protected void tickCrop(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-
     }
 
     protected float getGrowthChance(Block blockIn, IBlockReader worldIn, BlockPos pos) {

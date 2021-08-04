@@ -32,8 +32,9 @@ public class Artisia extends BaseCropsBlock {
     }
 
     @Override
-    public void tickCrop(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
+        super.randomTick(state, world, pos, rand);
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ZERO))
             ((TileArtisia)te).findCore();

@@ -26,9 +26,17 @@ public class Cobblonia extends BaseCropsBlock {
     }
 
     @Override
-    protected void tickCrop(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (!this.isMaxAge(state)) return;
+        super.randomTick(state, world, pos, rand);
+        if (!this.isMaxAge(state)) {
+            return;
+        }
+        boolean flag = this.canIgnoreGrowthRestrictions(world, pos);
+        cobbleGen(world, pos, flag);
+    }
+
+    private void cobbleGen(ServerWorld world, BlockPos pos, boolean boost) {
 
         BlockPos north = pos.down().north();
         BlockPos south = pos.down().south();
@@ -43,6 +51,7 @@ public class Cobblonia extends BaseCropsBlock {
         if (isFluidSource(world, west, FluidTags.WATER) && isFluidSource(world, east, FluidTags.LAVA)) cobblegen++;
 
         if (cobblegen > 0) {
+            cobblegen = boost ? 64 : cobblegen;
             ItemStack toDrop = new ItemStack(Blocks.COBBLESTONE, cobblegen);
             InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, toDrop);
         }
