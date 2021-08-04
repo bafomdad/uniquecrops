@@ -23,6 +23,7 @@ public class Cobblonia extends BaseCropsBlock {
     public Cobblonia() {
 
         super(() -> Item.getItemFromBlock(Blocks.COBBLESTONE), UCItems.COBBLONIA_SEED);
+        setIgnoreGrowthRestrictions(true);
     }
 
     @Override
