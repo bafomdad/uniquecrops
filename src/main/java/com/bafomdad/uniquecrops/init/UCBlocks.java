@@ -71,6 +71,8 @@ public class UCBlocks {
     public static final RegistryObject<Block> ROSEWOOD_PLANKS = register("rosewood_planks", () -> new Block(Properties.from(FLYWOOD_PLANKS.get())));
     public static final RegistryObject<Block> ROSEWOOD_STAIRS = register("rosewood_stairs", () -> new StairsBlock(() -> ROSEWOOD_PLANKS.get().getDefaultState(), Properties.from(ROSEWOOD_PLANKS.get())));
     public static final RegistryObject<Block> ROSEWOOD_SLAB = register("rosewood_slab", () -> new SlabBlock(Properties.from(ROSEWOOD_PLANKS.get())));
+    public static final RegistryObject<Block> FLYWOOD_TRAPDOOR = register("flywood_trapdoor", () -> new TrapDoorBlock(Properties.from(Blocks.OAK_TRAPDOOR)));
+    public static final RegistryObject<Block> ROSEWOOD_TRAPDOOR = register("rosewood_trapdoor", () -> new TrapDoorBlock(Properties.from(Blocks.OAK_TRAPDOOR)));
 
     /**
      * CROPS

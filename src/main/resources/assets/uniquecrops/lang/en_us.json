@@ -246,6 +246,7 @@
     "block.uniquecrops.flywood_leaves": "Flywood Leaves",
     "block.uniquecrops.flywood_sapling": "Flywood Sapling",
     "block.uniquecrops.flywood_planks": "Flywood Planks",
+	"block.uniquecrops.flywood_trapdoor": "Flywood Trapdoor",
     "block.uniquecrops.egg_basket": "Egg Basket",
     "block.uniquecrops.precision_block": "Precision Block",
     "block.uniquecrops.cindertorch": "Cinder Torch",
@@ -264,6 +265,7 @@
     "block.uniquecrops.rosewood_planks": "Rosewood Planks",
     "block.uniquecrops.rosewood_slab": "Rosewood Slab",
     "block.uniquecrops.rosewood_stairs": "Rosewood Stairs",
+	"block.uniquecrops.rosewood_trapdoor": "Rosewood Trapdoor",
 
     "_comment": "BOOK TEXT",
     "uniquecrops.book.pageintro": "Hello and welcome to Unique Crops! Here in this book, you'll find information on the various different crops, and how to grow them. A general rule to remember here is that not all the crops will be grown the same way, so be sure to read up on some of them! Luck favors the prepared, or so they say, heheh. Additionally, what they drop may have various amounts of usefulness. It is completely up to you to find out what's good or not.",

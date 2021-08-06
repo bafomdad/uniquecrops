@@ -31,11 +31,11 @@ apply plugin: 'org.spongepowered.mixin'
 mixin {
     add sourceSets.main, "uniquecrops.refmap.json"
 }
-version = '0.1.36-1.16.5'
+version = '0.1.39-1.16.5'
 group = 'com.bafomdad.uniquecrops' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'uniquecrops'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -46,9 +46,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg "-mixin.config=uniquecrops.mixins.json"
+            arg "-mixin.config=assets/uniquecrops/uniquecrops.mixins.json"
 
-//            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             property 'mixin.env.remapRefMap', 'true'
@@ -64,7 +63,6 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
-//            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -112,7 +110,7 @@ repositories {
     }
 }
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.24'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
 
     if (System.getProperty("idea.sync.active") != "true") {
         annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'

@@ -9,6 +9,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -29,7 +30,7 @@ public class SunBlock extends Block {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
-        list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "sunblock"));
+        list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "sunblock").mergeStyle(TextFormatting.GRAY));
     }
 
     @Override

@@ -28,6 +28,8 @@ public class UCBlockTagsProvider extends BlockTagsProvider {
         getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS_DIAMOND).add(UCBlocks.OLDDIAMOND.get());
         getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS_GOLD).add(UCBlocks.OLDGOLD.get());
         getOrCreateBuilder(Tags.Blocks.GRAVEL).add(UCBlocks.OLDGRAVEL.get());
+        getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.FLYWOOD_TRAPDOOR.get());
+        getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.ROSEWOOD_TRAPDOOR.get());
     }
 
     @Override

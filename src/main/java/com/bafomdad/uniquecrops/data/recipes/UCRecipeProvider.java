@@ -592,6 +592,18 @@ public class UCRecipeProvider extends RecipeProvider {
                 .patternLine("TGT")
                 .addCriterion("has_item", hasItem(UCBlocks.DARK_BLOCK.get()))
                 .build(consumer);
+        recipe(UCBlocks.FLYWOOD_TRAPDOOR.get(), 2)
+                .key('P', UCBlocks.FLYWOOD_PLANKS.get())
+                .patternLine("PPP")
+                .patternLine("PPP")
+                .addCriterion("has_item", hasItem(UCBlocks.FLYWOOD_PLANKS.get()))
+                .build(consumer);
+        recipe(UCBlocks.ROSEWOOD_TRAPDOOR.get(), 2)
+                .key('P', UCBlocks.ROSEWOOD_PLANKS.get())
+                .patternLine("PPP")
+                .patternLine("PPP")
+                .addCriterion("has_item", hasItem(UCBlocks.ROSEWOOD_PLANKS.get()))
+                .build(consumer);
     }
 
     @SuppressWarnings("deprecation")

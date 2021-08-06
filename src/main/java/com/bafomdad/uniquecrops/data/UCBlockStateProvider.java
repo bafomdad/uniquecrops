@@ -1,10 +1,14 @@
 package com.bafomdad.uniquecrops.data;
 
 import com.bafomdad.uniquecrops.UniqueCrops;
+import com.bafomdad.uniquecrops.init.UCBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.ModelTextures;
+import net.minecraft.data.StockModelShapes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -38,14 +42,16 @@ public class UCBlockStateProvider extends BlockStateProvider {
 //        simpleBlock(OLDGRAVEL);
 //        cubeIt(OLDDIAMOND, "block/old_diamond_side", "block/old_diamond_bottom", "block/old_diamond_top");
 //        cubeIt(OLDGOLD, "block/old_gold_side", "block/old_gold_bottom", "block/old_gold_top");
-//        cubeIt(OLDIRON, "block/old_iron_side", "block/old_iron_bottom", "block/old_iron_top");
+//        cubeIt(OLDIRON.get(), "block/old_iron_side", "block/old_iron_bottom", "block/old_iron_top");
 //        stairsBlock(RUINEDBRICKS_STAIRS, prefix("block/ruinedbricks"));
 //        slabBlock(FLYWOOD_SLAB, prefix("block/flywood_planks"), prefix("block/flywood_planks"));
 //        slabBlock(RUINEDBRICKS_SLAB, prefix("block/ruinedbricks"), prefix("block/ruinedbricks"));
 //        slabBlock(RUINEDBRICKSCARVED_SLAB, prefix("block/ruinedbricksmooth"), prefix("block/ruinedbricksmooth"));
-        simpleBlock(ROSEWOOD_PLANKS.get());
-        stairsBlock((StairsBlock)ROSEWOOD_STAIRS.get(), prefix("block/rosewood_planks"));
-        slabBlock((SlabBlock)ROSEWOOD_SLAB.get(), prefix("block/rosewood_planks"), prefix("block/rosewood_planks"));
+//        simpleBlock(ROSEWOOD_PLANKS.get());
+//        stairsBlock((StairsBlock)ROSEWOOD_STAIRS.get(), prefix("block/rosewood_planks"));
+//        slabBlock((SlabBlock)ROSEWOOD_SLAB.get(), prefix("block/rosewood_planks"), prefix("block/rosewood_planks"));
+//        trapdoorBlock((TrapDoorBlock) FLYWOOD_TRAPDOOR.get(), prefix("block/flywood_trapdoor"), true);
+//        trapdoorBlock((TrapDoorBlock) ROSEWOOD_TRAPDOOR.get(), prefix("block/rosewood_trapdoor"), true);
     }
 
     private ResourceLocation prefix(String path) {

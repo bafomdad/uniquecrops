@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "uniquecrops:flywood_planks"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:flywood_trapdoor",
+    "count": 2
+  }
+}

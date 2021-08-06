@@ -24,9 +24,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
@@ -126,7 +124,7 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 
         if (state.get(RAFFLESIA) == EnumDirectional.UP || state.get(RAFFLESIA) == EnumDirectional.DOWN) {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
@@ -137,10 +135,10 @@ public class Weatherflesia extends BaseSuperCropsBlock {
                 }
             }
         }
-        if (world instanceof World && isNeighborMissing((World)world, pos, state))
+        if (isNeighborMissing((World)world, pos, state))
             world.destroyBlock(pos, false);
 
-        return super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
     }
 
     @Override
@@ -162,10 +160,12 @@ public class Weatherflesia extends BaseSuperCropsBlock {
 
         EnumDirectional prop = (EnumDirectional)state.get(RAFFLESIA);
         switch (prop) {
-            case NORTH: return isRafflesia(world, pos.east()) || isRafflesia(world, pos.west());
-            case SOUTH: return isRafflesia(world, pos.east()) || isRafflesia(world, pos.west());
-            case WEST: return isRafflesia(world, pos.north()) || isRafflesia(world, pos.south());
-            case EAST: return isRafflesia(world, pos.north()) || isRafflesia(world, pos.south());
+            case NORTH:
+            case SOUTH:
+                return isRafflesia(world, pos.east()) || isRafflesia(world, pos.west());
+            case WEST:
+            case EAST:
+                return isRafflesia(world, pos.north()) || isRafflesia(world, pos.south());
             case NORTHEAST: return isRafflesia(world, pos.south()) || isRafflesia(world, pos.west());
             case NORTHWEST: return isRafflesia(world, pos.south()) || isRafflesia(world, pos.east());
             case SOUTHEAST: return isRafflesia(world, pos.north()) || isRafflesia(world, pos.west());
