@@ -28,6 +28,7 @@ public class EmblemIronStomach extends ItemCurioUC {
     public static boolean containsTag(Item item) {
 
         for (Map.Entry<ITag<Item>, Food> tag : STRANGE_FOODS.entrySet()) {
+            if (tag.getKey() == null) return false;
             if (item.isIn(tag.getKey())) return true;
         }
         return false;
@@ -36,6 +37,7 @@ public class EmblemIronStomach extends ItemCurioUC {
     public static Food getFood(Item item) {
 
         for (Map.Entry<ITag<Item>, Food> tag : STRANGE_FOODS.entrySet()) {
+            if (tag.getKey() == null) return null;
             if (item.isIn(tag.getKey())) return tag.getValue();
         }
         return null;
