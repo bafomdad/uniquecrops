@@ -26,14 +26,11 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(UniqueCrops.MOD_ID)
 public class UniqueCrops {
 
     public static final String MOD_ID = "uniquecrops";
-    public static final Logger LOGGER = LogManager.getLogger();
 
     public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     public static final UCTab TAB = new UCTab();
@@ -67,6 +64,7 @@ public class UniqueCrops {
         forgeBus.addListener(UCEventHandlerCommon::jumpTele);
         forgeBus.addListener(UCEventHandlerCommon::addSeed);
         forgeBus.addListener(UCEventHandlerCommon::injectLoot);
+        forgeBus.addListener(UCEventHandlerCommon::addTags);
         forgeBus.addListener(this::onServerStarting);
         forgeBus.addListener(this::registerCommands);
     }

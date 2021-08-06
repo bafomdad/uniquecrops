@@ -14,6 +14,7 @@ import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCFeatures;
 import com.bafomdad.uniquecrops.items.DyedBonemealItem;
+import com.bafomdad.uniquecrops.items.curios.EmblemIronStomach;
 import com.bafomdad.uniquecrops.network.PacketSyncCap;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import net.minecraft.block.Blocks;
@@ -43,6 +44,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -129,13 +131,17 @@ public class UCEventHandlerCommon {
             if (event.getWorld() instanceof ServerWorld) {
                 ServerWorld serverworld = (ServerWorld)event.getWorld();
                 BlockPos pos = event.getPos();
-                List<ItemStack> stacks = event.getState().getDrops((new LootContext.Builder(serverworld)).withRandom(serverworld.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(pos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY));
                 float value = serverworld.rand.nextFloat();
                 if (value > 0.90F) {
                     InventoryHelper.spawnItemStack(serverworld, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCItems.NORMAL_SEED.get()));
                 }
             }
         }
+    }
+
+    public static void addTags(PlayerEvent.PlayerLoggedInEvent event) {
+
+        EmblemIronStomach.init();
     }
 
     public static void injectLoot(LootTableLoadEvent event) {
