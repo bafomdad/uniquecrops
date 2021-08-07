@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "uniquecrops:uncookedwaffle"
   },
-  "result": "uniquecrops:uncookedwaffle",
+  "result": "uniquecrops:waffle",
   "experience": 0.35,
   "cookingtime": 200
 }
