@@ -1,10 +1,9 @@
 package com.bafomdad.uniquecrops.mixin;
 
 import com.bafomdad.uniquecrops.integration.patchouli.PatchouliUtils;
-import net.minecraft.client.multiplayer.ClientAdvancementManager;
+import com.bafomdad.uniquecrops.items.curios.EmblemIronStomach;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.network.play.server.SAdvancementInfoPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,5 +16,6 @@ public class MixinRecipeLoad {
     public void uniquecrops_onSync(Iterable<IRecipe<?>> recipes, CallbackInfo info) {
 
         PatchouliUtils.registerMultiblocks();
+        EmblemIronStomach.init();
     }
 }

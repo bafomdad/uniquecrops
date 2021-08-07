@@ -14,7 +14,6 @@ import com.bafomdad.uniquecrops.init.UCBlocks;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.init.UCFeatures;
 import com.bafomdad.uniquecrops.items.DyedBonemealItem;
-import com.bafomdad.uniquecrops.items.curios.EmblemIronStomach;
 import com.bafomdad.uniquecrops.network.PacketSyncCap;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import net.minecraft.block.Blocks;
@@ -33,7 +32,6 @@ import net.minecraft.loot.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -44,7 +42,6 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -137,11 +134,6 @@ public class UCEventHandlerCommon {
                 }
             }
         }
-    }
-
-    public static void addTags(PlayerEvent.PlayerLoggedInEvent event) {
-
-        EmblemIronStomach.init();
     }
 
     public static void injectLoot(LootTableLoadEvent event) {

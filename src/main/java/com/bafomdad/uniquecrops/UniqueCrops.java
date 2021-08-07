@@ -9,6 +9,7 @@ import com.bafomdad.uniquecrops.data.DataGenerators;
 import com.bafomdad.uniquecrops.events.UCEventHandlerCommon;
 import com.bafomdad.uniquecrops.init.*;
 import com.bafomdad.uniquecrops.integration.CuriosIntegration;
+import com.bafomdad.uniquecrops.items.curios.EmblemIronStomach;
 import com.bafomdad.uniquecrops.items.curios.EmblemScarab;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
 import com.bafomdad.uniquecrops.proxies.ClientProxy;
@@ -64,7 +65,6 @@ public class UniqueCrops {
         forgeBus.addListener(UCEventHandlerCommon::jumpTele);
         forgeBus.addListener(UCEventHandlerCommon::addSeed);
         forgeBus.addListener(UCEventHandlerCommon::injectLoot);
-        forgeBus.addListener(UCEventHandlerCommon::addTags);
         forgeBus.addListener(this::onServerStarting);
         forgeBus.addListener(this::registerCommands);
     }
@@ -94,6 +94,7 @@ public class UniqueCrops {
     private void onServerStarting(FMLServerStartingEvent event) {
 
         UCWorldData.getInstance(World.OVERWORLD).markDirty();
+        EmblemIronStomach.init();
     }
 
     private void registerCommands(RegisterCommandsEvent event) {
