@@ -3,41 +3,38 @@ package com.bafomdad.uniquecrops.core;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.enums.EnumGrowthSteps;
 import com.bafomdad.uniquecrops.crafting.RecipeMultiblock;
+import com.bafomdad.uniquecrops.mixin.AccessorRecipeManager;
 import com.bafomdad.uniquecrops.network.PacketChangeBiome;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
@@ -223,6 +220,12 @@ public class UCUtils {
             UCPacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> chunkAt), msg);
         }
         return true;
+    }
+
+    public static <T extends IRecipe<C>, C extends IInventory> Collection<T> loadType(IRecipeType<T> type) {
+
+        Minecraft mc = Minecraft.getInstance();
+        return (Collection<T>)((AccessorRecipeManager)mc.world.getRecipeManager()).uc_getRecipes(type).values();
     }
 
     public static <E> List<E> makeCollection(Iterable<E> iter, boolean shuffle) {

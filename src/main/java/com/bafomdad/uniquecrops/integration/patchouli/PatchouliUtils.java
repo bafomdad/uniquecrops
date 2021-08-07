@@ -1,7 +1,7 @@
 package com.bafomdad.uniquecrops.integration.patchouli;
 
+import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCRecipes;
-import com.bafomdad.uniquecrops.integration.jei.JEIPluginUC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -75,7 +75,7 @@ public final class PatchouliUtils {
 
     public static void registerMultiblocks() {
 
-        JEIPluginUC.loadType(UCRecipes.MULTIBLOCK_TYPE).forEach(recipe -> {
+        UCUtils.loadType(UCRecipes.MULTIBLOCK_TYPE).forEach(recipe -> {
             ResourceLocation id = recipe.getId();
             String[][] shape = new String[1][];
             shape[0] = recipe.getShape();
