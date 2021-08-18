@@ -21,12 +21,12 @@ public class HolyCrop extends BaseCropsBlock {
 
     public HolyCrop() {
 
-        super(() -> Items.APPLE, UCItems.BLESSED_SEED, Properties.from(Blocks.WHEAT).setLightLevel(l -> l.get(AGE) == 7 ? 15 : 0));
+        super(() -> Items.APPLE, UCItems.BLESSED_SEED, Properties.copy(Blocks.WHEAT).lightLevel(l -> l.getValue(AGE) == 7 ? 15 : 0));
         setBonemealable(false);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (entity instanceof LivingEntity) {
             boolean blessed = isMaxAge(state);
@@ -35,12 +35,12 @@ public class HolyCrop extends BaseCropsBlock {
 
                 VillagerProfession prof = ((VillagerEntity)entity).getVillagerData().getProfession();
                 if (prof == VillagerProfession.CLERIC) {
-                    world.setBlockState(pos, withAge(getMaxAge()), 3);
+                    world.setBlock(pos, setValueAge(getMaxAge()), 3);
                 }
             }
-            if (((LivingEntity)entity).getCreatureAttribute() == CreatureAttribute.UNDEAD) {
-                entity.setFire(2);
-                entity.attackEntityFrom(DamageSource.MAGIC, blessed ? 3.0F : 1.5F);
+            if (((LivingEntity)entity).getMobType() == CreatureAttribute.UNDEAD) {
+                entity.setSecondsOnFire(2);
+                entity.hurt(DamageSource.MAGIC, blessed ? 3.0F : 1.5F);
             }
         }
     }

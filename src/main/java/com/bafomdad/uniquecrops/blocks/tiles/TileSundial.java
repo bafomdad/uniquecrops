@@ -18,16 +18,16 @@ public class TileSundial extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (world.getGameTime() % 20 == 0) {
+        if (level.getGameTime() % 20 == 0) {
             boolean powered = hasPower;
-            long time = world.getDayTime() % 24000L;
-            float rot = world.getCelestialAngleRadians(1.0F);
+            long time = level.getDayTime() % 24000L;
+            float rot = level.getSunAngle(1.0F);
             int timeMod = 1500;
             if (savedTime > 0)
                 hasPower = (int)(time / timeMod) == (savedTime / timeMod);
             rotation = rot;
             if (powered != hasPower)
-                world.notifyNeighborsOfStateChange(pos, getBlockState().getBlock());
+                level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
         }
     }
 

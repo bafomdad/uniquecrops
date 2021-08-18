@@ -32,27 +32,27 @@ public class GrowthComponent implements ICustomComponent {
     public void render(MatrixStack ms, IComponentRenderContext ctx, float pticks, int mouseX, int mouseY) {
 
         Minecraft mc = ctx.getGui().getMinecraft();
-        ItemStack book = mc.player.getHeldItemMainhand();
+        ItemStack book = mc.player.getMainHandItem();
         if (book.getItem() == UCItems.BOOK_GUIDE.get()) {
             if (!book.hasTag()) {
-                renderBlank(ms, mc.fontRenderer);
+                renderBlank(ms, mc.font);
                 return;
             }
             if (!book.getTag().contains(UCStrings.TAG_GROWTHSTAGES)) {
-                renderBlank(ms, mc.fontRenderer);
+                renderBlank(ms, mc.font);
                 return;
             }
-            ms.push();
-            mc.fontRenderer.func_243248_b(ms, new StringTextComponent("Feroxia Growth Steps"), x, y, 0);
+            ms.pushPose();
+            mc.font.draw(ms, new StringTextComponent("Feroxia Growth Steps"), x, y, 0);
             ms.scale(0.85F, 0.85F, 0.85F);
             ListNBT tagList = book.getTag().getList(UCStrings.TAG_GROWTHSTAGES, 10);
             for (int i = 0; i < tagList.size(); i++) {
                 CompoundNBT tag = tagList.getCompound(i);
                 int stage = tag.getInt("stage" + i);
                 String desc = EnumGrowthSteps.values()[stage].getDescription();
-                mc.fontRenderer.func_243248_b(ms, new StringTextComponent("Stage " + (i + 1) + ": ").append(new TranslationTextComponent(desc)), x, 20 + y + (i * 15), 0);
+                mc.font.draw(ms, new StringTextComponent("Stage " + (i + 1) + ": ").append(new TranslationTextComponent(desc)), x, 20 + y + (i * 15), 0);
             }
-            ms.pop();
+            ms.popPose();
         }
     }
 
@@ -63,7 +63,7 @@ public class GrowthComponent implements ICustomComponent {
 
     private void renderBlank(MatrixStack ms, FontRenderer font) {
 
-        font.func_243248_b(ms, new StringTextComponent("Feroxia Growth Steps"), x, y, 0);
-        font.func_243248_b(ms, new StringTextComponent("Here be crops!"), x, y + 20, 0);
+        font.draw(ms, new StringTextComponent("Feroxia Growth Steps"), x, y, 0);
+        font.draw(ms, new StringTextComponent("Here be crops!"), x, y + 20, 0);
     }
 }

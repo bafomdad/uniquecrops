@@ -26,12 +26,12 @@ public class PrecisionShovelItem extends ShovelItem implements IBookUpgradeable 
 
     public PrecisionShovelItem() {
 
-        super(TierItem.PRECISION, 1.5F, -3.0F, UCItems.unstackable().addToolType(ToolType.SHOVEL, TierItem.PRECISION.getHarvestLevel()));
+        super(TierItem.PRECISION, 1.5F, -3.0F, UCItems.unstackable().addToolType(ToolType.SHOVEL, TierItem.PRECISION.getLevel()));
         MinecraftForge.EVENT_BUS.addListener(this::onBlockFall);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -44,17 +44,17 @@ public class PrecisionShovelItem extends ShovelItem implements IBookUpgradeable 
     public void onBlockFall(EntityJoinWorldEvent event) {
 
         if (event.getEntity() instanceof FallingBlockEntity) {
-            PlayerEntity player = event.getEntity().world.getClosestPlayer(event.getEntity(), RANGE);
-            if (player != null && player.getHeldItemMainhand().getItem() == this) {
-                if (isMaxLevel(player.getHeldItemMainhand()))
+            PlayerEntity player = event.getEntity().level.getNearestPlayer(event.getEntity(), RANGE);
+            if (player != null && player.getMainHandItem().getItem() == this) {
+                if (isMaxLevel(player.getMainHandItem()))
                     event.setCanceled(true);
             }
         }
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+        stack.enchant(Enchantments.SILK_TOUCH, 1);
     }
 }

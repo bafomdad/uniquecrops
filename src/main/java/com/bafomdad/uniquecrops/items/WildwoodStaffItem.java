@@ -50,14 +50,14 @@ public class WildwoodStaffItem extends ItemBaseUC {
 
     private void onCropGrowth(BlockEvent.CropGrowEvent.Pre event) {
 
-        if (event.getWorld().isRemote()) return;
+        if (event.getWorld().isClientSide()) return;
 
         BlockPos pos = event.getPos();
-        List<PlayerEntity> players = event.getWorld().getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.add(-7, -3, -7), pos.add(7, 3, 7)));
+        List<PlayerEntity> players = event.getWorld().getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(pos.offset(-7, -3, -7), pos.offset(7, 3, 7)));
         for (PlayerEntity player : players) {
-            ItemStack itemCap = player.getHeldItemMainhand();
-            ItemStack offhand = player.getHeldItemOffhand();
-            int distance = (int)player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ());
+            ItemStack itemCap = player.getMainHandItem();
+            ItemStack offhand = player.getOffhandItem();
+            int distance = (int)player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ());
             int range = (offhand.getItem() instanceof IItemBooster) ? 4 + ((IItemBooster)offhand.getItem()).getRange(offhand) : 3;
 
             if (distance <= range) {
@@ -91,9 +91,9 @@ public class WildwoodStaffItem extends ItemBaseUC {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup tab, NonNullList<ItemStack> items) {
+    public void fillItemCategory(ItemGroup tab, NonNullList<ItemStack> items) {
 
-        if (isInGroup(tab)) {
+        if (allowdedIn(tab)) {
             items.add(new ItemStack(this));
 
             ItemStack fullStaff = new ItemStack(this);
@@ -104,7 +104,7 @@ public class WildwoodStaffItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
         boolean flag = Screen.hasShiftDown();
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
@@ -119,7 +119,7 @@ public class WildwoodStaffItem extends ItemBaseUC {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-            if (crop.hasCooldown() && !world.isRemote) {
+            if (crop.hasCooldown() && !world.isClientSide) {
                 crop.setCooldown(crop.getCooldown() - 1);
         }
         });
@@ -152,7 +152,7 @@ public class WildwoodStaffItem extends ItemBaseUC {
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-        return !ItemStack.areItemsEqual(oldStack, newStack);
+        return !ItemStack.matches(oldStack, newStack);
     }
 
     @Nullable

@@ -41,9 +41,9 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
     private void onPlayerJump(LivingEvent.LivingJumpEvent event) {
 
         if (event.getEntityLiving() instanceof PlayerEntity) {
-            ItemStack boots = event.getEntityLiving().getItemStackFromSlot(EquipmentSlotType.FEET);
+            ItemStack boots = event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET);
             if (boots.getItem() == UCItems.SEVEN_LEAGUE_BOOTS.get()) {
-                event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().add(0, JUMP_FACTOR, 0));
+                event.getEntityLiving().setDeltaMovement(event.getEntityLiving().getDeltaMovement().add(0, JUMP_FACTOR, 0));
                 event.getEntityLiving().fallDistance -= FALL_BUFFER;
             }
         }
@@ -53,7 +53,7 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
 
         LivingEntity entity = event.getEntityLiving();
         if (entity instanceof PlayerEntity) {
-            ItemStack boots = entity.getItemStackFromSlot(EquipmentSlotType.FEET);
+            ItemStack boots = entity.getItemBySlot(EquipmentSlotType.FEET);
             if (boots.getItem() == this) {
                 event.setDistance(Math.max(0, event.getDistance() - FALL_BUFFER));
             }
@@ -66,9 +66,9 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
             PlayerEntity player = (PlayerEntity)event.getEntityLiving();
             String name = getPlayerStr(player);
             if (CMONSTEPITUP.contains(name)) {
-                ItemStack boots = player.getItemStackFromSlot(EquipmentSlotType.FEET);
+                ItemStack boots = player.getItemBySlot(EquipmentSlotType.FEET);
                 if (boots.getItem() != this) {
-                    player.stepHeight = 0.6F;
+                    player.maxUpStep = 0.6F;
                     CMONSTEPITUP.remove(name);
                 }
             }
@@ -87,20 +87,20 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
 
         String name = getPlayerStr(player);
         if (CMONSTEPITUP.contains(name)) {
-            if (world.isRemote) {
+            if (world.isClientSide) {
                 float SPEED = NBTUtils.getFloat(stack, UCStrings.SPEED_MODIFIER, DEFAULT_SPEED);
-                if ((player.isOnGround() || player.abilities.isFlying) && player.moveForward > 0F && !player.isInWaterOrBubbleColumn()) {
+                if ((player.isOnGround() || player.abilities.flying) && player.zza > 0F && !player.isInWaterOrBubble()) {
                     player.moveRelative(SPEED, new Vector3d(0F, 0F, 1F));
                 }
-                if (player.isSneaking())
-                    player.stepHeight = 0.60001F; // Botania's ItemTravelBelt uses this value to avoid setting the default value of 0.6F, so I'm not gonna step on any toes here
-                else player.stepHeight = 1.0625F;
+                if (player.isCrouching())
+                    player.maxUpStep = 0.60001F; // Botania's ItemTravelBelt uses this value to avoid setting the default value of 0.6F, so I'm not gonna step on any toes here
+                else player.maxUpStep = 1.0625F;
 
                 snapForward(player, stack);
             }
         } else {
             CMONSTEPITUP.add(name);
-            player.stepHeight = 1.0625F;
+            player.maxUpStep = 1.0625F;
         }
     }
 
@@ -114,7 +114,7 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
             NBTUtils.setInt(stack, UCStrings.SPRINTING_TICKS, sprintTicks - 1);
             return;
         }
-        if (player.isSprinting() && !player.abilities.isFlying) {
+        if (player.isSprinting() && !player.abilities.flying) {
             if (NBTUtils.getFloat(stack, UCStrings.SPEED_MODIFIER, DEFAULT_SPEED) == DEFAULT_SPEED) {
                 NBTUtils.setFloat(stack, UCStrings.SPEED_MODIFIER, speedMod * Math.max(getLevel(stack), 1));
                 return;
@@ -130,14 +130,14 @@ public class LeagueBootsItem extends ItemArmorUC implements IBookUpgradeable {
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 
         return false;
     }
 
     private String getPlayerStr(PlayerEntity player) {
 
-        return player.getGameProfile().getName() + ":" + player.world.isRemote;
+        return player.getGameProfile().getName() + ":" + player.level.isClientSide;
     }
 
     @Override

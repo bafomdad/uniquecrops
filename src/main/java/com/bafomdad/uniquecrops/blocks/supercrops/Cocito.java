@@ -22,13 +22,20 @@ public class Cocito extends BaseSuperCropsBlock {
 
     public Cocito() {
 
-        super(Properties.create(Material.PLANTS).doesNotBlockMovement().hardnessAndResistance(5.0F, 1000.0F).sound(SoundType.CROP).setLightLevel(i -> 15));
+        super(Properties.of(Material.PLANT).noCollission().strength(5.0F, 1000.0F).sound(SoundType.CROP).lightLevel(i -> 15).randomTicks());
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
 
-        world.getPendingBlockTicks().scheduleTick(pos, this, 20);
+        world.getBlockTicks().scheduleTick(pos, this, 20);
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+
+        if (!world.getBlockTicks().hasScheduledTick(pos, this))
+            cookNearbyThings(world, pos);
     }
 
     @Override
@@ -39,16 +46,16 @@ public class Cocito extends BaseSuperCropsBlock {
 
     private void cookNearbyThings(ServerWorld world, BlockPos pos) {
 
-        List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos.add(-4, 0, -4), pos.add(4, 1, 4)));
+        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos.offset(-4, 0, -4), pos.offset(4, 1, 4)));
         for (ItemEntity ei : items) {
             if (ei.isAlive() && !(ei instanceof CookingItemEntity)) {
                 if (ei.getItem().getItem() == UCItems.USELESS_LUMP.get()) continue;
                 CookingItemEntity eic = new CookingItemEntity(world, ei, ei.getItem());
-                world.addEntity(eic);
+                world.addFreshEntity(eic);
                 ei.remove();
             }
         }
-        world.getPendingBlockTicks().scheduleTick(pos, this, 20);
+        world.getBlockTicks().scheduleTick(pos, this, 20);
     }
 
     @Override

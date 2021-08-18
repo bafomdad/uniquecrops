@@ -22,11 +22,11 @@ import java.util.Random;
 
 public class CropPortalBlock extends Block {
 
-    public static final VoxelShape PORTAL_AABB = VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
+    public static final VoxelShape PORTAL_AABB = VoxelShapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
 
     public CropPortalBlock() {
 
-        super(Properties.from(Blocks.NETHER_PORTAL));
+        super(Properties.copy(Blocks.NETHER_PORTAL));
     }
 
     @Override
@@ -36,21 +36,21 @@ public class CropPortalBlock extends Block {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (!(entity instanceof PlayerEntity)) return;
 
-        Vector3d vec3d = entity.getMotion();
-        entity.setMotion(vec3d.x, Math.abs(vec3d.y * 1.05), vec3d.z);
+        Vector3d vec3d = entity.getDeltaMovement();
+        entity.setDeltaMovement(vec3d.x, Math.abs(vec3d.y * 1.05), vec3d.z);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
 
-        if (world.isAirBlock(facingPos))
+        if (world.isEmptyBlock(facingPos))
             world.destroyBlock(pos, false);
 
-        return super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
+        return super.updateShape(state, facing, facingState, world, pos, facingPos);
     }
 
     @Override

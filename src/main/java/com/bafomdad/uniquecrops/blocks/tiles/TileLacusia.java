@@ -27,23 +27,23 @@ public class TileLacusia extends BaseTileUC {
 
     public void updateStuff() {
 
-        boolean hasPower = world.isBlockPowered(getPos());
-        if (!world.isRemote) {
+        boolean hasPower = level.hasNeighborSignal(getBlockPos());
+        if (!level.isClientSide) {
             if (this.canAdd() && hasPower) {
                 TileEntity tileInv = null;
                 for (Direction face : Direction.Plane.HORIZONTAL) {
-                    BlockPos looppos = getPos().offset(face);
-                    if (!world.isBlockLoaded(looppos)) return;
+                    BlockPos looppos = getBlockPos().relative(face);
+                    if (!level.hasChunkAt(looppos)) return;
 
-                    TileEntity tile = world.getTileEntity(looppos);
+                    TileEntity tile = level.getBlockEntity(looppos);
                     if (tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
                         tileInv = tile;
-                        dir = face.getIndex();
+                        dir = face.ordinal();
                         break;
                     }
                 }
                 if (tileInv != null) {
-                    tileInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.byHorizontalIndex(dir))
+                    tileInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.from2DDataValue(dir))
                             .ifPresent(cap -> {
                                 for (int i = 0; i < cap.getSlots(); i++) {
                                     ItemStack extract = cap.getStackInSlot(i);
@@ -63,10 +63,10 @@ public class TileLacusia extends BaseTileUC {
                     if (hasPower) face = face.getOpposite();
                     if (directionMatches(face)) continue;
 
-                    BlockPos looppos = getPos().offset(face);
-                    if (!world.isBlockLoaded(looppos)) return;
+                    BlockPos looppos = getBlockPos().relative(face);
+                    if (!level.hasChunkAt(looppos)) return;
 
-                    TileEntity tile = world.getTileEntity(looppos);
+                    TileEntity tile = level.getBlockEntity(looppos);
                     if (tile instanceof TileLacusia) {
                         TileLacusia lacusia = (TileLacusia)tile;
                         if (lacusia.canAdd()) {
@@ -74,14 +74,14 @@ public class TileLacusia extends BaseTileUC {
                             this.setItem(ItemStack.EMPTY);
                             lacusia.markBlockForUpdate();
                             this.markBlockForUpdate();
-                            dir = face.getIndex();
-                            lacusia.dir = face.getOpposite().getIndex();
-                            world.getPendingBlockTicks().scheduleTick(looppos, UCBlocks.LACUSIA_CROP.get(), waitTime);
+                            dir = face.ordinal();
+                            lacusia.dir = face.getOpposite().ordinal();
+                            level.getBlockTicks().scheduleTick(looppos, UCBlocks.LACUSIA_CROP.get(), waitTime);
                             break;
                         }
                         else {
-                            dir = face.getIndex();
-                            world.getPendingBlockTicks().scheduleTick(getPos(), UCBlocks.LACUSIA_CROP.get(), waitTimeStuck);
+                            dir = face.ordinal();
+                            level.getBlockTicks().scheduleTick(getBlockPos(), UCBlocks.LACUSIA_CROP.get(), waitTimeStuck);
                         }
                     }
                     if (tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face).isPresent()) {
@@ -96,14 +96,14 @@ public class TileLacusia extends BaseTileUC {
                                 ItemHandlerHelper.insertItem(cap, getItem(), false);
                                 this.setItem(simulate);
                                 this.markBlockForUpdate();
-                                dir = finalFace.getIndex();
+                                dir = finalFace.ordinal();
                                 if (!getItem().isEmpty())
-                                    world.getPendingBlockTicks().scheduleTick(getPos(), UCBlocks.LACUSIA_CROP.get(), waitTime);
+                                    level.getBlockTicks().scheduleTick(getBlockPos(), UCBlocks.LACUSIA_CROP.get(), waitTime);
 //                                break;
                             }
                             else if (available <= 0) {
-                                dir = finalFace.getIndex();
-                                world.getPendingBlockTicks().scheduleTick(getPos(), UCBlocks.LACUSIA_CROP.get(), waitTimeStuck);
+                                dir = finalFace.ordinal();
+                                level.getBlockTicks().scheduleTick(getBlockPos(), UCBlocks.LACUSIA_CROP.get(), waitTimeStuck);
                             }
                         });
                     }
@@ -114,7 +114,7 @@ public class TileLacusia extends BaseTileUC {
 
     private boolean directionMatches(Direction facing) {
 
-        return facing.getIndex() == dir;
+        return facing.ordinal() == dir;
     }
 
     public boolean canAdd() {

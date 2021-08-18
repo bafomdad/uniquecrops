@@ -28,7 +28,7 @@ public class AnkhItem extends ItemBaseUC {
 
     public AnkhItem() {
 
-        super(UCItems.defaultBuilder().maxDamage(6));
+        super(UCItems.defaultBuilder().durability(6));
         MinecraftForge.EVENT_BUS.addListener(this::checkPlayerDeath);
         MinecraftForge.EVENT_BUS.addListener(this::onPlayerClone);
     }
@@ -42,15 +42,15 @@ public class AnkhItem extends ItemBaseUC {
             CompoundNBT tag = player.getPersistentData();
             if (tag.contains("hasSacrificed") && !tag.getBoolean("hasSacrificed")) {
                 tag.putBoolean("hasSacrificed", true);
-                if (!player.world.isRemote)
-                    InventoryHelper.spawnItemStack(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), new ItemStack(UCItems.STEVE_HEART.get()));
+                if (!player.level.isClientSide)
+                    InventoryHelper.dropItemStack(player.level, player.getX(), player.getY(), player.getZ(), new ItemStack(UCItems.STEVE_HEART.get()));
             }
         }
     }
 
     private void onPlayerClone(PlayerEvent.Clone event) {
 
-        if (event.isWasDeath() && !event.getPlayer().world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
+        if (event.isWasDeath() && !event.getPlayer().level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
             PlayerEntity oldPlayer = event.getOriginal();
             PlayerEntity newPlayer = event.getPlayer();
 
@@ -95,21 +95,21 @@ public class AnkhItem extends ItemBaseUC {
             playerTag.remove(UCStrings.SAVED_ITEMS);
 
         ListNBT tagList = new ListNBT();
-        for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-            ItemStack ankh = player.inventory.mainInventory.get(i);
+        for (int i = 0; i < player.inventory.items.size(); i++) {
+            ItemStack ankh = player.inventory.items.get(i);
             if (!ankh.isEmpty() && ankh.getItem() == UCItems.ANKH.get()) {
                 List<Integer> slots = getSurroundingSlots(i);
                 if (!slots.isEmpty()) {
                     for (int j = 0; j < slots.size(); j++) {
                         int slot = slots.get(j);
-                        ItemStack stack = player.inventory.mainInventory.get(slot);
+                        ItemStack stack = player.inventory.items.get(slot);
                         if (!stack.isEmpty()) {
                             CompoundNBT tag = new CompoundNBT();
                             tag.putInt("Slot", slot);
-                            stack.write(tag);
+                            stack.save(tag);
                             tagList.add(tag);
-                            if (!player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY))
-                                player.inventory.mainInventory.set(slot, ItemStack.EMPTY);
+                            if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+                                player.inventory.items.set(slot, ItemStack.EMPTY);
                         }
                     }
                 }
@@ -126,15 +126,15 @@ public class AnkhItem extends ItemBaseUC {
         for (int i = 0; i < tagList.size(); i++) {
             CompoundNBT tag = tagList.getCompound(i);
             int slot = tag.getInt("Slot");
-            ItemStack newStack = ItemStack.read(tag);
+            ItemStack newStack = ItemStack.of(tag);
             if (newStack.getItem() == UCItems.ANKH.get())
-                newStack.damageItem(1, newPlayer, (entity) -> {});
-            newPlayer.inventory.mainInventory.set(slot, newStack);
+                newStack.hurtAndBreak(1, newPlayer, (entity) -> {});
+            newPlayer.inventory.items.set(slot, newStack);
         }
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 
         return false;
     }

@@ -15,7 +15,7 @@ public class EmblemPowerfist extends ItemCurioUC {
     private void fistingSpeed(PlayerEvent.BreakSpeed event) {
 
         if (hasCurio(event.getPlayer())) {
-            ItemStack miningHand = event.getPlayer().getHeldItemMainhand();
+            ItemStack miningHand = event.getPlayer().getMainHandItem();
             if (!miningHand.isEmpty()) return;
 
             if (event.getNewSpeed() < 8.0F)

@@ -83,9 +83,9 @@ public class UCItems {
     public static final RegistryObject<Item> WAFFLE = registerFood("waffle", UCFoods.WAFFLE);
     public static final RegistryObject<Item> YOGURT = registerFood("yogurt", UCFoods.YOGURT);
     public static final RegistryObject<Item> EGGNOG = registerFood("eggnog", UCFoods.EGGNOG);
-    public static final RegistryObject<Item> POTION_REVERSE = register("potionreverse", () -> new ItemBaseUC(unstackable().food(UCFoods.REVERSE_POTION).containerItem(Items.GLASS_BOTTLE)));
-    public static final RegistryObject<Item> POTION_ENNUI = register("potionennui", () -> new ItemBaseUC(unstackable().food(UCFoods.ENNUI_POTION).containerItem(Items.GLASS_BOTTLE)));
-    public static final RegistryObject<Item> POTION_IGNORANCE = register("potionignorance", () -> new ItemBaseUC(unstackable().food(UCFoods.IGNORANCE_POTION).containerItem(Items.GLASS_BOTTLE)));
+    public static final RegistryObject<Item> POTION_REVERSE = register("potionreverse", () -> new ItemBaseUC(unstackable().food(UCFoods.REVERSE_POTION).craftRemainder(Items.GLASS_BOTTLE)));
+    public static final RegistryObject<Item> POTION_ENNUI = register("potionennui", () -> new ItemBaseUC(unstackable().food(UCFoods.ENNUI_POTION).craftRemainder(Items.GLASS_BOTTLE)));
+    public static final RegistryObject<Item> POTION_IGNORANCE = register("potionignorance", () -> new ItemBaseUC(unstackable().food(UCFoods.IGNORANCE_POTION).craftRemainder(Items.GLASS_BOTTLE)));
 
     /**
      * GEAR
@@ -211,7 +211,7 @@ public class UCItems {
 
     public static RegistryObject<Item> registerFood(String name, Food food) {
 
-        return ITEMS.register(name, () -> new Item(new Item.Properties().food(food).group(UniqueCrops.TAB)));
+        return ITEMS.register(name, () -> new Item(new Item.Properties().food(food).tab(UniqueCrops.TAB)));
     }
 
     public static RegistryObject<BlockItem> registerSeed(String name, RegistryObject<BaseCropsBlock> crop) {
@@ -221,11 +221,11 @@ public class UCItems {
 
     public static Item.Properties defaultBuilder() {
 
-        return new Item.Properties().group(UniqueCrops.TAB);
+        return new Item.Properties().tab(UniqueCrops.TAB);
     }
 
     public static Item.Properties unstackable() {
 
-        return defaultBuilder().maxStackSize(1);
+        return defaultBuilder().stacksTo(1);
     }
 }

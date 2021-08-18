@@ -40,25 +40,25 @@ import java.util.UUID;
 public class GobletBlock extends Block {
 
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-    public static final VoxelShape GOBLET_AABB = VoxelShapes.create(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D);
+    public static final VoxelShape GOBLET_AABB = VoxelShapes.box(0.375D, 0.0D, 0.375D, 0.625D, 0.5D, 0.625D);
 
     public GobletBlock() {
 
-        super(Properties.create(Material.CLAY).sound(SoundType.METAL).hardnessAndResistance(0.3F, 1.0F).doesNotBlockMovement());
-        setDefaultState(getDefaultState().with(FILLED, false));
+        super(Properties.of(Material.CLAY).sound(SoundType.METAL).strength(0.3F, 1.0F).noCollission());
+        registerDefaultState(defaultBlockState().setValue(FILLED, false));
         MinecraftForge.EVENT_BUS.addListener(this::onLivingAttack);
     }
 
     private void onLivingAttack(LivingAttackEvent event) {
 
         if (!(event.getEntityLiving() instanceof PlayerEntity)) return;
-        if (event.getSource() != DamageSource.MAGIC && event.getSource().getTrueSource() instanceof LivingEntity) {
-            for (TileEntity tile : event.getEntityLiving().world.loadedTileEntityList) {
+        if (event.getSource() != DamageSource.MAGIC && event.getSource().getEntity() instanceof LivingEntity) {
+            for (TileEntity tile : event.getEntityLiving().level.blockEntityList) {
                 if (tile instanceof TileGoblet) {
                     LivingEntity tagged = UCUtils.getTaggedEntity(((TileGoblet)tile).entityId);
                     if (tagged != null) {
                         event.setCanceled(true);
-                        tagged.attackEntityFrom(event.getSource(), event.getAmount());
+                        tagged.hurt(event.getSource(), event.getAmount());
                         if (!tagged.isAlive())
                             ((TileGoblet)tile).eraseTaglock();
                         return;
@@ -70,13 +70,13 @@ public class GobletBlock extends Block {
 
     public boolean isFilled(BlockState state) {
 
-        return state.get(FILLED);
+        return state.getValue(FILLED);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(FILLED);
     }
 
@@ -87,17 +87,17 @@ public class GobletBlock extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (!isFilled(state)) {
-            ItemStack stack = player.getHeldItemMainhand();
-            TileEntity tile = world.getTileEntity(pos);
+            ItemStack stack = player.getMainHandItem();
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileGoblet && stack.getItem() == UCItems.VAMPIRIC_OINTMENT.get()) {
                 boolean flag = stack.hasTag() && stack.getTag().contains(UCStrings.TAG_LOCK);
-                if (!world.isRemote && flag) {
+                if (!world.isClientSide && flag) {
                     ((TileGoblet)tile).setTaglock(UUID.fromString(NBTUtils.getString(stack, UCStrings.TAG_LOCK, "")));
-                    player.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
-                    world.setBlockState(pos, state.with(FILLED, true), 3);
+                    player.setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+                    world.setBlock(pos, state.setValue(FILLED, true), 3);
                 }
                 return ActionResultType.SUCCESS;
             }
@@ -106,24 +106,24 @@ public class GobletBlock extends Block {
     }
 
         @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (isFilled(state)) return;
-        if (!(world.getTileEntity(pos) instanceof TileGoblet)) return;
+        if (!(world.getBlockEntity(pos) instanceof TileGoblet)) return;
         if (!(entity instanceof ItemEntity) || ((ItemEntity) entity).getItem().getItem() != UCItems.VAMPIRIC_OINTMENT.get()) return;
 
         ItemStack ointment = ((ItemEntity)entity).getItem();
         if (!ointment.hasTag() || !ointment.getTag().contains(UCStrings.TAG_LOCK)) return;
 
-        if (!world.isRemote) {
-            world.setBlockState(pos, state.with(FILLED, true), 3);
-            ((TileGoblet)world.getTileEntity(pos)).setTaglock(UUID.fromString(NBTUtils.getString(ointment, UCStrings.TAG_LOCK, "")));
+        if (!world.isClientSide) {
+            world.setBlock(pos, state.setValue(FILLED, true), 3);
+            ((TileGoblet)world.getBlockEntity(pos)).setTaglock(UUID.fromString(NBTUtils.getString(ointment, UCStrings.TAG_LOCK, "")));
             entity.remove();
         }
     }
 
     @Override
-    public int getWeakPower(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
+    public int getSignal(BlockState state, IBlockReader blockAccess, BlockPos pos, Direction side) {
 
         return isFilled(state) ? 15 : 0;
     }

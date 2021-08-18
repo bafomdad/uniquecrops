@@ -23,10 +23,10 @@ public class Eula extends BaseCropsBlock {
 
         CompoundNBT data = ctx.getPlayer().getPersistentData();
         if (!data.contains(UCStrings.TAG_EULA)) {
-            if (!ctx.getWorld().isRemote) {
+            if (!ctx.getLevel().isClientSide) {
                 data.putBoolean(UCStrings.TAG_EULA, true);
                 if (ctx.getPlayer() instanceof ServerPlayerEntity)
-                    UCPacketHandler.sendTo((ServerPlayerEntity)ctx.getPlayer(), new PacketOpenBook(ctx.getPlayer().getEntityId()));
+                    UCPacketHandler.sendTo((ServerPlayerEntity)ctx.getPlayer(), new PacketOpenBook(ctx.getPlayer().getId()));
             }
         }
         return super.getStateForPlacement(ctx);

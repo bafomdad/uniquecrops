@@ -13,16 +13,16 @@ public class ObtusePlatformBlock extends Block {
 
     public ObtusePlatformBlock() {
 
-        super(AbstractBlock.Properties.from(Blocks.OAK_PLANKS).notSolid().doesNotBlockMovement());
+        super(AbstractBlock.Properties.copy(Blocks.OAK_PLANKS).noOcclusion().noCollission());
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (!(entity instanceof LivingEntity)) return;
 
         float prevFallDistance = entity.fallDistance;
-        if (!world.isRemote && !entity.isOnGround() && (prevFallDistance > 1.0F || prevFallDistance > 20.0F))
+        if (!world.isClientSide && !entity.isOnGround() && (prevFallDistance > 1.0F || prevFallDistance > 20.0F))
             entity.fallDistance = 20.0F;
     }
 }

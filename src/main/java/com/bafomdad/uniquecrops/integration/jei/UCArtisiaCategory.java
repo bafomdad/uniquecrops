@@ -43,7 +43,7 @@ public class UCArtisiaCategory implements IRecipeCategory<IArtisiaRecipe> {
     @Override
     public String getTitle() {
 
-        return I18n.format("container.jei.uniquecrops.craftyplant");
+        return I18n.get("container.jei.uniquecrops.craftyplant");
     }
 
     @Override
@@ -63,10 +63,10 @@ public class UCArtisiaCategory implements IRecipeCategory<IArtisiaRecipe> {
 
         List<List<ItemStack>> list = new ArrayList<>();
         for (Ingredient ingr : recipe.getIngredients()) {
-            list.add(Arrays.asList(ingr.getMatchingStacks()));
+            list.add(Arrays.asList(ingr.getItems()));
         }
         ingredients.setInputLists(VanillaTypes.ITEM, list);
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override

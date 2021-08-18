@@ -38,7 +38,7 @@ public class UCTickHandler {
     public static void clientTickEnd(TickEvent.ClientTickEvent event) {
 
         if (event.phase == TickEvent.Phase.END) {
-            Screen gui = Minecraft.getInstance().currentScreen;
+            Screen gui = Minecraft.getInstance().screen;
             if (gui == null || !gui.isPauseScreen()) {
                 ticksInGame++;
                 partialTicks = 0;

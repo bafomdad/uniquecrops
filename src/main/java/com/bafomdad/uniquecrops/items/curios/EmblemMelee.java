@@ -15,13 +15,13 @@ public class EmblemMelee extends ItemCurioUC {
     @Override
     public void onEquip(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
-        entity.getAttributeManager().reapplyModifiers(getEquippedAttributeModifiers(stack));
+        entity.getAttributes().addTransientAttributeModifiers(getEquippedAttributeModifiers(stack));
     }
 
     @Override
     public void onUnequip(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
-        entity.getAttributeManager().removeModifiers(getEquippedAttributeModifiers(stack));
+        entity.getAttributes().removeAttributeModifiers(getEquippedAttributeModifiers(stack));
     }
 
     public Multimap<Attribute, AttributeModifier> getEquippedAttributeModifiers(ItemStack stack) {

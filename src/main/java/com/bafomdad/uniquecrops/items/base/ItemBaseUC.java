@@ -28,7 +28,7 @@ public class ItemBaseUC extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -39,26 +39,26 @@ public class ItemBaseUC extends Item {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
 
         if (stack.getItem() == UCItems.POTION_REVERSE.get() || stack.getItem() == UCItems.POTION_IGNORANCE.get() || stack.getItem() == UCItems.POTION_ENNUI.get())
             return true;
 
-        return super.hasEffect(stack);
+        return super.isFoil(stack);
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
 
         if (entity instanceof PlayerEntity) {
             if (stack.hasContainerItem()) {
                 ItemStack container = stack.getContainerItem();
                 if (!((PlayerEntity)entity).isCreative()) {
-                    ((PlayerEntity)entity).inventory.addItemStackToInventory(container);
+                    ((PlayerEntity)entity).inventory.add(container);
                 }
                 return container;
             }
         }
-        return super.onItemUseFinish(stack, world, entity);
+        return super.finishUsingItem(stack, world, entity);
     }
 }

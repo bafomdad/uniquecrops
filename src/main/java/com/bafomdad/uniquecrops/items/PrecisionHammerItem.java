@@ -31,39 +31,39 @@ public class PrecisionHammerItem extends ToolItem {
     private static final Set<Material> EFFECTIVE_ON_MATERIALS = Sets.newHashSet(
             Material.WOOD,
             Material.NETHER_WOOD,
-            Material.PLANTS,
-            Material.TALL_PLANTS,
+            Material.PLANT,
+            Material.REPLACEABLE_PLANT,
             Material.BAMBOO,
-            Material.GOURD,
-            Material.ORGANIC,
-            Material.ROCK,
-            Material.IRON,
-            Material.ANVIL,
+            Material.VEGETABLE,
+            Material.GRASS,
+            Material.STONE,
+            Material.METAL,
+            Material.HEAVY_METAL,
             Material.SAND,
-            Material.EARTH,
+            Material.DIRT,
             Material.CACTUS,
             Material.GLASS,
             Material.CLAY,
             Material.ICE,
-            Material.PACKED_ICE,
+            Material.ICE_SOLID,
             Material.CORAL,
             Material.LEAVES,
             Material.PISTON,
             Material.SNOW,
-            Material.SNOW_BLOCK,
+            Material.SNOW,
             Material.WOOL,
             Material.WEB,
             Material.SPONGE,
-            Material.CARPET
+            Material.CLOTH_DECORATION
     );
 
     public PrecisionHammerItem() {
 
         super(1.0F, -2.6F, TierItem.PRECISION, EFFECTIVE_ON, UCItems.unstackable()
-        .addToolType(ToolType.SHOVEL, TierItem.PRECISION.getHarvestLevel())
-        .addToolType(ToolType.AXE, TierItem.PRECISION.getHarvestLevel())
-        .addToolType(ToolType.PICKAXE, TierItem.PRECISION.getHarvestLevel())
-        .addToolType(ToolType.HOE, TierItem.PRECISION.getHarvestLevel()));
+        .addToolType(ToolType.SHOVEL, TierItem.PRECISION.getLevel())
+        .addToolType(ToolType.AXE, TierItem.PRECISION.getLevel())
+        .addToolType(ToolType.PICKAXE, TierItem.PRECISION.getLevel())
+        .addToolType(ToolType.HOE, TierItem.PRECISION.getLevel()));
     }
 
     @Override
@@ -76,29 +76,29 @@ public class PrecisionHammerItem extends ToolItem {
     public float getDestroySpeed(ItemStack stack, BlockState state) {
 
         Material material = state.getMaterial();
-        return EFFECTIVE_ON_MATERIALS.contains(material) ? this.efficiency : super.getDestroySpeed(stack, state);
+        return EFFECTIVE_ON_MATERIALS.contains(material) ? this.speed : super.getDestroySpeed(stack, state);
     }
 
     @Override
-    public boolean canHarvestBlock(BlockState blockIn) {
+    public boolean isCorrectToolForDrops(BlockState blockIn) {
 
-        int i = this.getTier().getHarvestLevel();
+        int i = this.getTier().getLevel();
         if (blockIn.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE) {
             return i >= blockIn.getHarvestLevel();
         }
         Material material = blockIn.getMaterial();
-        return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
+        return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "precisionhammer"));
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+        stack.enchant(Enchantments.SILK_TOUCH, 1);
     }
 }

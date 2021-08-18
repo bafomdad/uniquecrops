@@ -18,19 +18,19 @@ public class PotionEnnui extends Effect {
 
     private void onPlayerJump(LivingEvent.LivingJumpEvent event) {
 
-        if (event.getEntityLiving().getActivePotionEffect(this) != null)
-            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().x, 0, event.getEntityLiving().getMotion().z);
+        if (event.getEntityLiving().getEffect(this) != null)
+            event.getEntityLiving().setDeltaMovement(event.getEntityLiving().getDeltaMovement().x, 0, event.getEntityLiving().getDeltaMovement().z);
     }
 
     private void onPlayerClickBlock(PlayerInteractEvent.RightClickBlock event) {
 
-        if (event.getPlayer().getActivePotionEffect(this) != null)
+        if (event.getPlayer().getEffect(this) != null)
             event.setCanceled(true);
     }
 
     private void onPlayerClickItem(PlayerInteractEvent.RightClickItem event) {
 
-        if (event.getPlayer().getActivePotionEffect(this) != null)
+        if (event.getPlayer().getEffect(this) != null)
             event.setCanceled(true);
     }
 }

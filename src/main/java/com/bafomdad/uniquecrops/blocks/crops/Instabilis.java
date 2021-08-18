@@ -35,17 +35,17 @@ public class Instabilis extends BaseCropsBlock {
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         if (!canGrow(world, pos)) return;
 
-        super.grow(world, rand, pos, state);
+        super.performBonemeal(world, rand, pos, state);
     }
 
     private boolean canGrow(ServerWorld world, BlockPos pos) {
 
         for (Direction dir : Direction.Plane.HORIZONTAL)
-            if (world.getBlockState(pos.offset(dir)).getBlock() != this) return false;
+            if (world.getBlockState(pos.relative(dir)).getBlock() != this) return false;
 
         return true;
     }
@@ -53,19 +53,19 @@ public class Instabilis extends BaseCropsBlock {
     @Override
     public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
 
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof ShearsItem) {
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 if (!player.isCreative())
-                    stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity)player);
+                    stack.hurt(1, world.random, (ServerPlayerEntity)player);
                 if (isMaxAge(state))
-                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCBlocks.DEMO_CORD.get()));
+                    InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCBlocks.DEMO_CORD.get()));
                 world.removeBlock(pos, false);
             }
             return willHarvest;
         }
         for (Direction dir : Direction.Plane.HORIZONTAL) {
-            BlockPos loopPos = pos.offset(dir);
+            BlockPos loopPos = pos.relative(dir);
             if (world.getBlockState(loopPos).getBlock() == this) {
                 world.destroyBlock(loopPos, false);
             }

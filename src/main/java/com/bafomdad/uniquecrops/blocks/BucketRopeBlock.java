@@ -29,40 +29,40 @@ import net.minecraftforge.fluids.FluidUtil;
 
 public class BucketRopeBlock extends Block {
 
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-    public static final VoxelShape BUCKET_AABB = VoxelShapes.create(0.375D, 0.0D, 0.375D, 0.625D, 1.5D, 0.625D);
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final VoxelShape BUCKET_AABB = VoxelShapes.box(0.375D, 0.0D, 0.375D, 0.625D, 1.5D, 0.625D);
 
     public BucketRopeBlock() {
 
-        super(Properties.create(Material.ANVIL).hardnessAndResistance(1.0F));
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+        super(Properties.of(Material.HEAVY_METAL).strength(1.0F));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(FACING);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        ItemStack bucket = player.getHeldItem(hand);
+        ItemStack bucket = player.getItemInHand(hand);
         if (bucket.getItem() == Items.BUCKET) {
-            if (!world.isRemote) {
-                BlockPos searchPos = pos.down();
+            if (!world.isClientSide) {
+                BlockPos searchPos = pos.below();
                 while (searchPos.getY() > 0) {
-                    searchPos = searchPos.down();
-                    if (!world.isAirBlock(searchPos)) break;
+                    searchPos = searchPos.below();
+                    if (!world.isEmptyBlock(searchPos)) break;
                 }
                 BlockState loopState = world.getBlockState(searchPos);
-                if (player.canPlayerEdit(searchPos, hit.getFace(), bucket) && loopState.getBlock() instanceof IBucketPickupHandler) {
-                    Fluid fluid = ((IBucketPickupHandler)loopState.getBlock()).pickupFluid(world, searchPos, loopState);
+                if (player.mayUseItemAt(searchPos, hit.getDirection(), bucket) && loopState.getBlock() instanceof IBucketPickupHandler) {
+                    Fluid fluid = ((IBucketPickupHandler)loopState.getBlock()).takeLiquid(world, searchPos, loopState);
                     if (fluid != Fluids.EMPTY) {
                         ItemStack filled = FluidUtil.getFilledBucket(new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME));
                         if (!player.isCreative())
-                            player.setHeldItem(hand, filled);
+                            player.setItemInHand(hand, filled);
                     }
                 }
             }
@@ -80,6 +80,6 @@ public class BucketRopeBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection());
     }
 }

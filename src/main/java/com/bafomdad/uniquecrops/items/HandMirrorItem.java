@@ -20,14 +20,14 @@ public class HandMirrorItem extends ItemBaseUC {
 
     private void reflectLazers(LivingAttackEvent event) {
 
-        if (event.getEntityLiving() instanceof PlayerEntity && event.getSource().getTrueSource() instanceof GuardianEntity) {
-            ItemStack mirror = event.getEntityLiving().getHeldItemOffhand();
+        if (event.getEntityLiving() instanceof PlayerEntity && event.getSource().getEntity() instanceof GuardianEntity) {
+            ItemStack mirror = event.getEntityLiving().getOffhandItem();
             if ( mirror.getItem() == this) {
                 float damage = event.getAmount();
-                event.getSource().getTrueSource().attackEntityFrom(EntityDamageSource.MAGIC, damage);
+                event.getSource().getEntity().hurt(EntityDamageSource.MAGIC, damage);
                 event.setCanceled(true);
                 if (event.getEntityLiving() instanceof ServerPlayerEntity)
-                mirror.attemptDamageItem(1, event.getEntityLiving().world.rand, (ServerPlayerEntity)event.getEntityLiving());
+                mirror.hurt(1, event.getEntityLiving().level.random, (ServerPlayerEntity)event.getEntityLiving());
             }
         }
     }

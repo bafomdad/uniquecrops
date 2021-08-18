@@ -25,7 +25,7 @@ public class HourglassProvider extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         consumer.accept(create("oldgrass", Blocks.GRASS_BLOCK, UCBlocks.OLDGRASS.get()));
         consumer.accept(create("oldcobble", Blocks.COBBLESTONE, UCBlocks.OLDCOBBLE.get()));
@@ -47,7 +47,7 @@ public class HourglassProvider extends RecipeProvider {
 
     private static FinishedRecipe create(String name, Block input, Block output) {
 
-        return create(name, input.getDefaultState(), output.getDefaultState());
+        return create(name, input.defaultBlockState(), output.defaultBlockState());
     }
 
     private static class FinishedRecipe implements IFinishedRecipe {
@@ -64,34 +64,34 @@ public class HourglassProvider extends RecipeProvider {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
 
             json.add("input", JsonUtils.writeBlockState(input));
             json.add("output", JsonUtils.writeBlockState(output));
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
 
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
 
             return UCRecipes.HOURGLASS_SERIALIZER.get();
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
 
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
 
             return null;
         }

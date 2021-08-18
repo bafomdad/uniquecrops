@@ -41,25 +41,25 @@ public interface IMultiblockRecipe extends IRecipe<IInventory> {
     }
 
     @Override
-    default ItemStack getCraftingResult(IInventory inv) {
+    default ItemStack assemble(IInventory inv) {
 
         return ItemStack.EMPTY;
     }
 
     @Override
-    default boolean canFit(int width, int height) {
+    default boolean canCraftInDimensions(int width, int height) {
 
         return false;
     }
 
     @Override
-    default ItemStack getRecipeOutput() {
+    default ItemStack getResultItem() {
 
         return ItemStack.EMPTY;
     }
 
     @Override
-    default boolean isDynamic() {
+    default boolean isSpecial() {
 
         return true;
     }

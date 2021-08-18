@@ -13,7 +13,7 @@ public final class UCTab extends ItemGroup {
     }
 
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
 
         return new ItemStack(UCItems.BOOK_GUIDE::get);
     }

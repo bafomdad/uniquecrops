@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 public class EmeradicDiamondItem extends ItemBaseUC implements IItemBooster {
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
 
         return true;
     }

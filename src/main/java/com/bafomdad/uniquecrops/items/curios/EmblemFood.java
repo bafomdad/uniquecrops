@@ -10,18 +10,18 @@ public class EmblemFood extends ItemCurioUC {
 
     public EmblemFood() {
 
-        super(UCItems.unstackable().maxDamage(50));
+        super(UCItems.unstackable().durability(50));
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
-        if (!entity.world.isRemote && entity instanceof ServerPlayerEntity) {
+        if (!entity.level.isClientSide && entity instanceof ServerPlayerEntity) {
             ServerPlayerEntity playerMP = (ServerPlayerEntity) entity;
-            int diff = 20 - playerMP.getFoodStats().getFoodLevel();
-            if (playerMP.getFoodStats().needFood() && diff >= 5) {
-                playerMP.getFoodStats().addStats(6, 0.6F);
-                stack.damageItem(1, playerMP, (player) -> { });
+            int diff = 20 - playerMP.getFoodData().getFoodLevel();
+            if (playerMP.getFoodData().needsFood() && diff >= 5) {
+                playerMP.getFoodData().eat(6, 0.6F);
+                stack.hurtAndBreak(1, playerMP, (player) -> {});
             }
         }
     }

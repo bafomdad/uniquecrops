@@ -54,29 +54,29 @@ public class GuiColorfulCube extends Screen {
     public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
 
         //TODO: real fix
-        ms.push();
+        ms.pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         double time = (UCTickHandler.ticksInGame + UCTickHandler.partialTicks) * 12F;
-        float zLevel = minecraft.getItemRenderer().zLevel;
-        ms.translate(0, 0, zLevel - 0.25);
+        float blitOffset = minecraft.getItemRenderer().blitOffset;
+        ms.translate(0, 0, blitOffset - 0.25);
         ms.scale(0.25F, 0.25F, 0.25F);
 //        ms.translate(-0.125, -0.125, 0);
         Vector3i vec3 = this.getRotationVec();
         Vector3f vecf = new Vector3f(vec3.getX(), vec3.getY(), vec3.getZ());
-        boolean north = vec3.equals(Direction.NORTH.getDirectionVec());
+        boolean north = vec3.equals(Direction.NORTH.getNormal());
         if (hasRotated) {
             if (lastRotationTime == -1)
                 this.lastRotationTime = time;
             double rotationElapsed = time - lastRotationTime;
             if (!north) {
-                ms.rotate(new Quaternion(vecf, (float)rotationElapsed, true));
+                ms.mulPose(new Quaternion(vecf, (float)rotationElapsed, true));
                 if (rotationElapsed >= 90F) {
                     this.lastRotationTime = -1;
                     this.hasRotated = false;
                 }
             } else {
-                ms.rotate(Vector3f.YP.rotationDegrees((float)rotationElapsed + 90F));
+                ms.mulPose(Vector3f.YP.rotationDegrees((float)rotationElapsed + 90F));
                 if ((float)rotationElapsed + 90F >= 180F) {
                     this.lastRotationTime = -1;
                     this.hasRotated = false;
@@ -84,17 +84,17 @@ public class GuiColorfulCube extends Screen {
             }
         } else {
             if (!north)
-                ms.rotate(new Quaternion(vecf, 90F, true));
+                ms.mulPose(new Quaternion(vecf, 90F, true));
             else
-                ms.rotate(Vector3f.YP.rotationDegrees(180F));
+                ms.mulPose(Vector3f.YP.rotationDegrees(180F));
         }
         ItemStack cubeStack = new ItemStack(UCItems.RUBIKS_CUBE.get());
-        IRenderTypeBuffer.Impl renderBuffer = minecraft.getRenderTypeBuffers().getCrumblingBufferSource();
-        itemRenderer.renderItem(cubeStack, ItemCameraTransforms.TransformType.FIXED, 0xF000F0, OverlayTexture.NO_OVERLAY, ms, renderBuffer);
+        IRenderTypeBuffer.Impl renderBuffer = minecraft.renderBuffers().crumblingBufferSource();
+        itemRenderer.renderStatic(cubeStack, ItemCameraTransforms.TransformType.FIXED, 0xF000F0, OverlayTexture.NO_OVERLAY, ms, renderBuffer);
 //        IBakedModel model = itemRenderer.getItemModelWithOverrides(cubeStack, null, null);
 //        itemRenderer.renderModel(model, cubeStack, 15728880, OverlayTexture.NO_OVERLAY, ms, renderBuffer.getBuffer(RenderType.getCutout()));
         RenderSystem.disableBlend();
-        ms.pop();
+        ms.popPose();
         super.render(ms, mouseX, mouseY, partialTicks);
     }
 
@@ -127,27 +127,27 @@ public class GuiColorfulCube extends Screen {
     private Vector3i getRotationVec() {
 
         int rot = ((RubiksCubeItem)UCItems.RUBIKS_CUBE.get()).getRotation(getCube());
-        Direction facing = Direction.byIndex(rot);
-        return facing.getDirectionVec();
+        Direction facing = Direction.from3DDataValue(rot);
+        return facing.getNormal();
     }
 
     private void rotateLeft(int i) {
 
-        Direction facing = Direction.byIndex(i);
+        Direction facing = Direction.from3DDataValue(i);
         if (facing == Direction.UP || facing == Direction.DOWN) return;
-        updateCube(facing.rotateY().getIndex());
+        updateCube(facing.getClockWise().ordinal());
     }
 
     private void rotateRight(int i) {
 
-        Direction facing = Direction.byIndex(i);
+        Direction facing = Direction.from3DDataValue(i);
         if (facing == Direction.UP || facing == Direction.DOWN) return;
-        updateCube(facing.rotateYCCW().getIndex());
+        updateCube(facing.getCounterClockWise().ordinal());
     }
 
     private void rotateUp(int i) {
 
-        Direction facing = Direction.byIndex(i);
+        Direction facing = Direction.from3DDataValue(i);
         if (facing != Direction.UP && facing != Direction.DOWN)
             updateCube(Direction.UP.ordinal());
         if (facing == Direction.DOWN) {
@@ -157,7 +157,7 @@ public class GuiColorfulCube extends Screen {
 
     private void rotateDown(int i) {
 
-        Direction facing = Direction.byIndex(i);
+        Direction facing = Direction.from3DDataValue(i);
         if (facing != Direction.DOWN && facing != Direction.UP)
             updateCube(Direction.DOWN.ordinal());
         if (facing == Direction.UP) {
@@ -173,7 +173,7 @@ public class GuiColorfulCube extends Screen {
 
     private ItemStack getCube() {
 
-        ItemStack stack = Minecraft.getInstance().player.getHeldItemMainhand();
+        ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
         if (stack.getItem() == UCItems.RUBIKS_CUBE.get())
             return stack;
 
@@ -186,7 +186,7 @@ public class GuiColorfulCube extends Screen {
         if (!cube.isEmpty()) {
             int rot = ((RubiksCubeItem)cube.getItem()).getRotation(cube);
             UCPacketHandler.INSTANCE.sendToServer(new PacketColorfulCube(rot, true));
-            this.closeScreen();
+            this.onClose();
         }
     }
 }

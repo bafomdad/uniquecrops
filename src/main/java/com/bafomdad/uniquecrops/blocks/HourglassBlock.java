@@ -26,11 +26,11 @@ public class HourglassBlock extends Block {
 
     private static final int RANGE = 3;
 
-    public static final VoxelShape HOURGLASS = VoxelShapes.create(0.25F, 0.0F, 0.25F, 0.75F, 1F, 0.75F);
+    public static final VoxelShape HOURGLASS = VoxelShapes.box(0.25F, 0.0F, 0.25F, 0.75F, 1F, 0.75F);
 
     public HourglassBlock() {
 
-        super(Properties.create(Material.IRON).sound(SoundType.GLASS).hardnessAndResistance(1.0F).tickRandomly().setOpaque(HourglassBlock::isntSolid));
+        super(Properties.of(Material.METAL).sound(SoundType.GLASS).strength(1.0F).randomTicks().isRedstoneConductor(HourglassBlock::isntSolid));
     }
 
     @Override
@@ -47,16 +47,16 @@ public class HourglassBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (world.getRedstonePowerFromNeighbors(pos) > 0)
+        if (world.getBestNeighborSignal(pos) > 0)
             searchAroundBlocks(world, pos, rand);
     }
 
     private void searchAroundBlocks(World world, BlockPos pos, Random rand) {
 
         List<BlockPos> toConvert = new ArrayList<>();
-        for (BlockPos loopPos : BlockPos.getAllInBoxMutable(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, RANGE, RANGE))) {
-            if (!world.isAirBlock(loopPos))
-                toConvert.add(loopPos.toImmutable());
+        for (BlockPos loopPos : BlockPos.betweenClosed(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE))) {
+            if (!world.isEmptyBlock(loopPos))
+                toConvert.add(loopPos.immutable());
         }
         Collections.shuffle(toConvert, rand);
         for (BlockPos loopPos : toConvert) {
@@ -82,14 +82,14 @@ public class HourglassBlock extends Block {
 
     private void convertBlock(World world, BlockPos pos, BlockState output) {
 
-        world.setBlockState(pos, output, 2);
+        world.setBlock(pos, output, 2);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 
-        if (rand.nextInt(2) == 0 && world.isBlockPowered(pos))
+        if (rand.nextInt(2) == 0 && world.hasNeighborSignal(pos))
             world.addParticle(ParticleTypes.END_ROD, pos.getX() + rand.nextFloat(), pos.getY() + 0.5, pos.getZ() + rand.nextFloat(), 0, 0, 0);
     }
 }

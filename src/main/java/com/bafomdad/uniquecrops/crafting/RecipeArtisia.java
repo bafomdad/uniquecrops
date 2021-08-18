@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
@@ -31,7 +32,7 @@ public class RecipeArtisia implements IArtisiaRecipe {
 
         this.id = id;
         this.output = output;
-        this.inputs = NonNullList.from(Ingredient.EMPTY, inputs);
+        this.inputs = NonNullList.of(Ingredient.EMPTY, inputs);
         if (inputs.length > 9)
             throw new IllegalStateException("Inputs cannot be more than 9");
     }
@@ -41,8 +42,8 @@ public class RecipeArtisia implements IArtisiaRecipe {
 
         List<Ingredient> ingredientsMissing = new ArrayList<>(inputs);
 
-        for (int i = 0; i < inv.getSizeInventory(); i++) {
-            ItemStack input = inv.getStackInSlot(i);
+        for (int i = 0; i < inv.getContainerSize(); i++) {
+            ItemStack input = inv.getItem(i);
             if (input.isEmpty()) {
                 break;
             }
@@ -64,13 +65,13 @@ public class RecipeArtisia implements IArtisiaRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
 
-        return getRecipeOutput().copy();
+        return getResultItem().copy();
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
 
         return output;
     }
@@ -96,37 +97,37 @@ public class RecipeArtisia implements IArtisiaRecipe {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeArtisia> {
 
         @Override
-        public RecipeArtisia read(ResourceLocation id, JsonObject json) {
+        public RecipeArtisia fromJson(ResourceLocation id, JsonObject json) {
 
-            ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
-            JsonArray ingredients = JSONUtils.getJsonArray(json, "ingredients");
+            ItemStack output = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "output"));
+            JsonArray ingredients = JSONUtils.getAsJsonArray(json, "ingredients");
             List<Ingredient> inputs = new ArrayList<>();
             for (JsonElement e : ingredients)
-                inputs.add(Ingredient.deserialize(e));
+                inputs.add(Ingredient.fromJson(e));
 
             return new RecipeArtisia(id, output, inputs.toArray(new Ingredient[0]));
         }
 
         @Nullable
         @Override
-        public RecipeArtisia read(ResourceLocation id, PacketBuffer buf) {
+        public RecipeArtisia fromNetwork(ResourceLocation id, PacketBuffer buf) {
 
             Ingredient[] inputs = new Ingredient[buf.readVarInt()];
             for (int i = 0; i < inputs.length; i++)
-                inputs[i] = Ingredient.read(buf);
+                inputs[i] = Ingredient.fromNetwork(buf);
 
-            ItemStack output = buf.readItemStack();
+            ItemStack output = buf.readItem();
             return new RecipeArtisia(id, output, inputs);
         }
 
         @Override
-        public void write(PacketBuffer buf, RecipeArtisia recipe) {
+        public void toNetwork(PacketBuffer buf, RecipeArtisia recipe) {
 
             buf.writeVarInt(recipe.getIngredients().size());
             for (Ingredient input : recipe.getIngredients())
-                input.write(buf);
+                input.toNetwork(buf);
 
-            buf.writeItemStack(recipe.getRecipeOutput(), false);
+            buf.writeItemStack(recipe.getResultItem(), false);
         }
     }
 }

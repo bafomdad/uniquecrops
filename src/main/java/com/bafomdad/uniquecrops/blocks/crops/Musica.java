@@ -49,11 +49,11 @@ public class Musica extends BaseCropsBlock {
 
     private void notePlayEvent(NoteBlockEvent.Play event) {
 
-        if (event.getWorld().isRemote()) return;
+        if (event.getWorld().isClientSide()) return;
 
         BlockPos ePos = event.getPos();
-        for (BlockPos pos : BlockPos.getAllInBoxMutable(ePos.add(-RANGE, -2, -RANGE), ePos.add(RANGE, 2, RANGE))) {
-            TileEntity te = event.getWorld().getTileEntity(pos);
+        for (BlockPos pos : BlockPos.betweenClosed(ePos.offset(-RANGE, -2, -RANGE), ePos.offset(RANGE, 2, RANGE))) {
+            TileEntity te = event.getWorld().getBlockEntity(pos);
             if (te instanceof TileMusica) {
                 TileMusica plant = (TileMusica)te;
                 if (plant.getBeats().size() > 0) {

@@ -21,32 +21,32 @@ import net.minecraftforge.items.ItemStackHandler;
 public class Fascino extends BaseSuperCropsBlock {
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileFascino) {
             TileFascino fe = (TileFascino)tile;
             if (fe.getStage() != TileFascino.Stage.IDLE) return ActionResultType.SUCCESS;
 
-            ItemStack stack = player.getHeldItem(hand);
+            ItemStack stack = player.getItemInHand(hand);
             if (stack.getItem() == UCItems.WILDWOOD_STAFF.get()) {
                 if (fe.getStage() == TileFascino.Stage.IDLE) {
                     fe.checkEnchants(player, stack);
                 }
                 return ActionResultType.SUCCESS;
             }
-            if (!stack.isEmpty() && !player.isSneaking()) {
-                player.setHeldItem(hand, ItemHandlerHelper.insertItem(fe.getInventory(), stack, false));
+            if (!stack.isEmpty() && !player.isCrouching()) {
+                player.setItemInHand(hand, ItemHandlerHelper.insertItem(fe.getInventory(), stack, false));
                 fe.markBlockForUpdate();
                 return ActionResultType.SUCCESS;
             }
-            if (stack.isEmpty() && player.isSneaking()) {
+            if (stack.isEmpty() && player.isCrouching()) {
                 for (int i = fe.getInventory().getSlots() - 1; i >= 0; i--) {
                     ItemStack tileStack = fe.getInventory().getStackInSlot(i);
                     if (!tileStack.isEmpty()) {
                         ItemHandlerHelper.giveItemToPlayer(player, tileStack);
                         ((ItemStackHandler)fe.getInventory()).setStackInSlot(i, ItemStack.EMPTY);
-                        fe.markDirty();
+                        fe.setChanged();
                         break;
                     }
                 }
@@ -58,23 +58,23 @@ public class Fascino extends BaseSuperCropsBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
-        if (!state.isIn(newState.getBlock())) {
-            TileEntity tileentity = world.getTileEntity(pos);
+        if (!state.is(newState.getBlock())) {
+            TileEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof TileFascino) {
                 for (int i = 0; i < ((TileFascino)tileentity).getInventory().getSlots(); i++) {
                     ItemStack stack = ((TileFascino)tileentity).getInventory().getStackInSlot(i);
                     if (!stack.isEmpty())
-                        InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+                        InventoryHelper.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
                 }
             }
-            super.onReplaced(state, world, pos, newState, isMoving);
+            super.onRemove(state, world, pos, newState, isMoving);
         }
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
 
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }

@@ -27,7 +27,7 @@ public class PacketSendKey {
         ctx.get().enqueueWork(() -> {
 
             PlayerEntity player = ctx.get().getSender();
-            ItemStack glasses = player.inventory.armorInventory.get(3);
+            ItemStack glasses = player.inventory.armor.get(3);
             if (glasses.getItem() == UCItems.GLASSES_PIXELS.get())
                 NBTUtils.setBoolean(glasses, "isActive", !NBTUtils.getBoolean(glasses, "isActive", false));
         });

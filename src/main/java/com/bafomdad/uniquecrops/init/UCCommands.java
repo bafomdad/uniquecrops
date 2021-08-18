@@ -16,7 +16,7 @@ public class UCCommands {
     public static void register(CommandDispatcher<CommandSource> dispatcher) {
 
         dispatcher.register(Commands.literal("uniquecrops")
-                .requires(s -> s.hasPermissionLevel(2))
+                .requires(s -> s.hasPermission(2))
                 .then(Commands.literal("setlevel")
                         .then(Commands.argument("level", IntegerArgumentType.integer(0, 10))
                         .executes((ctx -> setLevel(ctx, IntegerArgumentType.getInteger(ctx, "level"))))))
@@ -25,8 +25,8 @@ public class UCCommands {
 
     private static int setLevel(CommandContext<CommandSource> ctx, int level) throws CommandSyntaxException {
 
-        ServerPlayerEntity player = ctx.getSource().asPlayer();
-        ItemStack heldItem = player.getHeldItemMainhand();
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrException();
+        ItemStack heldItem = player.getMainHandItem();
 
         if (heldItem.getItem() instanceof IBookUpgradeable) {
             IBookUpgradeable upgradeable = (IBookUpgradeable)heldItem.getItem();

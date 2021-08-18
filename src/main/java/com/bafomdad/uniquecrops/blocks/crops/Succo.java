@@ -27,12 +27,12 @@ public class Succo extends BaseCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (world.getMoonPhase() == 1.0F)
+        if (world.dimensionType().moonPhase(world.dayTime()) == 1.0F)
             super.randomTick(state, world, pos, rand);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
 
         return BlockRenderType.INVISIBLE;
     }
@@ -40,7 +40,7 @@ public class Succo extends BaseCropsBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
 
-        if (world instanceof World && ((World)world).getMoonFactor() != 1.0F)
+        if (world instanceof World && ((World)world).getMoonPhase() != 1.0F)
             return VoxelShapes.empty();
 
         return super.getShape(state, world, pos, ctx);

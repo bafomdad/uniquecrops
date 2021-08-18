@@ -25,7 +25,7 @@ public enum EnumLily {
         public void collide(BlockState state, World world, BlockPos pos, Entity entity) {
             if (entity instanceof PlayerEntity) {
                 if (world.getGameTime() % 20 == 0) {
-                    if (entity.isOnGround() && entity.isSneaking())
+                    if (entity.isOnGround() && entity.isCrouching())
                         searchNearbyPads(world, pos, entity, Direction.DOWN);
                 }
             }
@@ -38,15 +38,15 @@ public enum EnumLily {
             if (entity instanceof ItemEntity) {
                 ItemEntity ei = (ItemEntity)entity;
                 if (ei.isAlive() && ei.getItem().getEntityLifespan(world) > -6000)
-                    ei.setNoDespawn();
+                    ei.setExtendedLifetime();
             }
         }
 
         @Override
         public boolean isValidGround(BlockState state, IBlockReader reader, BlockPos pos) {
 
-            FluidState fluidUp = reader.getFluidState(pos.up());
-            return (state.getMaterial() == Material.ICE || state.getMaterial() == Material.PACKED_ICE) && fluidUp.getFluid() == Fluids.EMPTY;
+            FluidState fluidUp = reader.getFluidState(pos.above());
+            return (state.getMaterial() == Material.ICE || state.getMaterial() == Material.ICE_SOLID) && fluidUp.getType() == Fluids.EMPTY;
         }
     },
     JUNGLE(ParticleTypes.ITEM_SLIME) {
@@ -64,14 +64,14 @@ public enum EnumLily {
             if (entity instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity)entity;
                 if (!player.isCreative()) {
-                    ItemStack boots = player.inventory.armorInventory.get(0);
+                    ItemStack boots = player.inventory.armor.get(0);
                     if (boots.isEmpty())
-                        player.setFire(3);
+                        player.setSecondsOnFire(3);
                 }
             }
             else if (entity instanceof LivingEntity) {
-                if (!entity.isImmuneToFire())
-                    entity.setFire(3);
+                if (!entity.fireImmune())
+                    entity.setSecondsOnFire(3);
             }
         }
 
@@ -79,8 +79,8 @@ public enum EnumLily {
         public boolean isValidGround(BlockState state, IBlockReader reader, BlockPos pos) {
 
             FluidState fluid = reader.getFluidState(pos);
-            FluidState fluidUp = reader.getFluidState(pos.up());
-            return (fluid.getFluid() == Fluids.LAVA || state.getMaterial() == Material.LAVA) && fluidUp.getFluid() == Fluids.EMPTY;
+            FluidState fluidUp = reader.getFluidState(pos.above());
+            return (fluid.getType() == Fluids.LAVA || state.getMaterial() == Material.LAVA) && fluidUp.getType() == Fluids.EMPTY;
         }
     };
 
@@ -101,16 +101,16 @@ public enum EnumLily {
     public boolean isValidGround(BlockState state, IBlockReader reader, BlockPos pos) {
 
         FluidState fluid = reader.getFluidState(pos);
-        FluidState fluidUp = reader.getFluidState(pos.up());
-        return (fluid.getFluid() == Fluids.WATER || state.getMaterial() == Material.ICE) && fluidUp.getFluid() == Fluids.EMPTY;
+        FluidState fluidUp = reader.getFluidState(pos.above());
+        return (fluid.getType() == Fluids.WATER || state.getMaterial() == Material.ICE) && fluidUp.getType() == Fluids.EMPTY;
     }
 
     public static void searchNearbyPads(World world, BlockPos pos, Entity entity, Direction dir) {
 
         for (int i = 1; i < 12; i++) {
-            BlockPos loopPos = pos.offset(dir, i);
+            BlockPos loopPos = pos.relative(dir, i);
             if (world.getBlockState(loopPos).getBlock() == UCBlocks.LILY_ENDER.get()) {
-                entity.setPositionAndUpdate(pos.getX() + 0.5, loopPos.up().getY(), loopPos.getZ() + 0.5);
+                entity.teleportTo(pos.getX() + 0.5, loopPos.above().getY(), loopPos.getZ() + 0.5);
                 return;
             }
         }

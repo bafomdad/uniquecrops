@@ -30,20 +30,19 @@ public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
     private void onPlayerTick(TickEvent.PlayerTickEvent event) {
 
         PlayerEntity player = event.player;
-        ItemStack pixelGlasses = player.inventory.armorInventory.get(3);
+        ItemStack pixelGlasses = player.inventory.armor.get(3);
         if (pixelGlasses.getItem() == this) {
             boolean flag = NBTUtils.getBoolean(pixelGlasses, "isActive", false);
             boolean flag2 = isMaxLevel(pixelGlasses);
             if (flag && flag2) {
-                if (event.phase == TickEvent.Phase.START && player.world.getGameTime() % 20 == 0) {
-                    ChunkPos cPos = new ChunkPos(player.getPosition());
+                if (event.phase == TickEvent.Phase.START && player.level.getGameTime() % 20 == 0) {
+                    ChunkPos cPos = new ChunkPos(player.blockPosition());
                     if (UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
                         BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
-//                        System.out.println("blockpos: " + pos + " / chunkpos: " + cPos);
-                        NBTUtils.setLong(pixelGlasses, "orePos", pos.toLong());
+                        NBTUtils.setLong(pixelGlasses, "orePos", pos.asLong());
                     }
                     if (!event.side.isClient() && !UCOreHandler.getInstance().getSaveInfo().containsKey(cPos))
-                        NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ZERO.toLong());
+                        NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ZERO.asLong());
                 }
             }
         }
@@ -55,16 +54,16 @@ public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
 
         PlayerEntity player = event.getPlayer();
 
-        if (player.getHeldItemMainhand().canHarvestBlock(event.getState()) && player.inventory.armorInventory.get(3).getItem() == this) {
-            boolean flag = NBTUtils.getBoolean(player.inventory.armorInventory.get(3), "isActive", false);
-            boolean flag2 = isMaxLevel(player.inventory.armorInventory.get(3));
-            if (flag && flag2 && event.getState().isIn(BlockTags.BASE_STONE_OVERWORLD)) {
+        if (player.getMainHandItem().isCorrectToolForDrops(event.getState()) && player.inventory.armor.get(3).getItem() == this) {
+            boolean flag = NBTUtils.getBoolean(player.inventory.armor.get(3), "isActive", false);
+            boolean flag2 = isMaxLevel(player.inventory.armor.get(3));
+            if (flag && flag2 && event.getState().is(BlockTags.BASE_STONE_OVERWORLD)) {
                 if (UCOreHandler.getInstance().getSaveInfo().containsValue(event.getPos())) {
-                    if (!event.getWorld().isRemote())
-                        InventoryHelper.spawnItemStack(event.getPlayer().world, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, new ItemStack(UCItems.DIAMONDS.get()));
+                    if (!event.getWorld().isClientSide())
+                        InventoryHelper.dropItemStack(event.getPlayer().level, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, new ItemStack(UCItems.DIAMONDS.get()));
                     UCOreHandler.getInstance().removeChunk(event.getPos(), true);
                     if (!player.isCreative())
-                        player.inventory.armorInventory.get(3).damageItem(10, player, (entity) -> {});
+                        player.inventory.armor.get(3).hurtAndBreak(10, player, (entity) -> {});
                 }
             }
         }

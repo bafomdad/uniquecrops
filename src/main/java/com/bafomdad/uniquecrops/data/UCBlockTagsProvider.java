@@ -16,20 +16,20 @@ public class UCBlockTagsProvider extends BlockTagsProvider {
     }
 
     @Override
-    public void registerTags() {
+    public void addTags() {
 
-        getOrCreateBuilder(BlockTags.STAIRS).add(UCBlocks.RUINEDBRICKS_STAIRS.get());
-        getOrCreateBuilder(BlockTags.SLABS).add(UCBlocks.RUINEDBRICKS_SLAB.get(), UCBlocks.RUINEDBRICKSCARVED_SLAB.get());
-        getOrCreateBuilder(BlockTags.LOGS).add(UCBlocks.FLYWOOD_LOG.get());
-        getOrCreateBuilder(BlockTags.PLANKS).add(UCBlocks.FLYWOOD_PLANKS.get(), UCBlocks.ROSEWOOD_PLANKS.get());
-        getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(UCBlocks.FLYWOOD_STAIRS.get(), UCBlocks.ROSEWOOD_STAIRS.get());
-        getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(UCBlocks.FLYWOOD_SLAB.get(), UCBlocks.ROSEWOOD_SLAB.get());
-        getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS_IRON).add(UCBlocks.OLDIRON.get());
-        getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS_DIAMOND).add(UCBlocks.OLDDIAMOND.get());
-        getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS_GOLD).add(UCBlocks.OLDGOLD.get());
-        getOrCreateBuilder(Tags.Blocks.GRAVEL).add(UCBlocks.OLDGRAVEL.get());
-        getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.FLYWOOD_TRAPDOOR.get());
-        getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.ROSEWOOD_TRAPDOOR.get());
+        tag(BlockTags.STAIRS).add(UCBlocks.RUINEDBRICKS_STAIRS.get());
+        tag(BlockTags.SLABS).add(UCBlocks.RUINEDBRICKS_SLAB.get(), UCBlocks.RUINEDBRICKSCARVED_SLAB.get());
+        tag(BlockTags.LOGS).add(UCBlocks.FLYWOOD_LOG.get());
+        tag(BlockTags.PLANKS).add(UCBlocks.FLYWOOD_PLANKS.get(), UCBlocks.ROSEWOOD_PLANKS.get());
+        tag(BlockTags.WOODEN_STAIRS).add(UCBlocks.FLYWOOD_STAIRS.get(), UCBlocks.ROSEWOOD_STAIRS.get());
+        tag(BlockTags.WOODEN_SLABS).add(UCBlocks.FLYWOOD_SLAB.get(), UCBlocks.ROSEWOOD_SLAB.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS_IRON).add(UCBlocks.OLDIRON.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS_DIAMOND).add(UCBlocks.OLDDIAMOND.get());
+        tag(Tags.Blocks.STORAGE_BLOCKS_GOLD).add(UCBlocks.OLDGOLD.get());
+        tag(Tags.Blocks.GRAVEL).add(UCBlocks.OLDGRAVEL.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.FLYWOOD_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS).add(UCBlocks.ROSEWOOD_TRAPDOOR.get());
     }
 
     @Override

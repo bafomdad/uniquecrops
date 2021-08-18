@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public enum TierItem implements IItemTier {
 
-    PRECISION(3, 1751, 8.0F, 3.0F, 14, () -> Ingredient.fromItems(UCItems.PREGEM.get()));
+    PRECISION(3, 1751, 8.0F, 3.0F, 14, () -> Ingredient.of(UCItems.PREGEM.get()));
 
     private final int harvestLevel;
     private final int maxUses;
@@ -29,38 +29,38 @@ public enum TierItem implements IItemTier {
     }
 
     @Override
-    public int getMaxUses() {
+    public int getUses() {
 
         return this.maxUses;
     }
 
     @Override
-    public float getEfficiency() {
+    public float getSpeed() {
 
         return this.efficiency;
     }
 
     @Override
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
 
         return attackDamage;
     }
 
     @Override
-    public int getHarvestLevel() {
+    public int getLevel() {
 
         return this.harvestLevel;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
 
         return this.enchantability;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
+    public Ingredient getRepairIngredient() {
 
-        return this.repairMaterial.getValue();
+        return this.repairMaterial.get();
     }
 }

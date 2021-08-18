@@ -18,7 +18,7 @@ public class RenderBattleCropEntity extends BipedRenderer<BattleCropEntity, Bipe
     }
 
     @Override
-    public ResourceLocation getEntityTexture(BattleCropEntity entity) {
+    public ResourceLocation getTextureLocation(BattleCropEntity entity) {
 
         return CROP_TEXTURE;
     }

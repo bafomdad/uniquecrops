@@ -27,12 +27,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void openCube() {
 
-        Minecraft.getInstance().displayGuiScreen(new GuiColorfulCube());
+        Minecraft.getInstance().setScreen(new GuiColorfulCube());
     }
 
     @Override
     public void openBook() {
 
-        Minecraft.getInstance().displayGuiScreen(new GuiEulaBook());
+        Minecraft.getInstance().setScreen(new GuiEulaBook());
     }
 }

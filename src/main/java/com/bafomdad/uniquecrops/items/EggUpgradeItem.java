@@ -26,17 +26,17 @@ public class EggUpgradeItem extends ItemBaseUC {
 
     private void maximumOvercluck(LivingEvent.LivingUpdateEvent event) {
 
-        if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof ChickenEntity) {
+        if (!event.getEntityLiving().level.isClientSide && event.getEntityLiving() instanceof ChickenEntity) {
             ChickenEntity chicken = (ChickenEntity)event.getEntityLiving();
-            if (chicken.isChild()) return;
+            if (chicken.isBaby()) return;
             CompoundNBT tag = chicken.getPersistentData();
             if (tag.contains(TAG_OVERCLUCK)) {
                 int timer = tag.getInt(TAG_OVERCLUCK);
                 tag.putInt(TAG_OVERCLUCK, --timer);
                 if (--timer <= 0) {
-                    chicken.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (chicken.world.rand.nextFloat() - chicken.world.rand.nextFloat()) * 0.2F + 1.0F);
-                    chicken.entityDropItem(Items.EGG);
-                    timer = chicken.world.rand.nextInt(60) + 900;
+                    chicken.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (chicken.level.random.nextFloat() - chicken.level.random.nextFloat()) * 0.2F + 1.0F);
+                    chicken.spawnAtLocation(Items.EGG);
+                    timer = chicken.level.random.nextInt(60) + 900;
                     tag.putInt(TAG_OVERCLUCK, timer);
                 }
             }
@@ -46,11 +46,11 @@ public class EggUpgradeItem extends ItemBaseUC {
     private void checkEggUpgrade(LivingDropsEvent event) {
 
         if (event.getEntityLiving() instanceof ChickenEntity) {
-            if (!event.getEntityLiving().world.isRemote && !event.getEntityLiving().isChild()) {
+            if (!event.getEntityLiving().level.isClientSide && !event.getEntityLiving().isBaby()) {
                 ChickenEntity chicken = (ChickenEntity)event.getEntityLiving();
                 CompoundNBT tag = chicken.getPersistentData();
                 if (tag.contains(TAG_OVERCLUCK)) {
-                    InventoryHelper.spawnItemStack(chicken.world, chicken.getPosX(), chicken.getPosY(), chicken.getPosZ(), new ItemStack(UCItems.EGGUPGRADE.get()));
+                    InventoryHelper.dropItemStack(chicken.level, chicken.getX(), chicken.getY(), chicken.getZ(), new ItemStack(UCItems.EGGUPGRADE.get()));
                 }
             }
         }
@@ -59,12 +59,12 @@ public class EggUpgradeItem extends ItemBaseUC {
     public static final String TAG_OVERCLUCK = "UC_tagEggUpgrade";
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
 
-        if (target instanceof ChickenEntity && !target.isChild()) {
+        if (target instanceof ChickenEntity && !target.isBaby()) {
             CompoundNBT tag = target.getPersistentData();
             if (!tag.contains(TAG_OVERCLUCK)) {
-                tag.putInt(TAG_OVERCLUCK, target.world.rand.nextInt(60) + 900);
+                tag.putInt(TAG_OVERCLUCK, target.level.random.nextInt(60) + 900);
                 if (!player.isCreative())
                     stack.shrink(1);
             }

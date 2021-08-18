@@ -34,7 +34,7 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
         boolean flag = Screen.hasShiftDown();
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
@@ -75,7 +75,7 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
         if (!(entity instanceof PlayerEntity)) return;
 
         stack.getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-            if (!world.isRemote && crop.getPower() >= crop.getCapacity()) {
+            if (!world.isClientSide && crop.getPower() >= crop.getCapacity()) {
                 stack.shrink(1);
                 ItemHandlerHelper.giveItemToPlayer((PlayerEntity)entity, new ItemStack(UCItems.ENCHANTED_LEATHER.get()));
             }
@@ -85,7 +85,7 @@ public class ImpregnatedLeatherItem extends ItemBaseUC {
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-        return !ItemStack.areItemsEqual(oldStack, newStack);
+        return !ItemStack.matches(oldStack, newStack);
     }
 
     @Nullable

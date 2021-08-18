@@ -18,11 +18,11 @@ import javax.annotation.Nullable;
 
 public class DemoCordBlock extends Block {
 
-    public static final VoxelShape AABB = VoxelShapes.create(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.09375D, 0.9375D);
+    public static final VoxelShape AABB = VoxelShapes.box(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.09375D, 0.9375D);
 
     public DemoCordBlock() {
 
-        super(Properties.from(Blocks.REDSTONE_WIRE));
+        super(Properties.copy(Blocks.REDSTONE_WIRE));
     }
 
     @Override
@@ -34,18 +34,18 @@ public class DemoCordBlock extends Block {
     @Override
     public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             world.removeBlock(pos, false);
             detonate(world, pos);
         }
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 
-        super.onBlockPlacedBy(world, pos, state, placer, stack);
-        if (!world.isRemote) {
-            if (world.getRedstonePowerFromNeighbors(pos) > 0)
+        super.setPlacedBy(world, pos, state, placer, stack);
+        if (!world.isClientSide) {
+            if (world.getBestNeighborSignal(pos) > 0)
                 detonate(world, pos);
         }
     }
@@ -53,12 +53,12 @@ public class DemoCordBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 
-        if (!world.isRemote && world.getRedstonePowerFromNeighbors(pos) > 0)
+        if (!world.isClientSide && world.getBestNeighborSignal(pos) > 0)
             detonate(world, pos);
     }
 
     private void detonate(World world, BlockPos pos) {
 
-        world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 1, Explosion.Mode.BREAK);
+        world.explode(null, pos.getX(), pos.getY(), pos.getZ(), 1, Explosion.Mode.BREAK);
     }
 }

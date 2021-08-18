@@ -32,24 +32,24 @@ public class DevilSnare extends BaseCropsBlock {
     @Override
     public boolean isValidGround(BlockState state, IBlockReader reader, BlockPos pos) {
 
-        return state.isIn(Blocks.FARMLAND) || state.isIn(Blocks.DIRT) || state.isIn(Blocks.COARSE_DIRT);
+        return state.is(Blocks.FARMLAND) || state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (!this.isMaxAge(state)) return;
 
-        if (entity instanceof LivingEntity && ((LivingEntity)entity).getItemStackFromSlot(EquipmentSlotType.FEET).getItem() != UCItems.GLASS_SLIPPERS.get())
-            entity.setMotionMultiplier(state, new Vector3d(SNARE_SPEED, 1.0, SNARE_SPEED));
+        if (entity instanceof LivingEntity && ((LivingEntity)entity).getItemBySlot(EquipmentSlotType.FEET).getItem() != UCItems.GLASS_SLIPPERS.get())
+            entity.makeStuckInBlock(state, new Vector3d(SNARE_SPEED, 1.0, SNARE_SPEED));
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (world.getLightFor(LightType.SKY, pos) > 7) {
+        if (world.getBrightness(LightType.SKY, pos) > 7) {
             if (isMaxAge(state))
-                world.setBlockState(pos, this.withAge(0), 2);
+                world.setBlock(pos, this.setValueAge(0), 2);
             return;
         }
         if (isMaxAge(state))
@@ -61,13 +61,13 @@ public class DevilSnare extends BaseCropsBlock {
     private void trySpread(ServerWorld world, BlockPos pos) {
 
         for (Direction dir : Direction.Plane.HORIZONTAL) {
-            BlockPos loopPos = pos.offset(dir);
-            if (world.isAirBlock(loopPos)) {
-                BlockState toPlace = this.getDefaultState();
-                if (toPlace.isValidPosition(world, loopPos) && world.rand.nextInt(2) == 0) {
-                    if (world.getBlockState(loopPos.down()).getBlock() != Blocks.FARMLAND)
-                        world.setBlockState(loopPos.down(), Blocks.FARMLAND.getDefaultState(), 3);
-                    world.setBlockState(loopPos, toPlace, 3);
+            BlockPos loopPos = pos.relative(dir);
+            if (world.isEmptyBlock(loopPos)) {
+                BlockState toPlace = this.defaultBlockState();
+                if (toPlace.canSurvive(world, loopPos) && world.random.nextInt(2) == 0) {
+                    if (world.getBlockState(loopPos.below()).getBlock() != Blocks.FARMLAND)
+                        world.setBlock(loopPos.below(), Blocks.FARMLAND.defaultBlockState(), 3);
+                    world.setBlock(loopPos, toPlace, 3);
                     return;
                 }
             }

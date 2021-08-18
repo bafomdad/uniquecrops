@@ -24,11 +24,11 @@ public class Cinderbella extends BaseCropsBlock {
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+    public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
 
         if (world instanceof World && !this.canPlantOrGrow((World)world, pos)) return false;
 
-        return super.isValidPosition(state, world, pos);
+        return super.canSurvive(state, world, pos);
     }
 
     @Override
@@ -38,21 +38,21 @@ public class Cinderbella extends BaseCropsBlock {
             super.randomTick(state, world, pos, rand);
             return;
         }
-        world.setBlockState(pos, Blocks.DEAD_BUSH.getDefaultState(), 2);
+        world.setBlock(pos, Blocks.DEAD_BUSH.defaultBlockState(), 2);
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         if (this.canIgnoreGrowthRestrictions(world, pos)) {
-            super.grow(world, rand, pos, state);
+            super.performBonemeal(world, rand, pos, state);
             return;
         }
         if (!this.canPlantOrGrow(world, pos)) {
-            world.setBlockState(pos, Blocks.DEAD_BUSH.getDefaultState(), 2);
+            world.setBlock(pos, Blocks.DEAD_BUSH.defaultBlockState(), 2);
             return;
         }
-        super.grow(world, rand, pos, state);
+        super.performBonemeal(world, rand, pos, state);
     }
 
     private boolean canPlantOrGrow(World world, BlockPos pos) {
@@ -62,11 +62,9 @@ public class Cinderbella extends BaseCropsBlock {
 
         int pumpkins = 0;
         for (Direction dir : Direction.Plane.HORIZONTAL) {
-            if (isPumpkin(world.getBlockState(pos.offset(dir)))) pumpkins++;
+            if (isPumpkin(world.getBlockState(pos.relative(dir)))) pumpkins++;
         }
-        if (pumpkins < 4) return false;
-
-        return true;
+        return pumpkins >= 4;
     }
 
     private boolean isPumpkin(BlockState state) {

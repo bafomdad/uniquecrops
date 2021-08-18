@@ -37,8 +37,8 @@ public class TileFeroxia extends BaseTileUC {
         if ((this.owner != null && !this.owner.equals(owner)) || (owner != null && !owner.equals(this.owner))) {
 
             this.owner = owner;
-            if (world != null && !world.isRemote)
-                markDirty();
+            if (level != null && !level.isClientSide)
+                setChanged();
         }
     }
 }

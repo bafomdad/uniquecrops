@@ -32,10 +32,10 @@ public class DonkItemEntity extends ItemEntity {
 
     public DonkItemEntity(World world, ItemEntity oldEntity, ItemStack stack) {
 
-        super(world, oldEntity.getPosX(), oldEntity.getPosY(), oldEntity.getPosZ(), stack);
-        this.setMotion(oldEntity.getMotion());
+        super(world, oldEntity.getX(), oldEntity.getY(), oldEntity.getZ(), stack);
+        this.setDeltaMovement(oldEntity.getDeltaMovement());
         this.lifespan = oldEntity.lifespan;
-        this.setDefaultPickupDelay();
+        this.setDefaultPickUpDelay();
     }
 
     @Override
@@ -49,19 +49,19 @@ public class DonkItemEntity extends ItemEntity {
             this.getPersistentData().remove("UC:canDonk");
             return;
         }
-        List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox());
+        List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
         for (int i = 0; i < list.size(); ++i) {
             LivingEntity ent = list.get(i);
             if (ent.isAlive()) {
                 if (damageMap.containsKey(this.getItem().getItem())) {
                     float damage = damageMap.get(this.getItem().getItem());
-                    ent.attackEntityFrom(DamageSource.GENERIC, damage);
-                    ent.applyKnockback( (float)1 * 0.5F, (double) MathHelper.sin(this.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+                    ent.hurt(DamageSource.GENERIC, damage);
+                    ent.knockback( (float)1 * 0.5F, (double) MathHelper.sin(this.yRot * 0.017453292F), (double)(-MathHelper.cos(this.yRot * 0.017453292F)));
                 }
                 this.getPersistentData().remove("UC:canDonk");
-                double motionX = -this.getMotion().x / 4;
-                double motionZ = -this.getMotion().z / 4;
-                this.setMotion(motionX, this.getMotion().y, motionZ);
+                double motionX = -this.getDeltaMovement().x / 4;
+                double motionZ = -this.getDeltaMovement().z / 4;
+                this.setDeltaMovement(motionX, this.getDeltaMovement().y, motionZ);
             }
         }
     }

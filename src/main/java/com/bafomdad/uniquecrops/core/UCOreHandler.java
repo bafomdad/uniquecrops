@@ -20,8 +20,8 @@ public class UCOreHandler {
     public static UCOreHandler getInstance() {
 
         if (INSTANCE == null) {
-            for (ServerWorld ws : ServerLifecycleHooks.getCurrentServer().getWorlds()) {
-                if (ws.getDimensionKey() == World.OVERWORLD)
+            for (ServerWorld ws : ServerLifecycleHooks.getCurrentServer().getAllLevels()) {
+                if (ws.dimension() == World.OVERWORLD)
                     INSTANCE = new UCOreHandler();
             }
         }

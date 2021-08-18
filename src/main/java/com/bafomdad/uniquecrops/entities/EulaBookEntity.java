@@ -37,34 +37,32 @@ public class EulaBookEntity extends ThrowableEntity implements IRendersAsItem {
 
     public EulaBookEntity(LivingEntity thrower) {
 
-        super(UCEntities.THROWABLE_BOOK.get(), thrower, thrower.world);
+        super(UCEntities.THROWABLE_BOOK.get(), thrower, thrower.level);
     }
 
     @Override
-    protected void registerData() {
-
-    }
+    protected void defineSynchedData() {}
 
     @Override
-    protected void onImpact(RayTraceResult rtr) {
+    protected void onHit(RayTraceResult rtr) {
 
-        if (!world.isRemote) {
-            AxisAlignedBB aabb = this.getBoundingBox().grow(2.0D, 2.0D, 2.0D);
-            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, aabb);
+        if (!level.isClientSide) {
+            AxisAlignedBB aabb = this.getBoundingBox().inflate(2.0D, 2.0D, 2.0D);
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, aabb);
             for (LivingEntity elb : entities) {
                 if (elb instanceof PlayerEntity) {
-                    double d0 = this.getDistanceSq(elb);
+                    double d0 = this.distanceToSqr(elb);
                     if (d0 < 4.0D) {
                         if (elb instanceof ServerPlayerEntity)
-                            UCPacketHandler.sendTo((ServerPlayerEntity)elb, new PacketOpenBook(elb.getEntityId()));
+                            UCPacketHandler.sendTo((ServerPlayerEntity)elb, new PacketOpenBook(elb.getId()));
                     }
                 }
             }
             this.remove();
             if (rtr.getType() == RayTraceResult.Type.BLOCK) {
-                BlockPos pos = new BlockPos(((BlockRayTraceResult)rtr).getPos().offset(((BlockRayTraceResult)rtr).getFace()));
+                BlockPos pos = new BlockPos(((BlockRayTraceResult)rtr).getBlockPos().relative(((BlockRayTraceResult)rtr).getDirection()));
                 ItemStack book = new ItemStack(UCItems.BOOK_EULA.get());
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), book);
+                InventoryHelper.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), book);
             }
         }
     }
@@ -76,7 +74,7 @@ public class EulaBookEntity extends ThrowableEntity implements IRendersAsItem {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
 
         return NetworkHooks.getEntitySpawningPacket(this);
     }

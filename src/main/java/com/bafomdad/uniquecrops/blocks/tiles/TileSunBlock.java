@@ -21,7 +21,7 @@ public class TileSunBlock extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (this.world.getRedstonePowerFromNeighbors(getPos()) > 0) {
+        if (this.level.getBestNeighborSignal(getBlockPos()) > 0) {
             this.powerlevel = Math.min(this.powerlevel + 1, MAX_POWER);
             this.powered = true;
         } else {

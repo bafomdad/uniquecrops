@@ -37,11 +37,11 @@ public class UCRecipes {
 
     public static void registerBrews() {
 
-        ItemStack awkwardPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potion.getPotionTypeForName("awkward"));
-        ItemStack invisibilityPotion = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potion.getPotionTypeForName("invisibility"));
+        ItemStack awkwardPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potion.byName("awkward"));
+        ItemStack invisibilityPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potion.byName("invisibility"));
         if (!awkwardPotion.isEmpty()) {
-            BrewingRecipeRegistry.addRecipe(Ingredient.fromStacks(awkwardPotion), Ingredient.fromItems(UCItems.TIMEDUST.get()), new ItemStack(UCItems.POTION_REVERSE.get()));
-            BrewingRecipeRegistry.addRecipe(Ingredient.fromStacks(invisibilityPotion), Ingredient.fromItems(UCBlocks.INVISIBILIA_GLASS.get()), new ItemStack(UCItems.POTION_IGNORANCE.get()));
+            BrewingRecipeRegistry.addRecipe(Ingredient.of(awkwardPotion), Ingredient.of(UCItems.TIMEDUST.get()), new ItemStack(UCItems.POTION_REVERSE.get()));
+            BrewingRecipeRegistry.addRecipe(Ingredient.of(invisibilityPotion), Ingredient.of(UCBlocks.INVISIBILIA_GLASS.get()), new ItemStack(UCItems.POTION_IGNORANCE.get()));
         }
     }
 

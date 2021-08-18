@@ -25,7 +25,7 @@ public class StoneCuttingProvider extends RecipeProvider {
     }
 
     @Override
-    public void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    public void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         consumer.accept(stonecutting(UCBlocks.FLYWOOD_PLANKS.get(), UCBlocks.FLYWOOD_STAIRS.get(), 1));
         consumer.accept(stonecutting(UCBlocks.ROSEWOOD_PLANKS.get(), UCBlocks.ROSEWOOD_STAIRS.get(), 1));
@@ -51,7 +51,7 @@ public class StoneCuttingProvider extends RecipeProvider {
 
     private static IFinishedRecipe stonecutting(IItemProvider input, IItemProvider output, int count) {
 
-        return new Result(idFor(input, output), IRecipeSerializer.STONECUTTING, Ingredient.fromItems(input), output.asItem(), count);
+        return new Result(idFor(input, output), IRecipeSerializer.STONECUTTER, Ingredient.of(input), output.asItem(), count);
     }
 
     private static class Result extends SingleItemRecipeBuilder.Result {
@@ -62,13 +62,13 @@ public class StoneCuttingProvider extends RecipeProvider {
         }
 
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
 
             return null;
         }
 
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
 
             return null;
         }

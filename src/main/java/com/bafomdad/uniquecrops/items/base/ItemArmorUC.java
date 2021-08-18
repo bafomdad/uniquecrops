@@ -23,11 +23,11 @@ public class ItemArmorUC extends ArmorItem {
 
     public ItemArmorUC(IArmorMaterial material, EquipmentSlotType slot) {
 
-        super(material, slot, UCItems.defaultBuilder().maxStackSize(1));
+        super(material, slot, UCItems.defaultBuilder().stacksTo(1));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -49,9 +49,9 @@ public class ItemArmorUC extends ArmorItem {
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
         if (stack.getItem() == UCItems.CACTUS_BOOTS.get() || stack.getItem() == UCItems.CACTUS_CHESTPLATE.get() || stack.getItem() == UCItems.CACTUS_HELM.get() || stack.getItem() == UCItems.CACTUS_LEGGINGS.get())
-            stack.addEnchantment(Enchantments.THORNS, 1);
+            stack.enchant(Enchantments.THORNS, 1);
     }
 }

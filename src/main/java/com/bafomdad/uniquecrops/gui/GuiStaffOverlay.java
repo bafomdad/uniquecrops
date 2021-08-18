@@ -31,11 +31,11 @@ public class GuiStaffOverlay {
 
         IProfiler profiler = mc.getProfiler();
         if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-            if (mc.currentScreen != null) return;
-            mc.player.getHeldItemMainhand().getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
-                profiler.startSection("UC-hud");
+            if (mc.screen != null) return;
+            mc.player.getMainHandItem().getCapability(CPProvider.CROP_POWER, null).ifPresent(crop -> {
+                profiler.push("UC-hud");
                 MatrixStack ms = event.getMatrixStack();
-                ms.push();
+                ms.pushPose();
                 MainWindow scaled = event.getWindow();
                 int i = crop.getPower();
                 boolean flag = this.staffUpdateCounter > this.updateCounter;
@@ -43,26 +43,26 @@ public class GuiStaffOverlay {
                     RenderSystem.color3f(0.0F, 1.0F, 0.0F);
                 RenderSystem.disableLighting();
 
-                float scale = (float)Math.sin(Util.milliTime() / 500D) * 0.01562F;
+                float scale = (float)Math.sin(Util.getMillis() / 500D) * 0.01562F;
 
                 if (i < this.capacity) {
-                    this.lastSystemTime = Util.milliTime();
+                    this.lastSystemTime = Util.getMillis();
                     this.staffUpdateCounter = this.updateCounter + 200;
                 }
                 if (i > this.capacity) {
-                    this.lastSystemTime = Util.milliTime();
+                    this.lastSystemTime = Util.getMillis();
                     this.staffUpdateCounter = this.updateCounter + 200;
                 }
-                if (Util.milliTime() - this.lastSystemTime > 1000L) {
+                if (Util.getMillis() - this.lastSystemTime > 1000L) {
                     this.capacity = i;
-                    this.lastSystemTime = Util.milliTime();
+                    this.lastSystemTime = Util.getMillis();
                 }
                 RenderSystem.scalef(1 + scale, 1 + scale, 1 + scale);
                 this.renderLeafBar(ms, scaled, crop.getPower(), crop.getCapacity());
-                ms.pop();
+                ms.popPose();
                 this.capacity = i;
 
-                profiler.endSection();
+                profiler.pop();
             });
         }
     }
@@ -71,10 +71,10 @@ public class GuiStaffOverlay {
 
         if (capacity <= 0) return;
 
-        int x = res.getScaledWidth() / 2 + UCConfig.CLIENT.guiWidth.get();
-        int y = res.getScaledHeight() + UCConfig.CLIENT.guiHeight.get();
+        int x = res.getGuiScaledWidth() / 2 + UCConfig.CLIENT.guiWidth.get();
+        int y = res.getGuiScaledHeight() + UCConfig.CLIENT.guiHeight.get();
 
-        mc.getTextureManager().bindTexture(TEX);
+        mc.getTextureManager().bind(TEX);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 

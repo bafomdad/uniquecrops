@@ -33,12 +33,12 @@ public class PrecisionAxeItem extends AxeItem implements IBookUpgradeable {
 
     public PrecisionAxeItem() {
 
-        super(TierItem.PRECISION, 5, -3.0F, UCItems.unstackable().addToolType(ToolType.AXE, TierItem.PRECISION.getHarvestLevel()));
+        super(TierItem.PRECISION, 5, -3.0F, UCItems.unstackable().addToolType(ToolType.AXE, TierItem.PRECISION.getLevel()));
         MinecraftForge.EVENT_BUS.addListener(this::checkDrops);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -50,27 +50,27 @@ public class PrecisionAxeItem extends AxeItem implements IBookUpgradeable {
 
     private void checkDrops(LivingDropsEvent event) {
 
-        if (!(event.getEntityLiving() instanceof PlayerEntity) && event.getSource().getTrueSource() instanceof PlayerEntity) {
+        if (!(event.getEntityLiving() instanceof PlayerEntity) && event.getSource().getEntity() instanceof PlayerEntity) {
             LivingEntity el = event.getEntityLiving();
-            PlayerEntity player = (PlayerEntity)event.getSource().getTrueSource();
-            ItemStack boots = el.getItemStackFromSlot(EquipmentSlotType.FEET);
-            if (!boots.isEmpty() && player.inventory.hasItemStack(new ItemStack(UCItems.SLIPPERGLASS.get()))) {
-                if (player.world.rand.nextInt(5) == 0) {
+            PlayerEntity player = (PlayerEntity)event.getSource().getEntity();
+            ItemStack boots = el.getItemBySlot(EquipmentSlotType.FEET);
+            if (!boots.isEmpty() && player.inventory.contains(new ItemStack(UCItems.SLIPPERGLASS.get()))) {
+                if (player.level.random.nextInt(5) == 0) {
                     addDrop(event, new ItemStack(UCItems.GLASS_SLIPPERS.get()));
-                    for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-                        ItemStack oneboot = player.inventory.getStackInSlot(i);
+                    for (int i = 0; i < player.inventory.items.size(); i++) {
+                        ItemStack oneboot = player.inventory.getItem(i);
                         if (oneboot.getItem() == UCItems.SLIPPERGLASS.get()) {
-                            player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+                            player.inventory.setItem(i, ItemStack.EMPTY);
                             break;
                         }
                     }
                 }
             }
-            if (player.getHeldItemMainhand().getItem() == this) {
-                ItemStack axe = player.getHeldItemMainhand();
+            if (player.getMainHandItem().getItem() == this) {
+                ItemStack axe = player.getMainHandItem();
                 if (((IBookUpgradeable)axe.getItem()).isMaxLevel(axe)) {
-                    Random rand = el.world.rand;
-                    int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
+                    Random rand = el.level.random;
+                    int looting = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
                     if (rand.nextInt(15) <= 2 + looting) {
                         if (el instanceof SkeletonEntity)
                             addDrop(event, new ItemStack(Items.SKELETON_SKULL));
@@ -88,14 +88,14 @@ public class PrecisionAxeItem extends AxeItem implements IBookUpgradeable {
 
     private void addDrop(LivingDropsEvent event, ItemStack drop) {
 
-        ItemEntity ei = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), drop);
-        ei.setPickupDelay(10);
+        ItemEntity ei = new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), drop);
+        ei.setPickUpDelay(10);
         event.getDrops().add(ei);
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+        stack.enchant(Enchantments.SILK_TOUCH, 1);
     }
 }

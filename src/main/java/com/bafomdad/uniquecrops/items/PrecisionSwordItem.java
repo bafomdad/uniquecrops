@@ -7,7 +7,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.text.ITextComponent;
@@ -26,7 +25,7 @@ public class PrecisionSwordItem extends SwordItem implements IBookUpgradeable {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -37,18 +36,18 @@ public class PrecisionSwordItem extends SwordItem implements IBookUpgradeable {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 
-        if (!target.world.isRemote && target.hurtResistantTime > 0) {
+        if (!target.level.isClientSide && target.invulnerableTime > 0) {
             if (isMaxLevel(stack))
-                target.hurtResistantTime = 0;
+                target.invulnerableTime = 0;
         }
-        return super.hitEntity(stack, target, attacker);
+        return super.hurtEnemy(stack, target, attacker);
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.addEnchantment(Enchantments.LOOTING, 1);
+        stack.enchant(Enchantments.MOB_LOOTING, 1);
     }
 }

@@ -22,21 +22,21 @@ public class GuiBarrel extends ContainerScreen<ContainerBarrel> {
 
         this.renderBackground(ms);
         super.render(ms, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(ms, mouseX, mouseY);
+        this.renderTooltip(ms, mouseX, mouseY);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack ms, int x, int y) {
+    public void renderLabels(MatrixStack ms, int x, int y) {
 
         String s = "Abstract Barrel";
-        this.font.drawString(ms, s, this.xSize / 2 - this.font.getStringWidth(s) / 2, 6, 4210752);
+        this.font.draw(ms, s, this.imageWidth / 2 - this.font.width(s) / 2, 6, 4210752);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
+    public void renderBg(MatrixStack ms, float partialTicks, int x, int y) {
 
         RenderSystem.color4f(1.0f, 1.0F, 1.0F, 1.0F);
-        this.minecraft.textureManager.bindTexture(RES);
-        this.blit(ms, guiLeft, guiTop, 0, 0, xSize, ySize);
+        this.minecraft.textureManager.bind(RES);
+        this.blit(ms, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 }

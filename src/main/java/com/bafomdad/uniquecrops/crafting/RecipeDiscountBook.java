@@ -24,8 +24,8 @@ public class RecipeDiscountBook extends SpecialRecipe {
         boolean foundDiscountBook = false;
         boolean foundItem = false;
 
-        for (int i = 0; i < ic.getSizeInventory(); i++) {
-            ItemStack stack = ic.getStackInSlot(i);
+        for (int i = 0; i < ic.getContainerSize(); i++) {
+            ItemStack stack = ic.getItem(i);
             if (!stack.isEmpty()) {
                 if (stack.getItem() == UCItems.BOOK_DISCOUNT.get())
                     foundDiscountBook = true;
@@ -38,12 +38,12 @@ public class RecipeDiscountBook extends SpecialRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory ic) {
+    public ItemStack assemble(CraftingInventory ic) {
 
         ItemStack item = ItemStack.EMPTY;
 
-        for (int i = 0; i < ic.getSizeInventory(); i++) {
-            ItemStack stack = ic.getStackInSlot(i);
+        for (int i = 0; i < ic.getContainerSize(); i++) {
+            ItemStack stack = ic.getItem(i);
             if (!stack.isEmpty() && stack.getItem() != UCItems.BOOK_DISCOUNT.get())
                 item = stack;
         }
@@ -54,7 +54,7 @@ public class RecipeDiscountBook extends SpecialRecipe {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
 
         return width > 1 || height > 1;
     }
@@ -67,6 +67,6 @@ public class RecipeDiscountBook extends SpecialRecipe {
 
     private boolean isStackValid(ItemStack stack) {
 
-        return stack.getItem().isDamageable() && !NBTUtils.getBoolean(stack, UCStrings.TAG_DISCOUNT, false);
+        return stack.getItem().canBeDepleted() && !NBTUtils.getBoolean(stack, UCStrings.TAG_DISCOUNT, false);
     }
 }

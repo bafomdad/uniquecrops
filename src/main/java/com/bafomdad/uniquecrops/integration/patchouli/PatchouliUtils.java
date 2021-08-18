@@ -56,21 +56,21 @@ public final class PatchouliUtils {
             split[1] = split[1].substring(0, split[1].lastIndexOf("]"));
 
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(split[0]));
-            if (block == Blocks.AIR) return Blocks.AIR.getDefaultState();
+            if (block == Blocks.AIR) return Blocks.AIR.defaultBlockState();
 
-            StateContainer blockState = block.getStateContainer();
-            BlockState returnState = block.getDefaultState();
+            StateContainer blockState = block.getStateDefinition();
+            BlockState returnState = block.defaultBlockState();
 
             String[] stateValues = split[1].split(",");
             for (String value : stateValues) {
                 String[] valueSplit = value.split("=");
                 Property property = blockState.getProperty(valueSplit[0]);
                 if (property != null)
-                    returnState = returnState.with(property, (Comparable) property.parseValue(valueSplit[1]).get());
+                    returnState = returnState.setValue(property, (Comparable) property.getValue(valueSplit[1]).get());
             }
             return returnState;
         }
-        return Blocks.AIR.getDefaultState();
+        return Blocks.AIR.defaultBlockState();
     }
 
     public static void registerMultiblocks() {

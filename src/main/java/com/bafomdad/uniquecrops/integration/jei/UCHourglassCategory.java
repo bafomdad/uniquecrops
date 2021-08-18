@@ -39,7 +39,7 @@ public class UCHourglassCategory implements IRecipeCategory<IHourglassRecipe> {
     @Override
     public String getTitle() {
 
-        return I18n.format("container.jei.uniquecrops.hourglass");
+        return I18n.get("container.jei.uniquecrops.hourglass");
     }
 
     @Override

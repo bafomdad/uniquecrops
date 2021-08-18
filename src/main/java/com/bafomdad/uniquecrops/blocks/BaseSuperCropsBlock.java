@@ -8,7 +8,7 @@ public class BaseSuperCropsBlock extends Block {
 
     public BaseSuperCropsBlock() {
 
-        super(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(5.0F, 1000.0F).sound(SoundType.CROP));
+        super(Properties.of(Material.PLANT).noCollission().randomTicks().strength(5.0F, 1000.0F).sound(SoundType.CROP));
     }
 
     public BaseSuperCropsBlock(Properties prop) {

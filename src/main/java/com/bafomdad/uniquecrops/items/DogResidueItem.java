@@ -13,29 +13,29 @@ public class DogResidueItem extends ItemBaseUC {
 
     public DogResidueItem() {
 
-        super(UCItems.defaultBuilder().maxStackSize(1));
+        super(UCItems.defaultBuilder().stacksTo(1));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
         if (hand == Hand.MAIN_HAND) {
             boolean canFill = false;
-            for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-                ItemStack loopStack = player.inventory.mainInventory.get(i);
+            for (int i = 0; i < player.inventory.items.size(); i++) {
+                ItemStack loopStack = player.inventory.items.get(i);
                 if (loopStack.isEmpty()) {
-                    player.inventory.mainInventory.set(i, new ItemStack(UCItems.DOGRESIDUE.get()));
+                    player.inventory.items.set(i, new ItemStack(UCItems.DOGRESIDUE.get()));
                     canFill = true;
                 }
             }
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 if (canFill)
-                    player.sendMessage(new StringTextComponent("The rest of your inventory filled up with dog residue."), player.getUniqueID());
+                    player.sendMessage(new StringTextComponent("The rest of your inventory filled up setValue dog residue."), player.getUUID());
                 else
-                    player.sendMessage(new StringTextComponent("You finished using it. An uneasy silence fills the room."), player.getUniqueID());
+                    player.sendMessage(new StringTextComponent("You finished using it. An uneasy silence fills the room."), player.getUUID());
             }
-            return ActionResult.resultSuccess(player.getHeldItemMainhand());
+            return ActionResult.success(player.getMainHandItem());
         }
-        return ActionResult.resultPass(player.getHeldItem(hand));
+        return ActionResult.pass(player.getItemInHand(hand));
     }
 }

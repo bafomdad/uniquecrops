@@ -26,15 +26,15 @@ public class TileIndustria extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (!world.canBlockSeeSky(pos)) return;
+        if (!level.canSeeSkyFromBelowWater(worldPosition)) return;
 
-        if (!world.isRemote && world.isDaytime()) {
+        if (!level.isClientSide && level.isDay()) {
             if (!energy.canReceive()) return;
 
             energy.receiveEnergy(UCConfig.COMMON.energyPerTick.get(), false);
             int age = energy.getEnergyStored() / 5000;
-            if (Math.min(age, 7) != getBlockState().get(BaseCropsBlock.AGE))
-                world.setBlockState(pos, getBlockState().with(BaseCropsBlock.AGE, Math.min(age, 7)));
+            if (Math.min(age, 7) != getBlockState().getValue(BaseCropsBlock.AGE))
+                level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BaseCropsBlock.AGE, Math.min(age, 7)));
         }
     }
 

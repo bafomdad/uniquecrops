@@ -24,11 +24,11 @@ public class RenderExedo extends TileEntityRenderer<TileExedo> {
     public void render(TileExedo te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 
         float f = 0.5F;
-        ms.push();
+        ms.pushPose();
         ms.translate(0.5, 1.2, 0.5);
         ms.scale(f, f, f);
-        ms.rotate(Vector3f.XP.rotationDegrees(180.0F));
-        model.renderWithWiggle(te, ms, buffer.getBuffer(model.getRenderType(TEX)), light, overlay);
-        ms.pop();
+        ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+        model.renderWithWiggle(te, ms, buffer.getBuffer(model.renderType(TEX)), light, overlay);
+        ms.popPose();
     }
 }

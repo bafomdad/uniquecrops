@@ -27,9 +27,9 @@ public class DonutSteel extends BaseCropsBlock {
 
         if (player != null && isMaxAge(state)) {
             BattleCropEntity ent = UCEntities.BATTLE_CROP.get().create(world);
-            ent.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-            if (!world.isRemote) {
-                world.addEntity(ent);
+            ent.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            if (!world.isClientSide) {
+                world.addFreshEntity(ent);
                 UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX(), pos.getY() + 0.3D, pos.getZ(), 6));
                 world.removeBlock(pos, false);
             }

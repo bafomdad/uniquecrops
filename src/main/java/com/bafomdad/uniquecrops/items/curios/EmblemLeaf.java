@@ -21,20 +21,20 @@ public class EmblemLeaf extends ItemCurioUC {
     public void onEquip(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
         int armorCount = 0;
-        for (ItemStack armor : ((PlayerEntity)entity).inventory.armorInventory) {
+        for (ItemStack armor : ((PlayerEntity)entity).inventory.armor) {
             if (armor.getItem() instanceof ArmorItem) {
-                if (((ArmorItem)armor.getItem()).getArmorMaterial() != ArmorMaterial.LEATHER)
+                if (((ArmorItem)armor.getItem()).getMaterial() != ArmorMaterial.LEATHER)
                     armorCount++;
             }
         }
         NBTUtils.setInt(stack, ARMORCOUNT, armorCount);
-        entity.getAttributeManager().reapplyModifiers(getEquippedAttributeModifiers(stack));
+        entity.getAttributes().addTransientAttributeModifiers(getEquippedAttributeModifiers(stack));
     }
 
     @Override
     public void onUnequip(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
-        entity.getAttributeManager().removeModifiers(getEquippedAttributeModifiers(stack));
+        entity.getAttributes().removeAttributeModifiers(getEquippedAttributeModifiers(stack));
     }
 
     public Multimap<Attribute, AttributeModifier> getEquippedAttributeModifiers(ItemStack stack) {

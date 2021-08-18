@@ -27,38 +27,38 @@ public class Hexis extends BaseCropsBlock {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
-        if (world.isRemote || isMaxAge(state)) return;
+        if (world.isClientSide || isMaxAge(state)) return;
 
         if (entity instanceof ExperienceOrbEntity) {
             ExperienceOrbEntity orb = (ExperienceOrbEntity)entity;
-            if (orb.isAlive() && orb.getXpValue() > 1) {
-                int age = Math.min(getAge(state) + orb.getXpValue(), getMaxAge());
+            if (orb.isAlive() && orb.getValue() > 1) {
+                int age = Math.min(getAge(state) + orb.getValue(), getMaxAge());
                 orb.remove();
-                world.setBlockState(pos, withAge(age), 3);
+                world.setBlock(pos, setValueAge(age), 3);
             }
         }
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (!isMaxAge(state)) {
             if (player.experienceLevel >= 1) {
                 if (!player.isCreative())
-                    player.addExperienceLevel(-1);
-                world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+                    player.giveExperienceLevels(-1);
+                world.setBlock(pos, this.setValueAge(getAge(state) + 1), 3);
                 return ActionResultType.SUCCESS;
             }
         }
-        ItemStack bottle = player.getHeldItem(hand);
+        ItemStack bottle = player.getItemInHand(hand);
         if (bottle.getItem() == Items.GLASS_BOTTLE) {
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 bottle.shrink(1);
                 ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.EXPERIENCE_BOTTLE));
-                if (world.rand.nextBoolean())
-                    world.setBlockState(pos, this.withAge(0), 3);
+                if (world.random.nextBoolean())
+                    world.setBlock(pos, this.setValueAge(0), 3);
             }
             return ActionResultType.SUCCESS;
         }

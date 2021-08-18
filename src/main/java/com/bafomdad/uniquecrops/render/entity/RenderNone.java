@@ -21,8 +21,8 @@ public class RenderNone<T extends Entity> extends EntityRenderer<T> {
     }
 
     @Override
-    public ResourceLocation getEntityTexture(T entity) {
+    public ResourceLocation getTextureLocation(T entity) {
 
-        return PlayerContainer.LOCATION_BLOCKS_TEXTURE;
+        return PlayerContainer.BLOCK_ATLAS;
     }
 }

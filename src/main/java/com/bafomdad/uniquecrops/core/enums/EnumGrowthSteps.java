@@ -42,7 +42,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            return world.getMoonFactor() == 1.0F;
+            return world.getMoonPhase() == 1.0F;
         }
     },
     HASTORCH(UCStrings.HASTORCH, UCConfig.COMMON.hasTorch.get()) {
@@ -54,12 +54,12 @@ public enum EnumGrowthSteps {
 
             if (getTile(world, pos) == null) return false;
 
-            List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.add(-range, -range, -range), pos.add(range, range, range)));
+            List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(pos.offset(-range, -range, -range), pos.offset(range, range, range)));
             for (PlayerEntity player : players) {
-                if (player.getUniqueID().equals(getTile(world, pos).getOwner())) {
+                if (player.getUUID().equals(getTile(world, pos).getOwner())) {
                     for (Hand hand : Hand.values()) {
-                        ItemStack held = player.getHeldItem(hand);
-                        if (held.getItem() == Item.getItemFromBlock(Blocks.TORCH))
+                        ItemStack held = player.getItemInHand(hand);
+                        if (held.getItem() == Item.byBlock(Blocks.TORCH))
                             return true;
                     }
                 }
@@ -72,7 +72,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            return world.getLight(pos.up()) < 3 && world.isAirBlock(pos.up());
+            return world.getLightEmission(pos.above()) < 3 && world.isEmptyBlock(pos.above());
         }
     },
     DRYFARMLAND(UCStrings.DRYFARMLAND, UCConfig.COMMON.dryFarmland.get()) {
@@ -80,7 +80,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            return world.getBlockState(pos.down()).getBlock() == Blocks.FARMLAND && world.getBlockState(pos.down()).get(FarmlandBlock.MOISTURE) < 7;
+            return world.getBlockState(pos.below()).getBlock() == Blocks.FARMLAND && world.getBlockState(pos.below()).getValue(FarmlandBlock.MOISTURE) < 7;
         }
     },
     UNDERFARMLAND(UCStrings.UNDERFARMLAND, UCConfig.COMMON.underFarmland.get()) {
@@ -88,7 +88,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            return world.getBlockState(pos.up()).getBlock() == Blocks.FARMLAND;
+            return world.getBlockState(pos.above()).getBlock() == Blocks.FARMLAND;
         }
     },
     BURNINGPLAYER(UCStrings.BURNINGPLAYER, UCConfig.COMMON.burningPlayer.get()) {
@@ -101,10 +101,10 @@ public enum EnumGrowthSteps {
             if (getTile(world, pos) == null)
                 return false;
 
-            List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.add(-range, -range, -range), pos.add(range, range, range)));
+            List<PlayerEntity> players = world.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(pos.offset(-range, -range, -range), pos.offset(range, range, range)));
             for (PlayerEntity player : players) {
-                if (player.getUniqueID().equals(getTile(world, pos).getOwner())) {
-                    if (player.isBurning() && !player.isImmuneToFire())
+                if (player.getUUID().equals(getTile(world, pos).getOwner())) {
+                    if (player.isOnFire() && !player.fireImmune())
                         return true;
                 }
             }
@@ -116,7 +116,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            return world.getDimensionKey() == World.THE_NETHER;
+            return world.dimension() == World.NETHER;
         }
     },
     LIKESHEIGHTS(UCStrings.LIKESHEIGHTS, UCConfig.COMMON.likesHeights.get()) {
@@ -134,7 +134,7 @@ public enum EnumGrowthSteps {
 
             int lilypads = 0;
             for (Direction facing : Direction.Plane.HORIZONTAL) {
-                Block lilypad = world.getBlockState(pos.offset(facing)).getBlock();
+                Block lilypad = world.getBlockState(pos.relative(facing)).getBlock();
                 if (lilypad != null && (lilypad == Blocks.LILY_PAD || lilypad instanceof BaseLilyBlock))
                     lilypads++;
             }
@@ -146,7 +146,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
+            List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos, pos.offset(1, 1, 1)));
             for (ItemEntity item : items) {
                 if (item.isAlive() && !item.getItem().isEmpty()) {
                     if (item.getItem().getItem() == Items.WATER_BUCKET)
@@ -165,10 +165,10 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
+            List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos, pos.offset(1, 1, 1)));
             for (ItemEntity item : items) {
                 if (!item.isAlive() && !item.getItem().isEmpty()) {
-                    if (item.getItem().getItem().isFood()) {
+                    if (item.getItem().getItem().isEdible()) {
                         UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX(), pos.getY(), pos.getZ(), 6));
                         item.getItem().shrink(1);
                         if (item.getItem().getCount() <= 0)
@@ -186,7 +186,7 @@ public enum EnumGrowthSteps {
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
             Entity item = null, chicken = null;
-            List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.add(-3, 0, -3), pos.add(3, 1, 3)));
+            List<Entity> entities = world.getEntitiesOfClass(Entity.class, new AxisAlignedBB(pos.offset(-3, 0, -3), pos.offset(3, 1, 3)));
             for (Entity ent : entities) {
                 if (ent.isAlive()) {
                     if (ent instanceof ChickenEntity)
@@ -198,24 +198,24 @@ public enum EnumGrowthSteps {
                 }
             }
             if (chicken != null && item != null) {
-                AxisAlignedBB aabb = new AxisAlignedBB(chicken.getPosition().add(0, 0, 0), chicken.getPosition().add(1, 1, 1));
-                List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(chicken, aabb);
+                AxisAlignedBB aabb = new AxisAlignedBB(chicken.blockPosition().offset(0, 0, 0), chicken.blockPosition().offset(1, 1, 1));
+                List<Entity> list = world.getEntities(chicken, aabb);
                 for (Entity entity : list) {
                     if (entity != null && entity == item) {
-                        ItemEntity ei = new ItemEntity(item.world, item.getPosX(), item.getPosY(), item.getPosZ(), new ItemStack(UCItems.TERIYAKI.get()));
+                        ItemEntity ei = new ItemEntity(item.level, item.getX(), item.getY(), item.getZ(), new ItemStack(UCItems.TERIYAKI.get()));
                         ((ItemEntity)item).getItem().shrink(1);
                         if (((ItemEntity)item).getItem().getCount() <= 0)
                             item.remove();
                         chicken.remove();
-                        UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.EXPLOSION, chicken.getPosX(), chicken.getPosY() + 0.5D, chicken.getPosZ(), 3));
-                        if (!world.isRemote)
-                            world.addEntity(ei);
+                        UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.EXPLOSION, chicken.getX(), chicken.getY() + 0.5D, chicken.getZ(), 3));
+                        if (!world.isClientSide)
+                            world.addFreshEntity(ei);
                         return true;
                     }
                 }
             }
             else if (chicken != null) {
-                UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.HEART, chicken.getPosX(), chicken.getPosY() + 1D, chicken.getPosZ(), 3));
+                UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.HEART, chicken.getX(), chicken.getY() + 1D, chicken.getZ(), 3));
                 return true;
             }
             return false;
@@ -227,7 +227,7 @@ public enum EnumGrowthSteps {
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
             for (Direction facing : Direction.values()) {
-                int powersignal = world.getRedstonePower(pos.offset(facing), facing);
+                int powersignal = world.getSignal(pos.relative(facing), facing);
                 if (powersignal >= 8)
                     return true;
             }
@@ -239,7 +239,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            int sunlight = world.getLightFor(LightType.SKY.SKY, pos);
+            int sunlight = world.getBrightness(LightType.SKY.SKY, pos);
             return sunlight == 0;
         }
     },
@@ -248,7 +248,7 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            int light = world.getLightFor(LightType.BLOCK, pos.up());
+            int light = world.getBrightness(LightType.BLOCK, pos.above());
             return light >= 13;
         }
     },
@@ -260,11 +260,11 @@ public enum EnumGrowthSteps {
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
             int warts = 0;
-            Iterable<BlockPos> poslist = BlockPos.getAllInBoxMutable(pos.add(-range, 0, -range), pos.add(range, 0, range));
+            Iterable<BlockPos> poslist = BlockPos.betweenClosed(pos.offset(-range, 0, -range), pos.offset(range, 0, range));
             Iterator posit = poslist.iterator();
             while (posit.hasNext()) {
                 BlockPos looppos = (BlockPos)posit.next();
-                if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == Blocks.NETHER_WART) {
+                if (!world.isEmptyBlock(looppos) && world.getBlockState(looppos).getBlock() == Blocks.NETHER_WART) {
                     warts++;
                 }
             }
@@ -279,13 +279,13 @@ public enum EnumGrowthSteps {
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
             boolean flag = false;
-            Iterable<BlockPos> poslist = BlockPos.getAllInBoxMutable(pos.add(-range, -2, -range), pos.add(range, 2, range));
+            Iterable<BlockPos> poslist = BlockPos.betweenClosed(pos.offset(-range, -2, -range), pos.offset(range, 2, range));
             Iterator iter = poslist.iterator();
             while (iter.hasNext()) {
                 BlockPos posit = (BlockPos)iter.next();
                 BlockState loopState = world.getBlockState(posit);
                 if (loopState.getBlock() == Blocks.FURNACE) {
-                    if (loopState.get(AbstractFurnaceBlock.LIT)) flag = true;
+                    if (loopState.getValue(AbstractFurnaceBlock.LIT)) flag = true;
                 }
             }
             return flag;
@@ -298,11 +298,11 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            Iterable<BlockPos> poslist = BlockPos.getAllInBoxMutable(pos.add(-range, -2, -range), pos.add(range, 2, range));
+            Iterable<BlockPos> poslist = BlockPos.betweenClosed(pos.offset(-range, -2, -range), pos.offset(range, 2, range));
             Iterator iter = poslist.iterator();
             while (iter.hasNext()) {
                 BlockPos posit = (BlockPos)iter.next();
-                TileEntity tile = world.getTileEntity(posit);
+                TileEntity tile = world.getBlockEntity(posit);
                 if (tile instanceof BrewingStandTileEntity) {
                     boolean flag = false;
                     try {
@@ -323,8 +323,8 @@ public enum EnumGrowthSteps {
         @Override
         public boolean canAdvance(World world, BlockPos pos, BlockState state) {
 
-            BlockPos[] neighbors = new BlockPos[] { pos.add(1, 0, 1), pos.add(-1, 0, -1), pos.add(1, 0, -1), pos.add(-1, 0, 1) };
-            BlockPos[] noneighbors = new BlockPos[] { pos.offset(Direction.EAST), pos.offset(Direction.NORTH), pos.offset(Direction.SOUTH), pos.offset(Direction.WEST) };
+            BlockPos[] neighbors = new BlockPos[] { pos.offset(1, 0, 1), pos.offset(-1, 0, -1), pos.offset(1, 0, -1), pos.offset(-1, 0, 1) };
+            BlockPos[] noneighbors = new BlockPos[] { pos.relative(Direction.EAST), pos.relative(Direction.NORTH), pos.relative(Direction.SOUTH), pos.relative(Direction.WEST) };
             int crops = 0;
             for (BlockPos looppos1 : neighbors) {
                 if (world.getBlockState(looppos1).getBlock() == UCBlocks.FEROXIA_CROP.get())
@@ -353,10 +353,10 @@ public enum EnumGrowthSteps {
             TileFeroxia tile = getTile(world, pos);
             if (tile != null) {
                 PlayerEntity player = UCUtils.getPlayerFromUUID(tile.getOwner().toString());
-                if (!world.isRemote && player != null) {
+                if (!world.isClientSide && player != null) {
                     CompoundNBT tag = player.getPersistentData();
                     if (!tag.contains("hasSacrificed")) {
-                        player.sendMessage(new StringTextComponent(TextFormatting.RED + "The savage plant whispers: \"The Time is right to perform a self sacrifice.\""), player.getUniqueID());
+                        player.sendMessage(new StringTextComponent(TextFormatting.RED + "The savage plant whispers: \"The Time is right to perform a self sacrifice.\""), player.getUUID());
                         tag.putBoolean("hasSacrificed", false);
                     }
                 }
@@ -386,7 +386,7 @@ public enum EnumGrowthSteps {
 
     public TileFeroxia getTile(World world, BlockPos pos) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileFeroxia)
             return (TileFeroxia)tile;
 

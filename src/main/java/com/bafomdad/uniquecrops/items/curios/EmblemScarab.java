@@ -26,8 +26,8 @@ public class EmblemScarab extends ItemCurioUC {
 
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
-            if (!player.getActivePotionEffects().isEmpty())
-                player.getActivePotionEffects().removeIf(effect -> !BLACKLIST.contains(effect.getEffectName()));
+            if (!player.getActiveEffects().isEmpty())
+                player.getActiveEffects().removeIf(effect -> !BLACKLIST.contains(effect.getDescriptionId()));
         }
     }
 

@@ -39,7 +39,7 @@ public class Imperia extends BaseCropsBlock {
 
     public Imperia() {
 
-        super(() -> Items.AIR, UCItems.IMPERIA_SEED, Properties.from(Blocks.WHEAT).setLightLevel(s -> s.get(AGE) >= 7 ? 15 : 0));
+        super(() -> Items.AIR, UCItems.IMPERIA_SEED, Properties.copy(Blocks.WHEAT).lightLevel(s -> s.getValue(AGE) >= 7 ? 15 : 0));
         setClickHarvest(false);
         setBonemealable(false);
         MinecraftForge.EVENT_BUS.addListener(this::checkDenySpawn);
@@ -48,9 +48,9 @@ public class Imperia extends BaseCropsBlock {
 
     private void checkDenySpawn(LivingSpawnEvent.CheckSpawn event) {
 
-        ChunkPos cPos = new ChunkPos(event.getEntityLiving().getPosition());
-        if (!event.getWorld().isRemote() && !event.isSpawner() && event.getEntityLiving() instanceof MonsterEntity || event.getEntityLiving() instanceof SlimeEntity) {
-            if (UCProtectionHandler.getInstance().getChunkInfo(event.getEntityLiving().world.getDimensionKey()).contains(cPos))
+        ChunkPos cPos = new ChunkPos(event.getEntityLiving().blockPosition());
+        if (!event.getWorld().isClientSide() && !event.isSpawner() && event.getEntityLiving() instanceof MonsterEntity || event.getEntityLiving() instanceof SlimeEntity) {
+            if (UCProtectionHandler.getInstance().getChunkInfo(event.getEntityLiving().level.dimension()).contains(cPos))
                 event.setResult(Event.Result.DENY);
         }
     }
@@ -61,9 +61,9 @@ public class Imperia extends BaseCropsBlock {
             CompoundNBT tag = event.getEntityLiving().getPersistentData();
             if (tag.contains("ImperiaPosTag") && tag.contains("ImperiaStage")) {
                 BlockPos cropPos = NBTUtil.readBlockPos(tag.getCompound("ImperiaPosTag"));
-                World world = event.getEntityLiving().world;
-                if (!world.isAirBlock(cropPos) && world.isBlockLoaded(cropPos)) {
-                    if (world.getBlockState(cropPos).getBlock() == this && !world.isRemote) {
+                World world = event.getEntityLiving().level;
+                if (!world.isEmptyBlock(cropPos) && world.hasChunkAt(cropPos)) {
+                    if (world.getBlockState(cropPos).getBlock() == this && !world.isClientSide) {
                         int stage = tag.getInt("ImperiaStage");
                         this.advanceStage((ServerWorld)world, cropPos, world.getBlockState(cropPos), stage);
                     }
@@ -81,15 +81,15 @@ public class Imperia extends BaseCropsBlock {
                 return;
             }
             String[] mobList = new String[] { "minecraft:witch", "minecraft:skeleton", "minecraft:zombie", "minecraft:spider" };
-            EntityType type = Registry.ENTITY_TYPE.getOrDefault(new ResourceLocation(mobList[rand.nextInt(mobList.length)]));
+            EntityType type = Registry.ENTITY_TYPE.get(new ResourceLocation(mobList[rand.nextInt(mobList.length)]));
             Entity entity = type.create(world);
             if (!(entity instanceof LivingEntity)) return;
 
-            entity.setPosition(pos.getX(), pos.getY() + 0.5D, pos.getZ());
+            entity.setPos(pos.getX(), pos.getY() + 0.5D, pos.getZ());
             CompoundNBT tag = entity.getPersistentData();
             tag.put("ImperiaPosTag", NBTUtil.writeBlockPos(pos));
             tag.putInt("ImperiaStage", getAge(state));
-            world.addEntity(entity);
+            world.addFreshEntity(entity);
         }
         super.randomTick(state, world, pos, rand);
     }
@@ -97,7 +97,7 @@ public class Imperia extends BaseCropsBlock {
     @Override
     public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
 
-        if (!world.isRemote)
+        if (!world.isClientSide)
             setChunksAsNeeded((ServerWorld)world, pos, true);
         return removedByPlayer(state, world, pos, player, willHarvest, fluid);
     }
@@ -110,7 +110,7 @@ public class Imperia extends BaseCropsBlock {
             setChunksAsNeeded(world, pos, false);
 
         UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX(), pos.getY(), pos.getZ(), 6));
-        world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+        world.setBlock(pos, this.setValueAge(getAge(state) + 1), 3);
     }
 
     public void setChunksAsNeeded(ServerWorld world, BlockPos pos, boolean remove) {
@@ -120,9 +120,9 @@ public class Imperia extends BaseCropsBlock {
             for (int j = -1; j <= 1; j++) {
                 ChunkPos loopPos = new ChunkPos(cPos.x + i, cPos.z + j);
                 if (remove)
-                    UCProtectionHandler.getInstance().removeChunk(world.getDimensionKey(), loopPos, true);
+                    UCProtectionHandler.getInstance().removeChunk(world.dimension(), loopPos, true);
                 else
-                    UCProtectionHandler.getInstance().addChunk(world.getDimensionKey(), loopPos, true);
+                    UCProtectionHandler.getInstance().addChunk(world.dimension(), loopPos, true);
             }
         }
     }

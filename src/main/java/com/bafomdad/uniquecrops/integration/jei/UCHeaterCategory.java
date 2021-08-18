@@ -37,7 +37,7 @@ public class UCHeaterCategory implements IRecipeCategory<IHeaterRecipe> {
     @Override
     public String getTitle() {
 
-        return I18n.format("container.jei.uniquecrops.heater");
+        return I18n.get("container.jei.uniquecrops.heater");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class UCHeaterCategory implements IRecipeCategory<IHeaterRecipe> {
     public void setIngredients(IHeaterRecipe recipe, IIngredients ingredients) {
 
         ingredients.setInput(VanillaTypes.ITEM, recipe.getInput());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override

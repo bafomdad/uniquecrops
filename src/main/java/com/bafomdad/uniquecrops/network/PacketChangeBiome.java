@@ -47,9 +47,9 @@ public class PacketChangeBiome {
             final int HORIZONTAL_MASK = (1 << WIDTH_BITS) - 1;
             final int VERTICAL_MASK = (1 << HEIGHT_BITS) - 1;
 
-            ClientWorld world = Minecraft.getInstance().world;
+            ClientWorld world = Minecraft.getInstance().level;
             Chunk chunkAt = (Chunk)world.getChunk(msg.pos);
-            Biome targetBiome = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getOrDefault(msg.biomeId);
+            Biome targetBiome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).get(msg.biomeId);
 
             for (int dy = 0; dy < 255; dy += 4) {
                 int x = (msg.pos.getX() >> 2) & HORIZONTAL_MASK;
@@ -59,7 +59,7 @@ public class PacketChangeBiome {
             }
             world.onChunkLoaded(msg.pos.getX() >> 4, msg.pos.getZ() >> 4);
             for (int k = 0; k < 16; ++k)
-                world.markSurroundingsForRerender(msg.pos.getX() >> 4, k, msg.pos.getZ() >> 4);
+                world.setSectionDirtyWithNeighbors(msg.pos.getX() >> 4, k, msg.pos.getZ() >> 4);
         });
         ctx.get().setPacketHandled(true);
     }

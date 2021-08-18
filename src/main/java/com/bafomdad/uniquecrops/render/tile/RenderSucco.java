@@ -34,25 +34,25 @@ public class RenderSucco extends TileEntityRenderer<TileSucco> {
     @Override
     public void render(TileSucco te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 
-        int age = te.getBlockState().get(BaseCropsBlock.AGE);
+        int age = te.getBlockState().getValue(BaseCropsBlock.AGE);
 
         if (buffers  == null)
-            buffers = initBuffers(Minecraft.getInstance().getRenderTypeBuffers().getBufferSource());
+            buffers = initBuffers(Minecraft.getInstance().renderBuffers().bufferSource());
 
-        BlockState renderState = UCBlocks.DUMMY_CROP.get().getDefaultState().with(BaseCropsBlock.AGE, age);
-        BlockRendererDispatcher brd = Minecraft.getInstance().getBlockRendererDispatcher();
+        BlockState renderState = UCBlocks.DUMMY_CROP.get().defaultBlockState().setValue(BaseCropsBlock.AGE, age);
+        BlockRendererDispatcher brd = Minecraft.getInstance().getBlockRenderer();
         if (buffer instanceof IRenderTypeBuffer.Impl) {
-            ((IRenderTypeBuffer.Impl)buffer).finish();
+            ((IRenderTypeBuffer.Impl)buffer).endBatch();
         }
         brd.renderBlock(renderState, ms, buffers, light, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
 
-        buffers.finish();
+        buffers.endBatch();
     }
 
     private static IRenderTypeBuffer.Impl initBuffers(IRenderTypeBuffer.Impl original) {
 
-        BufferBuilder fallback = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "buffer");
-        Map<RenderType, BufferBuilder> layerBuffers = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "fixedBuffers");
+        BufferBuilder fallback = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "field_228457_a_");
+        Map<RenderType, BufferBuilder> layerBuffers = ObfuscationReflectionHelper.getPrivateValue(IRenderTypeBuffer.Impl.class, original, "field_228458_b_");
         Map<RenderType, BufferBuilder> remapped = new Object2ObjectLinkedOpenHashMap<>();
         for (Map.Entry<RenderType, BufferBuilder> e : layerBuffers.entrySet())
             remapped.put(GhostRenderType.remap(e.getKey()), e.getValue());
@@ -78,13 +78,13 @@ public class RenderSucco extends TileEntityRenderer<TileSucco> {
         private static Map<RenderType, RenderType> remappedTypes = new IdentityHashMap<>();
 
         private GhostRenderType(RenderType original) {
-            super(String.format("%s_%s_ghost", original.toString(), UniqueCrops.MOD_ID), original.getVertexFormat(), original.getDrawMode(), original.getBufferSize(), original.isUseDelegate(), true, () -> {
+            super(String.format("%s_%s_ghost", original.toString(), UniqueCrops.MOD_ID), original.format(), original.mode(), original.bufferSize(), original.affectsCrumbling(), true, () -> {
                 original.setupRenderState();
 
                 // Alter GL state
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GlStateManager.SourceFactor.CONSTANT_ALPHA, GlStateManager.DestFactor.ONE_MINUS_CONSTANT_ALPHA);
-                float moon = Minecraft.getInstance().world.getMoonFactor();
+                float moon = Minecraft.getInstance().level.getMoonPhase();
                 RenderSystem.blendColor(1, 1, 1, moon);
             }, () -> {
                 RenderSystem.blendColor(1, 1, 1, 1);

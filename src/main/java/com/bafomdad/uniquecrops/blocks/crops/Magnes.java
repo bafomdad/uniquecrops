@@ -30,41 +30,41 @@ public class Magnes extends BaseCropsBlock {
     public Magnes() {
 
         super(UCItems.FERROMAGNETICIRON, UCItems.MAGNES_SEED);
-        setDefaultState(getDefaultState().with(AGE, 0).with(POLARITY, false));
+        registerDefaultState(defaultBlockState().setValue(AGE, 0).setValue(POLARITY, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(POLARITY);
     }
 
     public boolean isBlue(BlockState state) {
 
-        return state.get(POLARITY);
+        return state.getValue(POLARITY);
     }
 
     public boolean isOppositePolarity(BlockState state1, BlockState state2) {
 
-        return state1.get(POLARITY) != state2.get(POLARITY);
+        return state1.getValue(POLARITY) != state2.getValue(POLARITY);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (!stack.isEmpty() && this.isMaxAge(state)) {
-            if (stack.getItem().isIn(Tags.Items.DYES_BLUE) && !isBlue(state)) {
+            if (stack.getItem().is(Tags.Items.DYES_BLUE) && !isBlue(state)) {
                 if (!player.isCreative())
                     stack.shrink(1);
-                world.setBlockState(pos, state.with(POLARITY, true), 2);
+                world.setBlock(pos, state.setValue(POLARITY, true), 2);
                 return ActionResultType.SUCCESS;
             }
-            if (stack.getItem().isIn(Tags.Items.DYES_RED) && isBlue(state)) {
+            if (stack.getItem().is(Tags.Items.DYES_RED) && isBlue(state)) {
                 if (!player.isCreative())
                     stack.shrink(1);
-                world.setBlockState(pos, state.with(POLARITY, false), 2);
+                world.setBlock(pos, state.setValue(POLARITY, false), 2);
                 return ActionResultType.SUCCESS;
             }
         }
@@ -83,11 +83,11 @@ public class Magnes extends BaseCropsBlock {
 
         for (Direction facing : Direction.Plane.HORIZONTAL) {
             for (int i = 0; i < RANGE; i++) {
-                BlockPos.Mutable loopPos = pos.offset(facing, i).toMutable();
+                BlockPos.Mutable loopPos = pos.relative(facing, i).mutable();
                 BlockState loopState = world.getBlockState(loopPos);
                 if (loopState.getBlock() == this && isOppositePolarity(state, loopState) && this.isMaxAge(loopState) && i > 1) {
                     spawnMovingCrop(world, pos, state, facing, i);
-                    spawnMovingCrop(world, loopPos.toImmutable(), loopState, facing.getOpposite(), i);
+                    spawnMovingCrop(world, loopPos.immutable(), loopState, facing.getOpposite(), i);
                     break;
                 }
             }
@@ -98,15 +98,15 @@ public class Magnes extends BaseCropsBlock {
 
         FallingBlockEntity fallingBlock = new FallingBlockEntity(world, pos.getX(), pos.getY(), pos.getZ(), state);
         fallingBlock.setNoGravity(true);
-        fallingBlock.fallTime = 10;
+        fallingBlock.time = 10;
         fallingBlock.fallDistance = 10;
         MovingCropEntity entity = UCEntities.MOVING_CROP.get().create(world);
-        entity.setPosition(pos.getX() + 0.25, pos.getY(), pos.getZ() + 0.25);
+        entity.setPos(pos.getX() + 0.25, pos.getY(), pos.getZ() + 0.25);
         entity.setFacingAndDistance(facing, distance);
 
         world.removeBlock(pos, false);
-        world.addEntity(entity);
-        world.addEntity(fallingBlock);
+        world.addFreshEntity(entity);
+        world.addFreshEntity(fallingBlock);
         fallingBlock.startRiding(entity);
     }
 }

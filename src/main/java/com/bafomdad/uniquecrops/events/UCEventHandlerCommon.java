@@ -47,7 +47,6 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
 import java.util.Map;
 
 public class UCEventHandlerCommon {
@@ -113,24 +112,24 @@ public class UCEventHandlerCommon {
     public static void jumpTele(LivingEvent.LivingJumpEvent event) {
 
         LivingEntity elb = event.getEntityLiving();
-        if (elb.world.isRemote) return;
+        if (elb.level.isClientSide) return;
 
         if (elb instanceof PlayerEntity) {
-            if (elb.world.getBlockState(elb.getPosition()).getBlock() == UCBlocks.LILY_ENDER.get()) {
-                EnumLily.searchNearbyPads(elb.world, elb.getPosition(), elb, Direction.UP);
+            if (elb.level.getBlockState(elb.blockPosition()).getBlock() == UCBlocks.LILY_ENDER.get()) {
+                EnumLily.searchNearbyPads(elb.level, elb.blockPosition(), elb, Direction.UP);
             }
         }
     }
 
     public static void addSeed(BlockEvent.BreakEvent event) {
 
-        if (event.getState().isIn(Blocks.GRASS) || event.getState().isIn(Blocks.TALL_GRASS) || event.getState().isIn(Blocks.FERN) || event.getState().isIn(Blocks.LARGE_FERN)) {
+        if (event.getState().is(Blocks.GRASS) || event.getState().is(Blocks.TALL_GRASS) || event.getState().is(Blocks.FERN) || event.getState().is(Blocks.LARGE_FERN)) {
             if (event.getWorld() instanceof ServerWorld) {
-                ServerWorld serverworld = (ServerWorld)event.getWorld();
+                ServerWorld serverlevel = (ServerWorld)event.getWorld();
                 BlockPos pos = event.getPos();
-                float value = serverworld.rand.nextFloat();
+                float value = serverlevel.random.nextFloat();
                 if (value > 0.90F) {
-                    InventoryHelper.spawnItemStack(serverworld, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCItems.NORMAL_SEED.get()));
+                    InventoryHelper.dropItemStack(serverlevel, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(UCItems.NORMAL_SEED.get()));
                 }
             }
         }
@@ -138,18 +137,18 @@ public class UCEventHandlerCommon {
 
     public static void injectLoot(LootTableLoadEvent event) {
 
-        if (event.getName().equals(LootTables.CHESTS_WOODLAND_MANSION))
+        if (event.getName().equals(LootTables.WOODLAND_MANSION))
             event.getTable().addPool(getInjectPool("chests/woodland_mansion"));
-        if (event.getName().equals(LootTables.CHESTS_IGLOO_CHEST))
+        if (event.getName().equals(LootTables.IGLOO_CHEST))
             event.getTable().addPool(getInjectPool("chests/igloo_chest"));
-        if (event.getName().equals(LootTables.CHESTS_SIMPLE_DUNGEON))
+        if (event.getName().equals(LootTables.SIMPLE_DUNGEON))
             event.getTable().addPool(getInjectPool("chests/simple_dungeon"));
     }
 
     private static LootPool getInjectPool(String pool) {
 
-        return LootPool.builder()
-                .addEntry(getInjectEntry(pool, 1))
+        return LootPool.lootPool()
+                .add(getInjectEntry(pool, 1))
                 .name("uniquecrops_inject")
                 .build();
     }
@@ -157,7 +156,7 @@ public class UCEventHandlerCommon {
     private static LootEntry.Builder<?> getInjectEntry(String name, int weight) {
 
         ResourceLocation injectFolder = new ResourceLocation(UniqueCrops.MOD_ID, "inject/" + name);
-        return TableLootEntry.builder(injectFolder).weight(weight);
+        return TableLootEntry.lootTableReference(injectFolder).setWeight(weight);
     }
 
     public static void onBlockInteract(PlayerInteractEvent.RightClickBlock event) {
@@ -165,18 +164,18 @@ public class UCEventHandlerCommon {
         IMultiblockRecipe recipe = findRecipe(event.getWorld(), event.getPos());
         if (recipe != null) {
             PlayerEntity player = event.getPlayer();
-            ItemStack held = player.getHeldItem(event.getHand());
-            if (!ItemStack.areItemsEqual(held, recipe.getCatalyst())) return;
+            ItemStack held = player.getItemInHand(event.getHand());
+            if (!ItemStack.matches(held, recipe.getCatalyst())) return;
             int cropPower = recipe.getPower();
 
             LazyOptional<ICropPower> cap = held.getCapability(CPProvider.CROP_POWER, null);
             if (cropPower > 0 && !cap.isPresent()) {
-                player.sendStatusMessage(new StringTextComponent("Crop power is not present in this item: " + held.getDisplayName()), true);
+                player.displayClientMessage(new StringTextComponent("Crop power is not present in this item: " + held.getDisplayName()), true);
                 return;
             }
             cap.ifPresent(crop -> {
                 if (crop.getPower() < cropPower) {
-                    player.sendStatusMessage(new StringTextComponent("Insufficient crop power. Needed: " + cropPower), true);
+                    player.displayClientMessage(new StringTextComponent("Insufficient crop power. Needed: " + cropPower), true);
                     return;
                 }
                 if (!player.isCreative()) {
@@ -185,19 +184,19 @@ public class UCEventHandlerCommon {
                         UCPacketHandler.sendTo((ServerPlayerEntity)player, new PacketSyncCap(crop.serializeNBT()));
                 }
             });
-            if (cropPower <= 0 && !event.getWorld().isRemote && !player.isCreative()) {
+            if (cropPower <= 0 && !event.getWorld().isClientSide && !player.isCreative()) {
                 held.shrink(1);
             }
             recipe.setResult(event.getWorld(), event.getPos());
             event.setCanceled(true);
-            player.swingArm(event.getHand());
+            player.swing(event.getHand());
         }
     }
 
-    private static IMultiblockRecipe findRecipe(World world, BlockPos pos) {
+    private static IMultiblockRecipe findRecipe(World level, BlockPos pos) {
 
-        for (IRecipe<?> recipe : world.getRecipeManager().getRecipes()) {
-            if (recipe instanceof IMultiblockRecipe && ((IMultiblockRecipe)recipe).match(world, pos))
+        for (IRecipe<?> recipe : level.getRecipeManager().getRecipes()) {
+            if (recipe instanceof IMultiblockRecipe && ((IMultiblockRecipe)recipe).match(level, pos))
                 return ((IMultiblockRecipe) recipe);
         }
         return null;
@@ -218,33 +217,33 @@ public class UCEventHandlerCommon {
             ItemStack itemstack1 = itemstack.copy();
             ItemStack itemstack2 = input2;
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(itemstack1);
-            j = j + itemstack.getRepairCost() + (itemstack2.isEmpty() ? 0 : itemstack2.getRepairCost());
+            j = j + itemstack.getBaseRepairCost() + (itemstack2.isEmpty() ? 0 : itemstack2.getBaseRepairCost());
             materialCost = 0;
             boolean flag = false;
 
             if (!itemstack2.isEmpty()) {
                 flag = itemstack2.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(itemstack2).isEmpty();
-                if (itemstack1.isDamageable() && itemstack1.getItem().getIsRepairable(itemstack, itemstack2)) {
-                    int l2 = Math.min(itemstack1.getDamage(), itemstack1.getMaxDamage() / 4);
+                if (itemstack1.isDamageableItem() && itemstack1.getItem().isValidRepairItem(itemstack, itemstack2)) {
+                    int l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
                     if (l2 <= 0) {
                         return ItemStack.EMPTY;
                     }
                     int i3;
                     for(i3 = 0; l2 > 0 && i3 < itemstack2.getCount(); ++i3) {
-                        int j3 = itemstack1.getDamage() - l2;
-                        itemstack1.setDamage(j3);
+                        int j3 = itemstack1.getDamageValue() - l2;
+                        itemstack1.setDamageValue(j3);
                         ++i;
-                        l2 = Math.min(itemstack1.getDamage(), itemstack1.getMaxDamage() / 4);
+                        l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
                     }
 
                     materialCost = i3;
                 } else {
-                    if (!flag && (itemstack1.getItem() != itemstack2.getItem() || !itemstack1.isDamageable())) {
+                    if (!flag && (itemstack1.getItem() != itemstack2.getItem() || !itemstack1.isDamageableItem())) {
                         return ItemStack.EMPTY;
                     }
-                    if (itemstack1.isDamageable() && !flag) {
-                        int l = itemstack.getMaxDamage() - itemstack.getDamage();
-                        int i1 = itemstack2.getMaxDamage() - itemstack2.getDamage();
+                    if (itemstack1.isDamageableItem() && !flag) {
+                        int l = itemstack.getMaxDamage() - itemstack.getDamageValue();
+                        int i1 = itemstack2.getMaxDamage() - itemstack2.getDamageValue();
                         int j1 = i1 + itemstack1.getMaxDamage() * 12 / 100;
                         int k1 = l + j1;
                         int l1 = itemstack1.getMaxDamage() - k1;
@@ -252,8 +251,8 @@ public class UCEventHandlerCommon {
                             l1 = 0;
                         }
 
-                        if (l1 < itemstack1.getDamage()) {
-                            itemstack1.setDamage(l1);
+                        if (l1 < itemstack1.getDamageValue()) {
+                            itemstack1.setDamageValue(l1);
                             i += 2;
                         }
                     }
@@ -267,7 +266,7 @@ public class UCEventHandlerCommon {
                             int i2 = map.getOrDefault(enchantment1, 0);
                             int j2 = map1.get(enchantment1);
                             j2 = i2 == j2 ? j2 + 1 : Math.max(j2, i2);
-                            boolean flag1 = enchantment1.canApply(itemstack);
+                            boolean flag1 = enchantment1.canEnchant(itemstack);
                             if (itemstack.getItem() == Items.ENCHANTED_BOOK) {
                                 flag1 = true;
                             }
@@ -322,15 +321,15 @@ public class UCEventHandlerCommon {
             }
 
             if (StringUtils.isBlank(repairedItemName)) {
-                if (itemstack.hasDisplayName()) {
+                if (itemstack.hasCustomHoverName()) {
                     k = 1;
                     i += k;
-                    itemstack1.clearCustomName();
+                    itemstack1.resetHoverName();
                 }
             } else if (!repairedItemName.equals(itemstack.getDisplayName().getString())) {
                 k = 1;
                 i += k;
-                itemstack1.setDisplayName(new StringTextComponent(repairedItemName));
+                itemstack1.setHoverName(new StringTextComponent(repairedItemName));
             }
             if (flag && !itemstack1.isBookEnchantable(itemstack2)) itemstack1 = ItemStack.EMPTY;
 
@@ -348,9 +347,9 @@ public class UCEventHandlerCommon {
             }
 
             if (!itemstack1.isEmpty()) {
-                int k2 = itemstack1.getRepairCost();
-                if (!itemstack2.isEmpty() && k2 < itemstack2.getRepairCost()) {
-                    k2 = itemstack2.getRepairCost();
+                int k2 = itemstack1.getBaseRepairCost();
+                if (!itemstack2.isEmpty() && k2 < itemstack2.getBaseRepairCost()) {
+                    k2 = itemstack2.getBaseRepairCost();
                 }
 
                 if (k != i || k == 0) {

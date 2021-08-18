@@ -13,7 +13,7 @@ public class EnchantedLeatherItem extends ItemBaseUC {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
 
         return true;
     }

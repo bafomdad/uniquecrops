@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 public class Exedo extends BaseSuperCropsBlock {
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
 
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }

@@ -53,8 +53,8 @@ public class UCUtils {
 
         if (uuid != null) {
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-            for (ServerWorld ws : server.getWorlds()) {
-                Entity entity = ws.func_242105_c(uuid);
+            for (ServerWorld ws : server.getAllLevels()) {
+                Entity entity = ws.getEntity(uuid);
                 if (entity instanceof LivingEntity && entity.isAlive())
                     return (LivingEntity)entity;
             }
@@ -65,12 +65,12 @@ public class UCUtils {
     public static void serializeArray(PacketBuffer buf, String[] str) {
 
         String serialize = Arrays.stream(str).map(s -> s.replace(",", "\\,")).collect(Collectors.joining(","));
-        buf.writeString(serialize);
+        buf.writeUtf(serialize);
     }
 
     public static String[] deserializeString(PacketBuffer buf) {
 
-        String[] deserialize = Pattern.compile("(?<!\\\\),").splitAsStream(buf.readString()).map(s -> s.replace("\\,", ",")).toArray(String[]::new);
+        String[] deserialize = Pattern.compile("(?<!\\\\),").splitAsStream(buf.readUtf()).map(s -> s.replace("\\,", ",")).toArray(String[]::new);
         return deserialize;
     }
 
@@ -91,7 +91,7 @@ public class UCUtils {
         ListNBT list = new ListNBT();
         recipe.forEach((key, value) -> {
             CompoundNBT charTag = new CompoundNBT();
-            int[] states = value.states.stream().mapToInt(Block::getStateId).toArray();
+            int[] states = value.states.stream().mapToInt(Block::getId).toArray();
             charTag.putIntArray(key.toString(), states);
             list.add(charTag);
         });
@@ -106,8 +106,8 @@ public class UCUtils {
             ListNBT list = nbt.getList(name, 10);
             for (int i = 0; i < list.size(); i++) {
                 CompoundNBT tag = list.getCompound(i);
-                for (String str : tag.keySet()) {
-                    BlockState[] states = Arrays.stream(tag.getIntArray(str)).mapToObj(Block::getStateById).toArray(BlockState[]::new);
+                for (String str : tag.getAllKeys()) {
+                    BlockState[] states = Arrays.stream(tag.getIntArray(str)).mapToObj(Block::stateById).toArray(BlockState[]::new);
                     RecipeMultiblock.Slot slot = new RecipeMultiblock.Slot(states);
                     map.put(str.charAt(0), slot);
                 }
@@ -119,9 +119,9 @@ public class UCUtils {
     public static TileEntity getClosestTile(Class tileToFind, World world, BlockPos pos, double dist) {
 
         TileEntity closest = null;
-        for (TileEntity tile : world.loadedTileEntityList) {
-            if (tile.getClass() == tileToFind && !pos.equals(tile.getPos())) {
-                double distance = tile.getPos().distanceSq(pos);
+        for (TileEntity tile : world.blockEntityList) {
+            if (tile.getClass() == tileToFind && !pos.equals(tile.getBlockPos())) {
+                double distance = tile.getBlockPos().distSqr(pos);
                 if (distance <= dist) {
                     closest = tile;
                     break;
@@ -147,29 +147,29 @@ public class UCUtils {
 
         Inventory inv = new Inventory(stacks.size()) {
             @Override
-            public int getInventoryStackLimit() {
+            public int getMaxStackSize() {
 
                 return 1;
             }
         };
         for (int i = 0; i < stacks.size(); i++)
-            inv.setInventorySlotContents(i, stacks.get(i));
+            inv.setItem(i, stacks.get(i));
 
         return inv;
     }
 
     public static void drawSplitString(MatrixStack ms, FontRenderer font, ITextComponent text, float x, float y, int wordWrap, int color) {
 
-        for (IReorderingProcessor proc : font.trimStringToWidth(text, wordWrap)) {
-            font.func_238407_a_(ms, proc, x, y, color);
-            y += font.FONT_HEIGHT;
+        for (IReorderingProcessor proc : font.split(text, wordWrap)) {
+            font.drawShadow(ms, proc, x, y, color);
+            y += font.lineHeight;
         }
     }
 
     public static void generateSteps(PlayerEntity player) {
 
         CompoundNBT tag = player.getPersistentData();
-        if (UCConfig.COMMON.selfSacrifice.get() && player.getEntityWorld().rand.nextInt(200) == 0) {
+        if (UCConfig.COMMON.selfSacrifice.get() && player.getCommandSenderWorld().random.nextInt(200) == 0) {
             if (tag.contains(UCStrings.TAG_GROWTHSTAGES))
                 tag.remove(UCStrings.TAG_GROWTHSTAGES);
 
@@ -197,13 +197,13 @@ public class UCUtils {
 
     public static boolean setBiome(ResourceLocation biomeId, World world, BlockPos pos) {
 
-        if (world.isRemote) return false;
+        if (world.isClientSide) return false;
 
         final int WIDTH_BITS = (int) Math.round(Math.log(16.0D) / Math.log(2.0D)) - 2;
         final int HEIGHT_BITS = (int) Math.round(Math.log(256.0D) / Math.log(2.0D)) - 2;
         final int HORIZONTAL_MASK = (1 << WIDTH_BITS) - 1;
         final int VERTICAL_MASK = (1 << HEIGHT_BITS) - 1;
-        Biome biome = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getOrDefault(biomeId);
+        Biome biome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).get(biomeId);
         Chunk chunkAt = world.getChunk(pos.getX() >> 4, pos.getZ() >> 4);
 
         int x = (pos.getX() >> 2) & HORIZONTAL_MASK;
@@ -225,7 +225,7 @@ public class UCUtils {
     public static <T extends IRecipe<C>, C extends IInventory> Collection<T> loadType(IRecipeType<T> type) {
 
         Minecraft mc = Minecraft.getInstance();
-        return (Collection<T>)((AccessorRecipeManager)mc.world.getRecipeManager()).uc_getRecipes(type).values();
+        return (Collection<T>)((AccessorRecipeManager)mc.level.getRecipeManager()).uc_getRecipes(type).values();
     }
 
     public static <E> List<E> makeCollection(Iterable<E> iter, boolean shuffle) {

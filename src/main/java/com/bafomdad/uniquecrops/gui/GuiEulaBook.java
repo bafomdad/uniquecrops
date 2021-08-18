@@ -37,7 +37,7 @@ public class GuiEulaBook extends Screen {
         int l = (this.height - this.HEIGHT) / 2;
         this.buttons.add(this.next = new GuiButtonPageChange(k + WIDTH - 26, l + 210, false, (button) -> { this.pageIndex++; }));
         this.buttons.add(this.prev = new GuiButtonPageChange(k + 10, l + 210, true, (button) -> { --this.pageIndex; }));
-        this.buttons.add(this.agree = new GuiButtonEula(k + 65, l + 210, true, (button) -> { minecraft.displayGuiScreen(null); }));
+        this.buttons.add(this.agree = new GuiButtonEula(k + 65, l + 210, true, (button) -> { minecraft.setScreen(null); }));
         this.buttons.add(this.disagree = new GuiButtonEula(k + 95, l + 210, false, (button) -> { this.pageIndex = 0; }));
         updateButtons();
     }
@@ -55,14 +55,14 @@ public class GuiEulaBook extends Screen {
 
         this.renderBackground(ms);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        ms.push();
-        minecraft.textureManager.bindTexture(RES);
+        ms.pushPose();
+        minecraft.textureManager.bind(RES);
         int k = (this.width - this.WIDTH) / 2;
         int b0 = (this.height - this.HEIGHT) / 2;
         blit(ms, k, b0, 0, 0, WIDTH, HEIGHT);
         ITextComponent text = new TranslationTextComponent(UniqueCrops.MOD_ID + ".eula.text" + pageIndex);
         UCUtils.drawSplitString(ms, font, text, k + 25, b0 + 15, WORDWRAP, TextFormatting.GRAY.getColor());
-        ms.pop();
+        ms.popPose();
         super.render(ms, mouseX, mouseY, partialTicks);
     }
 
@@ -109,7 +109,7 @@ public class GuiEulaBook extends Screen {
             if (visible) {
                 boolean mouseOver = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                minecraft.textureManager.bindTexture(RES);
+                minecraft.textureManager.bind(RES);
                 int u = 175;
                 int v = 34;
 
@@ -137,7 +137,7 @@ public class GuiEulaBook extends Screen {
             if (visible) {
                 boolean mouseOver = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                minecraft.textureManager.bindTexture(RES);
+                minecraft.textureManager.bind(RES);
                 int u = 175;
                 int v = 0;
 

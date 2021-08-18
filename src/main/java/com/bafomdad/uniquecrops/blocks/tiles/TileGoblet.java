@@ -40,7 +40,7 @@ public class TileGoblet extends BaseTileUC {
 
         if (entityId != null) {
             entityId = null;
-            world.setBlockState(pos, UCBlocks.GOBLET.get().getDefaultState().with(GobletBlock.FILLED, false), 3);
+            level.setBlock(worldPosition, UCBlocks.GOBLET.get().defaultBlockState().setValue(GobletBlock.FILLED, false), 3);
         }
     }
 }

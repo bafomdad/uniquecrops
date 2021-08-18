@@ -17,11 +17,11 @@ public class UCScreens {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, UniqueCrops.MOD_ID);
 
     public static final RegistryObject<ContainerType<ContainerBarrel>> BARREL = register("abstract_barrel", (IContainerFactory<ContainerBarrel>)(windowId, inventory, data) -> {
-        TileBarrel te = (TileBarrel)inventory.player.world.getTileEntity(data.readBlockPos());
+        TileBarrel te = (TileBarrel)inventory.player.level.getBlockEntity(data.readBlockPos());
         return new ContainerBarrel(windowId, inventory, te);
     });
     public static final RegistryObject<ContainerType<ContainerCraftyPlant>> CRAFTYPLANT = register("crafty_plant", (IContainerFactory<ContainerCraftyPlant>)(windowId, inventory, data) -> {
-        TileCraftyPlant te = (TileCraftyPlant)inventory.player.world.getTileEntity(data.readBlockPos());
+        TileCraftyPlant te = (TileCraftyPlant)inventory.player.level.getBlockEntity(data.readBlockPos());
         return new ContainerCraftyPlant(windowId, inventory, te);
     });
 

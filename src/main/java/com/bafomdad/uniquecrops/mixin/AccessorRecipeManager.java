@@ -13,6 +13,6 @@ import java.util.Map;
 @Mixin(RecipeManager.class)
 public interface AccessorRecipeManager {
 
-    @Invoker("getRecipes")
+    @Invoker("byType")
     <C extends IInventory, T extends IRecipe<C>> Map<ResourceLocation, IRecipe<C>> uc_getRecipes(IRecipeType<T> type);
 }

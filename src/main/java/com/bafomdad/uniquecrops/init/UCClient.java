@@ -57,22 +57,22 @@ public class UCClient {
     private static void registerRenderTypes() {
 
         for (Block block : UCBlocks.CROPS)
-            RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+            RenderTypeLookup.setRenderLayer(block, RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(UCBlocks.INVISIBILIA_GLASS.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.HOURGLASS.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.FLYWOOD_SAPLING.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_ENDER.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_ICE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_JUNGLE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_LAVA.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.SUN_BLOCK.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.DEMO_CORD.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.ITERO.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.FLYWOOD_TRAPDOOR.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(UCBlocks.ROSEWOOD_TRAPDOOR.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.INVISIBILIA_GLASS.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.HOURGLASS.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.FLYWOOD_SAPLING.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_ENDER.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_ICE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_JUNGLE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.LILY_LAVA.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.SUN_BLOCK.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.DEMO_CORD.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.ITERO.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.FLYWOOD_TRAPDOOR.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(UCBlocks.ROSEWOOD_TRAPDOOR.get(), RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(UCBlocks.CROP_PORTAL.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(UCBlocks.CROP_PORTAL.get(), RenderType.translucent());
     }
 
     private static void registerTileRenderers() {
@@ -90,8 +90,8 @@ public class UCClient {
 
     private static void registerScreens() {
 
-        ScreenManager.registerFactory(UCScreens.BARREL.get(), GuiBarrel::new);
-        ScreenManager.registerFactory(UCScreens.CRAFTYPLANT.get(), GuiCraftyPlant::new);
+        ScreenManager.register(UCScreens.BARREL.get(), GuiBarrel::new);
+        ScreenManager.register(UCScreens.CRAFTYPLANT.get(), GuiCraftyPlant::new);
     }
 
     private static void registerEntityRenderer() {
@@ -105,7 +105,7 @@ public class UCClient {
 
     private static void registerLayerRenderer() {
 
-        Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
+        Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         PlayerRenderer render;
         render = skinMap.get("default");
         render.addLayer(new RenderLayerPants(render));
@@ -116,7 +116,7 @@ public class UCClient {
 
     private static void registerKeys() {
 
-        PIXEL_GLASSES = new KeyBinding("key.uniquecrops.pixelglasses", KeyConflictContext.IN_GAME, InputMappings.getInputByCode(GLFW.GLFW_KEY_V, 0), "Unique Crops");
+        PIXEL_GLASSES = new KeyBinding("key.uniquecrops.pixelglasses", KeyConflictContext.IN_GAME, InputMappings.getKey(GLFW.GLFW_KEY_V, 0), "Unique Crops");
         ClientRegistry.registerKeyBinding(UCClient.PIXEL_GLASSES);
     }
 
@@ -125,12 +125,12 @@ public class UCClient {
         registerPropertyGetter(UCItems.DIAMONDS.get(), new ResourceLocation(UniqueCrops.MOD_ID, "diamonds"),
                 (stack, world, entity) -> NBTUtils.getInt(stack, UCStrings.TAG_DIAMONDS, 0));
         registerPropertyGetter(UCItems.IMPACT_SHIELD.get(), new ResourceLocation(UniqueCrops.MOD_ID, "blocking"),
-                (stack, world, entity) -> (entity != null && entity.getActiveItemStack() == stack) ? 1.0F : 0.0F);
+                (stack, world, entity) -> (entity != null && entity.getUseItem() == stack) ? 1.0F : 0.0F);
     }
 
     private static void registerPropertyGetter(IItemProvider item, ResourceLocation id, IItemPropertyGetter prop) {
 
-        ItemModelsProperties.registerProperty(item.asItem(), id, prop);
+        ItemModelsProperties.register(item.asItem(), id, prop);
     }
 
     private static void registerColorHandler() {

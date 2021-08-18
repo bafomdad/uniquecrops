@@ -32,7 +32,7 @@ public class EmblemIronStomach extends ItemCurioUC {
 
         if (STRANGE_FOODS.isEmpty()) return false;
         for (Map.Entry<ITag<Item>, Food> tag : STRANGE_FOODS.entrySet()) {
-            if (item.isIn(tag.getKey())) return true;
+            if (item.is(tag.getKey())) return true;
         }
         return false;
     }
@@ -41,7 +41,7 @@ public class EmblemIronStomach extends ItemCurioUC {
 
         if (STRANGE_FOODS.isEmpty()) return null;
         for (Map.Entry<ITag<Item>, Food> tag : STRANGE_FOODS.entrySet()) {
-            if (item.isIn(tag.getKey())) return tag.getValue();
+            if (item.is(tag.getKey())) return tag.getValue();
         }
         return null;
     }

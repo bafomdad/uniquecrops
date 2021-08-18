@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class EmblemBookworm extends ItemCurioUC {
 
-    public static boolean isFood(Item item) {
+    public static boolean isEdible(Item item) {
 
         return item == Items.ENCHANTED_BOOK;
     }
@@ -36,7 +36,7 @@ public class EmblemBookworm extends ItemCurioUC {
                 }
             }
         }
-        return new Food.Builder().hunger(hunger).saturation(saturation).build();
+        return new Food.Builder().nutrition(hunger).saturationMod(saturation).build();
     }
 
     public static boolean isEquipped(LivingEntity living) {

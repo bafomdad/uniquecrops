@@ -32,7 +32,7 @@ public class JsonUtils {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
 
     /**
-     * Reads a {@link T} back from the given file. If the file does not exist, a new file will be generated with the
+     * Reads a {@link T} back from the given file. If the file does not exist, a new file will be generated setValue the
      * provided default and the default will be returned.
      *
      * @param token The token type to use for deserialization.
@@ -87,7 +87,7 @@ public class JsonUtils {
 
     /**
      * Converts a {@link T} to JSON and writes it to file. If the file does not exist, a new one is created. If the file
-     * does exist, the contents are overwritten with the new value.
+     * does exist, the contents are overwritten setValue the new value.
      *
      * @param type The object to write to JSON.
      * @param token The token type to use for serialization.
@@ -124,7 +124,7 @@ public class JsonUtils {
 
     public static JsonObject serializeStack(ItemStack stack) {
 
-        CompoundNBT nbt = stack.write(new CompoundNBT());
+        CompoundNBT nbt = stack.save(new CompoundNBT());
         byte c = nbt.getByte("Count");
         if (c != 1)
             nbt.putByte("count", c);
@@ -151,7 +151,7 @@ public class JsonUtils {
         JsonUtils.renameTag(nbt, "name", "Name");
         JsonUtils.renameTag(nbt, "properties", "Properties");
         String name = nbt.getString("Name");
-        ResourceLocation id = ResourceLocation.tryCreate(name);
+        ResourceLocation id = ResourceLocation.tryParse(name);
         if (id == null || !ForgeRegistries.BLOCKS.containsKey(id))
             throw new IllegalArgumentException("Invalid or unknown block ID: " + name);
 

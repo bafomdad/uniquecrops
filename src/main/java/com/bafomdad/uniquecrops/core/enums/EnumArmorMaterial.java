@@ -14,13 +14,13 @@ import java.util.function.Supplier;
 
 public enum EnumArmorMaterial implements IArmorMaterial {
 
-    GLASSES_3D("3dglasses", 18, new int[] { 0, 0, 0, 0}, 10, () -> SoundEvents.ITEM_ARMOR_EQUIP_IRON, () -> Items.AIR, 0F),
+    GLASSES_3D("3dglasses", 18, new int[] { 0, 0, 0, 0}, 10, () -> SoundEvents.ARMOR_EQUIP_IRON, () -> Items.AIR, 0F),
     GLASSES_PIXELS("pixelglasses", GLASSES_3D),
-    PONCHO("poncho", 8, new int[] { 1, 2, 1, 1 }, 0, () -> SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, UCItems.INVISIFEATHER, 0F),
-    SLIPPERS("slippers", 8, new int[] { 1, 1, 1, 1 }, 0, () -> SoundEvents.ITEM_ARMOR_EQUIP_GOLD, UCItems.SLIPPERGLASS, 0F),
-    CACTUS("cactus", 13, new int[] { 1, 4, 5, 2}, 8, () -> SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Item.getItemFromBlock(Blocks.CACTUS), 0F),
-    THUNDERPANTZ("thunderpantz", 15, new int[] { 1, 4, 5, 2}, 6, () -> SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Items.AIR, 0F),
-    BOOTS_LEAGUE("bootsleague", 18, new int[] { 0, 0, 0, 0}, 1, () -> SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Items.AIR, 0F);
+    PONCHO("poncho", 8, new int[] { 1, 2, 1, 1 }, 0, () -> SoundEvents.ARMOR_EQUIP_LEATHER, UCItems.INVISIFEATHER, 0F),
+    SLIPPERS("slippers", 8, new int[] { 1, 1, 1, 1 }, 0, () -> SoundEvents.ARMOR_EQUIP_GOLD, UCItems.SLIPPERGLASS, 0F),
+    CACTUS("cactus", 13, new int[] { 1, 4, 5, 2}, 8, () -> SoundEvents.ARMOR_EQUIP_LEATHER, () -> Item.byBlock(Blocks.CACTUS), 0F),
+    THUNDERPANTZ("thunderpantz", 15, new int[] { 1, 4, 5, 2}, 6, () -> SoundEvents.ARMOR_EQUIP_LEATHER, () -> Items.AIR, 0F),
+    BOOTS_LEAGUE("bootsleague", 18, new int[] { 0, 0, 0, 0}, 1, () -> SoundEvents.ARMOR_EQUIP_LEATHER, () -> Items.AIR, 0F);
 
     private final String name;
     private final int durabilityMultiplier;
@@ -54,33 +54,33 @@ public enum EnumArmorMaterial implements IArmorMaterial {
     }
 
     @Override
-    public int getDurability(EquipmentSlotType slot) {
+    public int getDurabilityForSlot(EquipmentSlotType slot) {
 
         return durabilityMultiplier * MAX_DAMAGE_ARRAY[slot.getIndex()];
     }
 
     @Override
-    public int getDamageReductionAmount(EquipmentSlotType slot) {
+    public int getDefenseForSlot(EquipmentSlotType slot) {
 
         return damageReduction[slot.getIndex()];
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
 
         return enchantability;
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
+    public SoundEvent getEquipSound() {
 
         return equipSound.get();
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
+    public Ingredient getRepairIngredient() {
 
-        return Ingredient.fromItems(repairItem.get());
+        return Ingredient.of(repairItem.get());
     }
 
     @Override

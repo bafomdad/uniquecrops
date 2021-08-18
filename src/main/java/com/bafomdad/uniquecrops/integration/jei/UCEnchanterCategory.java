@@ -47,7 +47,7 @@ public class UCEnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
     @Override
     public String getTitle() {
 
-        return I18n.format("container.jei.uniquecrops.enchanter");
+        return I18n.get("container.jei.uniquecrops.enchanter");
     }
 
     @Override
@@ -65,13 +65,13 @@ public class UCEnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
     @Override
     public void draw(IEnchanterRecipe recipe, MatrixStack ms, double mouseX, double mouseY) {
 
-        final String text = I18n.format(recipe.getEnchantment().getName()) + " " + recipe.getEnchantment().getMaxLevel();
+        final String text = I18n.get(recipe.getEnchantment().getDescriptionId()) + " " + recipe.getEnchantment().getMaxLevel();
         Minecraft minecraft = Minecraft.getInstance();
-        int stringWidth = minecraft.fontRenderer.getStringWidth(text);
-        minecraft.fontRenderer.drawString(ms, text, 50 - stringWidth / 2, -20, 0x555555);
+        int stringWidth = minecraft.font.width(text);
+        minecraft.font.draw(ms, text, 50 - stringWidth / 2, -20, 0x555555);
         final String cost = "Cost: " + recipe.getCost();
-        int costWidth = minecraft.fontRenderer.getStringWidth(cost);
-        minecraft.fontRenderer.drawString(ms, cost, 50 - costWidth / 2, 95, 0x555555);
+        int costWidth = minecraft.font.width(cost);
+        minecraft.font.draw(ms, cost, 50 - costWidth / 2, 95, 0x555555);
     }
 
     @Override
@@ -79,10 +79,10 @@ public class UCEnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
 
         List<List<ItemStack>> list = new ArrayList<>();
         for (Ingredient ingr : recipe.getIngredients()) {
-            list.add(Arrays.asList(ingr.getMatchingStacks()));
+            list.add(Arrays.asList(ingr.getItems()));
         }
         ingredients.setInputLists(VanillaTypes.ITEM, list);
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override

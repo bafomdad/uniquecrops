@@ -15,7 +15,7 @@ public class CropProcessor implements IComponentProcessor {
     public void setup(IVariableProvider var) {
 
         if (!var.has("blockstate")) {
-            state = Blocks.AIR.getDefaultState();
+            state = Blocks.AIR.defaultBlockState();
             return;
         }
         state = PatchouliUtils.deserialize(var.get("blockstate").asString());

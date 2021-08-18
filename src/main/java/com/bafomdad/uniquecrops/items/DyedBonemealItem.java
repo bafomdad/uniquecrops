@@ -9,14 +9,14 @@ import net.minecraft.util.ActionResultType;
 public class DyedBonemealItem extends ItemBaseUC {
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext ctx) {
+    public ActionResultType useOn(ItemUseContext ctx) {
 
-        ItemStack stack = ctx.getPlayer().getHeldItem(ctx.getHand());
-        if (!ctx.getPlayer().canPlayerEdit(ctx.getPos(), ctx.getFace(), stack)) return ActionResultType.FAIL;
+        ItemStack stack = ctx.getPlayer().getItemInHand(ctx.getHand());
+        if (!ctx.getPlayer().mayUseItemAt(ctx.getClickedPos(), ctx.getClickedFace(), stack)) return ActionResultType.FAIL;
 
-        if (BoneMealItem.applyBonemeal(stack, ctx.getWorld(), ctx.getPos(), ctx.getPlayer())) {
-            if (!ctx.getWorld().isRemote)
-                ctx.getWorld().playEvent(2005, ctx.getPos(), 0);
+        if (BoneMealItem.applyBonemeal(stack, ctx.getLevel(), ctx.getClickedPos(), ctx.getPlayer())) {
+            if (!ctx.getLevel().isClientSide)
+                ctx.getLevel().levelEvent(2005, ctx.getClickedPos(), 0);
         }
         return ActionResultType.SUCCESS;
     }

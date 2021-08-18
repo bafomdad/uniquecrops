@@ -33,9 +33,9 @@ public class MaryJane extends BaseCropsBlock {
         if (isMaxAge(state)) {
             if (player == null) return false;
 
-            if (!player.isCreative() && (player.isBurning() && player.isImmuneToFire()) || !player.isBurning()) {
-                world.setBlockState(pos.down(), Blocks.DIRT.getDefaultState(), 2);
-                world.setBlockState(pos, Blocks.FIRE.getDefaultState(), 2);
+            if (!player.isCreative() && (player.isOnFire() && player.fireImmune()) || !player.isOnFire()) {
+                world.setBlock(pos.below(), Blocks.DIRT.defaultBlockState(), 2);
+                world.setBlock(pos, Blocks.FIRE.defaultBlockState(), 2);
                 return false;
             }
         }
@@ -43,13 +43,13 @@ public class MaryJane extends BaseCropsBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (isMaxAge(state)) return ActionResultType.PASS;
 
-        if (player.getHeldItem(hand).getItem() == Items.BLAZE_POWDER) {
-            if (!world.isRemote) {
-                this.grow((ServerWorld)world, world.rand, pos, state);
+        if (player.getItemInHand(hand).getItem() == Items.BLAZE_POWDER) {
+            if (!world.isClientSide) {
+                this.performBonemeal((ServerWorld)world, world.random, pos, state);
             }
             return ActionResultType.SUCCESS;
         }
@@ -57,9 +57,9 @@ public class MaryJane extends BaseCropsBlock {
     }
 
     @Override
-    public boolean canUseBonemeal(World world, Random random, BlockPos blockPos, BlockState blockState) {
+    public boolean isBonemealSuccess(World world, Random random, BlockPos blockPos, BlockState blockState) {
 
-        return world.getDimensionType().isUltrawarm();
+        return world.dimensionType().ultraWarm();
     }
 
     @Override

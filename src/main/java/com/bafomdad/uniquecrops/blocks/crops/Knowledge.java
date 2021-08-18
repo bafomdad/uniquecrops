@@ -47,30 +47,30 @@ public class Knowledge extends BaseCropsBlock {
             super.randomTick(state, world, pos, rand);
             return;
         }
-        if (!this.isMaxAge(state) || world.isRemote) return;
+        if (!this.isMaxAge(state) || world.isClientSide) return;
 
         int growStages = consumeKnowledge(world, pos);
         if (growStages > 0)
-            world.setBlockState(pos, this.withAge(Math.min(getAge(state) + growStages, getMaxAge())), 2);
+            world.setBlock(pos, this.setValueAge(Math.min(getAge(state) + growStages, getMaxAge())), 2);
     }
 
     private int consumeKnowledge(World world, BlockPos pos) {
 
         AtomicInteger result = new AtomicInteger();
-        Iterable<BlockPos> getBox = BlockPos.getAllInBoxMutable(pos.add(-4, -2, -4), pos.add(4, 2, 4));
+        Iterable<BlockPos> getBox = BlockPos.betweenClosed(pos.offset(-4, -2, -4), pos.offset(4, 2, 4));
         Iterator it = getBox.iterator();
         while (it.hasNext()) {
             BlockPos posit = (BlockPos)it.next();
             BlockState loopState = world.getBlockState(posit);
             if (loopState.getBlock().getEnchantPowerBonus(loopState, world, posit) >= 1F) {
-                TileEntity te = world.getTileEntity(posit.up());
+                TileEntity te = world.getBlockEntity(posit.above());
                 if (te != null && te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).isPresent()) {
                     te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(cap -> {
                         for (int i = 0; i < cap.getSlots(); i++) {
                             ItemStack book = cap.getStackInSlot(i);
                             if (!book.isEmpty() && book.getItem() == Items.WRITTEN_BOOK) {
                                 CompoundNBT tag = book.getTag();
-                                if (WrittenBookItem.validBookTagContents(tag) && !NBTUtils.getBoolean(book, BOOKMARK, false) && WrittenBookItem.getGeneration(book) == 0) {
+                                if (WrittenBookItem.makeSureTagIsValid(tag) && !NBTUtils.getBoolean(book, BOOKMARK, false) && WrittenBookItem.getGeneration(book) == 0) {
 
 //                                    int result = 0;
                                     ListNBT tagList = tag.getList("pages", 8);
@@ -78,13 +78,13 @@ public class Knowledge extends BaseCropsBlock {
                                         String str = tagList.getString(j);
                                         ITextComponent text;
                                         try {
-                                            text = ITextComponent.Serializer.getComponentFromJsonLenient(str);
+                                            text = ITextComponent.Serializer.fromJsonLenient(str);
 
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             text = new StringTextComponent(str);
                                         }
-                                        String newString = eatSomeVowels(text.getUnformattedComponentText());
+                                        String newString = eatSomeVowels(text.getContents());
                                         ITextComponent newComponent = new StringTextComponent(newString);
                                         tagList.set(j, StringNBT.valueOf(ITextComponent.Serializer.toJson(newComponent)));
                                         result.set(j + 1);

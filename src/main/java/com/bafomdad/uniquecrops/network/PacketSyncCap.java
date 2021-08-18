@@ -21,12 +21,12 @@ public class PacketSyncCap {
 
     public static void encode(PacketSyncCap msg, PacketBuffer buf) {
 
-        buf.writeCompoundTag(msg.tag);
+        buf.writeNbt(msg.tag);
     }
 
     public static PacketSyncCap decode(PacketBuffer buf) {
 
-        return new PacketSyncCap(buf.readCompoundTag());
+        return new PacketSyncCap(buf.readNbt());
     }
 
     public static void handle(PacketSyncCap msg, Supplier<NetworkEvent.Context> ctx) {
@@ -34,7 +34,7 @@ public class PacketSyncCap {
         if (ctx.get().getDirection().getReceptionSide().isClient()) {
             ctx.get().enqueueWork(() -> {
                 PlayerEntity player = UniqueCrops.proxy.getPlayer();
-                player.getHeldItemMainhand().getCapability(CPProvider.CROP_POWER, null).ifPresent(crop ->
+                player.getMainHandItem().getCapability(CPProvider.CROP_POWER, null).ifPresent(crop ->
                         crop.deserializeNBT(msg.tag));
             });
         }

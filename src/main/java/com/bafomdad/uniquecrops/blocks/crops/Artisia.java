@@ -28,35 +28,35 @@ public class Artisia extends BaseCropsBlock {
 
     public Artisia() {
 
-        super(() -> Item.getItemFromBlock(Blocks.CRAFTING_TABLE), UCItems.ARTISIA_SEED);
+        super(() -> Item.byBlock(Blocks.CRAFTING_TABLE), UCItems.ARTISIA_SEED);
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
         super.randomTick(state, world, pos, rand);
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getBlockEntity(pos);
         if (te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ZERO))
             ((TileArtisia)te).findCore();
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
-        super.grow(world, rand, pos, state);
-        if (!world.isRemote) {
-            TileEntity te = world.getTileEntity(pos);
+        super.performBonemeal(world, rand, pos, state);
+        if (!world.isClientSide) {
+            TileEntity te = world.getBlockEntity(pos);
             if (te instanceof TileArtisia && ((TileArtisia)te).core.equals(BlockPos.ZERO))
                 ((TileArtisia)te).findCore();
         }
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (!this.isMaxAge(state)) return ActionResultType.PASS;
 
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getBlockEntity(pos);
         if (te instanceof TileArtisia && hand == Hand.MAIN_HAND) {
             ItemStack tileStack = ((TileArtisia)te).getItem().copy();
             ((TileArtisia)te).setItem(ItemStack.EMPTY);
@@ -69,11 +69,11 @@ public class Artisia extends BaseCropsBlock {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (!(entity instanceof ItemEntity) || !isMaxAge(state)) return;
 
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getBlockEntity(pos);
         if (te instanceof TileArtisia) {
             if (!((TileArtisia)te).isCore()) return;
             if (!((TileArtisia)te).getItem().isEmpty()) return;
@@ -83,14 +83,14 @@ public class Artisia extends BaseCropsBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
-        if (!state.isIn(newState.getBlock())) {
-            TileEntity tileentity = world.getTileEntity(pos);
+        if (!state.is(newState.getBlock())) {
+            TileEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof TileArtisia) {
-                InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, ((TileArtisia)tileentity).getItem());
+                InventoryHelper.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, ((TileArtisia)tileentity).getItem());
             }
-            super.onReplaced(state, world, pos, newState, isMoving);
+            super.onRemove(state, world, pos, newState, isMoving);
         }
     }
 

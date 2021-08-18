@@ -51,10 +51,10 @@ public class UCEventHandlerClient {
     @SubscribeEvent
     public static void handleKeyPressed(InputEvent.KeyInputEvent event) {
 
-        if (UCClient.PIXEL_GLASSES.isPressed()) {
+        if (UCClient.PIXEL_GLASSES.consumeClick()) {
             PlayerEntity player = Minecraft.getInstance().player;
             if (player == null) return;
-            if (player.inventory.armorItemInSlot(3).getItem() != UCItems.GLASSES_PIXELS.get()) return;
+            if (player.inventory.getArmor(3).getItem() != UCItems.GLASSES_PIXELS.get()) return;
 
             UCPacketHandler.INSTANCE.sendToServer(new PacketSendKey());
         }
@@ -63,15 +63,15 @@ public class UCEventHandlerClient {
     @SubscribeEvent
     public static void onPlaySound(PlaySoundEvent event) {
 
-        if (event.getSound() == null || event.getSound().getCategory() == null) return;
+        if (event.getSound() == null || event.getSound().getSource() == null) return;
 
-        if (event.getSound().getSoundLocation().getPath().equals("entity.player.hurt")) {
+        if (event.getSound().getLocation().getPath().equals("entity.player.hurt")) {
             Minecraft mc = Minecraft.getInstance();
             if (mc.player != null) {
-                boolean flag = mc.player.inventory.hasItemStack(new ItemStack(UCBlocks.HOURGLASS.get()));
+                boolean flag = mc.player.inventory.contains(new ItemStack(UCBlocks.HOURGLASS.get()));
                 if (flag) {
                     event.setResultSound(null);
-                    mc.world.playSound(mc.player, mc.player.getPosition(), UCSounds.OOF.get(), SoundCategory.PLAYERS, 1F, 1F);
+                    mc.level.playSound(mc.player, mc.player.blockPosition(), UCSounds.OOF.get(), SoundCategory.PLAYERS, 1F, 1F);
                 }
             }
         }
@@ -96,48 +96,48 @@ public class UCEventHandlerClient {
         Minecraft mc = Minecraft.getInstance();
         PlayerEntity player = mc.player;
 
-        ItemStack glasses = player.inventory.armorItemInSlot(3);
+        ItemStack glasses = player.inventory.getArmor(3);
         if (glasses.getItem() == UCItems.GLASSES_PIXELS.get()) {
             boolean flag = NBTUtils.getBoolean(glasses, "isActive", false);
             boolean flag2 = ((IBookUpgradeable)glasses.getItem()).isMaxLevel(glasses);
             if (flag)
-                mc.gameRenderer.loadShader(BITS);
-            else if (!flag && mc.gameRenderer.getShaderGroup() != null && mc.gameRenderer.getShaderGroup().getShaderGroupName().equals(BITS.toString()))
-                mc.gameRenderer.stopUseShader();
+                mc.gameRenderer.loadEffect(BITS);
+            else if (!flag && mc.gameRenderer.currentEffect() != null && mc.gameRenderer.currentEffect().getName().equals(BITS.toString()))
+                mc.gameRenderer.shutdownEffect();
             if (flag && flag2) {
                 MatrixStack ms = event.getMatrixStack();
-                ms.push();
+                ms.pushPose();
                 RenderSystem.pushLightingAttributes();
                 RenderSystem.disableDepthTest();
                 RenderSystem.disableBlend();
 
-                BlockPos pos = BlockPos.fromLong(NBTUtils.getLong(glasses, "orePos", BlockPos.ZERO.toLong()));
+                BlockPos pos = BlockPos.of(NBTUtils.getLong(glasses, "orePos", BlockPos.ZERO.asLong()));
                 if (!pos.equals(BlockPos.ZERO)) {
                     renderOres(pos, mc, ms);
                 }
                 RenderSystem.enableDepthTest();
                 RenderSystem.disableBlend();
                 RenderSystem.popAttributes();
-                ms.pop();
+                ms.popPose();
             }
         }
-        else if (mc.gameRenderer.getShaderGroup() != null && mc.gameRenderer.getShaderGroup().getShaderGroupName().equals(BITS.toString()))
-            mc.gameRenderer.stopUseShader();
+        else if (mc.gameRenderer.currentEffect() != null && mc.gameRenderer.currentEffect().getName().equals(BITS.toString()))
+            mc.gameRenderer.shutdownEffect();
     }
 
     private static void renderOres(BlockPos pos, Minecraft mc, MatrixStack ms) {
 
-        double renderPosX = mc.getRenderManager().info.getProjectedView().x;
-        double renderPosY = mc.getRenderManager().info.getProjectedView().y;
-        double renderPosZ = mc.getRenderManager().info.getProjectedView().z;
+        double renderPosX = mc.getEntityRenderDispatcher().camera.getPosition().x;
+        double renderPosY = mc.getEntityRenderDispatcher().camera.getPosition().y;
+        double renderPosZ = mc.getEntityRenderDispatcher().camera.getPosition().z;
 
-        ms.push();
+        ms.pushPose();
         ms.translate(pos.getX() - renderPosX, pos.getY() - renderPosY, pos.getZ() - renderPosZ);
 
-        mc.textureManager.bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
-        BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
-        IRenderTypeBuffer.Impl renderBuffer = mc.getRenderTypeBuffers().getBufferSource();
-        brd.renderBlock(Blocks.PINK_GLAZED_TERRACOTTA.getDefaultState(), ms, renderBuffer, 0xF000F0, OverlayTexture.NO_OVERLAY);
-        ms.pop();
+        mc.textureManager.bind(PlayerContainer.BLOCK_ATLAS);
+        BlockRendererDispatcher brd = mc.getBlockRenderer();
+        IRenderTypeBuffer.Impl renderBuffer = mc.renderBuffers().bufferSource();
+        brd.renderSingleBlock(Blocks.PINK_GLAZED_TERRACOTTA.defaultBlockState(), ms, renderBuffer, 0xF000F0, OverlayTexture.NO_OVERLAY);
+        ms.popPose();
     }
 }

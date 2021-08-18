@@ -93,7 +93,7 @@ public class UniqueCrops {
 
     private void onServerStarting(FMLServerStartingEvent event) {
 
-        UCWorldData.getInstance(World.OVERWORLD).markDirty();
+        UCWorldData.getInstance(World.OVERWORLD).setDirty();
         EmblemIronStomach.init();
     }
 

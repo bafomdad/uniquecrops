@@ -27,35 +27,35 @@ public class BatStaffItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 
         tooltip.add(new TranslationTextComponent(UCStrings.TOOLTIP + "batstaff"));
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
 
         return true;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         boolean damage = false;
         if (stack.getItem() == this) {
-            BlockPos pos = player.getPosition();
-            List<BatEntity> entities = player.world.getEntitiesWithinAABB(BatEntity.class, new AxisAlignedBB(pos.add(-15, -15, -15), pos.add(15, 15, 15)));
+            BlockPos pos = player.blockPosition();
+            List<BatEntity> entities = player.level.getEntitiesOfClass(BatEntity.class, new AxisAlignedBB(pos.offset(-15, -15, -15), pos.offset(15, 15, 15)));
             for (BatEntity bat : entities) {
-                if (bat != entities && !world.isRemote) {
-                    UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.WITCH, bat.getPosX(), bat.getPosY(), bat.getPosZ(), 4));
+                if (bat != entities && !world.isClientSide) {
+                    UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.WITCH, bat.getX(), bat.getY(), bat.getZ(), 4));
                     bat.remove();
                     damage = true;
                 }
             }
-            if (damage && !world.isRemote)
-                stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity)player);
+            if (damage && !world.isClientSide)
+                stack.hurt(1, world.random, (ServerPlayerEntity)player);
         }
-        return damage ? ActionResult.resultSuccess(player.getHeldItem(hand)) : ActionResult.resultPass(player.getHeldItem(hand));
+        return damage ? ActionResult.success(player.getItemInHand(hand)) : ActionResult.pass(player.getItemInHand(hand));
     }
 }

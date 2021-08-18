@@ -23,9 +23,9 @@ public class Millennium extends BaseCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileMillennium) {
-            if (!world.isRemote && !isMaxAge(state)) {
+            if (!world.isClientSide && !isMaxAge(state)) {
                 TileMillennium mill = (TileMillennium)tile;
                 if (mill.isTimeEmpty()) {
                     mill.setTime();
@@ -34,7 +34,7 @@ public class Millennium extends BaseCropsBlock {
                 if (mill.calcTime() >= UCConfig.COMMON.millenniumTime.get()) {
                     float f = getGrowthChance(this, world, pos);
                     if (rand.nextInt((int)(10.0F / f) + 1) == 0) {
-                        world.setBlockState(pos, this.withAge(getAge(state) + 1), 2);
+                        world.setBlock(pos, this.setValueAge(getAge(state) + 1), 2);
                         mill.setTime();
                     }
                 }

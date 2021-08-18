@@ -37,10 +37,10 @@ public class BrassKnucklesItem extends SwordItem {
 
     private void knuckleDuster(LivingAttackEvent event) {
 
-        if (event.getEntityLiving().world.isRemote) return;
-        if (event.getEntityLiving() instanceof LivingEntity && event.getSource().getImmediateSource() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)event.getSource().getImmediateSource();
-            ItemStack brassKnuckles = player.getHeldItemMainhand();
+        if (event.getEntityLiving().level.isClientSide) return;
+        if (event.getEntityLiving() instanceof LivingEntity && event.getSource().getDirectEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)event.getSource().getDirectEntity();
+            ItemStack brassKnuckles = player.getMainHandItem();
             if (brassKnuckles.getItem() == this) {
                 boolean flag = event.getSource() instanceof IndirectEntityDamageSource;
                 if (flag) return;
@@ -49,8 +49,8 @@ public class BrassKnucklesItem extends SwordItem {
                 float damage = event.getAmount();
                 addHitEntity(event.getEntityLiving(), brassKnuckles, damage);
                 event.setCanceled(true);
-                BlockPos pos = event.getEntityLiving().getPosition();
-                UCPacketHandler.sendToNearbyPlayers(player.world, player.getPosition(), new PacketUCEffect(EnumParticle.CRIT, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, 6));
+                BlockPos pos = event.getEntityLiving().blockPosition();
+                UCPacketHandler.sendToNearbyPlayers(player.level, player.blockPosition(), new PacketUCEffect(EnumParticle.CRIT, pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5, 6));
                 return;
             }
         }
@@ -65,14 +65,14 @@ public class BrassKnucklesItem extends SwordItem {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
-        if (!world.isRemote && entity instanceof PlayerEntity && selected)
+        if (!world.isClientSide && entity instanceof PlayerEntity && selected)
             removeHitEntity(stack, world, (PlayerEntity)entity);
     }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-        return !ItemStack.areItemsEqual(oldStack, newStack);
+        return !ItemStack.matches(oldStack, newStack);
     }
 
     private void addHitEntity(LivingEntity target, ItemStack stack, float damage) {
@@ -81,7 +81,7 @@ public class BrassKnucklesItem extends SwordItem {
         if (tagList.size() > 4) return;
 
         CompoundNBT nbt = new CompoundNBT();
-        nbt.putInt(HIT_ENTITY, target.getEntityId());
+        nbt.putInt(HIT_ENTITY, target.getId());
         nbt.putInt(HIT_TIME, 25);
         nbt.putFloat(HIT_AMOUNT, damage);
         tagList.add(nbt);
@@ -100,12 +100,12 @@ public class BrassKnucklesItem extends SwordItem {
             if (timer > 0)
                 nbt.putInt(HIT_TIME, --timer);
             else {
-                LivingEntity elb = (LivingEntity)world.getEntityByID(nbt.getInt(HIT_ENTITY));
+                LivingEntity elb = (LivingEntity)world.getEntity(nbt.getInt(HIT_ENTITY));
                 if (elb != null) {
                     float damage = nbt.getFloat(HIT_AMOUNT);
-                    elb.attackEntityFrom(DamageSource.causeIndirectDamage(player, player), damage);
-                    elb.applyKnockback(damage * 0.131F, (double) MathHelper.sin(player.rotationYaw * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(player.rotationYaw * ((float)Math.PI / 180F))));
-                    elb.hurtResistantTime = 0;
+                    elb.hurt(DamageSource.indirectMobAttack(player, player), damage);
+                    elb.knockback(damage * 0.131F, (double) MathHelper.sin(player.yRot * ((float)Math.PI / 180F)), (double)(-MathHelper.cos(player.yRot * ((float)Math.PI / 180F))));
+                    elb.invulnerableTime = 0;
                 }
                 tagList.remove(i);
                 remove = true;

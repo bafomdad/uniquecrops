@@ -44,7 +44,7 @@ public class MultiblockProvider extends RecipeProvider {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         consumer.accept(create("craftyplant",
                 UCItems.WILDWOOD_STAFF.get(),
@@ -65,15 +65,15 @@ public class MultiblockProvider extends RecipeProvider {
                     put('0', new Slot(UCBlocks.ARTISIA_CROP.get()));
                 }},
                 new HashMap<Character, Slot>() {{
-                    put('C', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.DOWN)));
-                    put('N', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.NORTH)));
-                    put('S', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.SOUTH)));
-                    put('W', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.WEST)));
-                    put('E', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.EAST)));
-                    put('H', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.NORTHWEST)));
-                    put('P', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.NORTHEAST)));
-                    put('D', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.SOUTHWEST)));
-                    put('G', new Slot(UCBlocks.STALK.get().getDefaultState().with(StalkBlock.STALKS, EnumDirectional.SOUTHEAST)));
+                    put('C', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.DOWN)));
+                    put('N', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.NORTH)));
+                    put('S', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.SOUTH)));
+                    put('W', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.WEST)));
+                    put('E', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.EAST)));
+                    put('H', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.NORTHWEST)));
+                    put('P', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.NORTHEAST)));
+                    put('D', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.SOUTHWEST)));
+                    put('G', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.SOUTHEAST)));
                 }}
                 ));
         consumer.accept(create("fascino",
@@ -118,15 +118,15 @@ public class MultiblockProvider extends RecipeProvider {
                     put('0', new Slot(Blocks.BEACON));
                 }},
                 new HashMap<Character, Slot>() {{
-                    put('C', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.UP)));
-                    put('N', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.NORTH)));
-                    put('S', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTH)));
-                    put('W', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.WEST)));
-                    put('E', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.EAST)));
-                    put('H', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.NORTHWEST)));
-                    put('P', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.NORTHEAST)));
-                    put('D', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTHWEST)));
-                    put('G', new Slot(UCBlocks.WEATHERFLESIA.get().getDefaultState().with(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTHEAST)));
+                    put('C', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.UP)));
+                    put('N', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.NORTH)));
+                    put('S', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTH)));
+                    put('W', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.WEST)));
+                    put('E', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.EAST)));
+                    put('H', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.NORTHWEST)));
+                    put('P', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.NORTHEAST)));
+                    put('D', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTHWEST)));
+                    put('G', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTHEAST)));
                 }}
         ));
         consumer.accept(create("cropworldportal",
@@ -282,12 +282,12 @@ public class MultiblockProvider extends RecipeProvider {
             this.shapeResult = shapeResult;
             this.origin = origin;
             this.definition = definition;
-            this.definition.put(' ', new Slot(Blocks.AIR.getDefaultState()));
+            this.definition.put(' ', new Slot(Blocks.AIR.defaultBlockState()));
             this.definitionResult = definitionResult;
-            this.definitionResult.put(' ', new Slot(Blocks.AIR.getDefaultState()));
+            this.definitionResult.put(' ', new Slot(Blocks.AIR.defaultBlockState()));
 
             char originChar = shape[origin.y].charAt(origin.x);
-            if (originChar == ' ' || definition.get(originChar).test(Blocks.AIR.getDefaultState()))
+            if (originChar == ' ' || definition.get(originChar).test(Blocks.AIR.defaultBlockState()))
                 throw new IllegalStateException(id + ": Origin point cannot be blank space");
 
             int lineLength = shape[0].length();
@@ -308,7 +308,7 @@ public class MultiblockProvider extends RecipeProvider {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
 
             JsonObject cata = new JsonObject();
             ResourceLocation item = catalyst.getItem().getRegistryName();
@@ -340,27 +340,27 @@ public class MultiblockProvider extends RecipeProvider {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
 
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
 
             return UCRecipes.MULTIBLOCK_SERIALIZER.get();
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
 
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
 
             return null;
         }
@@ -380,23 +380,23 @@ public class MultiblockProvider extends RecipeProvider {
 
                     Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(split[0]));
                     if (block == Blocks.AIR)
-                        return Collections.singleton(block.getDefaultState());
+                        return Collections.singleton(block.defaultBlockState());
 
-                    StateContainer blockState = block.getStateContainer();
-                    BlockState returnState = block.getDefaultState();
+                    StateContainer blockState = block.getStateDefinition();
+                    BlockState returnState = block.defaultBlockState();
 
                     // Force our values into the state
                     String[] stateValues = split[1].split(","); // Splits up each value
                     for (String value : stateValues) {
 //                        String[] valueSplit = value.split("=");
-                        String[] valueSplit = value.split("-"); // split with - instead of = because minecraft's GSON escapes html characters
+                        String[] valueSplit = value.split("-"); // split setValue - instead of = because minecraft's GSON escapes html characters
                         Property property = blockState.getProperty(valueSplit[0]);
                         if (property != null)
-                            returnState = returnState.with(property, (Comparable) property.parseValue(valueSplit[1]).get());
+                            returnState = returnState.setValue(property, (Comparable) property.getValue(valueSplit[1]).get());
                     }
                     states.add(returnState);
                 } else {
-                    states.addAll(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(state)).getStateContainer().getValidStates());
+                    states.addAll(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(state)).getStateDefinition().getPossibleStates());
                 }
             }
             return states;
@@ -407,7 +407,7 @@ public class MultiblockProvider extends RecipeProvider {
 
             JsonArray arr = new JsonArray();
             for (BlockState state : src)
-                arr.add(BlockStateParser.toString(state).replace("=", "-"));
+                arr.add(BlockStateParser.serialize(state).replace("=", "-"));
 
             return ctx.serialize(arr);
         }

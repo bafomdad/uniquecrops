@@ -37,7 +37,7 @@ public class UCTiles {
 
     private static <T extends TileEntity> RegistryObject<TileEntityType<T>> register(String id, Supplier<T> factory, Supplier<Block[]> blocks) {
 
-        return TILES.register(id, () -> TileEntityType.Builder.create(factory, blocks.get()).build(null));
+        return TILES.register(id, () -> TileEntityType.Builder.of(factory, blocks.get()).build(null));
     }
 
     private static <B extends Block> Supplier<Block[]> set(RegistryObject<? extends B> blockGetter) {

@@ -27,23 +27,23 @@ public class TileWeepingBells extends BaseTileUC implements ITickableTileEntity 
     @Override
     public void tick() {
 
-        if (world.isRemote || world.getGameTime() % 10L != 0) return;
+        if (level.isClientSide || level.getGameTime() % 10L != 0) return;
 
         boolean wasLooking = this.isLooking();
         boolean looker = false;
 
-        List<PlayerEntity> players = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, RANGE, RANGE)));
+        List<PlayerEntity> players = level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(worldPosition.offset(-RANGE, -RANGE, -RANGE), worldPosition.offset(RANGE, RANGE, RANGE)));
         for (PlayerEntity player : players) {
-            ItemStack helm = player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack helm = player.getItemBySlot(EquipmentSlotType.HEAD);
             if (helm.getItem().isEnderMask(helm, player, null)) continue;
 
             RayTraceResult rtr = player.pick(RANGE, 0, false);
-            if (rtr != null && rtr.getType() == RayTraceResult.Type.BLOCK && ((BlockRayTraceResult)rtr).getPos().equals(this.getPos())) {
+            if (rtr != null && rtr.getType() == RayTraceResult.Type.BLOCK && ((BlockRayTraceResult)rtr).getBlockPos().equals(this.getBlockPos())) {
                 looker = true;
                 break;
             }
-            if (!wasLooking && !player.isCreative() && getBlockState().get(BaseCropsBlock.AGE) >= 7)
-                player.attackEntityFrom(DamageSource.OUT_OF_WORLD, 1.0F);
+            if (!wasLooking && !player.isCreative() && getBlockState().getValue(BaseCropsBlock.AGE) >= 7)
+                player.hurt(DamageSource.OUT_OF_WORLD, 1.0F);
         }
         if (looker != wasLooking)
             setLooking(looker);

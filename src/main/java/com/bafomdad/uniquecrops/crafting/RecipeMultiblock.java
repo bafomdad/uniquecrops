@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -47,12 +48,12 @@ public class RecipeMultiblock implements IMultiblockRecipe {
         this.shapeResult = shapeResult;
         this.origin = origin;
         this.definition = definition;
-        this.definition.put(' ', new Slot(Blocks.AIR.getDefaultState()));
+        this.definition.put(' ', new Slot(Blocks.AIR.defaultBlockState()));
         this.definitionResult = definitionResult;
-        this.definitionResult.put(' ', new Slot(Blocks.AIR.getDefaultState()));
+        this.definitionResult.put(' ', new Slot(Blocks.AIR.defaultBlockState()));
 
         char originChar = shape[origin.y].charAt(origin.x);
-        if (originChar == ' ' || definition.get(originChar).test(Blocks.AIR.getDefaultState()))
+        if (originChar == ' ' || definition.get(originChar).test(Blocks.AIR.defaultBlockState()))
             throw new IllegalStateException(id + ": Origin point cannot be blank space");
 
         int lineLength = shape[0].length();
@@ -91,7 +92,7 @@ public class RecipeMultiblock implements IMultiblockRecipe {
         for (int y = 0; y < shape.length; y++) {
             String line = shape[y];
             for (int x = 0; x < line.length(); x++) {
-                BlockPos offset = originBlock.add(x - origin.x, 0, y - origin.y);
+                BlockPos offset = originBlock.offset(x - origin.x, 0, y - origin.y);
                 BlockState state = world.getBlockState(offset);
                 if (!definition.get(line.charAt(x)).test(state))
                     return false;
@@ -132,10 +133,10 @@ public class RecipeMultiblock implements IMultiblockRecipe {
         for (int y = 0; y < shapeResult.length; y++) {
             String line = shapeResult[y];
             for (int x = 0; x < line.length(); x++) {
-                BlockPos offset = originBlock.add(x - origin.x, 0, y - origin.y);
+                BlockPos offset = originBlock.offset(x - origin.x, 0, y - origin.y);
                 BlockState state = definitionResult.get(line.charAt(x)).getFirstState();
-                world.playEvent(2001, offset, Block.getStateId(state));
-                world.setBlockState(offset, state, 2);
+                world.levelEvent(2001, offset, Block.getId(state));
+                world.setBlock(offset, state, 2);
             }
         }
     }
@@ -159,14 +160,14 @@ public class RecipeMultiblock implements IMultiblockRecipe {
 
         public Slot(Block block) {
 
-            this(block.getDefaultState());
+            this(block.defaultBlockState());
 //            this(block.getStateContainer().getValidStates().toArray(new BlockState[0]));
         }
 
         @Override
         public boolean test(BlockState state) {
 
-            if (getFirstState().equals(state.getBlock().getDefaultState()))
+            if (getFirstState().equals(state.getBlock().defaultBlockState()))
                 return true;
 
             return states.contains(state);
@@ -182,15 +183,15 @@ public class RecipeMultiblock implements IMultiblockRecipe {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeMultiblock> {
 
         @Override
-        public RecipeMultiblock read(ResourceLocation id, JsonObject obj) {
+        public RecipeMultiblock fromJson(ResourceLocation id, JsonObject obj) {
 
             ResourceLocation itemId = new ResourceLocation(obj.getAsJsonObject("catalyst").getAsJsonPrimitive("item").getAsString());
             int power = obj.getAsJsonObject("catalyst").getAsJsonPrimitive("power").getAsInt();
-            ItemStack catalyst = new ItemStack(Registry.ITEM.getOrDefault(itemId));
+            ItemStack catalyst = new ItemStack(Registry.ITEM.get(itemId));
 
             String[] shape = UCUtils.convertJson(obj.getAsJsonArray("shape"));
             String[] shapeResult = UCUtils.convertJson(obj.getAsJsonArray("shaperesult"));
-            JsonObject point = JSONUtils.getJsonObject(obj, "origin");
+            JsonObject point = JSONUtils.getAsJsonObject(obj, "origin");
             Point origin = new Point(point.get("x").getAsInt(), point.get("y").getAsInt());
             JsonObject definition = obj.getAsJsonObject("definition");
             Map<Character, Slot> mapDefinition = new GsonBuilder().create().fromJson(definition, new TypeToken<Map<Character, Slot>>(){}.getType());
@@ -201,39 +202,29 @@ public class RecipeMultiblock implements IMultiblockRecipe {
         }
 
         @Override
-        public void write(PacketBuffer buf, RecipeMultiblock recipe) {
+        public void toNetwork(PacketBuffer buf, RecipeMultiblock recipe) {
 
-            buf.writeItemStack(recipe.catalyst);
+            buf.writeItem(recipe.catalyst);
             buf.writeVarInt(recipe.power);
             UCUtils.serializeArray(buf, recipe.shape);
             UCUtils.serializeArray(buf, recipe.shapeResult);
             buf.writeVarIntArray(new int[] { recipe.origin.x, recipe.origin.y });
-            buf.writeCompoundTag(UCUtils.serializeMap("definition", recipe.definition));
-            buf.writeCompoundTag(UCUtils.serializeMap("definitionresult", recipe.definitionResult));
-//            for (Map.Entry<Character, Slot> map1 : recipe.definition.entrySet()) {
-//                buf.writeChar(map1.getKey());
-//                for (BlockState state : map1.getValue().states)
-//                    buf.writeVarInt(Block.getStateId(state));
-//            }
-//            for (Map.Entry<Character, Slot> map2 : recipe.definitionResult.entrySet()) {
-//                buf.writeChar(map2.getKey());
-//                for (BlockState state : map2.getValue().states)
-//                    buf.writeVarInt(Block.getStateId(state));
-//            }
+            buf.writeNbt(UCUtils.serializeMap("definition", recipe.definition));
+            buf.writeNbt(UCUtils.serializeMap("definitionresult", recipe.definitionResult));
         }
 
         @Nullable
         @Override
-        public RecipeMultiblock read(ResourceLocation id, PacketBuffer buf) {
+        public RecipeMultiblock fromNetwork(ResourceLocation id, PacketBuffer buf) {
 
-            ItemStack catalyst = buf.readItemStack();
+            ItemStack catalyst = buf.readItem();
             int power = buf.readVarInt();
             String[] shape = UCUtils.deserializeString(buf);
             String[] shapeResult = UCUtils.deserializeString(buf);
             int[] origin = buf.readVarIntArray();
             Point point = new Point(origin[0], origin[1]);
-            Map<Character, Slot> definition = UCUtils.deserializeMap("definition", buf.readCompoundTag());
-            Map<Character, Slot> definitionResult = UCUtils.deserializeMap("definitionresult", buf.readCompoundTag());
+            Map<Character, Slot> definition = UCUtils.deserializeMap("definition", buf.readNbt());
+            Map<Character, Slot> definitionResult = UCUtils.deserializeMap("definitionresult", buf.readNbt());
 
             return new RecipeMultiblock(id, catalyst, power, shape, shapeResult, point, definition, definitionResult);
         }

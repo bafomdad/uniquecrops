@@ -22,11 +22,11 @@ import java.util.Random;
 
 public class Lignator extends Block {
 
-    public static final VoxelShape AABB = VoxelShapes.create(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
+    public static final VoxelShape AABB = VoxelShapes.box(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
 
     public Lignator() {
 
-        super(Properties.from(Blocks.CACTUS));
+        super(Properties.copy(Blocks.CACTUS));
     }
 
     @Override
@@ -36,67 +36,67 @@ public class Lignator extends Block {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
         if (!(entity instanceof ItemEntity))
-            entity.attackEntityFrom(DamageSource.CACTUS, 2.0F);
+            entity.hurt(DamageSource.CACTUS, 2.0F);
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
 
-        if (world.getBlockState(pos.down()).getBlock() != this)
-            world.getPendingBlockTicks().scheduleTick(pos, this, 200);
+        if (world.getBlockState(pos.below()).getBlock() != this)
+            world.getBlockTicks().scheduleTick(pos, this, 200);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
 
-        if (world.isAirBlock(pos.down()))
+        if (world.isEmptyBlock(pos.below()))
             world.destroyBlock(pos, false);
 
-        return super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
+        return super.updateShape(state, facing, facingState, world, pos, facingPos);
     }
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (world.getBlockState(pos.down()).getBlock() != this) {
-            for (BlockPos loopPos : BlockPos.getAllInBoxMutable(pos.add(-5, 0, -5), pos.add(5, 0, 5))) {
-                if (world.getBlockState(loopPos).getBlock().isIn(BlockTags.LOGS))
-                    world.destroyBlock(loopPos.toImmutable(), true);
+        if (world.getBlockState(pos.below()).getBlock() != this) {
+            for (BlockPos loopPos : BlockPos.betweenClosed(pos.offset(-5, 0, -5), pos.offset(5, 0, 5))) {
+                if (world.getBlockState(loopPos).getBlock().is(BlockTags.LOGS))
+                    world.destroyBlock(loopPos.immutable(), true);
 
                 if (!pos.equals(loopPos) && world.getBlockState(loopPos).getBlock() == this)
-                    world.destroyBlock(loopPos.toImmutable(), false);
+                    world.destroyBlock(loopPos.immutable(), false);
             }
         }
-        if (world.getBlockState(pos.up()).getBlock() != this && (world.isAirBlock(pos.up()) || world.getBlockState(pos.up()).getMaterial() == Material.LEAVES)) {
-            growAndHarvest(world, pos.up());
-            world.getPendingBlockTicks().scheduleTick(pos.up(), this, 200);
+        if (world.getBlockState(pos.above()).getBlock() != this && (world.isEmptyBlock(pos.above()) || world.getBlockState(pos.above()).getMaterial() == Material.LEAVES)) {
+            growAndHarvest(world, pos.above());
+            world.getBlockTicks().scheduleTick(pos.above(), this, 200);
         }
     }
 
     private void growAndHarvest(ServerWorld world, BlockPos pos) {
 
         boolean grow = false;
-        for (BlockPos loopPos : BlockPos.getAllInBoxMutable(pos.add(-5, 0, -5), pos.add(5, 0, 5))) {
-            if (world.getBlockState(loopPos).getBlock().isIn(BlockTags.LOGS)) {
+        for (BlockPos loopPos : BlockPos.betweenClosed(pos.offset(-5, 0, -5), pos.offset(5, 0, 5))) {
+            if (world.getBlockState(loopPos).getBlock().is(BlockTags.LOGS)) {
                 if (!grow) grow = true;
-                world.destroyBlock(loopPos.toImmutable(), true);
+                world.destroyBlock(loopPos.immutable(), true);
             }
             if (!pos.equals(loopPos) && world.getBlockState(loopPos).getBlock() == this)
-                world.destroyBlock(loopPos.toImmutable(), false);
+                world.destroyBlock(loopPos.immutable(), false);
         }
         if (grow) {
-            world.setBlockState(pos, this.getDefaultState(), 3);
+            world.setBlock(pos, this.defaultBlockState(), 3);
         }
         else if (!grow) {
             int i;
-            for (i = 1; world.getBlockState(pos.down(i)).getBlock() == this; ++i) {
+            for (i = 1; world.getBlockState(pos.below(i)).getBlock() == this; ++i) {
                 ;
             }
-            world.destroyBlock(pos.down(i - 2), false);
-            world.getPendingBlockTicks().scheduleTick(pos.down(i - 1), this, 200);
+            world.destroyBlock(pos.below(i - 2), false);
+            world.getBlockTicks().scheduleTick(pos.below(i - 1), this, 200);
         }
     }
 }

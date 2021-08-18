@@ -27,21 +27,23 @@ public class Dyeius extends BaseCropsBlock {
     @Override
     public void harvestItems(World world, BlockPos pos, BlockState state, int fortune) {
 
-        InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, getDyeTime(world));
-        InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(this.getSeed()));
+        InventoryHelper.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, getDyeTime(world));
+        InventoryHelper.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(this.getSeed()));
     }
 
+    /*
     @Override
-    public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+    public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
 
-        player.addStat(Stats.BLOCK_MINED.get(this));
-        player.addExhaustion(0.005F);
+        player.awardStat(Stats.BLOCK_MINED.get(this));
+        player.causeFoodExhaustion(0.005F);
         ItemStack seed = new ItemStack(getSeed());
         ItemStack dye = getDyeTime(world);
 
-        spawnAsEntity(world, pos, dye);
-        spawnAsEntity(world, pos, seed);
+        popPoseResource(world, pos, dye);
+        popPoseResource(world, pos, seed);
     }
+    */
 
     private ItemStack getDyeTime(World world) {
 

@@ -26,10 +26,10 @@ public class TileMusica extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (getBlockState().get(BaseCropsBlock.AGE) >= 7)
+        if (getBlockState().getValue(BaseCropsBlock.AGE) >= 7)
             return;
 
-        if (this.world.isRemote || (beats.isEmpty() || beats.size() == 0))
+        if (this.level.isClientSide || (beats.isEmpty() || beats.size() == 0))
             return;
 
         for (int i = 0; i < beats.size(); i++) {
@@ -38,16 +38,16 @@ public class TileMusica extends BaseTileUC implements ITickableTileEntity {
 
             List<Integer> timelist = new ArrayList<Integer>();
 
-            int elapsedtime = (int)beat.getTimeElapsed(world.getGameTime(), beat.getTime());
+            int elapsedtime = (int)beat.getTimeElapsed(level.getGameTime(), beat.getTime());
             if (beat.getTime() != lastBeat && elapsedtime % 2 == 0 /*&& (lastBeat - elapsedtime) % 2 == 0*/)
                 timelist.add(elapsedtime);
 
             if (!timelist.isEmpty() && !beats.isEmpty()) {
-                if (world.getGameTime() % 10 == 0 && lastBeat > 0) {
-                    int randomtick = (world.rand.nextInt(100) + 5) - timelist.size();
-                    if (this.getPercussion() != null && (randomtick < this.getPercussion().getTimeElapsed(world.getGameTime(), lastBeat)))
+                if (level.getGameTime() % 10 == 0 && lastBeat > 0) {
+                    int randomtick = (level.random.nextInt(100) + 5) - timelist.size();
+                    if (this.getPercussion() != null && (randomtick < this.getPercussion().getTimeElapsed(level.getGameTime(), lastBeat)))
                     {
-                        world.setBlockState(pos, getBlockState().with(BaseCropsBlock.AGE, getBlockState().get(BaseCropsBlock.AGE) + 1), 2);
+                        level.setBlock(worldPosition, getBlockState().setValue(BaseCropsBlock.AGE, getBlockState().getValue(BaseCropsBlock.AGE) + 1), 2);
                         return;
                     }
                 }
@@ -120,7 +120,7 @@ public class TileMusica extends BaseTileUC implements ITickableTileEntity {
 
     public void listenAndRemove(Beat beat, int index) {
 
-        long diff = beat.getTimeElapsed(world.getGameTime(), beat.getTime());
+        long diff = beat.getTimeElapsed(level.getGameTime(), beat.getTime());
         if (diff > 50) {
             if (beat.getTime() == lastBeat)
                 lastBeat = 0L;

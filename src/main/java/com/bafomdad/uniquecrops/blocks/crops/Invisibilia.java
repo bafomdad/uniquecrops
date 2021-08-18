@@ -27,7 +27,7 @@ public class Invisibilia extends BaseCropsBlock {
 
         PlayerEntity player = (PlayerEntity)entity;
         if (!player.isCreative()) {
-            if (player.inventory.armorInventory.get(3).getItem() != UCItems.GLASSES_3D.get())
+            if (player.inventory.armor.get(3).getItem() != UCItems.GLASSES_3D.get())
                 return VoxelShapes.empty();
         }
         return super.getShape(state, world, pos, ctx);

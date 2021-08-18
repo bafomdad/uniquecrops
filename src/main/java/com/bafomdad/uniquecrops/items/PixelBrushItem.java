@@ -29,27 +29,27 @@ public class PixelBrushItem extends ItemBaseUC {
 
     public PixelBrushItem() {
 
-        super(UCItems.defaultBuilder().maxDamage(131));
+        super(UCItems.defaultBuilder().durability(131));
     }
 
     @Override
-    public void fillItemGroup(ItemGroup tab, NonNullList<ItemStack> items) {
+    public void fillItemCategory(ItemGroup tab, NonNullList<ItemStack> items) {
 
-        if (isInGroup(tab)) {
+        if (allowdedIn(tab)) {
             ItemStack brush = new ItemStack(this);
             items.add(brush.copy());
-            brush.setDamage(brush.getMaxDamage());
+            brush.setDamageValue(brush.getMaxDamage());
             items.add(brush);
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
         if (stack.hasTag() && stack.getTag().contains(UCStrings.TAG_BIOME)) {
             ResourceLocation biomeId = new ResourceLocation(stack.getTag().getString(UCStrings.TAG_BIOME));
-            Biome biome = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getOrDefault(biomeId);
+            Biome biome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).get(biomeId);
             list.add(new StringTextComponent(TextFormatting.GREEN + "Biome: " + TextFormatting.RESET + biome.getRegistryName().getPath()));
         } else {
             list.add(new StringTextComponent(TextFormatting.GREEN + "Biome: " + TextFormatting.RESET + "<NONE>"));
@@ -57,23 +57,23 @@ public class PixelBrushItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext ctx) {
+    public ActionResultType useOn(ItemUseContext ctx) {
 
-        if (ctx.getItem().getDamage() == ctx.getItem().getMaxDamage()) return ActionResultType.PASS;
-        if (!ctx.getItem().hasTag() || (ctx.getItem().hasTag() && !ctx.getItem().getTag().contains(UCStrings.TAG_BIOME))) return ActionResultType.PASS;
+        if (ctx.getItemInHand().getDamageValue() == ctx.getItemInHand().getMaxDamage()) return ActionResultType.PASS;
+        if (!ctx.getItemInHand().hasTag() || (ctx.getItemInHand().hasTag() && !ctx.getItemInHand().getTag().contains(UCStrings.TAG_BIOME))) return ActionResultType.PASS;
 
-        ResourceLocation biomeId = new ResourceLocation(ctx.getItem().getTag().getString(UCStrings.TAG_BIOME));
-        boolean flag = UCUtils.setBiome(biomeId, ctx.getWorld(), ctx.getPos());
+        ResourceLocation biomeId = new ResourceLocation(ctx.getItemInHand().getTag().getString(UCStrings.TAG_BIOME));
+        boolean flag = UCUtils.setBiome(biomeId, ctx.getLevel(), ctx.getClickedPos());
         if (!flag) return ActionResultType.PASS;
-        if (!ctx.getWorld().isRemote)
-            ctx.getItem().damageItem(1, ctx.getPlayer(), (player) -> {});
+        if (!ctx.getLevel().isClientSide)
+            ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), (player) -> {});
 
         return ActionResultType.SUCCESS;
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.setDamage(stack.getMaxDamage());
+        stack.setDamageValue(stack.getMaxDamage());
     }
 }

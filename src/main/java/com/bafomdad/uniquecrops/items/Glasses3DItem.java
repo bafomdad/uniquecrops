@@ -21,16 +21,16 @@ public class Glasses3DItem extends ItemArmorUC implements IBookUpgradeable {
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 
-        if (world.isRemote) return;
+        if (world.isClientSide) return;
         if (!isMaxLevel(stack)) return;
 
-        int sunlight = world.getLightFor(LightType.SKY, player.getPosition().add(0, player.getEyeHeight(), 0));
+        int sunlight = world.getBrightness(LightType.SKY, player.blockPosition().offset(0, player.getEyeHeight(), 0));
         if (sunlight <= 3)
-            player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 30));
+            player.addEffect(new EffectInstance(Effects.NIGHT_VISION, 30));
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 
         return false;
     }

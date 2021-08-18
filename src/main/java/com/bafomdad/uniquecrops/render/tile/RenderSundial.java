@@ -26,17 +26,17 @@ public class RenderSundial extends TileEntityRenderer<TileSundial> {
     @Override
     public void render(TileSundial te, float partialTicks, MatrixStack ms, IRenderTypeBuffer buff, int light, int overlay) {
 
-        ms.push();
+        ms.pushPose();
         ms.translate(0.5F, 0.1F, 0.5F);
-        ms.rotate(Vector3f.XP.rotationDegrees(180.0F));
-        Minecraft.getInstance().textureManager.bindTexture(RES);
+        ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+        Minecraft.getInstance().textureManager.bind(RES);
 
-        model.DialRedstone.showModel = te.savedTime > 0;
-        model.DialRedstone.rotateAngleY = te.savedRotation;
-        model.Dial.rotateAngleY = te.rotation;
+        model.DialRedstone.visible = te.savedTime > 0;
+        model.DialRedstone.yRot = te.savedRotation;
+        model.Dial.yRot = te.rotation;
 
-        IVertexBuilder buffer = buff.getBuffer(model.getRenderType(RES));
-        model.render(ms, buffer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        ms.pop();
+        IVertexBuilder buffer = buff.getBuffer(model.renderType(RES));
+        model.renderToBuffer(ms, buffer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        ms.popPose();
     }
 }

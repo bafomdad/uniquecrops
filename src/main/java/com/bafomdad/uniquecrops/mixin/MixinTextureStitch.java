@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinTextureStitch {
 
     @Shadow
-    int frameCounter;
+    int frame;
 
-    @Inject(method = "updateAnimation", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "cycleFrames", at = @At("HEAD"), cancellable = true)
     private void updateTextureAnimations(CallbackInfo ci) {
 
         updateTextureDyeius();
@@ -29,24 +29,24 @@ public class MixinTextureStitch {
         if (!isUniqueTexture("invisibilia")) return;
         ClientPlayerEntity p = Minecraft.getInstance().player;
         if (p != null) {
-            if ((p.inventory.armorInventory.get(3).getItem() == UCItems.GLASSES_3D.get()) || p.isCreative())
-                this.frameCounter = 1;
+            if ((p.inventory.armor.get(3).getItem() == UCItems.GLASSES_3D.get()) || p.isCreative())
+                this.frame = 1;
             else
-                this.frameCounter = 0;
+                this.frame = 0;
         }
-        this.uploadAnimationFrames(this.frameCounter);
+        this.uploadAnimationFrames(this.frame);
     }
 
     private void updateTextureDyeius() {
 
         if (!isUniqueTexture("dyeplant5")) return;
 
-        World world = Minecraft.getInstance().world;
+        World world = Minecraft.getInstance().level;
         if (world != null) {
             long time = world.getDayTime() % 24000L;
-            this.frameCounter = (int)(time / 1500);
+            this.frame = (int)(time / 1500);
         }
-        this.uploadAnimationFrames(this.frameCounter);
+        this.uploadAnimationFrames(this.frame);
     }
 
     private boolean isUniqueTexture(String texName) {
@@ -56,6 +56,6 @@ public class MixinTextureStitch {
 
     private void uploadAnimationFrames(int frame) {
 
-        ((TextureAtlasSprite)(Object)this).uploadFrames(frame);
+        ((TextureAtlasSprite)(Object)this).upload(frame);
     }
 }

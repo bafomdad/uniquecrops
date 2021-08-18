@@ -29,10 +29,10 @@ public class TEISR extends ItemStackTileEntityRenderer {
     }
 
     @Override
-    public void func_239207_a_(ItemStack stack, ItemCameraTransforms.TransformType transform, MatrixStack ms, IRenderTypeBuffer buffers, int light, int overlay) {
+    public void renderByItem(ItemStack stack, ItemCameraTransforms.TransformType transform, MatrixStack ms, IRenderTypeBuffer buffers, int light, int overlay) {
 
         if (stack.getItem() == UCItems.DUMMY_FASCINO.get()) {
-            TileEntityRenderer<?> r = TileEntityRendererDispatcher.instance.getRenderer(dummy.getValue());
+            TileEntityRenderer<?> r = TileEntityRendererDispatcher.instance.getRenderer(dummy.get());
             if (r != null)
                 r.render(null, 0, ms, buffers, light, overlay);
         }

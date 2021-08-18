@@ -32,9 +32,9 @@ public class GuideBookItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
-        list.add(getEdition().deepCopy().mergeStyle(TextFormatting.GOLD));
+        list.add(getEdition().copy().withStyle(TextFormatting.GOLD));
     }
 
     private ITextComponent getEdition() {
@@ -43,15 +43,15 @@ public class GuideBookItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
 
         if (player instanceof ServerPlayerEntity) {
             ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
             PatchouliAPI.get().openBookGUI(sPlayer, UCItems.BOOK_GUIDE.getId());
         }
-        return ActionResult.resultSuccess(stack);
+        return ActionResult.success(stack);
     }
 
     @Override
@@ -61,16 +61,16 @@ public class GuideBookItem extends ItemBaseUC {
 
         if (stack.getItem() == this && isSelected) {
             if (stack.hasTag() && stack.getTag().contains(UCStrings.TAG_GROWTHSTAGES)) return;
-            if (world.isRemote) return;
-            ListNBT tagList = UCUtils.getServerTaglist(entity.getUniqueID());
+            if (world.isClientSide) return;
+            ListNBT tagList = UCUtils.getServerTaglist(entity.getUUID());
             if (tagList != null)
-                stack.setTagInfo(UCStrings.TAG_GROWTHSTAGES, tagList);
+                stack.addTagElement(UCStrings.TAG_GROWTHSTAGES, tagList);
         }
     }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
-        return !ItemStack.areItemsEqual(oldStack, newStack);
+        return !ItemStack.matches(oldStack, newStack);
     }
 }

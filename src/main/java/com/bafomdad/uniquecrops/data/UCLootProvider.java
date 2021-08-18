@@ -40,7 +40,7 @@ import java.util.function.Function;
 public class UCLootProvider implements IDataProvider {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final ILootCondition.IBuilder SILK_TOUCH = MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
+    private static final ILootCondition.IBuilder SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
 
     private final DataGenerator gen;
     private final Map<Block, Function<Block, LootTable.Builder>> functionTable = new HashMap<>();
@@ -48,11 +48,11 @@ public class UCLootProvider implements IDataProvider {
     public UCLootProvider(DataGenerator gen) {
 
         this.gen = gen;
-        functionTable.put(UCBlocks.STALK.get(), (block) -> LootTable.builder()
-                .addLootPool(LootPool.builder()
-                .addEntry(ItemLootEntry.builder(Blocks.CRAFTING_TABLE)
-                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                .acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withStringProp(StalkBlock.STALKS, "up")))
+        functionTable.put(UCBlocks.STALK.get(), (block) -> LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                .add(ItemLootEntry.lootTableItem(Blocks.CRAFTING_TABLE)
+                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                .when(BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StalkBlock.STALKS, "up")))
                 ))
         );
         functionTable.put(UCBlocks.ARTISIA_CROP.get(), UCLootProvider::genCrops);
@@ -86,75 +86,75 @@ public class UCLootProvider implements IDataProvider {
         functionTable.put(UCBlocks.HOLY_CROP.get(), UCLootProvider::genCrops);
         functionTable.put(UCBlocks.MAGNES_CROP.get(), UCLootProvider::genCrops);
         functionTable.put(UCBlocks.FEROXIA_CROP.get(), UCLootProvider::genCropsWithBonus);
-        functionTable.put(UCBlocks.NORMAL_CROP.get(), (block) -> LootTable.builder()
-                .addLootPool(LootPool.builder()
-                        .rolls(ConstantRange.of(1))
-                        .addEntry(AlternativesLootEntry.builder(TagLootEntry.getBuilder(UCItemTagsProvider.NORMAL_DROP)
-                        .acceptCondition(fullyGrown(block)))))
-                .addLootPool(seed(UCItems.NORMAL_SEED.get()))
+        functionTable.put(UCBlocks.NORMAL_CROP.get(), (block) -> LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantRange.exactly(1))
+                        .add(AlternativesLootEntry.alternatives(TagLootEntry.expandTag(UCItemTagsProvider.NORMAL_DROP)
+                        .when(fullyGrown(block)))))
+                .withPool(seed(UCItems.NORMAL_SEED.get()))
         );
         functionTable.put(UCBlocks.INVISIBILIA_GLASS.get(), UCLootProvider::genSilk);
         functionTable.put(UCBlocks.FLYWOOD_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.ROSEWOOD_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.RUINEDBRICKS_SLAB.get(), UCLootProvider::genSlab);
         functionTable.put(UCBlocks.RUINEDBRICKSCARVED_SLAB.get(), UCLootProvider::genSlab);
-        functionTable.put(UCBlocks.DYEIUS_CROP.get(), (block) -> LootTable.builder()
-                .addLootPool(LootPool.builder()
-                        .acceptCondition(fullyGrown(block))
-                        .addEntry(ItemLootEntry.builder(Items.WHITE_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(0, 1500))))
-                        .addEntry(ItemLootEntry.builder(Items.ORANGE_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(1501, 3000))))
-                        .addEntry(ItemLootEntry.builder(Items.MAGENTA_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(3001, 4500))))
-                        .addEntry(ItemLootEntry.builder(Items.LIGHT_BLUE_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(4501, 6000))))
-                        .addEntry(ItemLootEntry.builder(Items.YELLOW_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(6001, 7500))))
-                        .addEntry(ItemLootEntry.builder(Items.LIME_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(7501, 9000))))
-                        .addEntry(ItemLootEntry.builder(Items.PINK_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(9001, 10500))))
-                        .addEntry(ItemLootEntry.builder(Items.GRAY_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(10501, 12000))))
-                        .addEntry(ItemLootEntry.builder(Items.LIGHT_GRAY_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(12001, 13500))))
-                        .addEntry(ItemLootEntry.builder(Items.CYAN_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(13501, 15000))))
-                        .addEntry(ItemLootEntry.builder(Items.PURPLE_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(15001, 16500))))
-                        .addEntry(ItemLootEntry.builder(Items.BLUE_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(16501, 18000))))
-                        .addEntry(ItemLootEntry.builder(Items.BROWN_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(18001, 19500))))
-                        .addEntry(ItemLootEntry.builder(Items.GREEN_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(19501, 21000))))
-                        .addEntry(ItemLootEntry.builder(Items.RED_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(21001, 22500))))
-                        .addEntry(ItemLootEntry.builder(Items.BLACK_DYE)
-                                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
-                                .acceptCondition(new TimeCheckBuilder(24000L, RandomValueRange.of(22501, 23999))))
+        functionTable.put(UCBlocks.DYEIUS_CROP.get(), (block) -> LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .when(fullyGrown(block))
+                        .add(ItemLootEntry.lootTableItem(Items.WHITE_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(0, 1500))))
+                        .add(ItemLootEntry.lootTableItem(Items.ORANGE_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(1501, 3000))))
+                        .add(ItemLootEntry.lootTableItem(Items.MAGENTA_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(3001, 4500))))
+                        .add(ItemLootEntry.lootTableItem(Items.LIGHT_BLUE_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(4501, 6000))))
+                        .add(ItemLootEntry.lootTableItem(Items.YELLOW_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(6001, 7500))))
+                        .add(ItemLootEntry.lootTableItem(Items.LIME_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(7501, 9000))))
+                        .add(ItemLootEntry.lootTableItem(Items.PINK_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(9001, 10500))))
+                        .add(ItemLootEntry.lootTableItem(Items.GRAY_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(10501, 12000))))
+                        .add(ItemLootEntry.lootTableItem(Items.LIGHT_GRAY_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(12001, 13500))))
+                        .add(ItemLootEntry.lootTableItem(Items.CYAN_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(13501, 15000))))
+                        .add(ItemLootEntry.lootTableItem(Items.PURPLE_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(15001, 16500))))
+                        .add(ItemLootEntry.lootTableItem(Items.BLUE_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(16501, 18000))))
+                        .add(ItemLootEntry.lootTableItem(Items.BROWN_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(18001, 19500))))
+                        .add(ItemLootEntry.lootTableItem(Items.GREEN_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(19501, 21000))))
+                        .add(ItemLootEntry.lootTableItem(Items.RED_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(21001, 22500))))
+                        .add(ItemLootEntry.lootTableItem(Items.BLACK_DYE)
+                                .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                .when(new TimeCheckBuilder(24000L, RandomValueRange.between(22501, 23999))))
         )
-        .addLootPool(seed(UCItems.DYEIUS_SEED.get())));
+        .withPool(seed(UCItems.DYEIUS_SEED.get())));
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
 
         Map<ResourceLocation, LootTable.Builder> tables = new HashMap<>();
 
@@ -176,7 +176,7 @@ public class UCLootProvider implements IDataProvider {
         }
         for (Map.Entry<ResourceLocation, LootTable.Builder> e : tables.entrySet()) {
             Path path = getPath(gen.getOutputFolder(), e.getKey());
-            IDataProvider.save(GSON, cache, LootTableManager.toJson(e.getValue().setParameterSet(LootParameterSets.BLOCK).build()), path);
+            IDataProvider.save(GSON, cache, LootTableManager.serialize(e.getValue().setParamSet(LootParameterSets.BLOCK).build()), path);
         }
     }
 
@@ -187,74 +187,74 @@ public class UCLootProvider implements IDataProvider {
 
     private static LootTable.Builder genCrops(Block block) {
 
-        ILootCondition.IBuilder condition = BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
+        ILootCondition.IBuilder condition = BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
         BaseCropsBlock crop = (BaseCropsBlock)block;
 
-        LootPool.Builder cropPool = LootPool.builder()
-                .rolls(ConstantRange.of(1))
-                .addEntry(ItemLootEntry.builder(crop.getCrop()))
-                .acceptCondition(condition);
-        LootPool.Builder seedPool = LootPool.builder()
-                .rolls(ConstantRange.of(1))
-                .addEntry(ItemLootEntry.builder(crop.getSeed()))
-                .acceptCondition(SurvivesExplosion.builder());
+        LootPool.Builder cropPool = LootPool.lootPool()
+                .setRolls(ConstantRange.exactly(1))
+                .add(ItemLootEntry.lootTableItem(crop.getCrop()))
+                .when(condition);
+        LootPool.Builder seedPool = LootPool.lootPool()
+                .setRolls(ConstantRange.exactly(1))
+                .add(ItemLootEntry.lootTableItem(crop.getSeed()))
+                .when(SurvivesExplosion.survivesExplosion());
 
-        return LootTable.builder().addLootPool(cropPool).addLootPool(seedPool);
+        return LootTable.lootTable().withPool(cropPool).withPool(seedPool);
     }
 
     private static LootTable.Builder genCropsWithBonus(Block block) {
 
-        ILootCondition.IBuilder condition = BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
+        ILootCondition.IBuilder condition = BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
         BaseCropsBlock crop = (BaseCropsBlock)block;
 
-        LootTable.Builder builder = LootTable.builder()
-                .addLootPool(LootPool.builder()
-                .addEntry(ItemLootEntry.builder(crop.getSeed())
-                        .acceptCondition(condition)
-                        .alternatively(ItemLootEntry.builder(crop.getCrop()))))
-                .addLootPool(LootPool.builder().acceptCondition(condition)
-                 .addEntry(ItemLootEntry.builder(crop.getCrop())
-                        .acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 1)))
-                        .acceptCondition(condition));
+        LootTable.Builder builder = LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                .add(ItemLootEntry.lootTableItem(crop.getSeed())
+                        .when(condition)
+                        .otherwise(ItemLootEntry.lootTableItem(crop.getCrop()))))
+                .withPool(LootPool.lootPool().when(condition)
+                 .add(ItemLootEntry.lootTableItem(crop.getCrop())
+                        .apply(ApplyBonus.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 1)))
+                        .when(condition));
 
         return builder;
     }
 
-    private static LootTable.Builder droppingAndBonusWhen(Block block, Item itemConditional, Item withBonus, ILootCondition.IBuilder conditionBuilder) {
+    private static LootTable.Builder droppingAndBonusWhen(Block block, Item itemConditional, Item setValueBonus, ILootCondition.IBuilder conditionBuilder) {
 
-        return LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(itemConditional).acceptCondition(conditionBuilder).alternatively(ItemLootEntry.builder(withBonus)))).addLootPool(LootPool.builder().acceptCondition(conditionBuilder).addEntry(ItemLootEntry.builder(withBonus).acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 1))));
+        return LootTable.lootTable().withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(itemConditional).when(conditionBuilder).otherwise(ItemLootEntry.lootTableItem(setValueBonus)))).withPool(LootPool.lootPool().when(conditionBuilder).add(ItemLootEntry.lootTableItem(setValueBonus).apply(ApplyBonus.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 1))));
     }
 
     private static LootTable.Builder genSlab(Block block) {
 
-        LootEntry.Builder<?> entry = ItemLootEntry.builder(block)
-                .acceptFunction(SetCount.builder(ConstantRange.of(2))
-                        .acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(SlabBlock.TYPE, SlabType.DOUBLE))))
-                .acceptFunction(ExplosionDecay.builder());
-        return LootTable.builder().addLootPool(LootPool.builder().name("main").rolls(ConstantRange.of(1)).addEntry(entry));
+        LootEntry.Builder<?> entry = ItemLootEntry.lootTableItem(block)
+                .apply(SetCount.setCount(ConstantRange.exactly(2))
+                        .when(BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE))))
+                .apply(ExplosionDecay.explosionDecay());
+        return LootTable.lootTable().withPool(LootPool.lootPool().name("main").setRolls(ConstantRange.exactly(1)).add(entry));
     }
 
     private static LootTable.Builder genRegular(Block block) {
 
-        LootEntry.Builder<?> entry = ItemLootEntry.builder(block);
-        LootPool.Builder pool = LootPool.builder().name("main").rolls(ConstantRange.of(1)).addEntry(entry)
-                .acceptCondition(SurvivesExplosion.builder());
-        return LootTable.builder().addLootPool(pool);
+        LootEntry.Builder<?> entry = ItemLootEntry.lootTableItem(block);
+        LootPool.Builder pool = LootPool.lootPool().name("main").setRolls(ConstantRange.exactly(1)).add(entry)
+                .when(SurvivesExplosion.survivesExplosion());
+        return LootTable.lootTable().withPool(pool);
     }
 
     private static LootTable.Builder genSilk(Block block) {
 
-        return LootTable.builder().addLootPool(LootPool.builder().acceptCondition(SILK_TOUCH).rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block)));
+        return LootTable.lootTable().withPool(LootPool.lootPool().when(SILK_TOUCH).setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(block)));
     }
 
     private static LootPool.Builder seed(Item item) {
 
-        return LootPool.builder().addEntry(ItemLootEntry.builder(item).acceptFunction(ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.5714286F, 3))).acceptCondition(SurvivesExplosion.builder());
+        return LootPool.lootPool().add(ItemLootEntry.lootTableItem(item).apply(ApplyBonus.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))).when(SurvivesExplosion.survivesExplosion());
     }
 
     private static ILootCondition.IBuilder fullyGrown(Block block) {
 
-        return BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
+        return BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BaseCropsBlock.AGE, ((BaseCropsBlock)block).getHarvestAge()));
     }
 
     @Override

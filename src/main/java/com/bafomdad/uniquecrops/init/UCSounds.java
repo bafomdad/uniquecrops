@@ -19,7 +19,6 @@ public class UCSounds {
 
     private static RegistryObject<SoundEvent> createSound(String name) {
 
-        RegistryObject<SoundEvent> sound = SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(UniqueCrops.MOD_ID, name)));
-        return sound;
+        return SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(UniqueCrops.MOD_ID, name)));
     }
 }

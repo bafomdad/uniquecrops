@@ -34,19 +34,19 @@ public class HarvestTrapBlock extends Block {
 
     private static final int RANGE = 4;
 
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-    public static final VoxelShape HARVEST_AABB = VoxelShapes.create(0.75D, 0.0D, 0.75D, 0.25D, 1.25D, 0.25D);
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final VoxelShape HARVEST_AABB = VoxelShapes.box(0.75D, 0.0D, 0.75D, 0.25D, 1.25D, 0.25D);
 
     public HarvestTrapBlock() {
 
-        super(Properties.create(Material.WOOD).sound(SoundType.WOOD).hardnessAndResistance(0.85F, 15.0F).tickRandomly());
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+        super(Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(0.85F, 15.0F).randomTicks());
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(FACING);
     }
 
@@ -59,19 +59,19 @@ public class HarvestTrapBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection());
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileHarvestTrap) {
             TileHarvestTrap trap = (TileHarvestTrap)tile;
             if (!trap.hasSpirit() && !trap.isCollected()) {
-                if (player.getHeldItem(hand).getItem() == UCItems.SPIRITBAIT.get()) {
+                if (player.getItemInHand(hand).getItem() == UCItems.SPIRITBAIT.get()) {
                     trap.setBaitPower(3);
-                    player.getHeldItem(hand).shrink(1);
+                    player.getItemInHand(hand).shrink(1);
                     return ActionResultType.SUCCESS;
                 }
             }
@@ -88,9 +88,9 @@ public class HarvestTrapBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (world.isRemote) return;
+        if (world.isClientSide) return;
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileHarvestTrap) {
             if (UCUtils.getClosestTile(TileHarvestTrap.class, world, pos, 10.0D) != null) {
                 UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.BARRIER, pos.getX(), pos.getY() + 0.75, pos.getZ(), 0));
@@ -122,7 +122,7 @@ public class HarvestTrapBlock extends Block {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileHarvestTrap && ((TileHarvestTrap)tile).hasSpirit()) {
             for (int i = 0; i < 5; i++) {
                 double d0 = (double)pos.getX() + rand.nextFloat();

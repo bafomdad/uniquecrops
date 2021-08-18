@@ -28,9 +28,9 @@ public class RenderFascino extends TileEntityRenderer<TileFascino> {
     @Override
     public void render(TileFascino tile, float partialTicks, MatrixStack ms, IRenderTypeBuffer buffer, int light, int overlay) {
 
-        ms.push();
+        ms.pushPose();
         ms.translate(0.5, 0.1, 0.5);
-        Minecraft.getInstance().textureManager.bindTexture(TEXTURE_BOOK);
+        Minecraft.getInstance().textureManager.bind(TEXTURE_BOOK);
 
         double time = UCTickHandler.ticksInGame + UCTickHandler.partialTicks;
         int cubes = 2;
@@ -42,16 +42,16 @@ public class RenderFascino extends TileEntityRenderer<TileFascino> {
 
         double wave = Math.sin(time * 0.2) / 32F;
 
-        ms.push();
-        ms.rotate(Vector3f.YP.rotationDegrees((float)time * 4F));
+        ms.pushPose();
+        ms.mulPose(Vector3f.YP.rotationDegrees((float)time * 4F));
         ms.translate(-0.25, wave + 0.65, 0);
 
-        this.book.setBookState(0, 0, 0, 0.005F);
-        this.book.render(ms, buffer.getBuffer(book.getRenderType(TEXTURE_BOOK)), light, overlay, 1F, 1F, 1F, 1F);
-        ms.pop();
+        this.book.setupAnim(0, 0, 0, 0.005F);
+        this.book.render(ms, buffer.getBuffer(book.renderType(TEXTURE_BOOK)), light, overlay, 1F, 1F, 1F, 1F);
+        ms.popPose();
 
         if (tile != null) {
-            ms.push();
+            ms.pushPose();
             int items = 0;
             for (int i = 0; i < tile.getInventory().getSlots(); i++) {
                 ItemStack stack = tile.getInventory().getStackInSlot(i);
@@ -64,32 +64,32 @@ public class RenderFascino extends TileEntityRenderer<TileFascino> {
                 float totalAngle = 0F;
                 float[] angles = new float[tile.getInventory().getSlots()];
                 ms.translate(0, 0.75, 0);
-                float playerView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getYaw();
-                ms.rotate(Vector3f.YP.rotationDegrees((180F - playerView) + 89F));
-                ms.rotate(Vector3f.XP.rotationDegrees(90F));
-                ms.rotate(Vector3f.XP.rotationDegrees(90.0F / items));
-                ms.rotate(Vector3f.ZP.rotationDegrees(90F));
+                float playerView = Minecraft.getInstance().gameRenderer.getMainCamera().getYRot();
+                ms.mulPose(Vector3f.YP.rotationDegrees((180F - playerView) + 89F));
+                ms.mulPose(Vector3f.XP.rotationDegrees(90F));
+                ms.mulPose(Vector3f.XP.rotationDegrees(90.0F / items));
+                ms.mulPose(Vector3f.ZP.rotationDegrees(90F));
                 for (int l = 0; l < items; l++) {
                     angles[l] = totalAngle += offsetPerItem;
-                    ms.push();
-                    ms.rotate(Vector3f.YP.rotationDegrees(angles[l]));
+                    ms.pushPose();
+                    ms.mulPose(Vector3f.YP.rotationDegrees(angles[l]));
                     ms.translate(0.75 + wave, 0, 0);
-                    ms.rotate(Vector3f.YP.rotationDegrees(-angles[l]));
-                    ms.rotate(Vector3f.YP.rotationDegrees((90.0F / items) + 90.0F));
+                    ms.mulPose(Vector3f.YP.rotationDegrees(-angles[l]));
+                    ms.mulPose(Vector3f.YP.rotationDegrees((90.0F / items) + 90.0F));
                     ItemStack stack = tile.getInventory().getStackInSlot(l);
-                    ms.rotate(Vector3f.ZP.rotationDegrees(-90F));
-                    ms.push();
-                    ms.rotate(Vector3f.YP.rotationDegrees(90F));
-                    Minecraft.getInstance().getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.GROUND, light, overlay, ms, buffer);
-                    ms.pop();
-                    ms.pop();
+                    ms.mulPose(Vector3f.ZP.rotationDegrees(-90F));
+                    ms.pushPose();
+                    ms.mulPose(Vector3f.YP.rotationDegrees(90F));
+                    Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemCameraTransforms.TransformType.GROUND, light, overlay, ms, buffer);
+                    ms.popPose();
+                    ms.popPose();
                 }
             }
-            ms.pop();
+            ms.popPose();
         }
-        Minecraft.getInstance().textureManager.bindTexture(TEXTURE_BOOK);
+        Minecraft.getInstance().textureManager.bind(TEXTURE_BOOK);
         for (int i = 0; i < 8; i++) {
-            ms.rotate(Vector3f.YP.rotationDegrees((float)time * 4F));
+            ms.mulPose(Vector3f.YP.rotationDegrees((float)time * 4F));
             for (int m = 0; m < cubes; m++) {
                 float offset = cubeOffset * m;
                 float deg = (int)(time / rotationMod % 360F + offset);
@@ -98,12 +98,12 @@ public class RenderFascino extends TileEntityRenderer<TileFascino> {
                 float radiusZ = (float)(radiusBase + radiusMod * Math.cos(time / modifier));
                 float x1 = (float)(radiusX * Math.cos(rad));
                 float z1 = (float)(radiusZ * Math.sin(rad));
-                ms.push();
+                ms.pushPose();
                 ms.translate(x1, i * 0.1, z1);
-                this.cube.render(ms, buffer.getBuffer(book.getRenderType(TEXTURE_BOOK)), light, overlay, 1F, 1F, 1F, 1F);
-                ms.pop();
+                this.cube.renderToBuffer(ms, buffer.getBuffer(book.renderType(TEXTURE_BOOK)), light, overlay, 1F, 1F, 1F, 1F);
+                ms.popPose();
             }
         }
-        ms.pop();
+        ms.popPose();
     }
 }

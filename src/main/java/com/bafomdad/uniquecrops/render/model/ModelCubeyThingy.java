@@ -12,15 +12,15 @@ public class ModelCubeyThingy extends Model {
 
     public ModelCubeyThingy() {
 
-        super(RenderType::getEntityCutout);
+        super(RenderType::entityCutout);
         cube = new ModelRenderer(this, 0, 0);
         cube.addBox(0F, 0F, 0F, 1, 1, 1);
-        cube.setRotationPoint(0F, 0F, 0F);
-        cube.setTextureSize(16, 16);
+        cube.setPos(0F, 0F, 0F);
+        cube.setTexSize(16, 16);
     }
 
     @Override
-    public void render(MatrixStack ms, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(MatrixStack ms, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 
         cube.render(ms, buffer, light, overlay);
     }

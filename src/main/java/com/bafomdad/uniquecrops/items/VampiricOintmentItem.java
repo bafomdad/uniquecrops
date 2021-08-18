@@ -14,10 +14,10 @@ import java.util.UUID;
 
 public class VampiricOintmentItem extends ItemBaseUC {
 
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
 
         if (!(target instanceof PlayerEntity)) {
-            if (!hasTaglock(stack) && !player.world.isRemote) {
+            if (!hasTaglock(stack) && !player.level.isClientSide) {
                 ItemStack newStack = new ItemStack(this);
                 setTaglock(newStack, target);
                 ItemHandlerHelper.giveItemToPlayer(player, newStack);
@@ -35,7 +35,7 @@ public class VampiricOintmentItem extends ItemBaseUC {
 
     public void setTaglock(ItemStack stack, LivingEntity target) {
 
-        UUID id = target.getUniqueID();
+        UUID id = target.getUUID();
         NBTUtils.setString(stack, UCStrings.TAG_LOCK, id.toString());
     }
 }

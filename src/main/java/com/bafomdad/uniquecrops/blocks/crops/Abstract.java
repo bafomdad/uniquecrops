@@ -5,8 +5,6 @@ import com.bafomdad.uniquecrops.init.UCItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,11 +19,11 @@ public class Abstract extends BaseCropsBlock {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             world.removeBlock(pos, true);
-            world.playEvent(2001, pos, Block.getStateId(state));
+            world.levelEvent(2001, pos, Block.getId(state));
         }
     }
 }

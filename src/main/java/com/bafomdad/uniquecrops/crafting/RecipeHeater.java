@@ -30,7 +30,7 @@ public class RecipeHeater implements IHeaterRecipe {
     @Override
     public boolean matches(IInventory inv, World world) {
 
-        return ItemStack.areItemsEqual(inv.getStackInSlot(0), input);
+        return ItemStack.matches(inv.getItem(0), input);
     }
 
     @Override
@@ -40,13 +40,13 @@ public class RecipeHeater implements IHeaterRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
 
-        return this.getRecipeOutput();
+        return this.getResultItem();
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
 
         return this.output;
     }
@@ -66,29 +66,29 @@ public class RecipeHeater implements IHeaterRecipe {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<IHeaterRecipe> {
 
         @Override
-        public IHeaterRecipe read(ResourceLocation id, JsonObject json) {
+        public IHeaterRecipe fromJson(ResourceLocation id, JsonObject json) {
 
-            ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
-            ItemStack input = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "input"));
+            ItemStack output = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "output"));
+            ItemStack input = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "input"));
 
             return new RecipeHeater(id, output, input);
         }
 
         @Nullable
         @Override
-        public IHeaterRecipe read(ResourceLocation id, PacketBuffer buf) {
+        public IHeaterRecipe fromNetwork(ResourceLocation id, PacketBuffer buf) {
 
-            ItemStack output = buf.readItemStack();
-            ItemStack input = buf.readItemStack();
+            ItemStack output = buf.readItem();
+            ItemStack input = buf.readItem();
 
             return new RecipeHeater(id, output, input);
         }
 
         @Override
-        public void write(PacketBuffer buf, IHeaterRecipe recipe) {
+        public void toNetwork(PacketBuffer buf, IHeaterRecipe recipe) {
 
-            buf.writeItemStack(recipe.getRecipeOutput());
-            buf.writeItemStack(recipe.getInput());
+            buf.writeItem(recipe.getResultItem());
+            buf.writeItem(recipe.getInput());
         }
     }
 }

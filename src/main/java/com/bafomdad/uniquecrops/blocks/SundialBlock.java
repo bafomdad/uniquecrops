@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 
 public class SundialBlock extends Block {
 
-    public static final VoxelShape SUNDIAL_SHAPE = VoxelShapes.create(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.300000011920929D, 0.8999999761581421D);
+    public static final VoxelShape SUNDIAL_SHAPE = VoxelShapes.box(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.300000011920929D, 0.8999999761581421D);
 
     public SundialBlock() {
 
-        super(Properties.from(Blocks.COBBLESTONE).notSolid().doesNotBlockMovement());
+        super(Properties.copy(Blocks.COBBLESTONE).noOcclusion().noCollission());
     }
 
     @Override
@@ -34,14 +34,14 @@ public class SundialBlock extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileSundial) {
                 long time = world.getDayTime() % 24000L;
                 ((TileSundial)tile).savedTime = (int)time;
-                ((TileSundial)tile).savedRotation = world.getCelestialAngleRadians(1.0F);
+                ((TileSundial)tile).savedRotation = world.getSunAngle(1.0F);
                 UCPacketDispatcher.dispatchTEToNearbyPlayers(tile);
             }
         }
@@ -49,10 +49,10 @@ public class SundialBlock extends Block {
     }
 
     @Override
-    public int getWeakPower(BlockState state, IBlockReader reader, BlockPos pos, Direction side) {
+    public int getSignal(BlockState state, IBlockReader reader, BlockPos pos, Direction side) {
 
-        if (reader.getTileEntity(pos) instanceof TileSundial) {
-            if (((TileSundial)reader.getTileEntity(pos)).hasPower)
+        if (reader.getBlockEntity(pos) instanceof TileSundial) {
+            if (((TileSundial)reader.getBlockEntity(pos)).hasPower)
                 return 15;
         }
         return 0;

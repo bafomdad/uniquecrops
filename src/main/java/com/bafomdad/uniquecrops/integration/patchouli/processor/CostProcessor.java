@@ -17,8 +17,8 @@ public class CostProcessor implements IComponentProcessor {
 
         if (!var.has("multiblock")) return;
 
-        RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
-        recipe = manager.getRecipe(new ResourceLocation(var.get("multiblock").asString())).orElseThrow(IllegalArgumentException::new);
+        RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
+        recipe = manager.byKey(new ResourceLocation(var.get("multiblock").asString())).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

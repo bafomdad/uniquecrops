@@ -20,10 +20,10 @@ public class CinderleafItem extends ItemBaseUC {
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 
         if (entity.getItem().getItem() == this) {
-            if (isWaterSource(entity.getEntityWorld(), entity.getPosition())) {
+            if (isWaterSource(entity.getCommandSenderWorld(), entity.blockPosition())) {
                 if (entity.getAge() % 20 == 0) {
                     if (entity.getItem().getCount() == 4) {
-                        entity.world.setBlockState(entity.getPosition(), Blocks.LAVA.getDefaultState(), 3);
+                        entity.level.setBlock(entity.blockPosition(), Blocks.LAVA.defaultBlockState(), 3);
                         entity.remove();
                     }
                 }
@@ -34,6 +34,6 @@ public class CinderleafItem extends ItemBaseUC {
 
     private boolean isWaterSource(World world, BlockPos pos) {
 
-        return world.getFluidState(pos).isTagged(FluidTags.WATER) && world.getFluidState(pos).isSource();
+        return world.getFluidState(pos).is(FluidTags.WATER) && world.getFluidState(pos).isSource();
     }
 }

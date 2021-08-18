@@ -33,27 +33,27 @@ import java.util.Random;
 
 public class Itero extends BaseSuperCropsBlock {
 
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+    public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
     public Itero() {
 
-        setDefaultState(getDefaultState().with(AGE, 0));
+        registerDefaultState(defaultBlockState().setValue(AGE, 0));
         MinecraftForge.EVENT_BUS.addListener(this::onPressurePlateTrigger);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(AGE);
     }
 
     private void onPressurePlateTrigger(BlockEvent.NeighborNotifyEvent event) {
 
         if (event.getState().getBlock() == Blocks.STONE_PRESSURE_PLATE) {
-            if (event.getState().get(PressurePlateBlock.POWERED)) {
+            if (event.getState().getValue(PressurePlateBlock.POWERED)) {
                 for (BlockPos loopPos : TileItero.PLATES) {
-                    TileEntity tile = event.getWorld().getTileEntity(event.getPos().subtract(loopPos));
+                    TileEntity tile = event.getWorld().getBlockEntity(event.getPos().subtract(loopPos));
                     if (tile instanceof TileItero) {
                         ((TileItero)tile).matchCombo(event.getPos());
                         break;
@@ -66,30 +66,30 @@ public class Itero extends BaseSuperCropsBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 
-        return BaseCropsBlock.SHAPE_BY_AGE[state.get(AGE)];
+        return BaseCropsBlock.SHAPE_BY_AGE[state.getValue(AGE)];
     }
 
     public boolean isMaxAge(BlockState state) {
 
-        return state.get(AGE) >= 7;
+        return state.getValue(AGE) >= 7;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (isMaxAge(state)) {
-            if (!world.isRemote) {
-                int num = 1 + world.rand.nextInt(2);
-                InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(UCItems.CUBEYTHINGY.get(), num));
-                world.setBlockState(pos, this.getDefaultState(), 2);
+            if (!world.isClientSide) {
+                int num = 1 + world.random.nextInt(2);
+                InventoryHelper.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, new ItemStack(UCItems.CUBEYTHINGY.get(), num));
+                world.setBlock(pos, this.defaultBlockState(), 2);
             }
             return ActionResultType.SUCCESS;
         }
-        TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileItero && !world.isRemote) {
+        TileEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileItero && !world.isClientSide) {
             TileItero itero = (TileItero)tile;
             itero.tryShowDemo();
-            itero.createCombos(state.get(AGE));
+            itero.createCombos(state.getValue(AGE));
         }
         return ActionResultType.PASS;
     }
@@ -111,7 +111,7 @@ public class Itero extends BaseSuperCropsBlock {
     public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 
         if (rand.nextInt(2) == 0) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileItero && ((TileItero)tile).showingDemo())
                 world.addParticle(new RedstoneParticleData(1.0F, 0.0F, 0.0F, 0.5F), pos.getX() + rand.nextFloat(), pos.getY() + 0.25, pos.getZ() + rand.nextFloat(), 0, 0,0);
         }

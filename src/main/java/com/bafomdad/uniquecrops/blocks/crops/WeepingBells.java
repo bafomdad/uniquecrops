@@ -26,7 +26,7 @@ public class WeepingBells extends BaseCropsBlock {
         boolean flag = false;
         if (this.canIgnoreGrowthRestrictions(world, pos)) flag = true;
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileWeepingBells && ((TileWeepingBells)tile).isLooking()) flag = true;
 
         if (flag) super.randomTick(state, world, pos, rand);

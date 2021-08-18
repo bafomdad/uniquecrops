@@ -16,7 +16,7 @@ public class InvisibiliaGlass extends AbstractGlassBlock {
 
     public InvisibiliaGlass() {
 
-        super(Properties.from(Blocks.GLASS).setBlocksVision((state, reader, pos) -> false).setSuffocates((state, reader, pos) -> false));
+        super(Properties.copy(Blocks.GLASS).isViewBlocking((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false));
     }
 
     @Override
@@ -28,14 +28,14 @@ public class InvisibiliaGlass extends AbstractGlassBlock {
 
         PlayerEntity player = (PlayerEntity)entity;
         if (!player.isCreative()) {
-            if (player.inventory.armorInventory.get(3).getItem() != UCItems.GLASSES_3D.get())
+            if (player.inventory.armor.get(3).getItem() != UCItems.GLASSES_3D.get())
                 return VoxelShapes.empty();
         }
         return super.getCollisionShape(state, world, pos, ctx);
     }
 
     @Override
-    public VoxelShape getRayTraceShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext ctx) {
+    public VoxelShape getVisualShape(BlockState state, IBlockReader reader, BlockPos pos, ISelectionContext ctx) {
 
         return this.getCollisionShape(state, reader, pos, ctx);
     }
@@ -49,7 +49,7 @@ public class InvisibiliaGlass extends AbstractGlassBlock {
 
         PlayerEntity player = (PlayerEntity)entity;
         if (!player.isCreative()) {
-            if (player.inventory.armorInventory.get(3).getItem() != UCItems.GLASSES_3D.get())
+            if (player.inventory.armor.get(3).getItem() != UCItems.GLASSES_3D.get())
                 return VoxelShapes.empty();
         }
         return super.getShape(state, world, pos, ctx);

@@ -26,8 +26,8 @@ public class Dirigible extends BaseCropsBlock {
 
         super.randomTick(state, world, pos, rand);
         if ((this.getAge(state) + 1) >= getMaxAge()) {
-            InventoryHelper.spawnItemStack(world, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, new ItemStack(UCItems.DIRIGIBLEPLUM.get()));
-            world.setBlockState(pos, withAge(0), 2);
+            InventoryHelper.dropItemStack(world, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, new ItemStack(UCItems.DIRIGIBLEPLUM.get()));
+            world.setBlock(pos, setValueAge(0), 2);
             UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX(), pos.getY() + 0.1D, pos.getZ(), 4));
         }
     }

@@ -37,7 +37,7 @@ public class RecipeEnchanter implements IEnchanterRecipe {
         this.id = id;
         this.ench = ench;
         this.cost = cost;
-        this.inputs = NonNullList.from(Ingredient.EMPTY, inputs);
+        this.inputs = NonNullList.of(Ingredient.EMPTY, inputs);
         if (ench == null)
             throw new IllegalStateException("Enchantment cannot be null");
         if (inputs == null || inputs.length <= 0)
@@ -50,13 +50,13 @@ public class RecipeEnchanter implements IEnchanterRecipe {
         if (!inputs.isEmpty()) {
             Ingredient ingredient = inputs.get(0);
             int inputs = 0;
-            for (int i = 0; i < inv.getSizeInventory(); i++) {
-                ItemStack stack = inv.getStackInSlot(i);
+            for (int i = 0; i < inv.getContainerSize(); i++) {
+                ItemStack stack = inv.getItem(i);
                 if (stack.isEmpty()) break;
                 if (ingredient.test(stack))
                     inputs++;
             }
-            return inputs == ingredient.getMatchingStacks().length;
+            return inputs == ingredient.getItems().length;
         }
         return false;
     }
@@ -70,7 +70,7 @@ public class RecipeEnchanter implements IEnchanterRecipe {
     @Override
     public void applyEnchantment(ItemStack toApply) {
 
-        toApply.addEnchantment(this.ench, this.ench.getMaxLevel());
+        toApply.enchant(this.ench, this.ench.getMaxLevel());
     }
 
     @Override
@@ -86,13 +86,13 @@ public class RecipeEnchanter implements IEnchanterRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
 
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
 
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantedBookItem.addEnchantment(enchantedBook, new EnchantmentData(this.ench, this.ench.getMaxLevel()));
@@ -121,39 +121,39 @@ public class RecipeEnchanter implements IEnchanterRecipe {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<IEnchanterRecipe> {
 
         @Override
-        public IEnchanterRecipe read(ResourceLocation id, JsonObject json) {
+        public IEnchanterRecipe fromJson(ResourceLocation id, JsonObject json) {
 
             Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(json.get("enchantment").getAsString()));
             int cost = json.get("cost").getAsInt();
-            JsonArray ingredients = JSONUtils.getJsonArray(json, "ingredients");
+            JsonArray ingredients = JSONUtils.getAsJsonArray(json, "ingredients");
             List<Ingredient> inputs = new ArrayList<>();
             for (JsonElement e : ingredients)
-                inputs.add(Ingredient.deserialize(e));
+                inputs.add(Ingredient.fromJson(e));
 
             return new RecipeEnchanter(id, ench, cost, inputs.toArray(new Ingredient[0]));
         }
 
         @Nullable
         @Override
-        public IEnchanterRecipe read(ResourceLocation id, PacketBuffer buf) {
+        public IEnchanterRecipe fromNetwork(ResourceLocation id, PacketBuffer buf) {
 
-            Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(buf.readString()));
+            Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(buf.readUtf()));
             int cost = buf.readVarInt();
             Ingredient[] inputs = new Ingredient[buf.readVarInt()];
             for (int i = 0; i < inputs.length; i++)
-                inputs[i] = Ingredient.read(buf);
+                inputs[i] = Ingredient.fromNetwork(buf);
 
             return new RecipeEnchanter(id, ench, cost, inputs);
         }
 
         @Override
-        public void write(PacketBuffer buf, IEnchanterRecipe recipe) {
+        public void toNetwork(PacketBuffer buf, IEnchanterRecipe recipe) {
 
-            buf.writeString(recipe.getEnchantment().getRegistryName().toString());
+            buf.writeUtf(recipe.getEnchantment().getRegistryName().toString());
             buf.writeVarInt(recipe.getCost());
             buf.writeVarInt(recipe.getIngredients().size());
             for (Ingredient input : recipe.getIngredients())
-                input.write(buf);
+                input.toNetwork(buf);
         }
     }
 }

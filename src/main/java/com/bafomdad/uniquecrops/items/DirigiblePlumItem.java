@@ -17,13 +17,13 @@ public class DirigiblePlumItem extends ItemBaseUC {
 
         if (entity.getItem().getItem() == this) {
             double velY = 0;
-            if (entity.ticksExisted > 40) {
+            if (entity.tickCount > 40) {
                 velY = 0.0625D;
-                if (entity.getPosY() >= 256)
+                if (entity.getY() >= 256)
                     entity.remove();
             }
-            entity.addVelocity(0, velY, 0);
-            if (entity.ticksExisted % 10 == 0 && (!entity.isOnGround() && entity.collidedVertically))
+            entity.push(0, velY, 0);
+            if (entity.tickCount % 10 == 0 && (!entity.isOnGround() && entity.verticalCollision))
                 entity.remove();
         }
         return false;

@@ -34,14 +34,14 @@ public final class UCPacketHandler {
         if (world instanceof ServerWorld) {
             ServerWorld ws = ((ServerWorld)world);
 
-            ws.getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
-                    .filter(p -> p.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 64 * 64)
+            ws.getChunkSource().chunkMap.getPlayers(new ChunkPos(pos), false)
+                    .filter(p -> p.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()) < 64 * 64)
                     .forEach(p -> INSTANCE.send(PacketDistributor.PLAYER.with(() -> p), toSend));
         }
     }
 
     public static void sendTo(ServerPlayerEntity playerMP, Object toSend) {
 
-        INSTANCE.sendTo(toSend, playerMP.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+        INSTANCE.sendTo(toSend, playerMP.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 }

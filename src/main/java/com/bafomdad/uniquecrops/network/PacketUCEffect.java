@@ -55,9 +55,9 @@ public class PacketUCEffect {
                 PlayerEntity player = UniqueCrops.proxy.getPlayer();
                 if (msg.loopSize > 0)
                     for (int i = 0; i < msg.loopSize; i++)
-                        player.world.addParticle(msg.type.getType(), (msg.x + 0.5D) + player.world.rand.nextFloat(), msg.y, (msg.z + 0.5D) + player.world.rand.nextFloat(), 0, 0, 0);
+                        player.level.addParticle(msg.type.getType(), (msg.x + 0.5D) + player.level.random.nextFloat(), msg.y, (msg.z + 0.5D) + player.level.random.nextFloat(), 0, 0, 0);
                 else
-                    player.world.addParticle(msg.type.getType(), msg.x + 0.5D, msg.y, msg.z + 0.5D, 0, 0, 0);
+                    player.level.addParticle(msg.type.getType(), msg.x + 0.5D, msg.y, msg.z + 0.5D, 0, 0, 0);
             });
         }
         ctx.get().setPacketHandled(true);

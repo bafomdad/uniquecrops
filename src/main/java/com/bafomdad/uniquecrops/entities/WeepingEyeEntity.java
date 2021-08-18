@@ -38,23 +38,23 @@ public class WeepingEyeEntity extends ThrowableEntity implements IRendersAsItem 
 
     public WeepingEyeEntity(LivingEntity thrower) {
 
-        super(UCEntities.WEEPING_EYE.get(), thrower, thrower.world);
+        super(UCEntities.WEEPING_EYE.get(), thrower, thrower.level);
     }
 
     @Override
-    protected void registerData() { }
+    protected void defineSynchedData() {}
 
     @Override
-    protected void onImpact(RayTraceResult rtr) {
+    protected void onHit(RayTraceResult rtr) {
 
-        if (!world.isRemote) {
-            BlockPos pos = new BlockPos(rtr.getHitVec());
-            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.add(-10, -5, -10), pos.add(10, 5, 10)));
+        if (!level.isClientSide) {
+            BlockPos pos = new BlockPos(rtr.getLocation());
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(pos.offset(-10, -5, -10), pos.offset(10, 5, 10)));
             for (LivingEntity ent : entities) {
                 if (ent.isAlive() && (ent instanceof MonsterEntity || ent instanceof SlimeEntity))
-                    ent.addPotionEffect(new EffectInstance(Effects.GLOWING, 300));
+                    ent.addEffect(new EffectInstance(Effects.GLOWING, 300));
             }
-            UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX() - 0.5D, pos.getY() + 0.1D, pos.getZ() - 0.5D, 5));
+            UCPacketHandler.sendToNearbyPlayers(level, pos, new PacketUCEffect(EnumParticle.CLOUD, pos.getX() - 0.5D, pos.getY() + 0.1D, pos.getZ() - 0.5D, 5));
         }
     }
 
@@ -65,7 +65,7 @@ public class WeepingEyeEntity extends ThrowableEntity implements IRendersAsItem 
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
 
         return NetworkHooks.getEntitySpawningPacket(this);
     }

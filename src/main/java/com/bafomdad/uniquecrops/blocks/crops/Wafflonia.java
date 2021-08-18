@@ -25,10 +25,10 @@ public class Wafflonia extends BaseCropsBlock {
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         if (waffleAbout(world, state, pos))
-            super.grow(world, rand, pos, state);
+            super.performBonemeal(world, rand, pos, state);
     }
 
     private boolean waffleAbout(ServerWorld world, BlockState state, BlockPos pos) {
@@ -51,7 +51,7 @@ public class Wafflonia extends BaseCropsBlock {
             case SOUTH: offset = offset.south().west(); break;
             case WEST: offset = offset.west().north(); break;
         }
-        BlockPos.getAllInBoxMutable(pos, offset).forEach(b -> {
+        BlockPos.betweenClosed(pos, offset).forEach(b -> {
             if (world.getBlockState(b).getBlock() == this) waffles.getAndIncrement();
         });
         return waffles.get();

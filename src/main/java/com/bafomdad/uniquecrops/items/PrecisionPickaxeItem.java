@@ -33,13 +33,13 @@ public class PrecisionPickaxeItem extends PickaxeItem implements IBookUpgradeabl
 
     public PrecisionPickaxeItem() {
 
-        super(TierItem.PRECISION, 1, -2.8F, UCItems.unstackable().addToolType(ToolType.PICKAXE, TierItem.PRECISION.getHarvestLevel()));
+        super(TierItem.PRECISION, 1, -2.8F, UCItems.unstackable().addToolType(ToolType.PICKAXE, TierItem.PRECISION.getLevel()));
         MinecraftForge.EVENT_BUS.addListener(this::breakSpawner);
         MinecraftForge.EVENT_BUS.addListener(this::placeSpawner);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         if (stack.getItem() instanceof IBookUpgradeable) {
             if (((IBookUpgradeable)stack.getItem()).getLevel(stack) > -1)
@@ -52,25 +52,25 @@ public class PrecisionPickaxeItem extends PickaxeItem implements IBookUpgradeabl
     private void breakSpawner(BlockEvent.BreakEvent event) {
 
         if (event.getPlayer() == null) return;
-        boolean flag = event.getPlayer().getHeldItemMainhand().getItem() == this;
+        boolean flag = event.getPlayer().getMainHandItem().getItem() == this;
         if (!flag) return;
 
-        ItemStack pick = event.getPlayer().getHeldItemMainhand();
+        ItemStack pick = event.getPlayer().getMainHandItem();
         if (!this.isMaxLevel(pick)) return;
 
         if (event.getState().getBlock() == Blocks.SPAWNER) {
             event.setCanceled(true);
-            TileEntity tile = event.getWorld().getTileEntity(event.getPos());
+            TileEntity tile = event.getWorld().getBlockEntity(event.getPos());
             if (tile instanceof MobSpawnerTileEntity) {
                 ItemStack stack = new ItemStack(event.getState().getBlock());
-                if (!event.getWorld().isRemote() && event.getWorld() instanceof World) {
+                if (!event.getWorld().isClientSide() && event.getWorld() instanceof World) {
                     NBTUtils.setCompound(stack, "Spawner", tile.serializeNBT());
-                    InventoryHelper.spawnItemStack((World)event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, stack);
+                    InventoryHelper.dropItemStack((World)event.getWorld(), event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, stack);
                 }
             }
             event.getWorld().removeBlock(event.getPos(), false);
             if (event.getPlayer() instanceof ServerPlayerEntity)
-                event.getPlayer().getHeldItemMainhand().attemptDamageItem(1, event.getWorld().getRandom(), (ServerPlayerEntity)event.getPlayer());
+                event.getPlayer().getMainHandItem().hurt(1, event.getWorld().getRandom(), (ServerPlayerEntity)event.getPlayer());
         }
     }
 
@@ -80,25 +80,25 @@ public class PrecisionPickaxeItem extends PickaxeItem implements IBookUpgradeabl
         if (!(event.getEntity() instanceof PlayerEntity)) return;
         if (!(event.getWorld() instanceof World)) return;
 
-        ItemStack stack = ((PlayerEntity)event.getEntity()).getHeldItem(event.getHand());
+        ItemStack stack = ((PlayerEntity)event.getEntity()).getItemInHand(event.getHand());
         if (stack.getItem() == Blocks.SPAWNER.asItem() && stack.hasTag() && stack.getTag().contains("Spawner")) {
-            BlockState spawner = Blocks.SPAWNER.getDefaultState();
-            BlockPos pos = event.getPos().offset(event.getFace());
-            event.getWorld().setBlockState(pos, spawner);
-            TileEntity tile = event.getWorld().getTileEntity(pos);
+            BlockState spawner = Blocks.SPAWNER.defaultBlockState();
+            BlockPos pos = event.getPos().relative(event.getFace());
+            event.getWorld().setBlockAndUpdate(pos, spawner);
+            TileEntity tile = event.getWorld().getBlockEntity(pos);
             CompoundNBT tag = stack.getTag().getCompound("Spawner");
             tag.putInt("x", pos.getX());
             tag.putInt("y", pos.getY());
             tag.putInt("z", pos.getZ());
-            tile.read(event.getWorld().getBlockState(pos), tag);
-            event.getPlayer().swingArm(event.getHand());
+            tile.load(event.getWorld().getBlockState(pos), tag);
+            event.getPlayer().swing(event.getHand());
             event.setCanceled(true);
         }
     }
 
     @Override
-    public void onCreated(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraftedBy(ItemStack stack, World world, PlayerEntity player) {
 
-        stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+        stack.enchant(Enchantments.SILK_TOUCH, 1);
     }
 }

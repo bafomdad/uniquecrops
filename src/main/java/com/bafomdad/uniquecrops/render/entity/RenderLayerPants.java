@@ -27,17 +27,17 @@ public class RenderLayerPants extends LayerRenderer<AbstractClientPlayerEntity, 
     @Override
     public void render(MatrixStack ms, IRenderTypeBuffer buffer, int light, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch) {
 
-        if (player.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == UCItems.THUNDERPANTZ.get()) {
-            ItemStack pants = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
-            ms.push();
-            float f = (float)player.ticksExisted + partialTicks;
+        if (player.getItemBySlot(EquipmentSlotType.LEGS).getItem() == UCItems.THUNDERPANTZ.get()) {
+            ItemStack pants = player.getItemBySlot(EquipmentSlotType.LEGS);
+            ms.pushPose();
+            float f = (float)player.tickCount + partialTicks;
             float toScale = ((ThunderpantzItem)pants.getItem()).getCharge(pants) / 16.0F;
-            IVertexBuilder builder = buffer.getBuffer(RenderType.getEnergySwirl(LIGHTNING_TEXTURE, f * 0.01F, f * 0.01F));
+            IVertexBuilder builder = buffer.getBuffer(RenderType.energySwirl(LIGHTNING_TEXTURE, f * 0.01F, f * 0.01F));
             ms.translate(0, -0.25, 0);
             ms.scale(toScale, 1.0F, toScale);
-            getEntityModel().bipedLeftLegwear.render(ms, builder, light, OverlayTexture.NO_OVERLAY);
-            getEntityModel().bipedRightLegwear.render(ms, builder, light, OverlayTexture.NO_OVERLAY);
-            ms.pop();
+            getParentModel().rightPants.render(ms, builder, light, OverlayTexture.NO_OVERLAY);
+            getParentModel().leftPants.render(ms, builder, light, OverlayTexture.NO_OVERLAY);
+            ms.popPose();
         }
     }
 }

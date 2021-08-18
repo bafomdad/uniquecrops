@@ -28,7 +28,7 @@ public class HeaterProvider extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         consumer.accept(create(Blocks.ICE, Blocks.PACKED_ICE));
         consumer.accept(create(UCItems.TERIYAKI.get(), Items.COOKED_CHICKEN));
@@ -54,34 +54,34 @@ public class HeaterProvider extends RecipeProvider {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
 
             json.add("output", JsonUtils.serializeStack(output));
             json.add("input", JsonUtils.serializeStack(input));
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
 
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
 
             return UCRecipes.HEATER_SERIALIZER.get();
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
 
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
 
             return null;
         }

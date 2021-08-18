@@ -28,9 +28,9 @@ public class MultiblockBookItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
-        list.add(getEdition().deepCopy().mergeStyle(TextFormatting.GOLD));
+        list.add(getEdition().copy().withStyle(TextFormatting.GOLD));
     }
 
     private ITextComponent getEdition() {
@@ -39,14 +39,14 @@ public class MultiblockBookItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
 
         if (player instanceof ServerPlayerEntity) {
             ServerPlayerEntity sPlayer = (ServerPlayerEntity)player;
             PatchouliAPI.get().openBookGUI(sPlayer, UCItems.BOOK_MULTIBLOCK.getId());
         }
-        return ActionResult.resultSuccess(stack);
+        return ActionResult.success(stack);
     }
 }

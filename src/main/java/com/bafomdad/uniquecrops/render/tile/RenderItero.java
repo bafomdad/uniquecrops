@@ -35,48 +35,48 @@ public class RenderItero extends TileEntityRenderer<TileItero> {
 
         if (!te.showingDemo()) return;
 
-        ms.push();
+        ms.pushPose();
         ms.translate(0.5, 0.1, 0.5);
 
-        Minecraft.getInstance().textureManager.bindTexture(TEX);
+        Minecraft.getInstance().textureManager.bind(TEX);
         Tessellator tess = Tessellator.getInstance();
         RenderSystem.disableAlphaTest();
         RenderSystem.disableLighting();
         RenderSystem.enableBlend();
 
         for  (int i = 0; i < TileItero.PLATES.length; i++) {
-            BlockPos platePos = te.getPos().add(TileItero.PLATES[i]);
-            BlockState state = te.getWorld().getBlockState(platePos);
-            if (state.getBlock() == Blocks.STONE_PRESSURE_PLATE && state.get(PressurePlateBlock.POWERED)) {
-                ms.push();
+            BlockPos platePos = te.getBlockPos().offset(TileItero.PLATES[i]);
+            BlockState state = te.getLevel().getBlockState(platePos);
+            if (state.getBlock() == Blocks.STONE_PRESSURE_PLATE && state.getValue(PressurePlateBlock.POWERED)) {
+                ms.pushPose();
                 ms.translate(TileItero.PLATES[i].getX(), 0, TileItero.PLATES[i].getZ());
                 this.renderLight(ms, tess, i);
-                ms.pop();
+                ms.popPose();
                 break;
             }
         }
         RenderSystem.disableBlend();
         RenderSystem.enableAlphaTest();
         RenderSystem.enableLighting();
-        ms.pop();
+        ms.popPose();
     }
 
     private void renderLight(MatrixStack ms, Tessellator tess, int color) {
 
         for (int j = 0; j < 4; j++) {
-            ms.push();
+            ms.pushPose();
             switch(j) {
                 case 0: ms.translate(0, 0, 0.375F); break;
                 case 1: ms.translate(0.375F, 0, 0); break;
                 case 2: ms.translate(0, 0, -0.375F); break;
                 case 3: ms.translate(-0.375F, 0, 0); break;
             }
-            ms.rotate(Vector3f.YP.rotationDegrees(j * 90.0F));
+            ms.mulPose(Vector3f.YP.rotationDegrees(j * 90.0F));
             RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             float power = 2.5F;
             float phase = 0.1F;
 
-            BufferBuilder buff = tess.getBuffer();
+            BufferBuilder buff = tess.getBuilder();
             buff.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
             RenderSystem.color4f(Math.max(phase * 2.0F, 1.0F), Math.max(phase * 2.0F, 1.0F), Math.max(phase * 2.0F, 1.0F), 0.5F * (1.0F - phase));
             switch(color) {
@@ -88,14 +88,14 @@ public class RenderItero extends TileEntityRenderer<TileItero> {
             float w = 1.0F;
             float h = 40.0F * phase * power;
 
-            Matrix4f mat = ms.getLast().getMatrix();
-            buff.pos(mat, -0.5F * w, -0.25F, 0.0F).tex(0.0F, 1.0F).endVertex();
-            buff.pos(mat,0.5F * w, -0.25F, 0.0F).tex(1.0F, 1.0F).endVertex();
-            buff.pos(mat,0.5F, 0.75F * h, 0.0F).tex(1.0F, 0.0F).endVertex();
-            buff.pos(mat, -0.5F, 0.75F * h, 0.0F).tex(0.0F, 0.0F).endVertex();
+            Matrix4f mat = ms.last().pose();
+            buff.vertex(mat, -0.5F * w, -0.25F, 0.0F).uv(0.0F, 1.0F).endVertex();
+            buff.vertex(mat,0.5F * w, -0.25F, 0.0F).uv(1.0F, 1.0F).endVertex();
+            buff.vertex(mat,0.5F, 0.75F * h, 0.0F).uv(1.0F, 0.0F).endVertex();
+            buff.vertex(mat, -0.5F, 0.75F * h, 0.0F).uv(0.0F, 0.0F).endVertex();
 
-            tess.draw();
-            ms.pop();
+            tess.end();
+            ms.popPose();
         }
     }
 }

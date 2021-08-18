@@ -36,7 +36,7 @@ public abstract class ItemCurioUC extends ItemBaseUC implements ICurioItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 
         tooltip.add(new TranslationTextComponent(UniqueCrops.MOD_ID + ".tooltip." + this.getRegistryName().getPath()));
     }

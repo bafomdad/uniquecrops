@@ -15,17 +15,17 @@ public abstract class BaseTileUC extends TileEntity {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT tag) {
+    public CompoundNBT save(CompoundNBT tag) {
 
-        CompoundNBT nbt = super.write(tag);
+        CompoundNBT nbt = super.save(tag);
         writeCustomNBT(nbt);
         return nbt;
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT tag) {
+    public void load(BlockState state, CompoundNBT tag) {
 
-        super.read(state, tag);
+        super.load(state, tag);
         readCustomNBT(tag);
     }
 
@@ -36,7 +36,7 @@ public abstract class BaseTileUC extends TileEntity {
     @Override
     public CompoundNBT getUpdateTag() {
 
-        return write(new CompoundNBT());
+        return save(new CompoundNBT());
     }
 
     @Override
@@ -44,24 +44,24 @@ public abstract class BaseTileUC extends TileEntity {
 
         CompoundNBT tag = new CompoundNBT();
         writeCustomNBT(tag);
-        return new SUpdateTileEntityPacket(pos, -999, tag);
+        return new SUpdateTileEntityPacket(worldPosition, -999, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
 
         super.onDataPacket(net, packet);
-        readCustomNBT(packet.getNbtCompound());
+        readCustomNBT(packet.getTag());
     }
 
     public void markBlockForUpdate() {
 
-        BlockState state = getWorld().getBlockState(pos);
-        getWorld().notifyBlockUpdate(pos, state, state, 3);
+        BlockState state = getLevel().getBlockState(worldPosition);
+        getLevel().sendBlockUpdated(worldPosition, state, state, 3);
     }
 
     public void markBlockForRenderUpdate() {
 
-        getWorld().markBlockRangeForRenderUpdate(pos, getWorld().getBlockState(pos), getWorld().getBlockState(pos));
+        getLevel().setBlocksDirty(worldPosition, getLevel().getBlockState(worldPosition), getLevel().getBlockState(worldPosition));
     }
 }

@@ -30,17 +30,17 @@ public class EmblemRainbow extends ItemCurioUC {
 
         if (!(event.getTarget() instanceof IShearable)) return;
         if (!(event.getTarget() instanceof SheepEntity)) return;
-        if (!(event.getItemStack().getItem() instanceof ShearsItem) || ((SheepEntity)event.getTarget()).getSheared()) return;
+        if (!(event.getItemStack().getItem() instanceof ShearsItem) || ((SheepEntity)event.getTarget()).isSheared()) return;
 
-        int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, event.getItemStack());
-        if (!event.getWorld().isRemote) {
+        int fortune = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, event.getItemStack());
+        if (!event.getWorld().isClientSide) {
             List<ItemStack> wools = ((SheepEntity)event.getTarget()).onSheared(event.getPlayer(), event.getItemStack(), event.getWorld(), event.getPos(), fortune);
             for (ItemStack is : wools) {
                 Random rand = new Random();
                 ItemStack stack = new ItemStack(DyeUtils.WOOL_BY_COLOR.get(DyeColor.byId(rand.nextInt(15))));
-                event.getWorld().addEntity(new ItemEntity(event.getWorld(), event.getTarget().getPosX(), event.getTarget().getPosY(), event.getTarget().getPosZ(), stack));
+                event.getWorld().addFreshEntity(new ItemEntity(event.getWorld(), event.getTarget().getX(), event.getTarget().getY(), event.getTarget().getZ(), stack));
                 if (event.getPlayer() instanceof ServerPlayerEntity)
-                    event.getItemStack().attemptDamageItem(1, rand, (ServerPlayerEntity)event.getPlayer());
+                    event.getItemStack().hurt(1, rand, (ServerPlayerEntity)event.getPlayer());
             }
         }
     }

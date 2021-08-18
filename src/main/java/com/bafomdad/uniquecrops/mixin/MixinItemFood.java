@@ -18,26 +18,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Item.class)
 public class MixinItemFood {
 
-    @Inject(method = "onItemRightClick", at = @At("HEAD"), cancellable = true)
-    private void onItemRightClick(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult<ItemStack>> cir) {
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult<ItemStack>> cir) {
 
-        if (EmblemBookworm.isFood((Item)(Object)this) && !EmblemBookworm.isEquipped(player))
-            cir.setReturnValue(ActionResult.resultPass(player.getHeldItem(hand)));
+        if (EmblemBookworm.isEdible((Item)(Object)this) && !EmblemBookworm.isEquipped(player))
+            cir.setReturnValue(ActionResult.pass(player.getItemInHand(hand)));
         if (EmblemIronStomach.containsTag((Item)(Object)this) && !EmblemIronStomach.isEquipped(player))
-            cir.setReturnValue(ActionResult.resultPass(player.getHeldItem(hand)));
+            cir.setReturnValue(ActionResult.pass(player.getItemInHand(hand)));
     }
 
-    @Inject(method = "isFood", at = @At("HEAD"), cancellable = true)
-    private void isFood(CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "isEdible", at = @At("HEAD"), cancellable = true)
+    private void isEdible(CallbackInfoReturnable<Boolean> cir) {
 
-        if (EmblemIronStomach.containsTag((Item)(Object)this) || EmblemBookworm.isFood((Item)(Object)this))
+        if (EmblemIronStomach.containsTag((Item)(Object)this) || EmblemBookworm.isEdible((Item)(Object)this))
             cir.setReturnValue(true);
     }
 
-    @Inject(method = "getFood", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getFoodProperties", at = @At("HEAD"), cancellable = true)
     private void getFood(CallbackInfoReturnable<Food> cir) {
 
-        if (EmblemBookworm.isFood((Item)(Object)this))
+        if (EmblemBookworm.isEdible((Item)(Object)this))
             cir.setReturnValue(EmblemBookworm.getFood(new ItemStack(Items.ENCHANTED_BOOK)));
         if (EmblemIronStomach.containsTag((Item)(Object)this))
             cir.setReturnValue(EmblemIronStomach.getFood((Item)(Object)this));

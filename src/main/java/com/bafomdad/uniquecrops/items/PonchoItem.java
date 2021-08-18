@@ -26,10 +26,10 @@ public class PonchoItem extends ItemArmorUC implements IBookUpgradeable {
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 
-        player.jumpMovementFactor = (0.025F + 1 * 0.02F);
-        if (player.getMotion().y < -0.175F && !player.isOnGround() && !player.abilities.isFlying && !player.isSneaking()) {
+        player.flyingSpeed = (0.025F + 1 * 0.02F);
+        if (player.getDeltaMovement().y < -0.175F && !player.isOnGround() && !player.abilities.flying && !player.isCrouching()) {
             float fallVel = -0.175F;
-            player.setMotion(player.getMotion().x, fallVel, player.getMotion().z);
+            player.setDeltaMovement(player.getDeltaMovement().x, fallVel, player.getDeltaMovement().z);
             player.fallDistance = 0;
         }
     }
@@ -42,15 +42,15 @@ public class PonchoItem extends ItemArmorUC implements IBookUpgradeable {
 
         PlayerEntity player = (PlayerEntity)event.getTarget();
         MobEntity ent = (MobEntity)event.getEntity();
-        if (player.getActivePotionEffect(UCPotions.IGNORANCE.get()) != null) {
-            ent.setAttackTarget(null);
-            ent.setRevengeTarget(null);
+        if (player.getEffect(UCPotions.IGNORANCE.get()) != null) {
+            ent.setTarget(null);
+            ent.setLastHurtByMob(null);
             return;
         }
-        boolean flag = player.inventory.armorInventory.get(2).getItem() == this && this.isMaxLevel(player.inventory.armorInventory.get(2));
-        if (flag && ent.isNonBoss() && !(ent instanceof GuardianEntity || ent instanceof ShulkerEntity)) {
-            ent.setAttackTarget(null);
-            ent.setRevengeTarget(null);
+        boolean flag = player.inventory.armor.get(2).getItem() == this && this.isMaxLevel(player.inventory.armor.get(2));
+        if (flag && ent.isPickable() && !(ent instanceof GuardianEntity || ent instanceof ShulkerEntity)) {
+            ent.setTarget(null);
+            ent.setLastHurtByMob(null);
         }
     }
 }

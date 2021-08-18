@@ -11,13 +11,13 @@ public class UCPacketDispatcher {
 
     public static void dispatchTEToNearbyPlayers(TileEntity tile) {
 
-        if (tile.getWorld() instanceof ServerWorld) {
+        if (tile.getLevel() instanceof ServerWorld) {
             SUpdateTileEntityPacket packet = tile.getUpdatePacket();
             if (packet != null) {
-                BlockPos pos = tile.getPos();
-                ((ServerChunkProvider)tile.getWorld().getChunkProvider()).chunkManager
-                        .getTrackingPlayers(new ChunkPos(pos), false)
-                        .forEach(e -> e.connection.sendPacket(packet));
+                BlockPos pos = tile.getBlockPos();
+                ((ServerChunkProvider)tile.getLevel().getChunkSource()).chunkMap
+                        .getPlayers(new ChunkPos(pos), false)
+                        .forEach(e -> e.connection.send(packet));
             }
         }
     }

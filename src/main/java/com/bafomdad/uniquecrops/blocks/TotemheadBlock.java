@@ -29,20 +29,20 @@ import java.util.Random;
 
 public class TotemheadBlock extends Block {
 
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-    public static final VoxelShape TOTEM_AABB = VoxelShapes.create(0.25F, 0.0F, 0.25F, 0.75F, 1.75F, 0.75F);
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final VoxelShape TOTEM_AABB = VoxelShapes.box(0.25F, 0.0F, 0.25F, 0.75F, 1.75F, 0.75F);
     private static final int RANGE = 12;
 
     public TotemheadBlock() {
 
-        super(Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 20.0F).tickRandomly());
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+        super(Properties.of(Material.WOOD).strength(2.0F, 20.0F).randomTicks());
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(FACING);
     }
 
@@ -51,23 +51,23 @@ public class TotemheadBlock extends Block {
 
 
         if (findMobs(world, pos))
-            world.getPendingBlockTicks().scheduleTick(pos, this, 100);
+            world.getBlockTicks().scheduleTick(pos, this, 100);
     }
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
         if (findMobs(world, pos))
-            world.getPendingBlockTicks().scheduleTick(pos, this, 100);
+            world.getBlockTicks().scheduleTick(pos, this, 100);
     }
 
     private boolean findMobs(ServerWorld world, BlockPos pos) {
 
         boolean foundEntity = false;
-        List<LivingEntity> elb = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.add(-RANGE, -1, -RANGE), pos.add(RANGE, 1, RANGE)));
+        List<LivingEntity> elb = world.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(pos.offset(-RANGE, -1, -RANGE), pos.offset(RANGE, 1, RANGE)));
         for (LivingEntity entity : elb) {
             if (entity.isAlive() && (entity instanceof MonsterEntity || entity instanceof SlimeEntity)) {
-                entity.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 500, 1));
+                entity.addEffect(new EffectInstance(Effects.INVISIBILITY, 500, 1));
                 foundEntity = true;
             }
         }
@@ -83,6 +83,6 @@ public class TotemheadBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection());
     }
 }

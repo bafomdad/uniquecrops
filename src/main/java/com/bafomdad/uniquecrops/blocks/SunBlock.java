@@ -23,14 +23,14 @@ public class SunBlock extends Block {
 
     public SunBlock() {
 
-        super(Properties.from(Blocks.GLASS).setLightLevel(s -> 15));
+        super(Properties.copy(Blocks.GLASS).lightLevel(s -> 15));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
-        list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "sunblock").mergeStyle(TextFormatting.GRAY));
+        list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "sunblock").withStyle(TextFormatting.GRAY));
     }
 
     @Override

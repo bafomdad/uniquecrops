@@ -11,6 +11,6 @@ public class ItemRecordUC extends MusicDiscItem {
 
     public ItemRecordUC(Supplier<SoundEvent> sound) {
 
-        super(1, sound, UCItems.defaultBuilder().maxStackSize(1).rarity(Rarity.UNCOMMON));
+        super(1, sound, UCItems.defaultBuilder().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
 }

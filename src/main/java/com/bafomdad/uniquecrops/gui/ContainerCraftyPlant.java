@@ -48,25 +48,25 @@ public class ContainerCraftyPlant extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int i) {
+    public ItemStack quickMoveStack(PlayerEntity player, int i) {
 
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.inventorySlots.get(i);
+        Slot slot = (Slot)this.slots.get(i);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack1 = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack1 = slot.getItem();
             stack = stack1.copy();
             int size = tile.getCraftingInventory().getSlots();
 
             if (i < size) {
                 slot.onTake(player, stack1);
-                if (!this.mergeItemStack(stack1, size, this.inventorySlots.size(), true))
+                if (!this.moveItemStackTo(stack1, size, this.slots.size(), true))
                     return ItemStack.EMPTY;
             } else {
                 boolean b = false;
                 for (int j = 0; j < size; j++) {
-                    if (this.getSlot(j).isItemValid(stack1)) {
-                        if (this.mergeItemStack(stack1, j, j + 1, false)) {
+                    if (this.getSlot(j).mayPlace(stack1)) {
+                        if (this.moveItemStackTo(stack1, j, j + 1, false)) {
                             b = true;
                             break;
                         }
@@ -76,9 +76,9 @@ public class ContainerCraftyPlant extends Container {
                     return ItemStack.EMPTY;
             }
             if (stack1.getCount() == 0)
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             else
-                slot.onSlotChanged();
+                slot.setChanged();
 
             slot.onTake(player, stack1);
         }
@@ -86,7 +86,7 @@ public class ContainerCraftyPlant extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
 
         return true;
     }
@@ -103,18 +103,18 @@ public class ContainerCraftyPlant extends Container {
         }
 
         @Override
-        public void onSlotChanged() {
+        public void setChanged() {
 
             IItemHandler handler = getItemHandler();
             List<ItemStack> stacks = IntStream.range(0, tile.getCraftingSize()).mapToObj(i -> handler.getStackInSlot(i)).collect(Collectors.toList());
             AtomicReference<ItemStack> result = new AtomicReference<>(ItemStack.EMPTY);
-            tile.getWorld().getRecipeManager().getRecipe(UCRecipes.ARTISIA_TYPE, UCUtils.wrap(stacks), tile.getWorld())
+            tile.getLevel().getRecipeManager().getRecipeFor(UCRecipes.ARTISIA_TYPE, UCUtils.wrap(stacks), tile.getLevel())
                     .ifPresent(recipe -> {
-                        result.set(recipe.getRecipeOutput().copy());
+                        result.set(recipe.getResultItem().copy());
                     });
             if (!result.get().isEmpty()) {
                 tile.setResult(result.get());
-                tile.markDirty();
+                tile.setChanged();
             }
         }
 
@@ -145,7 +145,7 @@ public class ContainerCraftyPlant extends Container {
         }
 
         @Override
-        public boolean isItemValid(@Nonnull ItemStack stack) {
+        public boolean mayPlace(@Nonnull ItemStack stack) {
 
             if (indexSlot == 9) return false;
             if (indexSlot == 10)

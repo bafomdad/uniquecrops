@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class CookingItemEntity extends ItemEntity {
 
-    private static final DataParameter<Integer> COOKING_TIME = EntityDataManager.createKey(CookingItemEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> COOKING_TIME = EntityDataManager.defineId(CookingItemEntity.class, DataSerializers.INT);
 
     public CookingItemEntity(EntityType<? extends ItemEntity> type, World world) {
 
@@ -30,17 +30,17 @@ public class CookingItemEntity extends ItemEntity {
 
     public CookingItemEntity(World world, ItemEntity oldEntity, ItemStack stack) {
 
-        super(world, oldEntity.getPosX(), oldEntity.getPosY(), oldEntity.getPosZ(), stack);
-        this.setMotion(oldEntity.getMotion());
+        super(world, oldEntity.getX(), oldEntity.getY(), oldEntity.getZ(), stack);
+        this.setDeltaMovement(oldEntity.getDeltaMovement());
         this.lifespan = oldEntity.lifespan;
-        this.setDefaultPickupDelay();
+        this.setDefaultPickUpDelay();
     }
 
     @Override
-    public void registerData() {
+    public void defineSynchedData() {
 
-        super.registerData();
-        this.dataManager.register(COOKING_TIME, Integer.valueOf(0));
+        super.defineSynchedData();
+        this.entityData.define(COOKING_TIME, Integer.valueOf(0));
     }
 
     @Override
@@ -49,16 +49,16 @@ public class CookingItemEntity extends ItemEntity {
         super.tick();
 
         int cookTime = getCookingTime();
-        if (cookTime > 0 && rand.nextBoolean())
-            UCPacketHandler.sendToNearbyPlayers(this.world, this.getPosition(), new PacketUCEffect(EnumParticle.SMOKE, this.getPosX() - 0.5, this.getPosY() + 0.1, this.getPosZ() - 0.5, 0));
+        if (cookTime > 0 && random.nextBoolean())
+            UCPacketHandler.sendToNearbyPlayers(this.level, this.blockPosition(), new PacketUCEffect(EnumParticle.SMOKE, this.getX() - 0.5, this.getY() + 0.1, this.getZ() - 0.5, 0));
         if (cookTime >= 100) {
-            UCPacketHandler.sendToNearbyPlayers(this.world, this.getPosition(), new PacketUCEffect(EnumParticle.FLAME, this.getPosX(), this.getPosY() + 0.2, this.getPosZ(), 5));
-            if (!this.world.isRemote)
-                InventoryHelper.spawnItemStack(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), getCookedItem());
+            UCPacketHandler.sendToNearbyPlayers(this.level, this.blockPosition(), new PacketUCEffect(EnumParticle.FLAME, this.getX(), this.getY() + 0.2, this.getZ(), 5));
+            if (!this.level.isClientSide)
+                InventoryHelper.dropItemStack(this.level, this.getX(), this.getY(), this.getZ(), getCookedItem());
             this.remove();
             return;
         }
-        if (this.ticksExisted % 5 == 0) {
+        if (this.tickCount % 5 == 0) {
             if (!isCustomNameVisible())
                 setCustomNameVisible(true);
             setCustomName(new StringTextComponent(cookTime + "%"));
@@ -68,25 +68,25 @@ public class CookingItemEntity extends ItemEntity {
 
     public void setCookingTime(int time) {
 
-        this.dataManager.set(COOKING_TIME, Integer.valueOf(time));
+        this.entityData.set(COOKING_TIME, Integer.valueOf(time));
     }
 
     public int getCookingTime() {
 
-        return this.dataManager.get(COOKING_TIME).intValue();
+        return this.entityData.get(COOKING_TIME).intValue();
     }
 
     private ItemStack getCookedItem() {
 
         AtomicReference<ItemStack> result = new AtomicReference<>(new ItemStack(UCItems.USELESS_LUMP.get()));
-        this.world.getRecipeManager().getRecipe(UCRecipes.HEATER_TYPE, wrap(this.getItem()), this.world)
+        this.level.getRecipeManager().getRecipeFor(UCRecipes.HEATER_TYPE, wrap(this.getItem()), this.level)
                 .ifPresent(recipe -> {
-                   result.set(recipe.getRecipeOutput().copy());
+                   result.set(recipe.getResultItem().copy());
                    result.get().setCount(this.getItem().getCount());
                 });
-        this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, wrap(this.getItem()), this.world)
+        this.level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, wrap(this.getItem()), this.level)
                 .ifPresent(recipe -> {
-                   result.set(recipe.getRecipeOutput().copy());
+                   result.set(recipe.getResultItem().copy());
                    result.get().setCount(this.getItem().getCount());
                 });
         return result.get();
@@ -95,7 +95,7 @@ public class CookingItemEntity extends ItemEntity {
     private Inventory wrap(ItemStack stack) {
 
         Inventory inv = new Inventory(1);
-        inv.setInventorySlotContents(0, stack);
+        inv.setItem(0, stack);
 
         return inv;
     }

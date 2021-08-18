@@ -21,18 +21,18 @@ public class EmblemTransformation extends ItemCurioUC {
     private void onHitEntity(LivingHurtEvent event) {
 
         if (event.getAmount() <= 0 || event.getEntityLiving() instanceof PlayerEntity) return;
-        if (!(event.getSource().getImmediateSource() instanceof PlayerEntity)) return;
-        if (!hasCurio((LivingEntity)event.getSource().getImmediateSource())) return;
+        if (!(event.getSource().getDirectEntity() instanceof PlayerEntity)) return;
+        if (!hasCurio((LivingEntity)event.getSource().getDirectEntity())) return;
 
         Random rand = new Random();
         if (rand.nextInt(100) == 0) {
             LivingEntity elb = event.getEntityLiving();
-            EntityType type = Registry.ENTITY_TYPE.getByValue(rand.nextInt(Registry.ENTITY_TYPE.getEntries().size()));
-            Entity entity = type.create(elb.getEntityWorld());
+            EntityType type = Registry.ENTITY_TYPE.byId(rand.nextInt(Registry.ENTITY_TYPE.entrySet().size()));
+            Entity entity = type.create(elb.getCommandSenderWorld());
             if (!(entity instanceof LivingEntity)) return;
 
-            entity.setPositionAndRotation(elb.getPosX(), elb.getPosY(), elb.getPosZ(), elb.rotationYaw, elb.rotationPitch);
-            elb.getEntityWorld().addEntity(entity);
+            entity.absMoveTo(elb.getX(), elb.getY(), elb.getZ(), elb.yRot, elb.xRot);
+            elb.getCommandSenderWorld().addFreshEntity(entity);
             elb.remove();
         }
     }

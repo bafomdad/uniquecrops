@@ -38,7 +38,7 @@ public class TileDigger extends BaseTileUC {
             startDig(digWorld);
         }
         if (canDig(digWorld)) {
-            if (digWorld.getTileEntity(digPos) != null) {
+            if (digWorld.getBlockEntity(digPos) != null) {
                 advance(digWorld);
                 return true;
             }
@@ -55,12 +55,12 @@ public class TileDigger extends BaseTileUC {
 
         if (digPos == BlockPos.ZERO) return false;
         BlockState digState = digWorld.getBlockState(digPos);
-        if (digState.getBlockHardness(digWorld, digPos) < 0 || digState.getBlock() instanceof FarmlandBlock || digState.getBlock() instanceof CropsBlock || digState.getBlock() instanceof BaseCropsBlock) {
+        if (digState.getDestroySpeed(digWorld, digPos) < 0 || digState.getBlock() instanceof FarmlandBlock || digState.getBlock() instanceof CropsBlock || digState.getBlock() instanceof BaseCropsBlock) {
             advance(digWorld);
             return false;
         }
         ChunkPos cPos = new ChunkPos(digPos);
-        if (digPos.getX() > cPos.getXEnd() && digPos.getZ() > cPos.getZEnd()) {
+        if (digPos.getX() > cPos.getMaxBlockX() && digPos.getZ() > cPos.getMaxBlockZ()) {
             jobDone = true;
             return false;
         }
@@ -69,16 +69,16 @@ public class TileDigger extends BaseTileUC {
 
     private boolean setQuarriedBlock(World digWorld, BlockState digState) {
 
-        if (digWorld.isAirBlock(getPos().up())) {
+        if (digWorld.isEmptyBlock(getBlockPos().above())) {
             digWorld.destroyBlock(digPos, false);
             if (!digState.getMaterial().isLiquid())
-                digWorld.setBlockState(getPos().up(), digState, 3);
+                digWorld.setBlock(getBlockPos().above(), digState, 3);
             return true;
         }
-        ItemStack digStack = digState.getBlock().getItem(digWorld, digPos, digState);
+        ItemStack digStack = digState.getBlock().getCloneItemStack(digWorld, digPos, digState);
         if (digStack.isEmpty()) return true;
 
-        TileEntity tile = digWorld.getTileEntity(getPos().up());
+        TileEntity tile = digWorld.getBlockEntity(getBlockPos().above());
         LazyOptional<IItemHandler> inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
         if (!inventory.isPresent()) return false;
 
@@ -93,26 +93,26 @@ public class TileDigger extends BaseTileUC {
 
     private void startDig(World digWorld) {
 
-        ChunkPos chunkPos = new ChunkPos(getPos());
-        digPos = new BlockPos(chunkPos.getXStart(), getPos().getY(), chunkPos.getZStart());
+        ChunkPos chunkPos = new ChunkPos(getBlockPos());
+        digPos = new BlockPos(chunkPos.getMinBlockX(), getBlockPos().getY(), chunkPos.getMinBlockZ());
     }
 
     private void advance(World digWorld) {
 
         if (digPos.getY() >= 1) {
-            digPos = digPos.down();
+            digPos = digPos.below();
         }
         if (digPos.getY() < 1) {
             ChunkPos cPos = new ChunkPos(digPos);
-            if (digPos.getX() < cPos.getXEnd()) {
-                digPos = digPos.add(1, getPos().getY(), 0);
-                if (digWorld.isAirBlock(digPos))
+            if (digPos.getX() < cPos.getMaxBlockX()) {
+                digPos = digPos.offset(1, getBlockPos().getY(), 0);
+                if (digWorld.isEmptyBlock(digPos))
                     advance(digWorld);
                 return;
             }
-            if (digPos.getZ() < cPos.getZEnd()) {
-                digPos = digPos.add(-15, getPos().getY(), 1);
-                if (digWorld.isAirBlock(digPos))
+            if (digPos.getZ() < cPos.getMaxBlockZ()) {
+                digPos = digPos.offset(-15, getBlockPos().getY(), 1);
+                if (digWorld.isEmptyBlock(digPos))
                     advance(digWorld);
                 return;
             }
@@ -127,14 +127,14 @@ public class TileDigger extends BaseTileUC {
     @Override
     public void writeCustomNBT(CompoundNBT tag) {
 
-        tag.putLong("UC:digPos", digPos.toLong());
+        tag.putLong("UC:digPos", digPos.asLong());
         tag.putBoolean("UC:digJobFinished", jobDone);
     }
 
     @Override
     public void readCustomNBT(CompoundNBT tag) {
 
-        digPos = BlockPos.fromLong(tag.getLong("UC:digPos"));
+        digPos = BlockPos.of(tag.getLong("UC:digPos"));
         jobDone = tag.getBoolean("UC:digJobFinished");
     }
 }

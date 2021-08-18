@@ -35,11 +35,11 @@ public class Enderlily extends BaseCropsBlock {
 
         if (event.getAttackDamage() > 0) {
             BlockPos targetPos = new BlockPos(event.getTarget());
-            BlockPos.getAllInBoxMutable(targetPos.add(-2, -1, -2), targetPos.add(2, 1, 2))
+            BlockPos.betweenClosed(targetPos.offset(-2, -1, -2), targetPos.offset(2, 1, 2))
                     .forEach(loopPos -> {
-                        BlockState loopState = event.getPlayer().world.getBlockState(loopPos);
+                        BlockState loopState = event.getPlayer().level.getBlockState(loopPos);
                         if (loopState.getBlock() == this) {
-                            if (this.isEnderlilyGrown(event.getPlayer().world, loopPos, loopState))
+                            if (this.isEnderlilyGrown(event.getPlayer().level, loopPos, loopState))
                                 return;
                         }
                     });
@@ -54,7 +54,7 @@ public class Enderlily extends BaseCropsBlock {
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         this.enderlilyTele(world, pos, state);
     }
@@ -62,9 +62,9 @@ public class Enderlily extends BaseCropsBlock {
     private boolean isEnderlilyGrown(World world, BlockPos pos, BlockState state) {
 
         if (isMaxAge(state)) {
-            for (int i = 0; i <= world.rand.nextInt(1) + 1; i++)
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.ENDER_PEARL));
-            world.setBlockState(pos, this.withAge(0), 3);
+            for (int i = 0; i <= world.random.nextInt(1) + 1; i++)
+                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.ENDER_PEARL));
+            world.setBlock(pos, this.setValueAge(0), 3);
             return true;
         }
         return false;
@@ -75,18 +75,18 @@ public class Enderlily extends BaseCropsBlock {
         if (isMaxAge(state)) return;
 
         List<BlockPos> targetList = new ArrayList<>();
-        for (BlockPos loopPos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 0, 4))) {
+        for (BlockPos loopPos : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 0, 4))) {
             Block loopBlock = world.getBlockState(loopPos).getBlock();
-            if ((world.isAirBlock(loopPos) || (loopBlock instanceof IGrowable && loopBlock != this)) && world.getBlockState(loopPos.down()).getBlock() instanceof FarmlandBlock) {
-                targetList.add(loopPos.toImmutable());
+            if ((world.isEmptyBlock(loopPos) || (loopBlock instanceof IGrowable && loopBlock != this)) && world.getBlockState(loopPos.below()).getBlock() instanceof FarmlandBlock) {
+                targetList.add(loopPos.immutable());
             }
         }
         targetList = UCUtils.makeCollection(targetList, true);
         for (BlockPos loopPos : targetList) {
-            if (world.rand.nextInt(7) == 0) {
+            if (world.random.nextInt(7) == 0) {
                 BlockState saveState = world.getBlockState(loopPos);
-                world.setBlockState(loopPos, this.withAge(getAge(state) + 1), 2);
-                world.setBlockState(pos, saveState);
+                world.setBlock(loopPos, this.setValueAge(getAge(state) + 1), 2);
+                world.setBlockAndUpdate(pos, saveState);
                 UCPacketHandler.sendToNearbyPlayers(world, loopPos, new PacketUCEffect(EnumParticle.PORTAL, loopPos.getX(), loopPos.getY(), loopPos.getZ(), 6));
                 UCPacketHandler.sendToNearbyPlayers(world, pos, new PacketUCEffect(EnumParticle.PORTAL, pos.getX(), pos.getY(), pos.getZ(), 6));
                 return;

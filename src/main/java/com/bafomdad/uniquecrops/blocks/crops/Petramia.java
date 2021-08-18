@@ -47,20 +47,20 @@ public class Petramia extends BaseCropsBlock {
     private boolean transformBedrock(World world, BlockPos pos) {
 
         List<BlockPos> toConvert = new ArrayList<>();
-        Iterable<BlockPos> poslist = BlockPos.getAllInBoxMutable(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, 0, RANGE));
+        Iterable<BlockPos> poslist = BlockPos.betweenClosed(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, 0, RANGE));
         Iterator posit = poslist.iterator();
         while (posit.hasNext()) {
             BlockPos looppos = (BlockPos)posit.next();
-            if (!world.isAirBlock(looppos) && world.getBlockState(looppos).getBlock() == (true ? Blocks.OBSIDIAN: Blocks.BEDROCK)) {
-                if (world.rand.nextBoolean()) {
-                    toConvert.add(looppos.toImmutable());
+            if (!world.isEmptyBlock(looppos) && world.getBlockState(looppos).getBlock() == (true ? Blocks.OBSIDIAN: Blocks.BEDROCK)) {
+                if (world.random.nextBoolean()) {
+                    toConvert.add(looppos.immutable());
                 }
             }
         }
         if (!toConvert.isEmpty()) {
             for (BlockPos loopPos : UCUtils.makeCollection(toConvert, true)) {
-                if (world.rand.nextBoolean()) {
-                    world.setBlockState(loopPos, UCBlocks.DARK_BLOCK.get().getDefaultState(), 2);
+                if (world.random.nextBoolean()) {
+                    world.setBlock(loopPos, UCBlocks.DARK_BLOCK.get().defaultBlockState(), 2);
                     UCPacketHandler.sendToNearbyPlayers(world, loopPos, new PacketUCEffect(EnumParticle.CLOUD, loopPos.getX(), loopPos.getY() + 0.5, loopPos.getZ(), 6));
                     return true;
                 }
@@ -72,7 +72,7 @@ public class Petramia extends BaseCropsBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        if (ctx.getPos().up().getY() > 9) return Blocks.AIR.getDefaultState();
+        if (ctx.getClickedPos().above().getY() > 9) return Blocks.AIR.defaultBlockState();
         return super.getStateForPlacement(ctx);
     }
 }

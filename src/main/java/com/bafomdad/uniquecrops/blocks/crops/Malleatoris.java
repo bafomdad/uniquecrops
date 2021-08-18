@@ -31,17 +31,17 @@ public class Malleatoris extends BaseCropsBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         if (this.getAge(state) < getMaxAge()) return ActionResultType.PASS;
 
-        if (!world.isRemote && hand == Hand.MAIN_HAND) {
-            ItemStack stacky = player.getHeldItemMainhand();
+        if (!world.isClientSide && hand == Hand.MAIN_HAND) {
+            ItemStack stacky = player.getMainHandItem();
             if (stacky.isEmpty() || (!stacky.isEmpty() && !stacky.isDamaged())) return ActionResultType.PASS;
 
             int repair = stacky.getMaxDamage() / 2;
-            stacky.setDamage(Math.max(stacky.getDamage() - repair, 0));
-            world.setBlockState(pos, this.withAge(0), 2);
+            stacky.setDamageValue(Math.max(stacky.getDamageValue() - repair, 0));
+            world.setBlock(pos, this.setValueAge(0), 2);
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.PASS;
@@ -50,12 +50,12 @@ public class Malleatoris extends BaseCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (!world.isRemote) {
-            AxisAlignedBB aabb = new AxisAlignedBB(pos.add(-4, 0, -4), pos.add(4, 1, 4));
-            List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, aabb);
+        if (!world.isClientSide) {
+            AxisAlignedBB aabb = new AxisAlignedBB(pos.offset(-4, 0, -4), pos.offset(4, 1, 4));
+            List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, aabb);
             for (ItemEntity item : items) {
                 if (calcGrowth(item, rand)) {
-                    world.setBlockState(pos, this.withAge(getAge(state) + 1), 2);
+                    world.setBlock(pos, this.setValueAge(getAge(state) + 1), 2);
                     return;
                 }
             }
@@ -70,10 +70,10 @@ public class Malleatoris extends BaseCropsBlock {
         double weight = damage / 2;
         double chance = Math.random() * 100;
         if (chance < weight) {
-            int newDamage = (int)damage + stack.getItem().getDamage();
+            int newDamage = (int)damage + stack.getItem().getDamageValue();
             if (newDamage < stack.getItem().getMaxDamage()) {
-                stack.getItem().setDamage(stack.getItem().getDamage() + (int)damage);
-                UCPacketHandler.sendToNearbyPlayers(stack.world, stack.getPosition(), new PacketUCEffect(EnumParticle.CLOUD, stack.getPosX(), stack.getPosY(), stack.getPosZ(), 6));
+                stack.getItem().setDamageValue(stack.getItem().getDamageValue() + (int)damage);
+                UCPacketHandler.sendToNearbyPlayers(stack.level, stack.blockPosition(), new PacketUCEffect(EnumParticle.CLOUD, stack.getX(), stack.getY(), stack.getZ(), 6));
                 return true;
             }
         }

@@ -22,35 +22,35 @@ public class UCWorldData extends WorldSavedData {
     }
 
     @Override
-    public void read(CompoundNBT tag) {
+    public void load(CompoundNBT tag) {
 
-        ServerLifecycleHooks.getCurrentServer().getWorlds().forEach(sw -> {
-           String s = sw.getDimensionKey().getLocation().toString();
+        ServerLifecycleHooks.getCurrentServer().getAllLevels().forEach(sw -> {
+           String s = sw.dimension().location().toString();
            ListNBT savedList = tag.getList(s, 10);
-           UCProtectionHandler.getInstance().clearQueue(sw.getDimensionKey());
+           UCProtectionHandler.getInstance().clearQueue(sw.dimension());
            for (int i = 0; i < savedList.size(); i++) {
                CompoundNBT saveTag = savedList.getCompound(i);
                ChunkPos cPos = new ChunkPos(saveTag.getInt("chunkX"), saveTag.getInt("chunkZ"));
-               UCProtectionHandler.getInstance().addChunk(sw.getDimensionKey(), cPos, false);
+               UCProtectionHandler.getInstance().addChunk(sw.dimension(), cPos, false);
            }
         });
 
         ListNBT tagList = tag.getList("savedOres", 10);
         for (int i = 0; i < tagList.size(); i++) {
             CompoundNBT chunkTag = tagList.getCompound(i);
-            BlockPos pos = BlockPos.fromLong(chunkTag.getLong("blockPos"));
-            BlockPos cPos = BlockPos.fromLong(chunkTag.getLong("chunkPos"));
+            BlockPos pos = BlockPos.of(chunkTag.getLong("blockPos"));
+            BlockPos cPos = BlockPos.of(chunkTag.getLong("chunkPos"));
             UCOreHandler.getInstance().getSaveInfo().put(new ChunkPos(cPos.getX(), cPos.getZ()), pos);
         }
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT tag) {
+    public CompoundNBT save(CompoundNBT tag) {
 
         String[] allDims = UCProtectionHandler.getInstance().getUnsavedDims().toArray(new String[0]);
         ListNBT savedDims = new ListNBT();
         for (String s : allDims) {
-            RegistryKey<World> world = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(s));
+            RegistryKey<World> world = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(s));
             if (world != null) {
                 ListNBT savedList = new ListNBT();
                 for (ChunkPos pos : UCProtectionHandler.getInstance().getChunkInfo(world)) {
@@ -66,8 +66,8 @@ public class UCWorldData extends WorldSavedData {
         ListNBT tagList = new ListNBT();
          for (ChunkPos cPos : UCOreHandler.getInstance().getUnsavedChunks()) {
              CompoundNBT chunkTag = new CompoundNBT();
-             chunkTag.putLong("chunkPos", new BlockPos(cPos.x, 0, cPos.z).toLong());
-             chunkTag.putLong("blockPos", UCOreHandler.getInstance().getSaveInfo().get(cPos).toLong());
+             chunkTag.putLong("chunkPos", new BlockPos(cPos.x, 0, cPos.z).asLong());
+             chunkTag.putLong("blockPos", UCOreHandler.getInstance().getSaveInfo().get(cPos).asLong());
              tagList.add(chunkTag);
          }
          tag.put("savedOres", tagList);
@@ -76,12 +76,12 @@ public class UCWorldData extends WorldSavedData {
 
     public static UCWorldData getInstance(RegistryKey<World> worldkey) {
 
-        ServerWorld sw = ServerLifecycleHooks.getCurrentServer().getWorld(worldkey);
-        UCWorldData data = sw.getSavedData().get(UCWorldData::new, ID);
+        ServerWorld sw = ServerLifecycleHooks.getCurrentServer().getLevel(worldkey);
+        UCWorldData data = sw.getDataStorage().get(UCWorldData::new, ID);
         if (data == null) {
             data = new UCWorldData();
-            data.markDirty();
-            sw.getSavedData().set(data);
+            data.setDirty();
+            sw.getDataStorage().set(data);
         }
         return data;
     }

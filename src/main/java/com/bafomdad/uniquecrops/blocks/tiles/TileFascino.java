@@ -75,50 +75,50 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
     public void loopMissingCrops() {
 
         for (int i = 0; i < ENCHPOS.length; i++) {
-            BlockPos loopPos = pos.add(ENCHPOS[i]);
-            BlockState loopState = world.getBlockState(loopPos);
+            BlockPos loopPos = worldPosition.offset(ENCHPOS[i]);
+            BlockState loopState = level.getBlockState(loopPos);
             if (loopState.getBlock() != UCBlocks.HEXIS_CROP.get()) {
-                UCPacketHandler.sendToNearbyPlayers(world, loopPos, new PacketUCEffect(EnumParticle.SMOKE, loopPos.getX() - 0.5, loopPos.getY() + 0.1, loopPos.getZ() - 0.5, 4));
+                UCPacketHandler.sendToNearbyPlayers(level, loopPos, new PacketUCEffect(EnumParticle.SMOKE, loopPos.getX() - 0.5, loopPos.getY() + 0.1, loopPos.getZ() - 0.5, 4));
             }
         }
     }
 
     public void checkEnchants(PlayerEntity player, ItemStack staff) {
 
-            Optional<IEnchanterRecipe> fascinoRecipe = world.getRecipeManager().getRecipe(UCRecipes.ENCHANTER_TYPE, wrap(), world);
+            Optional<IEnchanterRecipe> fascinoRecipe = level.getRecipeManager().getRecipeFor(UCRecipes.ENCHANTER_TYPE, wrap(), level);
             if (!fascinoRecipe.isPresent())
-                player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.unknownrecipe"), true);
+                player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.unknownrecipe"), true);
 
             fascinoRecipe.ifPresent(recipe -> {
                     ItemStack heldItem = ItemStack.EMPTY;
                     this.showMissingCrops = false;
-                    for (ItemStack stack : player.getHeldEquipment()) {
+                    for (ItemStack stack : player.getHandSlots()) {
                         if (!stack.isEmpty() && stack.getItem().isEnchantable(stack) && stack.getItem() != UCItems.WILDWOOD_STAFF.get()) {
                             heldItem = stack;
                             break;
                         }
                     }
                     if (heldItem.isEmpty()) {
-                        player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.nothing"), true);
+                        player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.nothing"), true);
                         return;
                     }
-                    if (!recipe.getEnchantment().type.canEnchantItem(heldItem.getItem())) {
-                        player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.unenchantable",heldItem.getDisplayName()), true);
+                    if (!recipe.getEnchantment().category.canEnchant(heldItem.getItem())) {
+                        player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.unenchantable",heldItem.getDisplayName()), true);
                         return;
                     }
                     if (EnchantmentHelper.getEnchantments(heldItem).containsKey(recipe.getEnchantment())) {
-                        player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.enchantmentexists"), true);
+                        player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.enchantmentexists"), true);
                         return;
                     }
                     Map<Enchantment, Integer> enchantSet = EnchantmentHelper.getEnchantments(heldItem);
                     Set<Enchantment> enchantments = enchantSet.keySet();
                     for (Enchantment ench : enchantments) {
                         if (!ench.isCompatibleWith(recipe.getEnchantment())) {
-                            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.incompatible", ench.getName()), true);
+                            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.incompatible", ench.getDescriptionId()), true);
                             return;
                         }
                     }
-                    prepareEnchanting(player, heldItem.getEnchantmentTagList().size() + 1, staff, recipe.getCost());
+                    prepareEnchanting(player, heldItem.getEnchantmentTags().size() + 1, staff, recipe.getCost());
                     enchantItem = heldItem;
                     return;
             });
@@ -128,13 +128,13 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
 
         Inventory inv = new Inventory(getInventory().getSlots()) {
             @Override
-            public int getInventoryStackLimit() {
+            public int getMaxStackSize() {
 
                 return 1;
             }
         };
         for (int i = 0; i < getInventory().getSlots(); i++)
-            inv.setInventorySlotContents(i, getInventory().getStackInSlot(i));
+            inv.setItem(i, getInventory().getStackInSlot(i));
 
         return inv;
     }
@@ -143,42 +143,42 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
 
         int maxGrowth = 7;
         for (int i = 0; i < ENCHPOS.length; i++) {
-            BlockPos loopPos = pos.add(ENCHPOS[i]);
-            BlockState loopState = world.getBlockState(loopPos);
+            BlockPos loopPos = worldPosition.offset(ENCHPOS[i]);
+            BlockState loopState = level.getBlockState(loopPos);
             if (loopState.getBlock() == UCBlocks.HEXIS_CROP.get()) {
-                int age = loopState.get(BaseCropsBlock.AGE);
+                int age = loopState.getValue(BaseCropsBlock.AGE);
                 if (age < maxGrowth)
                     maxGrowth = age;
             }
             else {
-                player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.missingcrops"), true);
+                player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.missingcrops"), true);
                 this.showMissingCrops = true;
                 enchantItem = ItemStack.EMPTY;
                 return;
             }
         }
         if (maxGrowth < enchantmentSize) {
-            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.cropgrowth",enchantmentSize), true);
+            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.cropgrowth",enchantmentSize), true);
             enchantItem = ItemStack.EMPTY;
             return;
         }
         if (!WildwoodStaffItem.adjustPower(staff, powerCost)) {
-            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.notenoughpower", powerCost), true);
+            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.notenoughpower", powerCost), true);
             enchantItem = ItemStack.EMPTY;
             return;
         }
         stage = Stage.PREPARE;
         enchantmentCost = enchantmentSize;
-        enchanterId = player.getUniqueID();
+        enchanterId = player.getUUID();
         this.markBlockForUpdate();
-        this.markDirty();
+        this.setChanged();
     }
 
     private PlayerEntity getEnchanter() {
 
-        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.add(-RANGE, -1, -RANGE), pos.add(RANGE, 2, RANGE)));
+        List<PlayerEntity> playerList = level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(worldPosition.offset(-RANGE, -1, -RANGE), worldPosition.offset(RANGE, 2, RANGE)));
         for (PlayerEntity player : playerList) {
-            if (player.getUniqueID().equals(enchanterId)) {
+            if (player.getUUID().equals(enchanterId)) {
                 return player;
             }
         }
@@ -192,16 +192,16 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
             advanceStage();
         }
         for (int i = 0; i < ENCHPOS.length; i++) {
-            BlockPos loopPos = pos.add(ENCHPOS[i]);
-            BlockState loopState = world.getBlockState(loopPos);
+            BlockPos loopPos = worldPosition.offset(ENCHPOS[i]);
+            BlockState loopState = level.getBlockState(loopPos);
             if (loopState.getBlock() == UCBlocks.HEXIS_CROP.get()) {
-                int age = loopState.get(BaseCropsBlock.AGE);
+                int age = loopState.getValue(BaseCropsBlock.AGE);
                 if (age < (7 - enchantmentCost)) {
                     finishEnchanting();
                     break;
                 }
-                world.playEvent(2001, loopPos, Block.getStateId(loopState));
-                world.setBlockState(loopPos, loopState.with(BaseCropsBlock.AGE, Math.max(age - 1, 0)));
+                level.levelEvent(2001, loopPos, Block.getId(loopState));
+                level.setBlockAndUpdate(loopPos, loopState.setValue(BaseCropsBlock.AGE, Math.max(age - 1, 0)));
             }
             else {
                 advanceStage();
@@ -221,7 +221,7 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
             return;
         }
         ItemStack heldItem = ItemStack.EMPTY;
-        for (ItemStack stack : player.getHeldEquipment()) {
+        for (ItemStack stack : player.getHandSlots()) {
             if (!stack.isEmpty() && stack.getItem().isEnchantable(stack) && stack.getItem() != UCItems.WILDWOOD_STAFF.get()) {
                 heldItem = stack;
                 break;
@@ -229,27 +229,27 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
         }
         if (heldItem.isEmpty()) {
             advanceStage();
-            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.nothing"), true);
+            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.nothing"), true);
             enchantItem = ItemStack.EMPTY;
             return;
         }
-        if (!ItemStack.areItemsEqual(heldItem, enchantItem)) {
+        if (!ItemStack.matches(heldItem, enchantItem)) {
             advanceStage();
-            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.nomatch"), true);
+            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.nomatch"), true);
             enchantItem = ItemStack.EMPTY;
             return;
         }
-        Optional<IEnchanterRecipe> enchanterRecipe = world.getRecipeManager().getRecipe(UCRecipes.ENCHANTER_TYPE, wrap(), world);
+        Optional<IEnchanterRecipe> enchanterRecipe = level.getRecipeManager().getRecipeFor(UCRecipes.ENCHANTER_TYPE, wrap(), level);
         if (!enchanterRecipe.isPresent()) {
             advanceStage();
-            player.sendStatusMessage(new TranslationTextComponent("uniquecrops.enchanting.unknownrecipe"), true);
+            player.displayClientMessage(new TranslationTextComponent("uniquecrops.enchanting.unknownrecipe"), true);
         }
         if (enchanterRecipe.isPresent()) {
             IEnchanterRecipe recipe = enchanterRecipe.get();
             recipe.applyEnchantment(heldItem);
             this.clearInv();
             advanceStage();
-            world.playEvent(2004, getPos().add(0, 0.7, 0), 0);
+            level.levelEvent(2004, getBlockPos().offset(0, 0.7, 0), 0);
         }
         enchantItem = ItemStack.EMPTY;
     }
@@ -257,8 +257,8 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
     public void loopEffects() {
 
         for (int i = 0; i < ENCHPOS.length; i++) {
-            BlockPos loopPos = pos.add(ENCHPOS[i]);
-            BlockState loopState = world.getBlockState(loopPos);
+            BlockPos loopPos = worldPosition.offset(ENCHPOS[i]);
+            BlockState loopState = level.getBlockState(loopPos);
             if (loopState.getBlock() == UCBlocks.HEXIS_CROP.get()) {
                 int size = 4;
                 for (int j = 0; j < size; ++j) {
@@ -266,7 +266,7 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
                         double x = ((double)j + 0.5D) / 4.0D;
                         double z = ((double)k + 0.5D) / 4.0D;
 
-                        world.addParticle(new BlockParticleData(ParticleTypes.BLOCK, loopState), (double)loopPos.getX() + x, (double)loopPos.getY() + loopState.getShape(world, loopPos).getEnd(Direction.Axis.Y), (double)loopPos.getZ() + z, ((double)this.getPos().getX() - loopPos.getX()) / 8, 0, ((double)this.getPos().getZ() - loopPos.getZ()) / 8);
+                        level.addParticle(new BlockParticleData(ParticleTypes.BLOCK, loopState), (double)loopPos.getX() + x, (double)loopPos.getY() + loopState.getShape(level, loopPos).max(Direction.Axis.Y), (double)loopPos.getZ() + z, ((double)this.getBlockPos().getX() - loopPos.getX()) / 8, 0, ((double)this.getBlockPos().getZ() - loopPos.getZ()) / 8);
                     }
                 }
             }
@@ -301,7 +301,7 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
         stage = Stage.values()[mod];
         this.enchantingTicks = 0;
         this.markBlockForUpdate();
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
@@ -331,7 +331,7 @@ public class TileFascino extends BaseTileUC implements ITickableTileEntity {
         enchantmentCost = tag.getInt(UCStrings.TAG_ENCHANT_COST);
 
         if (tag.contains("enchItem"))
-            ItemStack.read(tag.getCompound("enchItem"));
+            ItemStack.of(tag.getCompound("enchItem"));
     }
 
     public enum Stage {

@@ -37,14 +37,14 @@ public class TileExedo extends BaseTileUC implements ITickableTileEntity {
     public void tick() {
 
         ++timeAfterWiggle;
-//        if (!world.isRemote && timeAfterWiggle >= maxTime)
+//        if (!level.isClientSide && timeAfterWiggle >= maxTime)
 //            nomAndDrop();
 
-        if (!world.isRemote && isWiggling && --wiggleTime <= 0) {
+        if (!level.isClientSide && isWiggling && --wiggleTime <= 0) {
             isWiggling = false;
             UCPacketDispatcher.dispatchTEToNearbyPlayers(this);
         }
-        if (world.getGameTime() % (searchTime - world.rand.nextInt(20)) == 0) {
+        if (level.getGameTime() % (searchTime - level.random.nextInt(20)) == 0) {
             if (!isWiggling) {
                 LivingEntity elb = getTargetedEntity();
                 if (elb != null) {
@@ -52,7 +52,7 @@ public class TileExedo extends BaseTileUC implements ITickableTileEntity {
                         chomp();
                         return;
                     }
-                    entityId = elb.getUniqueID();
+                    entityId = elb.getUUID();
                     wiggle();
                 }
             }
@@ -71,7 +71,7 @@ public class TileExedo extends BaseTileUC implements ITickableTileEntity {
 
         timeAfterWiggle = 0;
         foundEntity = false;
-        this.markDirty();
+        this.setChanged();
         nomAndDrop();
         UCPacketDispatcher.dispatchTEToNearbyPlayers(this);
     }
@@ -80,21 +80,21 @@ public class TileExedo extends BaseTileUC implements ITickableTileEntity {
 
         LivingEntity elb = UCUtils.getTaggedEntity(entityId);
         if (elb != null && elb.isAlive()) {
-            float f = (float) MathHelper.atan2(elb.getPosZ() - pos.getZ(), elb.getPosX() - pos.getX());
-            EvokerFangsEntity evoke = new EvokerFangsEntity(world, elb.getPosX(), elb.getPosY(), elb.getPosZ(), f, 0, null);
-            world.addEntity(evoke);
-            elb.attackEntityFrom(DamageSource.MAGIC, elb.getMaxHealth());
+            float f = (float) MathHelper.atan2(elb.getZ() - worldPosition.getZ(), elb.getX() - worldPosition.getX());
+            EvokerFangsEntity evoke = new EvokerFangsEntity(level, elb.getX(), elb.getY(), elb.getZ(), f, 0, null);
+            level.addFreshEntity(evoke);
+            elb.hurt(DamageSource.MAGIC, elb.getMaxHealth());
         }
         entityId = null;
     }
 
     private LivingEntity getTargetedEntity() {
 
-        if (!world.isRemote) {
-            List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(pos.add(-5, 0, -5), pos.add(5, 2, 5)));
+        if (!level.isClientSide) {
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(worldPosition.offset(-5, 0, -5), worldPosition.offset(5, 2, 5)));
             for (LivingEntity elb : entities) {
                 if (!(elb instanceof PlayerEntity) && !elb.isInvulnerable()) {
-                    entityId = elb.getUniqueID();
+                    entityId = elb.getUUID();
                     return elb;
                 }
             }

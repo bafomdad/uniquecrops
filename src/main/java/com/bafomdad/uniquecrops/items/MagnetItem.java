@@ -21,23 +21,23 @@ public class MagnetItem extends ItemBaseUC implements IBookUpgradeable {
 
     public MagnetItem() {
 
-        super(UCItems.defaultBuilder().maxStackSize(1));
+        super(UCItems.defaultBuilder().stacksTo(1));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
-        if (entity instanceof PlayerEntity && !world.isRemote && NBTUtils.getBoolean(stack, UCStrings.ITEM_ACTIVATED, false)) {
+        if (entity instanceof PlayerEntity && !world.isClientSide && NBTUtils.getBoolean(stack, UCStrings.ITEM_ACTIVATED, false)) {
             PlayerEntity player = (PlayerEntity)entity;
             if (player.isCreative() || player.isSpectator()) return;
 
-            if (!player.isSneaking()) {
+            if (!player.isCrouching()) {
                 int range = 2 + Math.max(this.getLevel(stack), 0);
-                List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(player.getPosX() - range, player.getPosY() - range, player.getPosZ() - range, player.getPosX() + range, player.getPosY() + range, player.getPosZ() + range));
+                List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range));
                 if (!items.isEmpty()) {
                     for (ItemEntity ei : items) {
-                        if (ei.isAlive() && !ei.cannotPickup())
-                            ei.onCollideWithPlayer(player);
+                        if (ei.isAlive() && !ei.hasPickUpDelay())
+                            ei.playerTouch(player);
                     }
                 }
             }
@@ -45,13 +45,13 @@ public class MagnetItem extends ItemBaseUC implements IBookUpgradeable {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        if (hand == Hand.MAIN_HAND && !world.isRemote() && player.isSneaking()) {
-            NBTUtils.setBoolean(player.getHeldItemMainhand(), UCStrings.ITEM_ACTIVATED, !NBTUtils.getBoolean(player.getHeldItemMainhand(), UCStrings.ITEM_ACTIVATED, false));
-            return ActionResult.resultSuccess(player.getHeldItemMainhand());
+        if (hand == Hand.MAIN_HAND && !world.isClientSide() && player.isCrouching()) {
+            NBTUtils.setBoolean(player.getMainHandItem(), UCStrings.ITEM_ACTIVATED, !NBTUtils.getBoolean(player.getMainHandItem(), UCStrings.ITEM_ACTIVATED, false));
+            return ActionResult.success(player.getMainHandItem());
         }
-        return ActionResult.resultPass(player.getHeldItem(hand));
+        return ActionResult.pass(player.getItemInHand(hand));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MagnetItem extends ItemBaseUC implements IBookUpgradeable {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
 
         return NBTUtils.getBoolean(stack, UCStrings.ITEM_ACTIVATED, false);
     }

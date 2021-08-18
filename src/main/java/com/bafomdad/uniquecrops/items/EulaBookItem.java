@@ -17,17 +17,17 @@ public class EulaBookItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        ItemStack book = player.getHeldItemMainhand();
-        if (!world.isRemote) {
+        ItemStack book = player.getMainHandItem();
+        if (!world.isClientSide) {
             EulaBookEntity bookEntity = new EulaBookEntity(player);
-            bookEntity.func_234612_a_(player, player.rotationPitch, player.rotationYaw, -20.0F, 0.5F, 1.0F);
-            world.addEntity(bookEntity);
+            bookEntity.shootFromRotation(player, player.xRot, player.yRot, -20.0F, 0.5F, 1.0F);
+            world.addFreshEntity(bookEntity);
         }
         if (!player.isCreative())
             book.shrink(1);
 
-        return ActionResult.func_233538_a_(book, world.isRemote());
+        return ActionResult.sidedSuccess(book, world.isClientSide());
     }
 }

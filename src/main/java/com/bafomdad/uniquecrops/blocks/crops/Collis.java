@@ -31,7 +31,7 @@ public class Collis extends BaseCropsBlock {
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         checkHighplant(world, pos, state);
     }
@@ -40,9 +40,9 @@ public class Collis extends BaseCropsBlock {
 
         int chanceByHeight = Math.round(pos.getY() / 16);
 
-        if (world.getLight(pos.up()) >= 9) {
-            if (!isMaxAge(state) && world.rand.nextInt(16 - chanceByHeight) == 0) {
-                world.setBlockState(pos, this.withAge(getAge(state) + 1), 2);
+        if (world.getLightEmission(pos.above()) >= 9) {
+            if (!isMaxAge(state) && world.random.nextInt(16 - chanceByHeight) == 0) {
+                world.setBlock(pos, this.setValueAge(getAge(state) + 1), 2);
             }
         }
     }
@@ -50,7 +50,7 @@ public class Collis extends BaseCropsBlock {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        if (ctx.getPos().getY() < 100) return Blocks.AIR.getDefaultState();
+        if (ctx.getClickedPos().getY() < 100) return Blocks.AIR.defaultBlockState();
         return super.getStateForPlacement(ctx);
     }
 }

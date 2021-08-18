@@ -32,26 +32,26 @@ import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class AbstractBarrelBlock extends Block implements IWaterLoggable {
 
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-    public static final VoxelShape BARREL_SHAPE = VoxelShapes.create(0.75D, 0.0D, 0.75D, 0.25D, 0.8D, 0.25D);
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final VoxelShape BARREL_SHAPE = VoxelShapes.box(0.75D, 0.0D, 0.75D, 0.25D, 0.8D, 0.25D);
 
     public AbstractBarrelBlock() {
 
-        super(Properties.create(Material.WOOD).hardnessAndResistance(3.0F, 5.0F).sound(SoundType.WOOD));
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(WATERLOGGED, false));
+        super(Properties.of(Material.WOOD).strength(3.0F, 5.0F).sound(SoundType.WOOD));
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(FACING, WATERLOGGED);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
 
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Override
@@ -61,10 +61,10 @@ public class AbstractBarrelBlock extends Block implements IWaterLoggable {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileBarrel)
                 NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)tile, pos);
         }
@@ -72,36 +72,36 @@ public class AbstractBarrelBlock extends Block implements IWaterLoggable {
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
         if (state.getBlock() == this) return;
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileBarrel) {
             tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)
                     .ifPresent(inventory -> {
                         for (int i = 0; i < inventory.getSlots(); i++) {
                             ItemStack stack = inventory.getStackInSlot(i);
-                            if (!stack.isEmpty() && !world.isRemote)
-                                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                            if (!stack.isEmpty() && !world.isClientSide)
+                                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
                         }
                     });
         }
-        super.onReplaced(state, world, pos, newState, isMoving);
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getPos());
-        return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing()).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection()).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState state, Direction side, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState state, Direction side, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
 
-        if (state.get(WATERLOGGED))
-            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (state.getValue(WATERLOGGED))
+            world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 
         return state;
     }

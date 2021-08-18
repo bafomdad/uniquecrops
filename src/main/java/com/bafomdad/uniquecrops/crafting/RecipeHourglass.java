@@ -60,27 +60,27 @@ public class RecipeHourglass implements IHourglassRecipe {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecipeHourglass> {
 
         @Override
-        public RecipeHourglass read(ResourceLocation id, JsonObject obj) {
+        public RecipeHourglass fromJson(ResourceLocation id, JsonObject obj) {
 
-            BlockState input = JsonUtils.readBlockState(JSONUtils.getJsonObject(obj, "input"));
-            BlockState output = JsonUtils.readBlockState(JSONUtils.getJsonObject(obj, "output"));
+            BlockState input = JsonUtils.readBlockState(JSONUtils.getAsJsonObject(obj, "input"));
+            BlockState output = JsonUtils.readBlockState(JSONUtils.getAsJsonObject(obj, "output"));
 
             return new RecipeHourglass(id, input, output);
         }
 
         @Override
-        public void write(PacketBuffer buff, RecipeHourglass recipe) {
+        public void toNetwork(PacketBuffer buff, RecipeHourglass recipe) {
 
-            buff.writeVarInt(Block.getStateId(recipe.input));
-            buff.writeVarInt(Block.getStateId(recipe.output));
+            buff.writeVarInt(Block.getId(recipe.input));
+            buff.writeVarInt(Block.getId(recipe.output));
         }
 
         @Nullable
         @Override
-        public RecipeHourglass read(ResourceLocation id, PacketBuffer buff) {
+        public RecipeHourglass fromNetwork(ResourceLocation id, PacketBuffer buff) {
 
-            BlockState input = Block.getStateById(buff.readVarInt());
-            BlockState output = Block.getStateById(buff.readVarInt());
+            BlockState input = Block.stateById(buff.readVarInt());
+            BlockState output = Block.stateById(buff.readVarInt());
             return new RecipeHourglass(id, input, output);
         }
     }

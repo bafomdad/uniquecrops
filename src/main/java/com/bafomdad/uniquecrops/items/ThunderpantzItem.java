@@ -35,18 +35,18 @@ public class ThunderpantzItem extends ItemArmorUC implements IBookUpgradeable {
         if (!(event.getEntityLiving() instanceof PlayerEntity)) return;
 
         PlayerEntity player = (PlayerEntity)event.getEntityLiving();
-        if (event.getSource().getImmediateSource() instanceof LivingEntity) {
-            LivingEntity el = (LivingEntity)event.getSource().getImmediateSource();
-            ItemStack pants = player.getItemStackFromSlot(EquipmentSlotType.LEGS);
+        if (event.getSource().getDirectEntity() instanceof LivingEntity) {
+            LivingEntity el = (LivingEntity)event.getSource().getDirectEntity();
+            ItemStack pants = player.getItemBySlot(EquipmentSlotType.LEGS);
             if (pants.getItem() == this) {
                 if (getCharge(pants) < 1F) return;
 
                 event.setCanceled(true);
                 float toDamage = getCharge(pants);
-                LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create(el.world);
-                bolt.setEffectOnly(true);
-                player.world.addEntity(bolt);
-                el.attackEntityFrom(DamageSource.LIGHTNING_BOLT, toDamage);
+                LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create(el.level);
+                bolt.setVisualOnly(true);
+                player.level.addFreshEntity(bolt);
+                el.hurt(DamageSource.LIGHTNING_BOLT, toDamage);
                 setCharge(pants, 0F);
                 return;
             }
@@ -56,21 +56,21 @@ public class ThunderpantzItem extends ItemArmorUC implements IBookUpgradeable {
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
 
-        if (world.isRemote) return;
+        if (world.isClientSide) return;
         if (getCharge(stack) >= MAX_CHARGE) return;
 
-        if (player.isOnGround() && player.isSneaking()) {
-            BlockPos pos = new BlockPos(MathHelper.floor(player.getPosX()), MathHelper.floor(player.getPosY()), MathHelper.floor(player.getPosZ()));
+        if (player.isOnGround() && player.isCrouching()) {
+            BlockPos pos = new BlockPos(MathHelper.floor(player.getX()), MathHelper.floor(player.getY()), MathHelper.floor(player.getZ()));
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() instanceof CarpetBlock) {
-                if (world.rand.nextInt(11 - Math.max(this.getLevel(stack), 0)) == 0)
-                    setCharge(stack, getCharge(stack) + world.rand.nextFloat());
+                if (world.random.nextInt(11 - Math.max(this.getLevel(stack), 0)) == 0)
+                    setCharge(stack, getCharge(stack) + world.random.nextFloat());
             }
         }
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 
         return false;
     }

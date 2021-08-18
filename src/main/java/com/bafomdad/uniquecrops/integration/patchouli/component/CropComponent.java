@@ -38,24 +38,24 @@ public class CropComponent implements ICustomComponent {
     public void render(MatrixStack ms, IComponentRenderContext ctx, float pticks, int mouseX, int mouseY) {
 
         Minecraft mc = Minecraft.getInstance();
-        FontRenderer font = mc.fontRenderer;
-        mc.textureManager.bindTexture(RES);
-        ITextComponent name = state.getBlock().getTranslatedName();
-        ms.push();
+        FontRenderer font = mc.font;
+        mc.textureManager.bind(RES);
+        ITextComponent name = state.getBlock().getName();
+        ms.pushPose();
         ms.scale(0.9F, 0.9F, 0.9F);
         ctx.getGui().blit(ms, x / 2 - 25, y / 2 - 60, 0, 0, 175, 228);
-        ms.pop();
-        font.func_243248_b(ms, name, x + 102 / 2 - font.getStringPropertyWidth(name) / 2, y + 41, 0);
-        ms.push();
+        ms.popPose();
+        font.drawShadow(ms, name, x + 102 / 2 - font.width(name) / 2, y + 41, 0);
+        ms.pushPose();
         ms.translate(25, 58, 100);
-        ms.rotate(Vector3f.XP.rotationDegrees(145.0F));
-        ms.rotate(Vector3f.YP.rotationDegrees(45.0F));
+        ms.mulPose(Vector3f.XP.rotationDegrees(145.0F));
+        ms.mulPose(Vector3f.YP.rotationDegrees(45.0F));
         ms.scale(45, 45, 45);
-        BlockRendererDispatcher brd = mc.getBlockRendererDispatcher();
-        IRenderTypeBuffer.Impl renderBuffer = mc.getRenderTypeBuffers().getBufferSource();
+        BlockRendererDispatcher brd = mc.getBlockRenderer();
+        IRenderTypeBuffer.Impl renderBuffer = mc.renderBuffers().bufferSource();
         brd.renderBlock(state, ms, renderBuffer, 15728880, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
-        renderBuffer.finish();
-        ms.pop();
+        renderBuffer.endBatch();
+        ms.popPose();
     }
 
     @Override

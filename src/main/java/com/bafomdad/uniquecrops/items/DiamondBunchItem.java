@@ -17,7 +17,7 @@ public class DiamondBunchItem extends ItemBaseUC {
 
     public DiamondBunchItem() {
 
-        super(UCItems.defaultBuilder().maxStackSize(1));
+        super(UCItems.defaultBuilder().stacksTo(1));
         MinecraftForge.EVENT_BUS.addListener(this::onItemToss);
     }
 
@@ -35,16 +35,16 @@ public class DiamondBunchItem extends ItemBaseUC {
             ItemStack eventStack = ei.getItem().copy();
             int damage = NBTUtils.getInt(eventStack, UCStrings.TAG_DIAMONDS, 0);
             NBTUtils.setInt(eventStack, UCStrings.TAG_DIAMONDS, damage + 1);
-            if (!event.getPlayer().world.isRemote) {
+            if (!event.getPlayer().level.isClientSide) {
                 int num = 1;
                 if (NBTUtils.getInt(eventStack, UCStrings.TAG_DIAMONDS, 0) <= MAX_DAMAGE - 1)
                     ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), eventStack);
                 else
                     num = 2;
 
-                ItemEntity diamonds = new ItemEntity(event.getPlayer().world, ei.getPosX() + 0.5, ei.getPosY() + 0.5, ei.getPosZ() + 0.5, new ItemStack(Items.DIAMOND, num));
-                diamonds.setDefaultPickupDelay();
-                event.getPlayer().world.addEntity(diamonds);
+                ItemEntity diamonds = new ItemEntity(event.getPlayer().level, ei.getX() + 0.5, ei.getY() + 0.5, ei.getZ() + 0.5, new ItemStack(Items.DIAMOND, num));
+                diamonds.setDefaultPickUpDelay();
+                event.getPlayer().level.addFreshEntity(diamonds);
             }
         }
     }

@@ -38,7 +38,7 @@ public class EasyBadgeItem extends ItemBaseUC {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag whatisthis) {
 
         list.add(new TranslationTextComponent(UCStrings.TOOLTIP + "easybadge"));
     }
@@ -47,14 +47,14 @@ public class EasyBadgeItem extends ItemBaseUC {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 
         if (!(entity instanceof PlayerEntity) || (entity instanceof FakePlayer)) return;
-        if (slot < PlayerInventory.getHotbarSize() && !world.isRemote) {
-            BlockPos pos = entity.getPosition();
-            List<MonsterEntity> monsters = world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(pos.add(-RANGE, -RANGE, -RANGE), pos.add(RANGE, RANGE, RANGE)));
+        if (slot < PlayerInventory.getSelectionSize() && !world.isClientSide) {
+            BlockPos pos = entity.blockPosition();
+            List<MonsterEntity> monsters = world.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE)));
             for (MonsterEntity ent: monsters) {
                 if (ent instanceof SkeletonEntity)
                     ((SkeletonEntity)ent).goalSelector.getRunningGoals().filter(goal -> goal.getGoal() instanceof RangedBowAttackGoal)
                             .findFirst().ifPresent(g -> {
-                        ((RangedBowAttackGoal)g.getGoal()).setAttackCooldown(100);
+                        ((RangedBowAttackGoal)g.getGoal()).setMinAttackInterval(100);
                     });
 
                 if (ent instanceof CreeperEntity)

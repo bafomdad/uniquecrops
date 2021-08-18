@@ -44,7 +44,7 @@ public class MovingCropEntity extends Entity {
     }
 
     @Override
-    protected void registerData() {}
+    protected void defineSynchedData() {}
 
     @Override
     public void tick() {
@@ -57,60 +57,60 @@ public class MovingCropEntity extends Entity {
             return;
         }
         if (this.getPersistentData().contains("UC:markedForDrop")) {
-            if (!world.isRemote) {
+            if (!level.isClientSide) {
                 BlockState heldState = ((FallingBlockEntity)this.getPassengers().get(0)).getBlockState();
                 this.getPassengers().forEach(p -> p.remove());
                 int chance = Math.max(8 - this.distance, 1);
-                if (world.rand.nextInt(chance) == 0 && heldState.getBlock() == UCBlocks.MAGNES_CROP.get() && heldState.get(Magnes.POLARITY))
-                    InventoryHelper.spawnItemStack(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), new ItemStack(UCItems.FERROMAGNETICIRON.get()));
-                BlockPos toSet = new BlockPos(Math.floor(this.getPosX()), Math.floor(this.getPosY()), Math.floor(this.getPosZ()));
-                if (!world.isAirBlock(toSet)) {
+                if (level.random.nextInt(chance) == 0 && heldState.getBlock() == UCBlocks.MAGNES_CROP.get() && heldState.getValue(Magnes.POLARITY))
+                    InventoryHelper.dropItemStack(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(UCItems.FERROMAGNETICIRON.get()));
+                BlockPos toSet = new BlockPos(Math.floor(this.getX()), Math.floor(this.getY()), Math.floor(this.getZ()));
+                if (!level.isEmptyBlock(toSet)) {
                     for (Direction facing : Direction.Plane.HORIZONTAL) {
-                        if (world.isAirBlock(toSet.offset(facing)) && world.getBlockState(toSet.offset(facing).down()).getBlock() instanceof FarmlandBlock) {
-                            world.setBlockState(toSet.offset(facing), UCBlocks.MAGNES_CROP.get().getDefaultState(), 2);
+                        if (level.isEmptyBlock(toSet.relative(facing)) && level.getBlockState(toSet.relative(facing).below()).getBlock() instanceof FarmlandBlock) {
+                            level.setBlock(toSet.relative(facing), UCBlocks.MAGNES_CROP.get().defaultBlockState(), 2);
                             break;
                         }
                     }
                 } else {
-                    world.setBlockState(toSet, UCBlocks.MAGNES_CROP.get().getDefaultState(), 2);
+                    level.setBlock(toSet, UCBlocks.MAGNES_CROP.get().defaultBlockState(), 2);
                 }
                 this.getPersistentData().remove("UC:markedForDrop");
             }
             return;
         }
-        List<MovingCropEntity> entities = world.getEntitiesWithinAABB(MovingCropEntity.class, this.getBoundingBox());
+        List<MovingCropEntity> entities = level.getEntitiesOfClass(MovingCropEntity.class, this.getBoundingBox());
         if (entities.size() == 2) {
             entities.forEach(e -> this.getPersistentData().putBoolean("UC:markedForDrop", true));
         }
-        int vecx = this.dir.getDirectionVec().getX();
-        int vecy = this.dir.getDirectionVec().getY();
-        int vecz = this.dir.getDirectionVec().getZ();
+        int vecx = this.dir.getNormal().getX();
+        int vecy = this.dir.getNormal().getY();
+        int vecz = this.dir.getNormal().getZ();
         this.move(MoverType.SELF, new Vector3d(vecx * vel, vecy * vel, vecz * vel));
     }
 
     @Override
-    protected void readAdditional(CompoundNBT tag) {
+    protected void readAdditionalSaveData(CompoundNBT tag) {
 
-        this.dir = Direction.byIndex(tag.getByte("UC_facing"));
+        this.dir = Direction.from3DDataValue(tag.getByte("UC_facing"));
         this.distance = tag.getByte("UC_distance");
     }
 
     @Override
-    protected void writeAdditional(CompoundNBT tag) {
+    protected void addAdditionalSaveData(CompoundNBT tag) {
 
         if (dir != null)
-            tag.putByte("UC_facing", (byte)this.dir.getIndex());
+            tag.putByte("UC_facing", (byte)this.dir.ordinal());
         tag.putByte("UC_distance", (byte)this.distance);
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
 
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public boolean canBeAttackedWithItem() {
+    public boolean isAttackable() {
 
         return false;
     }

@@ -26,10 +26,10 @@ public class UCItemTagsProvider extends ItemTagsProvider {
     }
 
     @Override
-    public void registerTags() {
+    public void addTags() {
 
-        this.getOrCreateBuilder(STEEL_INGOT).addItemEntry(UCItems.STEEL_DONUT.get());
-        this.getOrCreateBuilder(NORMAL_DROP).add(Items.BEETROOT, Items.WHEAT, Items.CARROT, Items.POTATO);
+        this.tag(STEEL_INGOT).add(UCItems.STEEL_DONUT.get());
+        this.tag(NORMAL_DROP).add(Items.BEETROOT, Items.WHEAT, Items.CARROT, Items.POTATO);
     }
 
     @Override
@@ -40,12 +40,12 @@ public class UCItemTagsProvider extends ItemTagsProvider {
 
     private static ITag.INamedTag<Item> forgeTag(String name) {
 
-        return getOrRegister(ItemTags.getAllTags(), loc -> ItemTags.makeWrapperTag(loc.toString()), new ResourceLocation("forge", name));
+        return getOrRegister(ItemTags.getWrappers(), loc -> ItemTags.bind(loc.toString()), new ResourceLocation("forge", name));
     }
 
     private static ITag.INamedTag<Item> cTag(String name) {
 
-        return getOrRegister(ItemTags.getAllTags(), loc -> ItemTags.makeWrapperTag(loc.toString()), new ResourceLocation("c", name));
+        return getOrRegister(ItemTags.getWrappers(), loc -> ItemTags.bind(loc.toString()), new ResourceLocation("c", name));
     }
 
     private static <T> ITag.INamedTag<T> getOrRegister(List<? extends ITag.INamedTag<T>> list, Function<ResourceLocation, ITag.INamedTag<T>> register, ResourceLocation loc) {

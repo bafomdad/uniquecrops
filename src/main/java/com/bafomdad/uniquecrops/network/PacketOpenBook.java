@@ -33,8 +33,8 @@ public class PacketOpenBook {
         if (ctx.get().getDirection().getReceptionSide().isClient()) {
             ctx.get().enqueueWork(() -> {
                 PlayerEntity player = UniqueCrops.proxy.getPlayer();
-                Entity entity = player.world.getEntityByID(packet.id);
-                if (entity instanceof PlayerEntity && packet.id == player.getEntityId()) {
+                Entity entity = player.level.getEntity(packet.id);
+                if (entity instanceof PlayerEntity && packet.id == player.getId()) {
                     UniqueCrops.proxy.openBook();
                 }
             });

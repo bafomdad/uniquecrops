@@ -36,14 +36,14 @@ public class StalkBlock extends BaseStalkBlock {
 
     public StalkBlock() {
 
-        super(Properties.create(Material.PLANTS).hardnessAndResistance(0.1F, 1.0F).notSolid().tickRandomly().setOpaque(StalkBlock::isntSolid));
-        setDefaultState(getDefaultState().with(STALKS, EnumDirectional.NORTH));
+        super(Properties.of(Material.PLANT).strength(0.1F, 1.0F).noCollission().randomTicks().isSuffocating(StalkBlock::isntSolid));
+        registerDefaultState(defaultBlockState().setValue(STALKS, EnumDirectional.NORTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(STALKS);
     }
 
@@ -53,11 +53,11 @@ public class StalkBlock extends BaseStalkBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileCraftyPlant) {
-            if (!world.isRemote)
+            if (!world.isClientSide)
                 NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)tile, pos);
             return ActionResultType.SUCCESS;
         }
@@ -67,10 +67,10 @@ public class StalkBlock extends BaseStalkBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        if (state.get(STALKS) == EnumDirectional.DOWN && world.isAirBlock(pos.up())) {
+        if (state.getValue(STALKS) == EnumDirectional.DOWN && world.isEmptyBlock(pos.above())) {
             if (rand.nextInt(5) == 0) {
-                world.playEvent(2001, pos.up(), Block.getStateId(state));
-                world.setBlockState(pos.up(), UCBlocks.STALK.get().getDefaultState().with(STALKS, EnumDirectional.UP), 2);
+                world.levelEvent(2001, pos.above(), Block.getId(state));
+                world.setBlock(pos.above(), UCBlocks.STALK.get().defaultBlockState().setValue(STALKS, EnumDirectional.UP), 2);
             }
         }
     }
@@ -78,22 +78,22 @@ public class StalkBlock extends BaseStalkBlock {
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
 
-        if (state.get(STALKS) == EnumDirectional.UP)
-            return VoxelShapes.fullCube();
+        if (state.getValue(STALKS) == EnumDirectional.UP)
+            return VoxelShapes.block();
 
         return VoxelShapes.empty();
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileCraftyPlant) {
             TileCraftyPlant craft = (TileCraftyPlant)tile;
             for (int i = 0; i < craft.getCraftingInventory().getSlots(); i++) {
                 ItemStack stack  = craft.getCraftingInventory().getStackInSlot(i);
-                if (!stack.isEmpty() && !world.isRemote)
-                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                if (!stack.isEmpty() && !world.isClientSide)
+                    InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
             }
         }
     }
@@ -101,17 +101,17 @@ public class StalkBlock extends BaseStalkBlock {
     @Override
     public void checkAndDropBlock(World world, BlockPos pos, BlockState state) {
 
-        if (state.get(STALKS) == EnumDirectional.DOWN) {
+        if (state.getValue(STALKS) == EnumDirectional.DOWN) {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
-                BlockPos loopPos = pos.offset(dir);
-                if (world.isAirBlock(loopPos)) {
+                BlockPos loopPos = pos.relative(dir);
+                if (world.isEmptyBlock(loopPos)) {
                     world.destroyBlock(pos, false);
                 }
             }
             return;
         }
-        if (state.get(STALKS) == EnumDirectional.UP) {
-            if (world.isAirBlock(pos.down())) {
+        if (state.getValue(STALKS) == EnumDirectional.UP) {
+            if (world.isEmptyBlock(pos.below())) {
                 world.destroyBlock(pos, false);
             }
             return;
@@ -125,7 +125,7 @@ public class StalkBlock extends BaseStalkBlock {
 
         if (!(state.getBlock() instanceof BaseStalkBlock)) return false;
 
-        EnumDirectional prop = (EnumDirectional)state.get(STALKS);
+        EnumDirectional prop = (EnumDirectional)state.getValue(STALKS);
         switch (prop) {
             case NORTH:
             case SOUTH:
@@ -149,7 +149,7 @@ public class StalkBlock extends BaseStalkBlock {
     @Override
     public boolean hasTileEntity(BlockState state) {
 
-        return state.get(STALKS) == EnumDirectional.UP;
+        return state.getValue(STALKS) == EnumDirectional.UP;
     }
 
     @Override

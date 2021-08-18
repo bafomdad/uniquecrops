@@ -34,7 +34,7 @@ public class ArtisiaProvider extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         for (DyeColor dye : DyeColor.values())
             consumer.accept(create(getDyeCraftingResult(dye.ordinal()), DyeUtils.DYE_BY_COLOR.get(DyeColor.byId(dye.ordinal())), UCItems.SAVAGEESSENCE.get(), UCItems.SAVAGEESSENCE.get()));
@@ -57,9 +57,9 @@ public class ArtisiaProvider extends RecipeProvider {
         consumer.accept(create(UCItems.MUSICA_SEED.get(), Blocks.JUKEBOX, UCItems.NORMAL_SEED.get(), UCItems.MARYJANE_SEED.get()));
         consumer.accept(create(UCItems.PRECISION_SEED.get(), Items.GOLD_NUGGET, UCItems.COLLIS_SEED.get(), UCItems.INVISIBILIA_SEED.get()));
         consumer.accept(create(UCItems.WEEPINGBELLS_SEED.get(), Items.GHAST_TEAR, Items.MELON_SEEDS, UCItems.ENDERLILY_SEED.get()));
-        consumer.accept(create(UCItems.ABSTRACT_SEED.get(), Ingredient.fromItems(Items.SUGAR_CANE), Ingredient.fromItems(Blocks.TERRACOTTA), Ingredient.fromTag(ItemTags.WOOL)));
+        consumer.accept(create(UCItems.ABSTRACT_SEED.get(), Ingredient.of(Items.SUGAR_CANE), Ingredient.of(Blocks.TERRACOTTA), Ingredient.of(ItemTags.WOOL)));
         consumer.accept(create(UCItems.COBBLONIA_SEED.get(), Blocks.COBBLESTONE, Blocks.STONE_BRICKS, UCItems.NORMAL_SEED.get()));
-        consumer.accept(create(UCItems.DYEIUS_SEED.get(), Ingredient.fromTag(ItemTags.WOOL), Ingredient.fromTag(Tags.Items.DYES), Ingredient.fromItems(UCItems.ABSTRACT_SEED.get())));
+        consumer.accept(create(UCItems.DYEIUS_SEED.get(), Ingredient.of(ItemTags.WOOL), Ingredient.of(Tags.Items.DYES), Ingredient.of(UCItems.ABSTRACT_SEED.get())));
         consumer.accept(create(UCItems.EULA_SEED.get(), Items.PAPER, Items.BOOK, UCItems.COBBLONIA_SEED.get()));
         consumer.accept(create(UCItems.FEROXIA_SEED.get(), Items.CLAY_BALL, UCItems.KNOWLEDGE_SEED.get(), UCItems.WEEPINGBELLS_SEED.get()));
         consumer.accept(create(UCItems.WAFFLONIA_SEED.get(), Items.WHEAT_SEEDS, Items.BREAD, Items.SUGAR));
@@ -107,18 +107,18 @@ public class ArtisiaProvider extends RecipeProvider {
 
     private static FinishedRecipe create(ItemStack output, IItemProvider center, IItemProvider edge, IItemProvider corner) {
 
-        Ingredient fromCenter = Ingredient.fromItems(center);
-        Ingredient fromEdge = Ingredient.fromItems(edge);
-        Ingredient fromCorner = Ingredient.fromItems(corner);
+        Ingredient fromCenter = Ingredient.of(center);
+        Ingredient fromEdge = Ingredient.of(edge);
+        Ingredient fromCorner = Ingredient.of(corner);
 
         return new FinishedRecipe(idFor(Registry.ITEM.getKey(output.getItem())), output, fromCorner, fromEdge, fromCorner, fromEdge, fromCenter, fromEdge, fromCorner, fromEdge, fromCorner);
     }
 
     private static FinishedRecipe create(IItemProvider item, IItemProvider center, IItemProvider edge, IItemProvider corner) {
 
-        Ingredient fromCenter = Ingredient.fromItems(center);
-        Ingredient fromEdge = Ingredient.fromItems(edge);
-        Ingredient fromCorner = Ingredient.fromItems(corner);
+        Ingredient fromCenter = Ingredient.of(center);
+        Ingredient fromEdge = Ingredient.of(edge);
+        Ingredient fromCorner = Ingredient.of(corner);
 
         return create(item, fromCenter, fromEdge, fromCorner);
     }
@@ -142,37 +142,37 @@ public class ArtisiaProvider extends RecipeProvider {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
 
             json.add("output", JsonUtils.serializeStack(output));
             JsonArray ingredients = new JsonArray();
             for (Ingredient ingredient : inputs)
-                ingredients.add(ingredient.serialize());
+                ingredients.add(ingredient.toJson());
             json.add("ingredients", ingredients);
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
 
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
 
             return UCRecipes.ARTISIA_SERIALIZER.get();
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
 
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
 
             return null;
         }

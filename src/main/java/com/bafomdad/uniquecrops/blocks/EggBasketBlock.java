@@ -12,11 +12,11 @@ import net.minecraft.world.IBlockReader;
 
 public class EggBasketBlock extends Block {
 
-    public static final VoxelShape EGGBASKET = VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+    public static final VoxelShape EGGBASKET = VoxelShapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
 
     public EggBasketBlock() {
 
-        super(Properties.create(Material.SPONGE).sound(SoundType.WOOD).hardnessAndResistance(0.09F, 3.0F));
+        super(Properties.of(Material.SPONGE).sound(SoundType.WOOD).strength(0.09F, 3.0F));
     }
 
     @Override

@@ -26,7 +26,7 @@ public class UCProtectionHandler {
 
     public Set<ChunkPos> getChunkInfo(RegistryKey<World> world) {
 
-        String str = world.getLocation().toString();
+        String str = world.location().toString();
         if (saveInfo.get(str) == null) {
             Set<ChunkPos> save = new HashSet<>();
             saveInfo.put(str, save);
@@ -54,7 +54,7 @@ public class UCProtectionHandler {
 
         if (world == null) return null;
 
-        Set<ChunkPos> info = getChunkInfo(world.getDimensionKey());
+        Set<ChunkPos> info = getChunkInfo(world.dimension());
         if (info.contains(pos) && info.size() > 0)
             return info;
 

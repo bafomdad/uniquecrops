@@ -30,7 +30,7 @@ public class TileHarvestTrap extends BaseTileUC implements ITickableTileEntity {
 
         if (spiritTime <= 0) return;
 
-        if (collectedSpirit && world.getGameTime() % 20 == 0) {
+        if (collectedSpirit && level.getGameTime() % 20 == 0) {
             tickCropGrowth();
             spiritTime--;
             if (spiritTime <= 0) {
@@ -45,16 +45,16 @@ public class TileHarvestTrap extends BaseTileUC implements ITickableTileEntity {
 
     public void tickCropGrowth() {
 
-        if (world.isRemote) return;
+        if (level.isClientSide) return;
 
-        Iterable<BlockPos> posList = BlockPos.getAllInBoxMutable(pos.add(-RANGE, 0, -RANGE), pos.add(RANGE, 1, RANGE));
+        Iterable<BlockPos> posList = BlockPos.betweenClosed(worldPosition.offset(-RANGE, 0, -RANGE), worldPosition.offset(RANGE, 1, RANGE));
         Iterator<BlockPos> iterator = posList.iterator();
         while (iterator.hasNext()) {
             BlockPos loopPos = iterator.next();
-            BlockState loopState = world.getBlockState(loopPos);
-            if (loopState.getBlock() instanceof IGrowable && ((IGrowable)loopState.getBlock()).canGrow(world, loopPos, loopState, world.isRemote)) {
-                world.playEvent(2005, loopPos, 0);
-                loopState.getBlock().randomTick(loopState, (ServerWorld)world, loopPos, world.rand);
+            BlockState loopState = level.getBlockState(loopPos);
+            if (loopState.getBlock() instanceof IGrowable && ((IGrowable)loopState.getBlock()).isValidBonemealTarget(level, loopPos, loopState, level.isClientSide)) {
+                level.levelEvent(2005, loopPos, 0);
+                loopState.getBlock().randomTick(loopState, (ServerWorld)level, loopPos, level.random);
             }
         }
     }

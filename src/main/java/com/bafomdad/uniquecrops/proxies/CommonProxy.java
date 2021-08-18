@@ -12,7 +12,7 @@ public class CommonProxy {
 
     public PlayerEntity getPlayerFromUUID(String uuid) {
 
-        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(UUID.fromString(uuid));
+        return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(UUID.fromString(uuid));
     }
 
     public Item.Properties propertiesWithTEISR(Item.Properties props) {

@@ -15,8 +15,8 @@ public class GuiCraftyPlant extends ContainerScreen<ContainerCraftyPlant> {
     public GuiCraftyPlant(ContainerCraftyPlant container, PlayerInventory inv, ITextComponent title) {
 
         super(container, inv, title);
-        this.xSize = 176;
-        this.ySize = 166;
+        this.imageWidth = 176;
+        this.imageHeight = 166;
     }
 
     @Override
@@ -24,24 +24,24 @@ public class GuiCraftyPlant extends ContainerScreen<ContainerCraftyPlant> {
 
         this.renderBackground(ms);
         super.render(ms, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(ms, mouseX, mouseY);
+        this.renderTooltip(ms, mouseX, mouseY);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack ms, int x, int y) {
+    public void renderLabels(MatrixStack ms, int x, int y) {
 
         String s = "Crafty Plant";
-        font.drawString(ms, s, xSize / 2 - font.getStringWidth(s), 6, 4210752);
+        font.draw(ms, s, imageWidth / 2 - font.width(s), 6, 4210752);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack ms, float partialTicks, int x, int y) {
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.textureManager.bindTexture(TEXTURE);
+        this.minecraft.textureManager.bind(TEXTURE);
 
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
-        blit(ms, k, l, 0, 0, this.xSize, this.ySize);
+        int k = (this.width - this.imageWidth) / 2;
+        int l = (this.height - this.imageHeight) / 2;
+        blit(ms, k, l, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

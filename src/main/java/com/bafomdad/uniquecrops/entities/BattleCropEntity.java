@@ -21,7 +21,7 @@ public class BattleCropEntity extends CreatureEntity {
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
 
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.32D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0D);
+        return MonsterEntity.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.32D).add(Attributes.ATTACK_DAMAGE, 5.0D);
     }
 
     @Override
@@ -36,46 +36,46 @@ public class BattleCropEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
 
-        if (source.getTrueSource() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)source.getTrueSource();
+        if (source.getEntity() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)source.getEntity();
             if (player.isCreative())
-                return super.attackEntityFrom(source, amount);
+                return super.hurt(source, amount);
 
             if (!source.isExplosion())
-                player.attackEntityFrom(DamageSource.causeThornsDamage(this), amount);
+                player.hurt(DamageSource.thorns(this), amount);
         }
-        if (source.getTrueSource() == this || source.isFireDamage())
-            return super.attackEntityFrom(source, amount);
+        if (source.getEntity() == this || source.isFire())
+            return super.hurt(source, amount);
 
-        return super.attackEntityFrom(source, 0);
+        return super.hurt(source, 0);
     }
 
     @Override
-    public void onDeath(DamageSource source) {
+    public void die(DamageSource source) {
 
-        super.onDeath(source);
-        if (source.getTrueSource() == this) {
-            this.entityDropItem(new ItemStack(UCItems.STEEL_DONUT.get()));
+        super.die(source);
+        if (source.getEntity() == this) {
+            this.spawnAtLocation(new ItemStack(UCItems.STEEL_DONUT.get()));
         }
-        this.entityDropItem(new ItemStack(UCItems.DONUTSTEEL_SEED.get()));
+        this.spawnAtLocation(new ItemStack(UCItems.DONUTSTEEL_SEED.get()));
     }
 
     @Override
-    public boolean doesEntityNotTriggerPressurePlate() {
+    public boolean isIgnoringBlockTriggers() {
 
         return true;
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
 
         return false;
     }
 
     @Override
-    public boolean canDespawn(double distanceToClosestPlayer) {
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 
         return false;
     }

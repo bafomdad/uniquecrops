@@ -38,28 +38,28 @@ public class ContainerBarrel extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
 
         return !(player instanceof FakePlayer);
     }
 
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
 
         ItemStack stack = ItemStack.EMPTY;
-        Slot slotto = inventorySlots.get(slot);
+        Slot slotto = slots.get(slot);
 
-        if (slotto != null && slotto.getHasStack()) {
-            ItemStack stackInSlot = slotto.getStack();
+        if (slotto != null && slotto.hasItem()) {
+            ItemStack stackInSlot = slotto.getItem();
             stack = stackInSlot.copy();
 
             if (slot < 4) {
-                if (!this.mergeItemStack(stackInSlot, 4, inventorySlots.size(), true))
+                if (!this.moveItemStackTo(stackInSlot, 4, slots.size(), true))
                     return ItemStack.EMPTY;
             } else {
                 boolean b = false;
                 for (int i = 0; i < tile.getInventory().getSlots(); i++) {
-                    if (this.getSlot(i).isItemValid(stackInSlot)) {
-                        if (this.mergeItemStack(stackInSlot, i, i + 1, false)) {
+                    if (this.getSlot(i).mayPlace(stackInSlot)) {
+                        if (this.moveItemStackTo(stackInSlot, i, i + 1, false)) {
                             b = true;
                             break;
                         }
@@ -69,9 +69,9 @@ public class ContainerBarrel extends Container {
                     return ItemStack.EMPTY;
             }
             if (stackInSlot.getCount() == 0)
-                slotto.putStack(ItemStack.EMPTY);
+                slotto.set(ItemStack.EMPTY);
             else
-                slotto.onSlotChanged();
+                slotto.setChanged();
 
             if (stackInSlot.getCount() == stack.getCount())
                 return ItemStack.EMPTY;

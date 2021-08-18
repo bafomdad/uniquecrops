@@ -19,19 +19,19 @@ public class BaseLilyBlock extends LilyPadBlock {
 
     public BaseLilyBlock(EnumLily lily) {
 
-        super(Properties.from(Blocks.LILY_PAD));
+        super(Properties.copy(Blocks.LILY_PAD));
         this.lily = lily;
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 
-        if (world.isRemote) return;
+        if (world.isClientSide) return;
         lily.collide(state, world, pos, entity);
     }
 
     @Override
-    protected boolean isValidGround(BlockState state, IBlockReader reader, BlockPos pos) {
+    protected boolean mayPlaceOn(BlockState state, IBlockReader reader, BlockPos pos) {
 
         return lily.isValidGround(state, reader, pos);
     }

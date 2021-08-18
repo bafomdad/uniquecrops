@@ -32,20 +32,20 @@ public class UCFeatures {
     public static void registerOre() {
 
         ORE_PIXEL_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "ore_pixel",
-                UC_OREFEATURE.get().withConfiguration(
+                UC_OREFEATURE.get().configured(
                         new OreFeatureConfig(
-                            OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            Blocks.STONE.getDefaultState(), 4)
-                        ).range(16).square()
+                            OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+                            Blocks.STONE.defaultBlockState(), 4)
+                        ).range(16).squared()
                 );
         FLYWOOD_CONFIG = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "flywood_tree",
-                Feature.TREE.withConfiguration(
+                Feature.TREE.configured(
                         new BaseTreeFeatureConfig.Builder(
-                            new SimpleBlockStateProvider(UCBlocks.FLYWOOD_LOG.get().getDefaultState()),
-                            new SimpleBlockStateProvider(UCBlocks.FLYWOOD_LEAVES.get().getDefaultState()),
-                            new BlobFoliagePlacer(FeatureSpread.func_242252_a(2),FeatureSpread.func_242252_a(0), 3),
+                            new SimpleBlockStateProvider(UCBlocks.FLYWOOD_LOG.get().defaultBlockState()),
+                            new SimpleBlockStateProvider(UCBlocks.FLYWOOD_LEAVES.get().defaultBlockState()),
+                            new BlobFoliagePlacer(FeatureSpread.fixed(2),FeatureSpread.fixed(0), 3),
                             new StraightTrunkPlacer(5, 2, 0),
-                            new TwoLayerFeature(1, 0, 1)).setIgnoreVines()
+                            new TwoLayerFeature(1, 0, 1)).ignoreVines()
                         .build()
                 ));
     }
@@ -54,7 +54,7 @@ public class UCFeatures {
 
         @Nullable
         @Override
-        public ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random rand, boolean largeHive) {
+        public ConfiguredFeature<BaseTreeFeatureConfig, ?> getConfiguredFeature(Random rand, boolean largeHive) {
 
             return FLYWOOD_CONFIG;
         }
@@ -68,7 +68,7 @@ public class UCFeatures {
         }
 
         @Override
-        protected boolean func_207803_a(IWorld p_207803_1_, Random p_207803_2_, OreFeatureConfig p_207803_3_, double p_207803_4_, double p_207803_6_, double p_207803_8_, double p_207803_10_, double p_207803_12_, double p_207803_14_, int p_207803_16_, int p_207803_17_, int p_207803_18_, int p_207803_19_, int p_207803_20_) {
+        protected boolean doPlace(IWorld p_207803_1_, Random p_207803_2_, OreFeatureConfig p_207803_3_, double p_207803_4_, double p_207803_6_, double p_207803_8_, double p_207803_10_, double p_207803_12_, double p_207803_14_, int p_207803_16_, int p_207803_17_, int p_207803_18_, int p_207803_19_, int p_207803_20_) {
 
             int lvt_21_1_ = 0;
             BitSet lvt_22_1_ = new BitSet(p_207803_19_ * p_207803_20_ * p_207803_19_);
@@ -139,10 +139,10 @@ public class UCFeatures {
                                             int lvt_50_1_ = lvt_41_1_ - p_207803_16_ + (lvt_44_1_ - p_207803_17_) * p_207803_19_ + (lvt_47_1_ - p_207803_18_) * p_207803_19_ * p_207803_20_;
                                             if (!lvt_22_1_.get(lvt_50_1_)) {
                                                 lvt_22_1_.set(lvt_50_1_);
-                                                lvt_23_1_.setPos(lvt_41_1_, lvt_44_1_, lvt_47_1_);
+                                                lvt_23_1_.set(lvt_41_1_, lvt_44_1_, lvt_47_1_);
                                                 if (p_207803_3_.target.test(p_207803_1_.getBlockState(lvt_23_1_), p_207803_2_)) {
-                                                    UCOreHandler.getInstance().addChunk(lvt_23_1_.toImmutable(), true);
-                                                    p_207803_1_.setBlockState(lvt_23_1_, p_207803_3_.state, 2);
+                                                    UCOreHandler.getInstance().addChunk(lvt_23_1_.immutable(), true);
+                                                    p_207803_1_.setBlock(lvt_23_1_, p_207803_3_.state, 2);
                                                     ++lvt_21_1_;
                                                 }
                                             }

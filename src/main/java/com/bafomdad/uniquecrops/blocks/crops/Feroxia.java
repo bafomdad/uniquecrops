@@ -54,21 +54,21 @@ public class Feroxia extends BaseCropsBlock {
         if (!EnumGrowthSteps.values()[stage].canAdvance(world, pos, state)) return;
 
         if (rand.nextInt(3) == 0)
-            world.setBlockState(pos, this.withAge(getAge(state) + 1), 0);
+            world.setBlock(pos, this.setValueAge(getAge(state) + 1), 0);
     }
 
     @Override
-    public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
 
         int stage = getStage(world, pos, state);
 
         if (stage != -1 && EnumGrowthSteps.values()[stage].canAdvance(world, pos, state))
-            world.setBlockState(pos, this.withAge(getAge(state) + 1), 3);
+            world.setBlock(pos, this.setValueAge(getAge(state) + 1), 3);
     }
 
     private int getStage(World world, BlockPos pos, BlockState state) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (!(tile instanceof TileFeroxia)) return -1;
 
         TileFeroxia te = (TileFeroxia)tile;
@@ -82,14 +82,14 @@ public class Feroxia extends BaseCropsBlock {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getBlockEntity(pos);
         if (te instanceof TileFeroxia) {
-            world.playEvent(2001, pos, Block.getStateId(state));
+            world.levelEvent(2001, pos, Block.getId(state));
             if (placer instanceof PlayerEntity && !(placer instanceof FakePlayer)) {
-                if (!world.isRemote) {
-                    ((TileFeroxia)te).setOwner(placer.getUniqueID());
+                if (!world.isClientSide) {
+                    ((TileFeroxia)te).setOwner(placer.getUUID());
                     if (!placer.getPersistentData().contains(UCStrings.TAG_GROWTHSTAGES))
                         UCUtils.generateSteps((PlayerEntity)placer);
                 }

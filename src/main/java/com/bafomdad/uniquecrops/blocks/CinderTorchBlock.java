@@ -12,11 +12,11 @@ import net.minecraft.world.IBlockReader;
 
 public class CinderTorchBlock extends Block {
 
-    public static final VoxelShape TORCH_AABB = VoxelShapes.create(0.275D, 0.0D, 0.275D, 0.725D, 0.45D, 0.725D);
+    public static final VoxelShape TORCH_AABB = VoxelShapes.box(0.275D, 0.0D, 0.275D, 0.725D, 0.45D, 0.725D);
 
     public CinderTorchBlock() {
 
-        super(Properties.create(Material.SAND).hardnessAndResistance(0.01F, 0.1F).sound(SoundType.STONE).setLightLevel(s -> 15));
+        super(Properties.of(Material.SAND).strength(0.01F, 0.1F).sound(SoundType.STONE).lightLevel(s -> 15));
     }
 
     @Override

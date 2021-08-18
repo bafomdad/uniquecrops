@@ -33,54 +33,54 @@ public class Weatherflesia extends BaseSuperCropsBlock {
 
     public static final EnumProperty RAFFLESIA = EnumProperty.<EnumDirectional>create("rafflesia", EnumDirectional.class);
     private static final VoxelShape[] SHAPES = new VoxelShape[] {
-            VoxelShapes.create(0.0D, 0.0D, 0.5D, 1.0D, 0.625D, 1.0D),
-            VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 0.5D),
-            VoxelShapes.create(0.0D, 0.0D, 0.0D, 0.5D, 0.625D, 1.0D),
-            VoxelShapes.create(0.5D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
-            VoxelShapes.create(0.0D, 0.0D, 0.5D, 0.5D, 0.625D, 1.0D),
-            VoxelShapes.create(1.0D, 0.0D, 1.0D, 0.5D, 0.625D, 0.5D),
-            VoxelShapes.create(0.0D, 0.0D, 0.0D, 0.5D, 0.625D, 0.5D),
-            VoxelShapes.create(0.5D, 0.0D, 0.5D, 1.0D, 0.625D, 0.0D),
-            VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
-            VoxelShapes.create(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D)
+            VoxelShapes.box(0.0D, 0.0D, 0.5D, 1.0D, 0.625D, 1.0D),
+            VoxelShapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 0.5D),
+            VoxelShapes.box(0.0D, 0.0D, 0.0D, 0.5D, 0.625D, 1.0D),
+            VoxelShapes.box(0.5D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
+            VoxelShapes.box(0.0D, 0.0D, 0.5D, 0.5D, 0.625D, 1.0D),
+            VoxelShapes.box(1.0D, 0.0D, 1.0D, 0.5D, 0.625D, 0.5D),
+            VoxelShapes.box(0.0D, 0.0D, 0.0D, 0.5D, 0.625D, 0.5D),
+            VoxelShapes.box(0.5D, 0.0D, 0.5D, 1.0D, 0.625D, 0.0D),
+            VoxelShapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D),
+            VoxelShapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D)
     };
 
     public Weatherflesia() {
 
-        setDefaultState(getDefaultState().with(RAFFLESIA, EnumDirectional.UP));
+        registerDefaultState(defaultBlockState().setValue(RAFFLESIA, EnumDirectional.UP));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(RAFFLESIA);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 
         BlockPos offset = pos;
-        if (state.get(RAFFLESIA) != EnumDirectional.UP || state.get(RAFFLESIA) != EnumDirectional.DOWN) {
+        if (state.getValue(RAFFLESIA) != EnumDirectional.UP || state.getValue(RAFFLESIA) != EnumDirectional.DOWN) {
             offset = offsetDirectional(state, pos);
         }
-        TileEntity tile = world.getTileEntity(offset);
+        TileEntity tile = world.getBlockEntity(offset);
         if (tile instanceof TileWeatherflesia) {
             TileWeatherflesia weather = (TileWeatherflesia)tile;
-            ItemStack stack = player.getHeldItem(hand);
-            if (stack.getItem() == UCItems.PIXEL_BRUSH.get() && !player.isSneaking()) {
-                String biomeId = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(world.getBiome(offset)).toString();
+            ItemStack stack = player.getItemInHand(hand);
+            if (stack.getItem() == UCItems.PIXEL_BRUSH.get() && !player.isCrouching()) {
+                String biomeId = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getResourceKey(world.getBiome(offset)).toString();
                 NBTUtils.setString(stack, UCStrings.TAG_BIOME, biomeId);
                 weather.setBrush(stack);
-                player.setHeldItem(hand, ItemStack.EMPTY);
+                player.setItemInHand(hand, ItemStack.EMPTY);
                 weather.markBlockForUpdate();
                 return ActionResultType.SUCCESS;
             }
-            if (stack.isEmpty() && player.isSneaking()) {
+            if (stack.isEmpty() && player.isCrouching()) {
                 ItemStack tileItem = weather.getBrush();
                 if (!tileItem.isEmpty()) {
                     weather.setBrush(ItemStack.EMPTY);
-                    player.setHeldItem(hand, tileItem);
+                    player.setItemInHand(hand, tileItem);
                     weather.markBlockForUpdate();
                 }
                 return ActionResultType.SUCCESS;
@@ -92,7 +92,7 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     private BlockPos offsetDirectional(BlockState state, BlockPos pos) {
 
         BlockPos offPos = pos;
-        EnumDirectional dir = ((EnumDirectional)state.get(RAFFLESIA)).getOpposite();
+        EnumDirectional dir = ((EnumDirectional)state.getValue(RAFFLESIA)).getOpposite();
         switch (dir) {
             case NORTH: offPos = offPos.north(); break;
             case SOUTH: offPos = offPos.south(); break;
@@ -110,14 +110,14 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileWeatherflesia) {
             TileWeatherflesia weather = (TileWeatherflesia)tile;
             weather.tickBiomeStrength();
             ItemStack stack = weather.getBrush();
             if (!stack.isEmpty() && stack.isDamaged()) {
                 int repairStrength = weather.getBiomeStrength() / 2;
-                stack.setDamage(stack.getDamage() - repairStrength);
+                stack.setDamageValue(stack.getDamageValue() - repairStrength);
                 weather.markBlockForUpdate();
             }
         }
@@ -126,10 +126,10 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 
-        if (state.get(RAFFLESIA) == EnumDirectional.UP || state.get(RAFFLESIA) == EnumDirectional.DOWN) {
+        if (state.getValue(RAFFLESIA) == EnumDirectional.UP || state.getValue(RAFFLESIA) == EnumDirectional.DOWN) {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
-                BlockPos loopPos = pos.offset(dir);
-                if (world.isAirBlock(loopPos)) {
+                BlockPos loopPos = pos.relative(dir);
+                if (world.isEmptyBlock(loopPos)) {
                     world.destroyBlock(pos, false);
                     break;
                 }
@@ -142,23 +142,23 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileWeatherflesia) {
             TileWeatherflesia weather = (TileWeatherflesia)tile;
             ItemStack stack = weather.getBrush();
             if (!stack.isEmpty())
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
         }
-        super.onReplaced(state, world, pos, newState, isMoving);
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     private boolean isNeighborMissing(World world, BlockPos pos, BlockState state) {
 
         if (!(state.getBlock() instanceof Weatherflesia)) return false;
 
-        EnumDirectional prop = (EnumDirectional)state.get(RAFFLESIA);
+        EnumDirectional prop = (EnumDirectional)state.getValue(RAFFLESIA);
         switch (prop) {
             case NORTH:
             case SOUTH:
@@ -182,13 +182,13 @@ public class Weatherflesia extends BaseSuperCropsBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
 
-        return SHAPES[((EnumDirectional)state.get(RAFFLESIA)).ordinal()];
+        return SHAPES[((EnumDirectional)state.getValue(RAFFLESIA)).ordinal()];
     }
 
     @Override
     public boolean hasTileEntity(BlockState state) {
 
-        return state.get(RAFFLESIA) == EnumDirectional.UP || state.get(RAFFLESIA) == EnumDirectional.DOWN;
+        return state.getValue(RAFFLESIA) == EnumDirectional.UP || state.getValue(RAFFLESIA) == EnumDirectional.DOWN;
     }
 
     @Override

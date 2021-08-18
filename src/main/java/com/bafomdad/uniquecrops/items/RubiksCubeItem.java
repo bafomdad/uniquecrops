@@ -29,16 +29,16 @@ public class RubiksCubeItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext ctx) {
+    public ActionResultType useOn(ItemUseContext ctx) {
 
-        if (ctx.getWorld().getDimensionKey() == World.OVERWORLD && ctx.getPlayer().isSneaking() && ctx.getFace() == Direction.UP) {
-            ItemStack stack = ctx.getItem();
+        if (ctx.getLevel().dimension() == World.OVERWORLD && ctx.getPlayer().isCrouching() && ctx.getClickedFace() == Direction.UP) {
+            ItemStack stack = ctx.getItemInHand();
             if (stack.getItem() == this) {
                 int rot = getRotation(stack);
-                BlockPos savedPos = ctx.getPos().up();
-                if (!ctx.getWorld().isRemote) {
+                BlockPos savedPos = ctx.getClickedPos().above();
+                if (!ctx.getLevel().isClientSide) {
                     this.savePosition(stack, rot, savedPos);
-                    ctx.getPlayer().sendMessage(new StringTextComponent("Teleport position saved"), ctx.getPlayer().getUniqueID());
+                    ctx.getPlayer().sendMessage(new StringTextComponent("Teleport position saved"), ctx.getPlayer().getUUID());
                 }
                 return ActionResultType.SUCCESS;
             }
@@ -47,16 +47,16 @@ public class RubiksCubeItem extends ItemBaseUC {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-        ItemStack cube = player.getHeldItemMainhand();
+        ItemStack cube = player.getMainHandItem();
         if (cube.getItem() == this) {
-            if (!world.isRemote)
-                UCPacketHandler.sendTo((ServerPlayerEntity)player, new PacketOpenCube(player.getEntityId()));
+            if (!world.isClientSide)
+                UCPacketHandler.sendTo((ServerPlayerEntity)player, new PacketOpenCube(player.getId()));
 
-            return ActionResult.resultSuccess(cube);
+            return ActionResult.success(cube);
         }
-        return ActionResult.resultPass(cube);
+        return ActionResult.pass(cube);
     }
 
     public void saveRotation(ItemStack stack, int rotation) {
@@ -73,7 +73,7 @@ public class RubiksCubeItem extends ItemBaseUC {
     public void savePosition(ItemStack stack, int rotation, BlockPos pos) {
 
         CompoundNBT tag = new CompoundNBT();
-        tag.putLong(UCStrings.TAG_CUBE_SAVEDPOS, pos.toLong());
+        tag.putLong(UCStrings.TAG_CUBE_SAVEDPOS, pos.asLong());
         NBTUtils.setCompound(stack, UCStrings.TAG_CUBE_ROTATION + rotation, tag);
     }
 
@@ -81,18 +81,18 @@ public class RubiksCubeItem extends ItemBaseUC {
 
         CompoundNBT tag = NBTUtils.getCompound(stack, UCStrings.TAG_CUBE_ROTATION + rotation, true);
         if (tag != null && tag.contains(UCStrings.TAG_CUBE_SAVEDPOS))
-            return BlockPos.fromLong(tag.getLong(UCStrings.TAG_CUBE_SAVEDPOS));
+            return BlockPos.of(tag.getLong(UCStrings.TAG_CUBE_SAVEDPOS));
 
         return BlockPos.ZERO;
     }
 
     public void teleportToPosition(PlayerEntity player, int rotation, boolean teleport) {
 
-        if (player.world.getDimensionKey() != World.OVERWORLD) {
-            player.sendStatusMessage(new StringTextComponent("Not in the overworld!"), true);
+        if (player.level.dimension() != World.OVERWORLD) {
+            player.displayClientMessage(new StringTextComponent("Not in the overworld!"), true);
             return;
         }
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
         if (stack.getItem() == this) {
             if (!teleport) {
                 saveRotation(stack, rotation);
@@ -100,11 +100,11 @@ public class RubiksCubeItem extends ItemBaseUC {
             }
             BlockPos pos = getSavedPosition(stack, rotation);
             if (!pos.equals(BlockPos.ZERO)) {
-                player.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-                player.world.playEvent(2003, pos, 0);
-                player.getCooldownTracker().setCooldown(this, UCConfig.COMMON.cubeCooldown.get());
+                player.teleportTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                player.level.levelEvent(2003, pos, 0);
+                player.getCooldowns().addCooldown(this, UCConfig.COMMON.cubeCooldown.get());
             } else {
-                player.sendStatusMessage(new StringTextComponent("No teleport position saved here!"), true);
+                player.displayClientMessage(new StringTextComponent("No teleport position saved here!"), true);
             }
             saveRotation(stack, rotation);
         }

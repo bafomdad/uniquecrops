@@ -32,20 +32,20 @@ public class TileItero extends BaseTileUC implements ITickableTileEntity {
     @Override
     public void tick() {
 
-        if (!world.isRemote && world.getGameTime() % 40 == 0 && showDemo) {
+        if (!level.isClientSide && level.getGameTime() % 40 == 0 && showDemo) {
             if (gameCombos != null && gameCombos.length > 0) {
                 if (gameIndex >= gameCombos.length) {
                     gameIndex = 0;
                     showDemo = false;
-                    this.markDirty();
+                    this.setChanged();
                     UCPacketDispatcher.dispatchTEToNearbyPlayers(this);
                     return;
                 }
-                BlockPos platePos = this.pos.subtract(PLATES[gameCombos[gameIndex]]);
-                BlockState plate = world.getBlockState(platePos);
+                BlockPos platePos = this.worldPosition.subtract(PLATES[gameCombos[gameIndex]]);
+                BlockState plate = level.getBlockState(platePos);
                 if (plate.getBlock() == Blocks.STONE_PRESSURE_PLATE) {
-                    world.setBlockState(platePos, plate.with(PressurePlateBlock.POWERED, true), 3);
-                    world.getPendingBlockTicks().scheduleTick(platePos, plate.getBlock(), 20);
+                    level.setBlock(platePos, plate.setValue(PressurePlateBlock.POWERED, true), 3);
+                    level.getBlockTicks().scheduleTick(platePos, plate.getBlock(), 20);
                 }
                 gameIndex++;
             }
@@ -64,10 +64,10 @@ public class TileItero extends BaseTileUC implements ITickableTileEntity {
         if (gameCombos != null)
             return false;
 
-        int rand = 4 + world.rand.nextInt(age + 1);
+        int rand = 4 + level.random.nextInt(age + 1);
         gameCombos = new int[rand];
         for (int i = 0; i < gameCombos.length; i++) {
-            gameCombos[i] = world.rand.nextInt(PLATES.length);
+            gameCombos[i] = level.random.nextInt(PLATES.length);
         }
         return true;
     }
@@ -76,22 +76,22 @@ public class TileItero extends BaseTileUC implements ITickableTileEntity {
 
         if (showDemo || gameCombos == null) return;
 
-        BlockPos subPos = this.pos.subtract(pos);
+        BlockPos subPos = this.worldPosition.subtract(pos);
         if (gameIndex >= gameCombos.length) {
             reset();
             return;
         }
         if (PLATES[gameCombos[gameIndex]].equals(subPos)) {
             if (++this.gameIndex >= this.gameCombos.length) {
-                UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticle.END_ROD, this.pos.getX(), this.pos.getY() + 0.3, this.pos.getZ(), 4));
+                UCPacketHandler.sendToNearbyPlayers(level, this.worldPosition, new PacketUCEffect(EnumParticle.END_ROD, this.worldPosition.getX(), this.worldPosition.getY() + 0.3, this.worldPosition.getZ(), 4));
                 advanceStage();
                 reset();
                 return;
             }
-            UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticle.HEART, this.pos.getX(), this.pos.getY() + 0.3, this.pos.getZ(), 0));
+            UCPacketHandler.sendToNearbyPlayers(level, this.worldPosition, new PacketUCEffect(EnumParticle.HEART, this.worldPosition.getX(), this.worldPosition.getY() + 0.3, this.worldPosition.getZ(), 0));
             return;
         } else {
-            UCPacketHandler.sendToNearbyPlayers(world, this.pos, new PacketUCEffect(EnumParticle.EXPLOSION, this.pos.getX() + 0.5, this.pos.getY() + 0.3, this.pos.getZ() + 0.5, 0));
+            UCPacketHandler.sendToNearbyPlayers(level, this.worldPosition, new PacketUCEffect(EnumParticle.EXPLOSION, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.3, this.worldPosition.getZ() + 0.5, 0));
             regressStage();
             reset();
         }
@@ -107,13 +107,13 @@ public class TileItero extends BaseTileUC implements ITickableTileEntity {
 
     public void regressStage() {
 
-        int age = getBlockState().get(Itero.AGE);
-        world.setBlockState(this.pos, getBlockState().with(Itero.AGE, Math.max(--age, 0)));
+        int age = getBlockState().getValue(Itero.AGE);
+        level.setBlockAndUpdate(this.worldPosition, getBlockState().setValue(Itero.AGE, Math.max(--age, 0)));
     }
 
     public void advanceStage() {
 
-        world.setBlockState(this.pos, getBlockState().with(Itero.AGE, getBlockState().get(Itero.AGE) + 1), 3);
+        level.setBlock(this.worldPosition, getBlockState().setValue(Itero.AGE, getBlockState().getValue(Itero.AGE) + 1), 3);
     }
 
     public void reset() {

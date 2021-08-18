@@ -20,7 +20,7 @@ public class Fossura extends BaseCropsBlock {
 
     public Fossura() {
 
-        super(() -> Items.AIR, UCItems.QUARRY_SEED, Properties.from(Blocks.WHEAT).hardnessAndResistance(8.0F, 0.0F));
+        super(() -> Items.AIR, UCItems.QUARRY_SEED, Properties.copy(Blocks.WHEAT).strength(8.0F, 0.0F));
         setClickHarvest(false);
         setBonemealable(false);
     }
@@ -28,11 +28,11 @@ public class Fossura extends BaseCropsBlock {
     @Override
     public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
 
-        if (!this.isMaxAge(state) && !world.isRemote) {
-            ItemStack heldItem = player.getHeldItemMainhand();
+        if (!this.isMaxAge(state) && !world.isClientSide) {
+            ItemStack heldItem = player.getMainHandItem();
             if (heldItem.getItem() instanceof PickaxeItem) {
-                player.world.playEvent(2001, pos, Block.getStateId(state));
-                world.setBlockState(pos, this.withAge(this.getAge(state) + 1), 3);
+                player.level.levelEvent(2001, pos, Block.getId(state));
+                world.setBlock(pos, this.setValueAge(this.getAge(state) + 1), 3);
                 return false;
             }
         }
@@ -40,15 +40,15 @@ public class Fossura extends BaseCropsBlock {
     }
 
     @Override
-    public float getPlayerRelativeBlockHardness(BlockState state, PlayerEntity player, IBlockReader world, BlockPos pos) {
+    public float getDestroyProgress(BlockState state, PlayerEntity player, IBlockReader world, BlockPos pos) {
 
-        if (player.getHeldItemMainhand().isEmpty())
+        if (player.getMainHandItem().isEmpty())
             return 1.0F;
-        return super.getPlayerRelativeBlockHardness(state, player, world, pos);
+        return super.getDestroyProgress(state, player, world, pos);
     }
 
     @Override
-    public boolean ticksRandomly(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
 
         return false;
     }
