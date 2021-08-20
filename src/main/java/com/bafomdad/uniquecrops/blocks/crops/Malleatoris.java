@@ -50,6 +50,8 @@ public class Malleatoris extends BaseCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
+        if (this.isMaxAge(state)) return;
+
         if (!world.isClientSide) {
             AxisAlignedBB aabb = new AxisAlignedBB(pos.offset(-4, 0, -4), pos.offset(4, 1, 4));
             List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, aabb);
