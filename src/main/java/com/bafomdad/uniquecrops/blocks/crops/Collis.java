@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -40,8 +41,9 @@ public class Collis extends BaseCropsBlock {
 
         int chanceByHeight = Math.round(pos.getY() / 16);
 
-        if (world.getLightEmission(pos.above()) >= 9) {
-            if (!isMaxAge(state) && world.random.nextInt(16 - chanceByHeight) == 0) {
+        if (world.getBrightness(LightType.SKY, pos.above()) >= 9) {
+            int growthChance = world.random.nextInt(16 - chanceByHeight);
+            if (!isMaxAge(state) && growthChance == 0) {
                 world.setBlock(pos, this.setValueAge(getAge(state) + 1), 2);
             }
         }
