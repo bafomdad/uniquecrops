@@ -306,8 +306,8 @@ public enum EnumGrowthSteps {
                 if (tile instanceof BrewingStandTileEntity) {
                     boolean flag = false;
                     try {
-                        Field f = ObfuscationReflectionHelper.getPrivateValue(BrewingStandTileEntity.class, (BrewingStandTileEntity) tile, "field_145946_k");
-                        flag = f.getInt((BrewingStandTileEntity) tile) > 0;
+                        Field f = ObfuscationReflectionHelper.findField(BrewingStandTileEntity.class, "field_145946_k");
+                        flag = f.getInt(tile) > 0;
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
