@@ -116,7 +116,7 @@ public class UCEventHandlerClient {
                     renderOres(pos, mc, ms);
                 }
                 RenderSystem.enableDepthTest();
-                RenderSystem.disableBlend();
+                RenderSystem.enableBlend();
                 RenderSystem.popAttributes();
                 ms.popPose();
             }

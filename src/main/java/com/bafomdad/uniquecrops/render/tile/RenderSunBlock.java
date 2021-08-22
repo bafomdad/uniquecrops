@@ -36,7 +36,7 @@ public class RenderSunBlock extends TileEntityRenderer<TileSunBlock> {
         Minecraft.getInstance().textureManager.bind(TEX);
         Tessellator tess = Tessellator.getInstance();
         RenderSystem.disableAlphaTest();
-        RenderSystem.disableLighting();
+//        RenderSystem.disableLighting();
         RenderSystem.enableBlend();
 
         float phase = (float)(Util.getMillis() % 2000L) / 2000.0F;
@@ -70,7 +70,7 @@ public class RenderSunBlock extends TileEntityRenderer<TileSunBlock> {
         }
         RenderSystem.disableBlend();
         RenderSystem.enableAlphaTest();
-        RenderSystem.enableLighting();
+//        RenderSystem.enableLighting();
 
         ms.popPose();
     }
