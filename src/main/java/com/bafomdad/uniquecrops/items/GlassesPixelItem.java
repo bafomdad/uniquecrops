@@ -3,6 +3,8 @@ package com.bafomdad.uniquecrops.items;
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.core.UCOreHandler;
+import com.bafomdad.uniquecrops.core.UCStrings;
+import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.core.enums.EnumArmorMaterial;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemArmorUC;
@@ -16,6 +18,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.Random;
 
 public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
 
@@ -43,6 +48,16 @@ public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
                     }
                     if (!event.side.isClient() && !UCOreHandler.getInstance().getSaveInfo().containsKey(cPos))
                         NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ZERO.asLong());
+                }
+            }
+        }
+        if (player.getPersistentData().contains(UCStrings.TAG_ABSTRACT)) {
+            if (event.phase == TickEvent.Phase.START && player.level.random.nextInt(1000) == 0) {
+                Random rand = new Random();
+                if (rand.nextInt(10) != 0) {
+                    ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(UCItems.ABSTRACT.get()));
+                    if (!event.player.level.isClientSide)
+                        UCUtils.setAbstractCropGrowth(event.player, -1);
                 }
             }
         }

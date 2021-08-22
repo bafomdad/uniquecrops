@@ -1,9 +1,11 @@
 package com.bafomdad.uniquecrops.blocks.crops;
 
 import com.bafomdad.uniquecrops.blocks.BaseCropsBlock;
+import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +26,7 @@ public class Abstract extends BaseCropsBlock {
         if (!world.isClientSide) {
             world.removeBlock(pos, true);
             world.levelEvent(2001, pos, Block.getId(state));
+            UCUtils.setAbstractCropGrowth(placer, world.random.nextInt(2) + 1);
         }
     }
 }

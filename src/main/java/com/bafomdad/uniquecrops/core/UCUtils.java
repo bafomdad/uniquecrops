@@ -195,6 +195,18 @@ public class UCUtils {
         tag.put(UCStrings.TAG_GROWTHSTAGES, taglist);
     }
 
+    public static void setAbstractCropGrowth(LivingEntity player, int num) {
+
+        CompoundNBT tag = player.getPersistentData();
+        if (!tag.contains(UCStrings.TAG_ABSTRACT)) {
+            tag.putInt(UCStrings.TAG_ABSTRACT, num);
+            return;
+        }
+        tag.putInt(UCStrings.TAG_ABSTRACT, tag.getInt(UCStrings.TAG_ABSTRACT) + num);
+        if (tag.getInt(UCStrings.TAG_ABSTRACT) <= 0)
+            tag.remove(UCStrings.TAG_ABSTRACT);
+    }
+
     public static boolean setBiome(ResourceLocation biomeId, World world, BlockPos pos) {
 
         if (world.isClientSide) return false;
