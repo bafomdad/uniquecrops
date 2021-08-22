@@ -43,11 +43,12 @@ public class Knowledge extends BaseCropsBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
 
+        if (this.isMaxAge(state) || world.isClientSide) return;
+
         if (this.canIgnoreGrowthRestrictions(world, pos)) {
             super.randomTick(state, world, pos, rand);
             return;
         }
-        if (!this.isMaxAge(state) || world.isClientSide) return;
 
         int growStages = consumeKnowledge(world, pos);
         if (growStages > 0)
