@@ -32,6 +32,13 @@ public class Succo extends BaseCropsBlock {
     }
 
     @Override
+    public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {
+
+        if (world.dimensionType().moonPhase(world.dayTime()) == 0.0F)
+            super.performBonemeal(world, rand, pos, state);
+    }
+
+    @Override
     public BlockRenderType getRenderShape(BlockState state) {
 
         return BlockRenderType.INVISIBLE;
