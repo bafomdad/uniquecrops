@@ -42,6 +42,7 @@ public final class UCConfig {
         public final ForgeConfigSpec.IntValue millenniumTime;
         public final ForgeConfigSpec.IntValue cubeCooldown;
         public final ForgeConfigSpec.IntValue energyPerTick;
+        public final ForgeConfigSpec.BooleanValue convertObsidian;
 
         public final ForgeConfigSpec.BooleanValue moonPhase;
         public final ForgeConfigSpec.BooleanValue hasTorch;
@@ -76,6 +77,9 @@ public final class UCConfig {
             energyPerTick = builder
                     .comment("Amount of energy gained per tick while the Industria crop grows.")
                     .defineInRange("energyPerTick", 20, 1, 200);
+            convertObsidian = builder
+                    .comment("Lets the Petramia crop convert obsidian instead of bedrock. Use if there are no bedrock nearby to convert.")
+                    .define("convertObsidian", false);
 
             moonPhase = builder.define("moonPhase", true);
             hasTorch = builder.define("hasTorch", true);

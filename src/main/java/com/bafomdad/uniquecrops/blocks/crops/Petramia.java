@@ -1,6 +1,7 @@
 package com.bafomdad.uniquecrops.blocks.crops;
 
 import com.bafomdad.uniquecrops.blocks.BaseCropsBlock;
+import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.core.enums.EnumParticle;
 import com.bafomdad.uniquecrops.init.UCBlocks;
@@ -51,7 +52,7 @@ public class Petramia extends BaseCropsBlock {
         Iterator posit = poslist.iterator();
         while (posit.hasNext()) {
             BlockPos looppos = (BlockPos)posit.next();
-            if (!world.isEmptyBlock(looppos) && world.getBlockState(looppos).getBlock() == (true ? Blocks.OBSIDIAN: Blocks.BEDROCK)) {
+            if (!world.isEmptyBlock(looppos) && world.getBlockState(looppos).getBlock() == (UCConfig.COMMON.convertObsidian.get() ? Blocks.OBSIDIAN: Blocks.BEDROCK)) {
                 if (world.random.nextBoolean()) {
                     toConvert.add(looppos.immutable());
                 }
