@@ -21,7 +21,7 @@ public class CinderleafItem extends ItemBaseUC {
 
         if (entity.getItem().getItem() == this) {
             if (isWaterSource(entity.getCommandSenderWorld(), entity.blockPosition())) {
-                if (entity.getAge() % 20 == 0) {
+                if (entity.tickCount % 20 == 0) {
                     if (entity.getItem().getCount() == 4) {
                         entity.level.setBlock(entity.blockPosition(), Blocks.LAVA.defaultBlockState(), 3);
                         entity.remove();
