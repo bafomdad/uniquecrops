@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.world.DimensionType;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -84,7 +85,7 @@ public class RenderSucco extends TileEntityRenderer<TileSucco> {
                 // Alter GL state
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GlStateManager.SourceFactor.CONSTANT_ALPHA, GlStateManager.DestFactor.ONE_MINUS_CONSTANT_ALPHA);
-                float moon = Minecraft.getInstance().level.getMoonPhase();
+                float moon = DimensionType.MOON_BRIGHTNESS_PER_PHASE[Minecraft.getInstance().level.getMoonPhase()];
                 RenderSystem.blendColor(1, 1, 1, moon);
             }, () -> {
                 RenderSystem.blendColor(1, 1, 1, 1);
