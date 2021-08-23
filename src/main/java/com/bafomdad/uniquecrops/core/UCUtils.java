@@ -254,4 +254,9 @@ public class UCUtils {
 
         return type[rand.nextInt(type.length)];
     }
+
+    public static <T> T selectRandom(Random rand, List<T> list) {
+
+        return list.get(rand.nextInt(list.size()));
+    }
 }

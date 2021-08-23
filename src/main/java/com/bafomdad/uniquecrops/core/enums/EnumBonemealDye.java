@@ -1,6 +1,7 @@
 package com.bafomdad.uniquecrops.core.enums;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.BlockState;
@@ -17,59 +18,19 @@ public enum EnumBonemealDye {
 
     WHITE(Blocks.LILY_OF_THE_VALLEY.defaultBlockState(), Blocks.WHITE_TULIP.defaultBlockState()),
     ORANGE(Blocks.ORANGE_TULIP.defaultBlockState()),
-    MAGENTA(Blocks.ALLIUM.defaultBlockState()) {
-        @Override
-        public void growFlower(World world, BlockPos pos) {
-            if (world.random.nextBoolean())
-                ((DoublePlantBlock)Blocks.LILAC).placeAt(world, pos, 2);
-            else
-                super.growFlower(world, pos);
-        }
-    },
+    MAGENTA(Blocks.ALLIUM.defaultBlockState(), Blocks.LILAC.defaultBlockState()),
     LIGHT_BLUE(Blocks.BLUE_ORCHID.defaultBlockState()),
-    YELLOW(Blocks.DANDELION.defaultBlockState()) {
-        @Override
-        public void growFlower(World world, BlockPos pos) {
-            if (world.random.nextBoolean())
-                ((DoublePlantBlock)Blocks.SUNFLOWER).placeAt(world, pos, 2);
-            else
-                super.growFlower(world, pos);
-        }
-    },
+    YELLOW(Blocks.DANDELION.defaultBlockState(), Blocks.SUNFLOWER.defaultBlockState()),
     LIME(Blocks.LILY_PAD.defaultBlockState()),
-    PINK(Blocks.PINK_TULIP.defaultBlockState()) {
-        @Override
-        public void growFlower(World world, BlockPos pos) {
-            if (world.random.nextBoolean())
-                ((DoublePlantBlock)Blocks.PEONY).placeAt(world, pos, 2);
-            else
-                super.growFlower(world, pos);
-        }
-    },
+    PINK(Blocks.PINK_TULIP.defaultBlockState(), Blocks.PEONY.defaultBlockState()),
     GRAY,
     SILVER(Blocks.AZURE_BLUET.defaultBlockState(), Blocks.OXEYE_DAISY.defaultBlockState()),
     CYAN,
     PURPLE,
     BLUE(Blocks.CORNFLOWER.defaultBlockState()),
     BROWN,
-    GREEN(Blocks.FERN.defaultBlockState()) {
-        @Override
-        public void growFlower(World world, BlockPos pos) {
-            if (world.random.nextBoolean())
-                ((DoublePlantBlock)Blocks.LARGE_FERN).placeAt(world, pos, 2);
-            else
-                super.growFlower(world, pos);
-        }
-    },
-    RED(Blocks.POPPY.defaultBlockState(), Blocks.RED_TULIP.defaultBlockState()) {
-        @Override
-        public void growFlower(World world, BlockPos pos) {
-            if (world.random.nextBoolean())
-                ((DoublePlantBlock)Blocks.ROSE_BUSH).placeAt(world, pos, 2);
-            else
-                super.growFlower(world, pos);
-        }
-    },
+    GREEN(Blocks.FERN.defaultBlockState(), Blocks.LARGE_FERN.defaultBlockState()),
+    RED(Blocks.POPPY.defaultBlockState(), Blocks.RED_TULIP.defaultBlockState(), Blocks.ROSE_BUSH.defaultBlockState()),
     BLACK(Blocks.WITHER_ROSE.defaultBlockState()) {
         @Override
         public void growFlower(World world, BlockPos pos) {
@@ -78,16 +39,22 @@ public enum EnumBonemealDye {
         }
     };
 
-    final BlockState[] states;
+    final List<BlockState> states;
 
-    EnumBonemealDye(BlockState... states) {
+    EnumBonemealDye(BlockState... blockStates) {
 
-        this.states = states;
+        this.states = new ArrayList<>();
+        states.addAll(Arrays.asList(blockStates));
+    }
+
+    public void addFlower(BlockState flower) {
+
+        this.states.add(flower);
     }
 
     public Event.Result grow(World world, BlockPos pos) {
 
-        if (states == null || states.length <= 0) return Event.Result.DENY;
+        if (states == null || states.size() <= 0) return Event.Result.DENY;
 
         final int range = 3;
         List<BlockPos> growthSpots = new ArrayList<>();
@@ -109,7 +76,11 @@ public enum EnumBonemealDye {
 
     public void growFlower(World world, BlockPos pos) {
 
-        world.setBlock(pos, UCUtils.selectRandom(world.random, this.states), 2);
+        BlockState randomState = UCUtils.selectRandom(world.random, this.states);
+        if (randomState.getBlock() instanceof DoublePlantBlock)
+            ((DoublePlantBlock)randomState.getBlock()).placeAt(world, pos, 2);
+        else
+            world.setBlock(pos, randomState, 2);
     }
 }
 
