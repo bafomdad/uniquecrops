@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LEL",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "E": {
+      "item": "uniquecrops:millenniumeye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:phantomstaff"
+  }
+}

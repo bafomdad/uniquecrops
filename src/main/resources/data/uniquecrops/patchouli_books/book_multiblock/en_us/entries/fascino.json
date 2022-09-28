@@ -1,0 +1,20 @@
+{
+    "name": "block.uniquecrops.fascino",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/fascino",
+			"text": "Crop powered enchanting"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.fascino"
+        },
+        {
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/fascino"
+        }
+    ]
+}

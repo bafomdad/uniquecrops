@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+		"particle": "uniquecrops:block/ruinedbricks2",
+		"down": "uniquecrops:block/ruinedbricks2",
+		"up": "uniquecrops:block/ruinedbricks2",
+		"north": "uniquecrops:block/ruinedbricks1",
+		"east": "uniquecrops:block/ruinedbricks1",
+		"south": "uniquecrops:block/ruinedbricks1",
+		"west": "uniquecrops:block/ruinedbricks1"
+  }
+}

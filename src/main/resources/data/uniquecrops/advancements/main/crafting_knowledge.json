@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/artisia_craft",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedknowledge"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingKnowledge"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingKnowledge.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:seedknowledge"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

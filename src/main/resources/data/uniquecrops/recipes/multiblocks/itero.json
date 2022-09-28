@@ -1,0 +1,64 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 80
+  },
+  "shape": [
+    "PRRRP",
+    "R   R",
+    "R 0 R",
+    "R   R",
+    "PRRRP"
+  ],
+  "shaperesult": [
+    "P   P",
+    "     ",
+    "  I  ",
+    "     ",
+    "P   P"
+  ],
+  "origin": {
+    "x": 2,
+    "y": 2
+  },
+  "definition": {
+    "P": {
+      "states": [
+        "minecraft:stone_pressure_plate[powered-false]"
+      ]
+    },
+    "0": {
+      "states": [
+        "uniquecrops:crop_pixelsius[age-0]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "R": {
+      "states": [
+        "minecraft:redstone_wire[east-none,north-none,power-0,south-none,west-none]"
+      ]
+    }
+  },
+  "definitionresult": {
+    "P": {
+      "states": [
+        "minecraft:stone_pressure_plate[powered-false]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "I": {
+      "states": [
+        "uniquecrops:itero[age-0]"
+      ]
+    }
+  }
+}

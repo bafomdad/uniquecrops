@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "uniquecrops:abstractbarrel",
+    "uniquecrops:egg_basket",
+    "uniquecrops:flywood_leaves",
+    "uniquecrops:flywood_log",
+    "uniquecrops:flywood_planks",
+    "uniquecrops:flywood_stairs",
+    "uniquecrops:flywood_trapdoor",
+    "uniquecrops:harvest_trap",
+    "uniquecrops:normiecrate",
+    "uniquecrops:obtuse_platform",
+    "uniquecrops:rosewood_planks",
+    "uniquecrops:rosewood_slab",
+    "uniquecrops:rosewood_stairs",
+    "uniquecrops:rosewood_trapdoor",
+    "uniquecrops:totemhead"
+  ]
+}

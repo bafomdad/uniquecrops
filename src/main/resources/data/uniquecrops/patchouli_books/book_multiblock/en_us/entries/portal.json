@@ -1,0 +1,20 @@
+{
+    "name": "Crop Portal",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/cropworldportal",
+			"text": "!!Work in progress!!"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.portal"
+        },
+        {
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/cropworldportal"
+        }
+    ]
+}

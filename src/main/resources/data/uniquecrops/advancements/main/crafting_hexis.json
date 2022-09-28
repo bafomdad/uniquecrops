@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/artisia_craft",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedhexis"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingHexis"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingHexis.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:seedhexis"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

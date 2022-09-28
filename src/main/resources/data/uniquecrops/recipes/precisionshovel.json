@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "uniquecrops:precision_shovel"
+  },
+  "pattern": [
+    " P ",
+    " S ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "uniquecrops:pregem"
+    }
+  }
+}

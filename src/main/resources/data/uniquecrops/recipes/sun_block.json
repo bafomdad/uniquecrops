@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EGE",
+    "GEG",
+    "EGE"
+  ],
+  "key": {
+    "E": {
+      "item": "uniquecrops:savageessence"
+    },
+    "G": {
+      "item": "uniquecrops:invisibilia_glass"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:sun_block"
+  }
+}

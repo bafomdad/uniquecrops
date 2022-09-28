@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SLS",
+    "LWL",
+    "ELE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:emerald_block"
+    },
+    "W": {
+      "item": "minecraft:cobweb"
+    },
+    "S": {
+      "item": "uniquecrops:phantomstaff"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:dreamcatcher"
+  }
+}

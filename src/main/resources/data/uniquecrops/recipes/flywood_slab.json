@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "uniquecrops:flywood_planks"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:flywood_slab",
+    "count": 6
+  }
+}

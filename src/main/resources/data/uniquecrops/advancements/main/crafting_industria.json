@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/artisia_craft",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedindustria"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingIndustria"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingIndustria.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:seedindustria"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

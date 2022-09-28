@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:projectile_protection",
+  "cost": 60,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:shield"
+      },
+      {
+        "item": "minecraft:arrow"
+      },
+      {
+        "item": "minecraft:armor_stand"
+      }
+    ]
+  ]
+}

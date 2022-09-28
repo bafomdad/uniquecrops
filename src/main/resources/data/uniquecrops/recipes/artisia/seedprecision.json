@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedprecision"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    }
+  ]
+}

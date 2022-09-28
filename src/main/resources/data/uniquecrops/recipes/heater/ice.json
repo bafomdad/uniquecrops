@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:heater",
+  "output": {
+    "item": "minecraft:ice"
+  },
+  "input": {
+    "item": "minecraft:packed_ice"
+  }
+}

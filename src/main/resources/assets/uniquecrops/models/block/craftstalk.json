@@ -1,0 +1,66 @@
+{
+	"textures": {
+		"0": "minecraft:block/green_terracotta",
+		"1": "minecraft:block/lime_terracotta",
+		"2": "minecraft:block/crafting_table_front",
+		"3": "minecraft:block/crafting_table_side",
+		"4": "minecraft:block/crafting_table_top",
+		"5": "minecraft:block/oak_planks",
+		"particle": "minecraft:block/green_terracotta"
+	},
+	"elements": [
+		{
+			"from": [6.5, 0, 6.5],
+			"to": [9.5, 6.5, 9.5],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"south": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"west": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"up": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"down": {"uv": [0, 0, 3, 3], "texture": "#0"}
+			}
+		},
+		{
+			"name": "workbench",
+			"from": [3, 6, 3],
+			"to": [13, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#5"}
+			}
+		},
+		{
+			"name": "leaf",
+			"from": [8, 1, 8],
+			"to": [12, 2, 12],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [10, 1.5, 10]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 4, 4], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [0, 0, 4, 4], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "leaf",
+			"from": [4, 3, 3],
+			"to": [8, 4, 7],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [6, 3.5, 5]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"east": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"south": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"west": {"uv": [0, 0, 4, 1], "texture": "#1"},
+				"up": {"uv": [0, 0, 4, 4], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [0, 0, 4, 4], "rotation": 90, "texture": "#1"}
+			}
+		}
+	]
+}

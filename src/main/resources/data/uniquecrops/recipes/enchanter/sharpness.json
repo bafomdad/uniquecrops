@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:sharpness",
+  "cost": 90,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:wooden_sword"
+      },
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "minecraft:golden_sword"
+      }
+    ]
+  ]
+}

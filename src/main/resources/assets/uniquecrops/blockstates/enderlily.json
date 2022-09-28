@@ -1,0 +1,10 @@
+{
+	"variants": {
+        "": [
+            { "model": "uniquecrops:block/enderlily" },
+            { "model": "uniquecrops:block/enderlily", "y": 90 },
+            { "model": "uniquecrops:block/enderlily", "y": 180 },
+            { "model": "uniquecrops:block/enderlily", "y": 270 }
+        ]
+    }
+}

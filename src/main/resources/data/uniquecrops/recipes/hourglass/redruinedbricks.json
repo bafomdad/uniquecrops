@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:red_terracotta"
+  },
+  "output": {
+    "name": "uniquecrops:ruinedbricksred"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/artisia_craft",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedenderlily"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingEnderlily"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingEnderlily.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:seedenderlily"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

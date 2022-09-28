@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedweepingbells"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "minecraft:melon_seeds"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "minecraft:melon_seeds"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:melon_seeds"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "minecraft:melon_seeds"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    }
+  ]
+}

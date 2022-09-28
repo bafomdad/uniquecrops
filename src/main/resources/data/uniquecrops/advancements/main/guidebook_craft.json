@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/seed_pickup",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:book_guide"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingGuideBook"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingGuideBook.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:book_guide"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

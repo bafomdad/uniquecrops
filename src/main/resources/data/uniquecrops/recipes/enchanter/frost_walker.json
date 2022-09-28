@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:frost_walker",
+  "cost": 40,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:ice"
+      },
+      {
+        "item": "minecraft:packed_ice"
+      },
+      {
+        "item": "minecraft:blue_ice"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:chiseled_stone_bricks"
+  },
+  "output": {
+    "name": "uniquecrops:ruinedbrickscarved"
+  }
+}

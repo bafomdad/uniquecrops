@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uniquecrops:block/knowledge1"
+    },
+    "age=1": {
+      "model": "uniquecrops:block/knowledge2"
+    },
+    "age=2": {
+      "model": "uniquecrops:block/knowledge2"
+    },
+    "age=3": {
+      "model": "uniquecrops:block/knowledge3"
+    },
+    "age=4": {
+      "model": "uniquecrops:block/knowledge3"
+    },
+    "age=5": {
+      "model": "uniquecrops:block/knowledge4"
+    },
+    "age=6": {
+      "model": "uniquecrops:block/knowledge4"
+    },
+    "age=7": {
+      "model": "uniquecrops:block/knowledge5"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:fire_aspect",
+  "cost": 50,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "uniquecrops:seedmaryjane"
+      },
+      {
+        "item": "minecraft:blaze_powder"
+      },
+      {
+        "item": "minecraft:blaze_rod"
+      }
+    ]
+  ]
+}

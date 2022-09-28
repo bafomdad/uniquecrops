@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uniquecrops:block/industria0"
+    },
+    "age=1": {
+      "model": "uniquecrops:block/industria1"
+    },
+    "age=2": {
+      "model": "uniquecrops:block/industria2"
+    },
+    "age=3": {
+      "model": "uniquecrops:block/industria3"
+    },
+    "age=4": {
+      "model": "uniquecrops:block/industria4"
+    },
+    "age=5": {
+      "model": "uniquecrops:block/industria5"
+    },
+    "age=6": {
+      "model": "uniquecrops:block/industria6"
+    },
+    "age=7": {
+      "model": "uniquecrops:block/industria7"
+    }
+  }
+}

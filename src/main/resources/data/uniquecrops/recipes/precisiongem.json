@@ -1,0 +1,12 @@
+{
+  "result": {
+    "item": "uniquecrops:pregem",
+	"count": 9
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:precision_block"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

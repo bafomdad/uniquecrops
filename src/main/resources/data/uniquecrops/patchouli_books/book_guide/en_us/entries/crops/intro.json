@@ -1,0 +1,16 @@
+{
+    "name": "Introduction",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:seeds",
+    "priority": true,
+    "pages": [
+        {
+            "type": "patchouli:image",
+			"images": [ "uniquecrops:textures/gui/titlepage.png" ]
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.book.pageintro"
+        }
+    ]
+}

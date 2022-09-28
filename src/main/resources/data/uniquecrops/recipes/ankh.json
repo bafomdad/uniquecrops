@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " E ",
+    "OOO",
+    " O "
+  ],
+  "key": {
+    "E": {
+      "item": "uniquecrops:sun_block"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:ankh"
+  }
+}

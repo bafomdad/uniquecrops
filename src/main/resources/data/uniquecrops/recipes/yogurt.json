@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "uniquecrops:boiled_milk"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "uniquecrops:seeddyeius"
+    }
+  ],
+  "result": {
+    "item": "uniquecrops:yogurt"
+  }
+}

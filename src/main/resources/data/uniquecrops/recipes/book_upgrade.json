@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " F ",
+    "FBF",
+    " F "
+  ],
+  "key": {
+    "B": {
+      "item": "uniquecrops:book_discount"
+    },
+    "F": {
+      "item": "uniquecrops:invisifeather"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:book_upgrade"
+  }
+}

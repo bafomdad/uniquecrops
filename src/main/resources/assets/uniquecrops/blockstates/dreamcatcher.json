@@ -1,0 +1,8 @@
+{
+  "variants": {
+		"facing=north": { "model": "uniquecrops:block/dreamcatcher", "y": 0 },
+		"facing=south": { "model": "uniquecrops:block/dreamcatcher", "y": 180 },
+		"facing=east": { "model": "uniquecrops:block/dreamcatcher", "y": 90 },
+		"facing=west": { "model": "uniquecrops:block/dreamcatcher", "y": 270 }
+  }
+}

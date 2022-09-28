@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "uniquecrops:precision_block"
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+	"PPP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "uniquecrops:pregem"
+    }
+  }
+}

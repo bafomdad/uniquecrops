@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EPE",
+    "PSP",
+    "EPE"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "E": {
+      "item": "uniquecrops:lilytwine"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:endersnooker"
+  }
+}

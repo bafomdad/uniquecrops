@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "X",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "X": {
+      "item": "uniquecrops:cinderleaf"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:cindertorch",
+    "count": 4
+  }
+}

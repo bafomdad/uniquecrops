@@ -1,0 +1,37 @@
+{
+  "parent": "uniquecrops:main/guidebook_craft",
+  "display": {
+    "icon": {
+      "item": "uniquecrops:seedartisia"
+    },
+    "title": {
+      "translate": "advancement.uniquecrops:craftingArtisia"
+    },
+    "description": {
+      "translate": "advancement.uniquecrops:craftingArtisia.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "uniquecrops:seedartisia"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "seed"
+    ]
+  ]
+}

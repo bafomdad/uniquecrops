@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:fire_protection",
+  "cost": 40,
+  "ingredients": [
+    [
+      {
+        "item": "uniquecrops:cinderleaf"
+      },
+      {
+        "item": "minecraft:lava_bucket"
+      },
+      {
+        "item": "uniquecrops:cinderleaf"
+      },
+      {
+        "item": "minecraft:bricks"
+      }
+    ]
+  ]
+}

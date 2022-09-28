@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedferoxia"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedweepingbells"
+    },
+    {
+      "item": "uniquecrops:seedknowledge"
+    },
+    {
+      "item": "uniquecrops:seedweepingbells"
+    },
+    {
+      "item": "uniquecrops:seedknowledge"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "uniquecrops:seedknowledge"
+    },
+    {
+      "item": "uniquecrops:seedweepingbells"
+    },
+    {
+      "item": "uniquecrops:seedknowledge"
+    },
+    {
+      "item": "uniquecrops:seedweepingbells"
+    }
+  ]
+}

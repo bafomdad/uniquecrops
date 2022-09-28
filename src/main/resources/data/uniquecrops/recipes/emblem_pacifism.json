@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "uniquecrops:emblem_defense"
+    },
+    {
+      "item": "uniquecrops:emblem_blacksmith"
+    },
+    {
+      "item": "uniquecrops:emblem_ironstomach"
+    },
+    {
+      "item": "uniquecrops:emblem_leaf"
+    },
+    {
+      "item": "uniquecrops:emblem_melee"
+    },
+    {
+      "item": "uniquecrops:emblem_powerfist"
+    },
+    {
+      "item": "uniquecrops:emblem_rainbow"
+    },
+    {
+      "item": "uniquecrops:emblem_scarab"
+    },
+    {
+      "item": "uniquecrops:emblem_transformation"
+    }
+  ],
+  "result": {
+    "item": "uniquecrops:emblem_pacifism"
+  }
+}

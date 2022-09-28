@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:protection",
+  "cost": 80,
+  "ingredients": [
+    [
+      {
+        "item": "uniquecrops:darkblock"
+      },
+      {
+        "item": "uniquecrops:darkblock"
+      },
+      {
+        "item": "minecraft:iron_block"
+      },
+      {
+        "item": "minecraft:gold_block"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "E E",
+    "E E"
+  ],
+  "key": {
+    "E": {
+      "item": "uniquecrops:ferromagnetic_iron"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:item_magnet"
+  }
+}

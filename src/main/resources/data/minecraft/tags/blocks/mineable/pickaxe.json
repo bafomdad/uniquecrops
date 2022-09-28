@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "uniquecrops:ruinedbricks",
+    "uniquecrops:ruinedbricks_slab",
+    "uniquecrops:ruinedbricks_stairs",
+    "uniquecrops:ruinedbrickscarved",
+    "uniquecrops:ruinedbrickscarved_slab",
+    "uniquecrops:ruinedbricksred",
+    "uniquecrops:bucketrope",
+    "uniquecrops:cindertorch",
+    "uniquecrops:goblet",
+    "uniquecrops:hourglass",
+    "uniquecrops:invisibilia_glass",
+    "uniquecrops:oldbrick",
+    "uniquecrops:oldcobble",
+    "uniquecrops:oldcobblemoss",
+    "uniquecrops:olddiamond",
+    "uniquecrops:oldgold",
+    "uniquecrops:oldiron",
+    "uniquecrops:precision_block",
+    "uniquecrops:sun_block",
+    "uniquecrops:sun_dial"
+  ]
+}

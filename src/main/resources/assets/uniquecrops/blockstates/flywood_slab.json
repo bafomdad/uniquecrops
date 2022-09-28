@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "uniquecrops:block/flywood_slab_top"
+    },
+    "type=bottom": {
+      "model": "uniquecrops:block/flywood_slab"
+    },
+    "type=double": {
+      "model": "uniquecrops:block/flywood_planks"
+    }
+  }
+}

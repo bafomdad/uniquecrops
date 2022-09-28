@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "uniquecrops:block/millennium1"
+    },
+    "age=1": {
+      "model": "uniquecrops:block/millennium2"
+    },
+    "age=2": {
+      "model": "uniquecrops:block/millennium2"
+    },
+    "age=3": {
+      "model": "uniquecrops:block/millennium3"
+    },
+    "age=4": {
+      "model": "uniquecrops:block/millennium3"
+    },
+    "age=5": {
+      "model": "uniquecrops:block/millennium4"
+    },
+    "age=6": {
+      "model": "uniquecrops:block/millennium4"
+    },
+    "age=7": {
+      "model": "uniquecrops:block/millennium5"
+    }
+  }
+}

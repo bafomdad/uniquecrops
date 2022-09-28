@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedmaryjane"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "uniquecrops:seedcollis"
+    }
+  ]
+}

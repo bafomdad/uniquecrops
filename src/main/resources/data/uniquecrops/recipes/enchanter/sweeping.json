@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:sweeping",
+  "cost": 70,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "minecraft:iron_sword"
+      },
+      {
+        "item": "minecraft:diamond_sword"
+      }
+    ]
+  ]
+}

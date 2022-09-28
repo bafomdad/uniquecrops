@@ -1,0 +1,18 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:fortune",
+  "cost": 80,
+  "ingredients": [
+    [
+      {
+        "item": "uniquecrops:savageessence"
+      },
+      {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      {
+        "item": "uniquecrops:pregem"
+      }
+    ]
+  ]
+}

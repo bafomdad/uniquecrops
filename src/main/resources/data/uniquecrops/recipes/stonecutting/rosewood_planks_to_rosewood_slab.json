@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "uniquecrops:rosewood_planks"
+  },
+  "result": "uniquecrops:rosewood_slab",
+  "count": 2
+}

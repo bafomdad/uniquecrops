@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedsucco"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "uniquecrops:seedinvisibilia"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "block.uniquecrops.exedo",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/exedo",
+			"text": "Entity killer"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.exedo"
+        },
+        {
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/exedo"
+        }
+    ]
+}

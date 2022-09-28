@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " T ",
+    "TET",
+    " T "
+  ],
+  "key": {
+    "T": {
+      "item": "uniquecrops:weepingtear"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:weepingeye"
+  }
+}

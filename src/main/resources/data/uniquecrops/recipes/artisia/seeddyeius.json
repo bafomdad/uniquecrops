@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seeddyeius"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedabstract"
+    },
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "item": "uniquecrops:seedabstract"
+    },
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "item": "uniquecrops:seedabstract"
+    },
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "item": "uniquecrops:seedabstract"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:diamond_block"
+  },
+  "output": {
+    "name": "uniquecrops:olddiamond"
+  }
+}

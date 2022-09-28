@@ -1,0 +1,21 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:aqua_affinity",
+  "cost": 30,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:diamond_pickaxe"
+      },
+      {
+        "item": "minecraft:water_bucket"
+      },
+      {
+        "item": "uniquecrops:timedust"
+      },
+      {
+        "item": "uniquecrops:timedust"
+      }
+    ]
+  ]
+}

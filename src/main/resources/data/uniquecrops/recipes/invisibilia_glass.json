@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TGT",
+    "GTG",
+    "TGT"
+  ],
+  "key": {
+    "T": {
+      "item": "uniquecrops:invisitwine"
+    },
+    "G": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:invisibilia_glass",
+    "count": 4
+  }
+}

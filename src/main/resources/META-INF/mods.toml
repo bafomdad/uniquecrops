@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+license="MIT"
+logoFile="logo.png"
+
+[[mods]]
+modId="uniquecrops"
+version="${file.jarVersion}"
+displayName="Unique Crops"
+logoFile="logo.png"
+authors="bafomdad"
+description="Unique crops, unique growth, unique drops"
+
+[[dependencies.uniquecrops]]
+    modId="forge"
+    mandatory=true #mandatory
+    versionRange="[40.1.68,)"
+	
+[[dependencies.uniquecrops]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.18.2-67,)"
+
+[[dependencies.uniquecrops]]
+    modId="curios"
+    mandatory=true
+    versionRange="[1.18.2-5.0.6.3,)"

@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedeula"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedcobblonia"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "uniquecrops:seedcobblonia"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "uniquecrops:seedcobblonia"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "uniquecrops:seedcobblonia"
+    }
+  ]
+}

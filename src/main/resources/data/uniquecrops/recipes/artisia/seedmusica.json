@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedmusica"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedmaryjane"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedmaryjane"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:jukebox"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedmaryjane"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "uniquecrops:seedmaryjane"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedcinderbella"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:wheat_seeds"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    }
+  ]
+}

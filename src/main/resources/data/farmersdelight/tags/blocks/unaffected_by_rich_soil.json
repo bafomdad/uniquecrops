@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+	"uniquecrops:crop_holy",
+	"uniquecrops:crop_devilsnare",
+	"uniquecrops:crop_dirigible",
+	"uniquecrops:crop_donutsteel",
+	"uniquecrops:crop_feroxia",
+	"uniquecrops:crop_hexis",
+	"uniquecrops:crop_imperia",
+	"uniquecrops:crop_industria",
+	"uniquecrops:crop_knowledge",
+	"uniquecrops:crop_malleatoris",
+	"uniquecrops:crop_maryjane",
+	"uniquecrops:crop_millennium",
+	"uniquecrops:crop_musica",
+	"uniquecrops:crop_precision",
+	"uniquecrops:crop_quarry",
+	"uniquecrops:crop_weepingbells"
+  ]
+}

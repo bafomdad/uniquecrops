@@ -1,0 +1,15 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:mending",
+  "cost": 90,
+  "ingredients": [
+    [
+      {
+        "item": "minecraft:experience_bottle"
+      },
+      {
+        "item": "uniquecrops:seedmalleatoris"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedcobblonia"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "uniquecrops:seednormal"
+    }
+  ]
+}

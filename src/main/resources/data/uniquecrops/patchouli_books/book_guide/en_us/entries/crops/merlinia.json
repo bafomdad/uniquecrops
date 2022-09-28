@@ -1,0 +1,15 @@
+{
+    "name": "block.uniquecrops.crop_merlinia",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:seeds",
+    "pages": [
+        {
+            "type": "uniquecrops:cropimage",
+            "blockstate": "uniquecrops:crop_merlinia[age=0]"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.book.pagemerlinia"
+        }
+    ]
+}

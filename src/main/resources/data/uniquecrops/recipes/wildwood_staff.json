@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " SE",
+    " NS",
+    "S  "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "N": {
+      "item": "uniquecrops:endersnooker"
+    },
+    "E": {
+      "item": "uniquecrops:savageessence"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:wildwood_staff"
+  }
+}

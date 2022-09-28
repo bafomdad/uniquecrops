@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedinvisibilia"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "uniquecrops:seedcinderbella"
+    }
+  ]
+}

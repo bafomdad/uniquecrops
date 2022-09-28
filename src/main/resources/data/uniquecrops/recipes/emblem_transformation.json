@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " p ",
+    "fDf",
+    " f "
+  ],
+  "key": {
+    "p": {
+      "item": "uniquecrops:invisifeather"
+    },
+    "f": {
+      "item": "minecraft:feather"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_transformation"
+  }
+}

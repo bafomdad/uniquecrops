@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "minecraft:block/glass",
+        "down": "uniquecrops:block/sunblock",
+        "up": "uniquecrops:block/sunblock",
+        "north": "uniquecrops:block/sunblock_side",
+		"south": "uniquecrops:block/sunblock_side",
+		"east": "uniquecrops:block/sunblock_side",
+		"west": "uniquecrops:block/sunblock_side"
+    }
+}

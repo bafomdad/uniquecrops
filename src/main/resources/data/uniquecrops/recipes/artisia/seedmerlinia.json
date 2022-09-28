@@ -1,0 +1,35 @@
+{
+  "type": "uniquecrops:artisia",
+  "output": {
+    "item": "uniquecrops:seedmerlinia"
+  },
+  "ingredients": [
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "uniquecrops:timemeal"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "uniquecrops:timemeal"
+    },
+    {
+      "item": "minecraft:pumpkin_seeds"
+    },
+    {
+      "item": "uniquecrops:timemeal"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    },
+    {
+      "item": "uniquecrops:timemeal"
+    },
+    {
+      "item": "uniquecrops:seedenderlily"
+    }
+  ]
+}

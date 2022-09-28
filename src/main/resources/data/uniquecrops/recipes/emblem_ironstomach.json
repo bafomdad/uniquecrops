@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SgP",
+    "iDe",
+    "RdC"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:cooked_rabbit"
+    },
+    "C": {
+      "item": "minecraft:cooked_chicken"
+    },
+    "S": {
+      "item": "minecraft:cooked_beef"
+    },
+    "P": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "D": {
+      "item": "uniquecrops:darkblock"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:emblem_ironstomach"
+  }
+}

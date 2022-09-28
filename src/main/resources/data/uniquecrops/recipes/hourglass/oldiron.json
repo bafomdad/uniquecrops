@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:hourglass",
+  "input": {
+    "name": "minecraft:iron_block"
+  },
+  "output": {
+    "name": "uniquecrops:oldiron"
+  }
+}

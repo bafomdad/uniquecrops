@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BAB",
+    "BBB"
+  ],
+  "key": {
+    "A": {
+      "item": "uniquecrops:glasses_3d"
+    },
+    "B": {
+      "item": "uniquecrops:pixels"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:glasses_pixels"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 40
+  },
+  "shape": [
+    "MDM",
+    "D0D",
+    "MDM"
+  ],
+  "shaperesult": [
+    "   ",
+    " C ",
+    "   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "0": {
+      "states": [
+        "uniquecrops:crop_maryjane[age-0]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "D": {
+      "states": [
+        "uniquecrops:crop_industria[age-0]"
+      ]
+    },
+    "M": {
+      "states": [
+        "uniquecrops:crop_maryjane[age-0]"
+      ]
+    }
+  },
+  "definitionresult": {
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "C": {
+      "states": [
+        "uniquecrops:cocito"
+      ]
+    }
+  }
+}

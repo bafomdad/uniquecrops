@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TGT",
+    "GDG",
+    "TGT"
+  ],
+  "key": {
+    "D": {
+      "item": "uniquecrops:darkblock"
+    },
+    "G": {
+      "item": "uniquecrops:invisibilia_glass"
+    },
+    "T": {
+      "item": "uniquecrops:lilytwine"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:obtuse_platform"
+  }
+}

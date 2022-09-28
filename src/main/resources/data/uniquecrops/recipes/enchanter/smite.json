@@ -1,0 +1,19 @@
+{
+  "type": "uniquecrops:enchanter",
+  "enchantment": "minecraft:smite",
+  "cost": 30,
+  "ingredients": [
+    {
+      "item": "uniquecrops:enchanted_leather"
+    },
+    {
+      "item": "minecraft:leather_chestplate"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ]
+}

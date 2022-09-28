@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " P ",
+    "PLP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:packed_ice"
+    },
+    "L": {
+      "item": "minecraft:lily_pad"
+    }
+  },
+  "result": {
+    "item": "uniquecrops:icelily"
+  }
+}

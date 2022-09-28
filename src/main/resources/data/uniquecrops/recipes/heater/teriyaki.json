@@ -1,0 +1,9 @@
+{
+  "type": "uniquecrops:heater",
+  "output": {
+    "item": "uniquecrops:teriyaki"
+  },
+  "input": {
+    "item": "minecraft:cooked_chicken"
+  }
+}

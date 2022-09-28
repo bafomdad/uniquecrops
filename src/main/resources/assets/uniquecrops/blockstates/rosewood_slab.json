@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "uniquecrops:block/rosewood_slab_top"
+    },
+    "type=bottom": {
+      "model": "uniquecrops:block/rosewood_slab"
+    },
+    "type=double": {
+      "model": "uniquecrops:block/rosewood_planks"
+    }
+  }
+}

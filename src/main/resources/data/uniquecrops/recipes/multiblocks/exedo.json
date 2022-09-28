@@ -1,0 +1,55 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:wildwood_staff",
+    "power": 40
+  },
+  "shape": [
+    " D ",
+    "D0D",
+    " D "
+  ],
+  "shaperesult": [
+    "   ",
+    " E ",
+    "   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    "0": {
+      "states": [
+        "uniquecrops:crop_devilsnare[age-0]"
+      ]
+    },
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "D": {
+      "states": [
+        "uniquecrops:crop_devilsnare[age-0]"
+      ]
+    },
+    "W": {
+      "states": [
+        "uniquecrops:crop_weepingbells[age-0]"
+      ]
+    }
+  },
+  "definitionresult": {
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "E": {
+      "states": [
+        "uniquecrops:exedo"
+      ]
+    }
+  }
+}
