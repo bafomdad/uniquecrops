@@ -54,7 +54,7 @@ public class RenderSunBlock implements BlockEntityRenderer<TileSunBlock> {
                 float a = 0.5F * (1.0F - phase);
 
                 float w = 1.0F;
-                float h = 40.0F * phase * power;
+                float h = 80.0F * phase * power;
 
                 VertexConsumer buff = buffer.getBuffer(CustomRenderType.CUSTOM_BEAM.apply(RES, true));
                 Matrix4f mat = ms.last().pose();
