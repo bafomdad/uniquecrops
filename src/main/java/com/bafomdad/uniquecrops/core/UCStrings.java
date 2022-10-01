@@ -6,7 +6,6 @@ public class UCStrings {
 
     private static final String BASE = UniqueCrops.MOD_ID;
     public static final String TOOLTIP = BASE + ".tooltip.";
-    public static final String INFOJEI = "info.jei." + BASE + ".";
 
     // MUSICA PLANT TAGS
     public static final String TAG_BEATLIST = "UC_tagBeatlist";
@@ -37,10 +36,6 @@ public class UCStrings {
     public static final String TAG_ADVENT = "UC:adventCalendar";
     public static final String TAG_DIAMONDS = "diamonds";
     public static final String TAG_DISCOUNT = "UC_tagDiscount";
-
-    // BOOK
-    private static final String BOOK = BASE + ".book";
-    public static final String INTRO = BOOK + ".pageintro";
 
     // CONDITIONS
     private static final String COND = BASE + ".condition";

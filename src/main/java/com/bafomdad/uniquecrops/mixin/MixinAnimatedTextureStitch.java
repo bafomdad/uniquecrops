@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops.mixin;
 
+import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.init.UCItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -21,7 +22,8 @@ public abstract class MixinAnimatedTextureStitch {
     @Shadow
     abstract void uploadFrame(int frame);
 
-    @Shadow @Final private TextureAtlasSprite this$0;
+    @Shadow @Final
+    TextureAtlasSprite this$0;
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void updateTextureAnimations(CallbackInfo ci) {
@@ -57,6 +59,8 @@ public abstract class MixinAnimatedTextureStitch {
 
     private boolean isUniqueTexture(String texName) {
 
-        return ((TextureAtlasSprite)(Object)this.this$0).getName().toString().contains(texName);
+        if (!this.this$0.getName().getNamespace().equals(UniqueCrops.MOD_ID)) return false;
+
+        return this.this$0.getName().getPath().contains(texName);
     }
 }

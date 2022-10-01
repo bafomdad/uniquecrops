@@ -19,6 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.NoteBlockEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -56,8 +57,7 @@ public class Musica extends BaseCropsBlock implements EntityBlock {
         BlockPos ePos = event.getPos();
         for (BlockPos pos : BlockPos.betweenClosed(ePos.offset(-RANGE, -2, -RANGE), ePos.offset(RANGE, 2, RANGE))) {
             BlockEntity te = event.getWorld().getBlockEntity(pos);
-            if (te instanceof TileMusica) {
-                TileMusica plant = (TileMusica)te;
+            if (te instanceof TileMusica plant) {
                 if (plant.getBeats().size() > 0) {
                     for (int i = 0; i < plant.getBeats().size(); i++) {
                         TileMusica.Beat beat = plant.getBeats().get(i);
@@ -78,13 +78,13 @@ public class Musica extends BaseCropsBlock implements EntityBlock {
 
         Random rand = new Random();
         if (rand.nextInt(50) == 0) {
-            Item[] modded = new Item[] {
+            Item[] MODDED = new Item[] {
                     UCItems.RECORD_TAXI.get(),
                     UCItems.RECORD_SIMPLY.get(),
                     UCItems.RECORD_NEONSIGNS.get(),
                     UCItems.RECORD_FARAWAY.get()
             };
-            return UCUtils.selectRandom(rand, modded);
+            return UCUtils.selectRandom(rand, MODDED);
         }
         return UCUtils.selectRandom(rand, DROPS);
     }
@@ -97,13 +97,13 @@ public class Musica extends BaseCropsBlock implements EntityBlock {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 
         return new TileMusica(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
 
         if (!level.isClientSide()) {
             return (lvl, pos, st, te) -> {
@@ -115,7 +115,7 @@ public class Musica extends BaseCropsBlock implements EntityBlock {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Random rand) {
 
         if (isMaxAge(state))
             world.addParticle(ParticleTypes.NOTE, pos.getX() + rand.nextFloat(), pos.getY() + 0.3, pos.getZ() + rand.nextFloat(), 0, 0, 0);

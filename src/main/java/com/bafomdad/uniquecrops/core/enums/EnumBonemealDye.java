@@ -77,8 +77,8 @@ public enum EnumBonemealDye {
     public void growFlower(Level world, BlockPos pos) {
 
         BlockState randomState = UCUtils.selectRandom(world.random, this.states);
-        if (randomState.getBlock() instanceof DoublePlantBlock)
-            ((DoublePlantBlock)randomState.getBlock()).placeAt(world, randomState, pos, 2);
+        if (randomState.getBlock() instanceof DoublePlantBlock doubleplant)
+            doubleplant.placeAt(world, randomState, pos, 2);
         else
             world.setBlock(pos, randomState, 2);
     }
