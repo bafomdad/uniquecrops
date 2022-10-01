@@ -75,6 +75,12 @@ public class ThunderpantzItem extends ItemArmorUC implements IBookUpgradeable {
         return false;
     }
 
+    @Override
+    public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
+
+        return stack.is(this);
+    }
+
     public void setCharge(ItemStack stack, float f) {
 
         NBTUtils.setFloat(stack, TAG_CHARGE, f);
