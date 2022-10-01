@@ -41,7 +41,8 @@ public class RenderSucco implements BlockEntityRenderer<TileSucco> {
         float moon = DimensionType.MOON_BRIGHTNESS_PER_PHASE[Minecraft.getInstance().level.getMoonPhase()];
         Matrix4f mat = ms.last().pose();
 
-        ms.translate(0.5, 0.45, 0.5);
+        ms.mulPose(Vector3f.YP.rotationDegrees(45.0F));
+        ms.translate(0, 0.45, 0.75);
         ms.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
         this.quad(buff, mat, 0.5F, 0.5F, 0, moon);
         ms.mulPose(Vector3f.XP.rotationDegrees(180.0F));
