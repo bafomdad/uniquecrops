@@ -11,15 +11,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
-
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemCurioUC extends ItemBaseUC implements ICurioItem {
 
@@ -45,7 +42,7 @@ public abstract class ItemCurioUC extends ItemBaseUC implements ICurioItem {
 
     public boolean hasCurio(LivingEntity living) {
 
-        return !CuriosApi.getCuriosHelper().findEquippedCurio(this, living).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty();
+        return CuriosApi.getCuriosHelper().findFirstCurio(living, this).isPresent();
     }
 
     public UUID getCurioUUID(ItemStack stack) {

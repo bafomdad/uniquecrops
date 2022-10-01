@@ -4,9 +4,10 @@ import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.items.base.ItemCurioUC;
 import com.google.common.collect.Lists;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.InterModComms;
 
 import java.util.List;
@@ -19,15 +20,16 @@ public class EmblemScarab extends ItemCurioUC {
 
         InterModComms.sendTo(UniqueCrops.MOD_ID, UCStrings.BLACKLIST_EFFECT, () -> "minecraft.effect.awkward");
         InterModComms.sendTo(UniqueCrops.MOD_ID, UCStrings.BLACKLIST_EFFECT, () -> "effect.uniquecrops.zombification" );
+        MinecraftForge.EVENT_BUS.addListener(this::onApplyPotion);
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void curioTick(String identifier, int index, LivingEntity entity, ItemStack stack) {
+    private void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
 
-        if (entity instanceof Player player) {
-            if (!player.getActiveEffects().isEmpty())
-                player.getActiveEffects().removeIf(effect -> !BLACKLIST.contains(effect.getDescriptionId()));
+        if (event.getEntityLiving() instanceof Player player) {
+            if (hasCurio(player)) {
+                if (!BLACKLIST.contains(event.getPotionEffect().getDescriptionId()))
+                    event.setResult(Event.Result.DENY);
+            }
         }
     }
 
