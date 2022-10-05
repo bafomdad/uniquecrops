@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops;
 import com.bafomdad.uniquecrops.core.UCConfig;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCTab;
+import com.bafomdad.uniquecrops.core.UCWorldData;
 import com.bafomdad.uniquecrops.data.DataGenerators;
 import com.bafomdad.uniquecrops.events.UCEventHandlerCommon;
 import com.bafomdad.uniquecrops.init.*;
@@ -14,8 +15,10 @@ import com.bafomdad.uniquecrops.proxies.ClientProxy;
 import com.bafomdad.uniquecrops.proxies.CommonProxy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.server.ServerLifecycleEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -26,6 +29,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 @Mod(UniqueCrops.MOD_ID)
 public class UniqueCrops {
@@ -96,6 +100,7 @@ public class UniqueCrops {
 
     private void onServerStarting(final FMLDedicatedServerSetupEvent event) {
 
+        UCWorldData.getInstance(ServerLifecycleHooks.getCurrentServer().overworld()).setDirty();
         EmblemIronStomach.init();
     }
 

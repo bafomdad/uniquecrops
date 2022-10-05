@@ -7,7 +7,7 @@ import com.bafomdad.uniquecrops.gui.GuiStaffOverlay;
 import com.bafomdad.uniquecrops.init.*;
 import com.bafomdad.uniquecrops.network.PacketSendKey;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.bafomdad.uniquecrops.render.CustomBufferSource;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -24,7 +24,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -83,10 +82,9 @@ public class UCEventHandlerClient {
         event.getToolTip().add(new TextComponent(ChatFormatting.GOLD + tag.getCompound("SpawnData").getString("id")));
     }
 
-    @SubscribeEvent
-    public static void renderWorldLast(RenderLevelStageEvent event) {
+    private static MultiBufferSource.BufferSource buffers = null;
 
-        if (!event.getStage().equals(RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS)) return;
+    public static void renderWorldLast(PoseStack ms) {
 
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
@@ -98,12 +96,11 @@ public class UCEventHandlerClient {
             boolean flag2 = ((IBookUpgradeable) glasses.getItem()).isMaxLevel(glasses);
 
             if (flag && flag2) {
-                PoseStack ms = event.getPoseStack();
                 BlockPos pos = BlockPos.of(NBTUtils.getLong(glasses, "orePos", BlockPos.ZERO.asLong()));
                 if (!pos.equals(BlockPos.ZERO)) {
-                    RenderSystem.disableDepthTest();
+                    if (buffers == null)
+                        buffers = CustomBufferSource.initBuffers(mc.renderBuffers().bufferSource());
                     renderOres(pos, mc, ms);
-                    RenderSystem.enableDepthTest();
                 }
             }
         }
@@ -119,8 +116,8 @@ public class UCEventHandlerClient {
         ms.translate(pos.getX() - renderPosX, pos.getY() - renderPosY, pos.getZ() - renderPosZ);
 
         BlockRenderDispatcher brd = mc.getBlockRenderer();
-        MultiBufferSource.BufferSource renderBuffer = mc.renderBuffers().bufferSource();
-        brd.renderSingleBlock(Blocks.PINK_CONCRETE.defaultBlockState(), ms, renderBuffer, 0xF000F0, OverlayTexture.NO_OVERLAY);
+        brd.renderSingleBlock(Blocks.PINK_CONCRETE.defaultBlockState(), ms, buffers, 0xF000F0, OverlayTexture.NO_OVERLAY);
+        buffers.endBatch();
         ms.popPose();
     }
 }

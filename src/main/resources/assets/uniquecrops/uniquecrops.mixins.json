@@ -12,7 +12,9 @@
   ],
   "client": [
     "MixinAnimatedTextureStitch",
-    "MixinRecipeLoad"
+    "MixinRecipeLoad",
+    "MixinWorldRenderer",
+    "AccessorBS"
   ],
   "minVersion": "0.8",
   "injectors": {

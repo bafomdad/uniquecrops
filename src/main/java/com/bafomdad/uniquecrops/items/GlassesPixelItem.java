@@ -1,10 +1,7 @@
 package com.bafomdad.uniquecrops.items;
 
 import com.bafomdad.uniquecrops.api.IBookUpgradeable;
-import com.bafomdad.uniquecrops.core.NBTUtils;
-import com.bafomdad.uniquecrops.core.UCOreHandler;
-import com.bafomdad.uniquecrops.core.UCStrings;
-import com.bafomdad.uniquecrops.core.UCUtils;
+import com.bafomdad.uniquecrops.core.*;
 import com.bafomdad.uniquecrops.core.enums.EnumArmorMaterial;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemArmorUC;
@@ -37,18 +34,23 @@ public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
         Player player = event.player;
 
         ItemStack pixelGlasses = player.getInventory().armor.get(3);
-        if (pixelGlasses.getItem() == this) {
+        if (pixelGlasses.is(this)) {
             boolean flag = NBTUtils.getBoolean(pixelGlasses, "isActive", false);
             boolean flag2 = isMaxLevel(pixelGlasses);
             if (flag && flag2) {
                 if (event.phase == TickEvent.Phase.START && player.level.getGameTime() % 20 == 0) {
                     ChunkPos cPos = new ChunkPos(player.blockPosition());
-                    if (!event.side.isClient() && UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
-                        BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
-                        NBTUtils.setLong(pixelGlasses, "orePos", pos.asLong());
+                    if (!event.side.isClient()) {
+                        if (UCOreHandler.getInstance().getSaveInfo().containsKey(cPos)) {
+                            BlockPos pos = UCOreHandler.getInstance().getSaveInfo().get(cPos);
+                            NBTUtils.setLong(pixelGlasses, "orePos", pos.asLong());
+                            UCOreHandler.getInstance().removeChunk(player.getLevel(), BlockPos.ZERO, true);
+                        }
+                        else {
+                            NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ZERO.asLong());
+                            UCOreHandler.getInstance().addChunk(player.getLevel(), BlockPos.ZERO, true);
+                        }
                     }
-                    if (!event.side.isClient() && !UCOreHandler.getInstance().getSaveInfo().containsKey(cPos))
-                        NBTUtils.setLong(pixelGlasses, "orePos", BlockPos.ZERO.asLong());
                 }
             }
         }
@@ -80,7 +82,7 @@ public class GlassesPixelItem extends ItemArmorUC implements IBookUpgradeable {
                         UCOreHandler.getInstance().removeChunk(event.getPlayer().getLevel(), event.getPos(), true);
                     }
                     if (!player.isCreative())
-                        player.getInventory().armor.get(3).hurtAndBreak(10, player, (entity) -> {});
+                        player.getInventory().armor.get(3).hurtAndBreak(2, player, (entity) -> {});
                 }
             }
         }

@@ -12,13 +12,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.NotNull;
 
 public class UCWorldData extends SavedData {
 
     public static final String ID = "UCWorldData";
 
-    public UCWorldData() {
-    }
+    public UCWorldData() {}
 
     public UCWorldData(CompoundTag tag) {
 
@@ -43,7 +43,7 @@ public class UCWorldData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag tag) {
 
         String[] allDims = UCProtectionHandler.getInstance().getUnsavedDims().toArray(new String[0]);
         for (String s : allDims) {
@@ -78,13 +78,5 @@ public class UCWorldData extends SavedData {
 
         DimensionDataStorage storage = ((ServerLevel)world).getDataStorage();
         return storage.computeIfAbsent(UCWorldData::new, UCWorldData::new, ID);
-//        ServerLevel sw = ServerLifecycleHooks.getCurrentServer().getLevel(worldkey);
-//        UCWorldData data = sw.getDataStorage().get(UCWorldData::new, ID);
-//        if (data == null) {
-//            data = new UCWorldData();
-//            data.setDirty();
-//            sw.getDataStorage().set(ID, data);
-//        }
-//        return data;
     }
 }
