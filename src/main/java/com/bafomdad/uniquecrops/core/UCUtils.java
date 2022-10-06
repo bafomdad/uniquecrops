@@ -255,6 +255,9 @@ public class UCUtils {
     public static <T extends Recipe<C>, C extends Container> Collection<T> loadType(RecipeType<T> type) {
 
         Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null)
+            return ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(type);
+
         return mc.level.getRecipeManager().getAllRecipesFor(type);
     }
 

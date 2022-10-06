@@ -23,6 +23,7 @@ public class PotionZombification extends MobEffect {
 
     private void onPotionExpire(PotionEvent.PotionExpiryEvent event) {
 
+        if (event.getPotionEffect() == null) return;
         if (event.getPotionEffect().getEffect() == this && event.getEntityLiving() instanceof Player player) {
             if (!player.getLevel().isClientSide()) {
                 ZombieVillager zombie = EntityType.ZOMBIE_VILLAGER.create(player.getLevel());
@@ -35,6 +36,8 @@ public class PotionZombification extends MobEffect {
     }
 
     private void onPotionRemove(PotionEvent.PotionRemoveEvent event) {
+
+        if (event.getPotionEffect() == null) return;
 
         if (event.getPotionEffect().getEffect() == this)
             event.setCanceled(true);

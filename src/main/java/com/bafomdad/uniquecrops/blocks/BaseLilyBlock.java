@@ -13,8 +13,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class BaseLilyBlock extends WaterlilyBlock {
 
     final EnumLily lily;
