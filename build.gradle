@@ -33,7 +33,7 @@ mixin {
     add sourceSets.main, "uniquecrops.refmap.json"
     config 'uniquecrops.mixins.json'
 }
-version = '0.1.26-1.18.2'
+version = "${mod_version}-${minecraft_version}"
 group = 'com.bafomdad.uniquecrops'
 archivesBaseName = 'uniquecrops'
 
