@@ -1,0 +1,20 @@
+{
+    "name": "block.uniquecrops.sanalight",
+    "icon": "minecraft:writable_book",
+    "category": "uniquecrops:multiblocks",
+    "pages": [
+        {
+            "type": "patchouli:multiblock",
+			"multiblock_id": "uniquecrops:multiblocks/sanalight",
+			"text": "All that the light touches"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "uniquecrops.bookmultiblocks.page.sanalight"
+        },
+        {
+            "type": "uniquecrops:recipecost",
+            "multiblock": "uniquecrops:multiblocks/sanalight"
+        }
+    ]
+}

@@ -55,10 +55,10 @@ public class CostComponent implements ICustomComponent {
     public void onVariablesAvailable(UnaryOperator<IVariable> lookup) {
 
         IVariable recipeVar = lookup.apply(multiblock);
-        Recipe<?> mb = Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(recipeVar.asString())).orElseThrow(IllegalArgumentException::new);
-        if (mb instanceof IMultiblockRecipe) {
-            stack = ((IMultiblockRecipe)mb).getCatalyst();
-            cost = ((IMultiblockRecipe)mb).getPower();
+        Recipe<?> recipe = Minecraft.getInstance().level.getRecipeManager().byKey(new ResourceLocation(recipeVar.asString())).orElseThrow(IllegalArgumentException::new);
+        if (recipe instanceof IMultiblockRecipe mb) {
+            stack = mb.getCatalyst();
+            cost = mb.getPower();
         }
     }
 }

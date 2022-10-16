@@ -60,11 +60,11 @@ public class MultiblockProvider extends RecipeProvider {
                         "DSG"
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('A', new Slot(UCBlocks.ARTISIA_CROP.get()));
                     put('0', new Slot(UCBlocks.ARTISIA_CROP.get()));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('C', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.DOWN)));
                     put('N', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.NORTH)));
                     put('S', new Slot(UCBlocks.STALK.get().defaultBlockState().setValue(StalkBlock.STALKS, EnumDirectional.SOUTH)));
@@ -90,11 +90,11 @@ public class MultiblockProvider extends RecipeProvider {
                         "   "
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('0', new Slot(Blocks.ENCHANTING_TABLE));
                     put('L', new Slot(Blocks.LAPIS_BLOCK));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('D', new Slot(UCBlocks.FASCINO.get()));
                 }}
                 ));
@@ -112,12 +112,12 @@ public class MultiblockProvider extends RecipeProvider {
                         "DSG"
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('T', new Slot(UCBlocks.INDUSTRIA_CROP.get()));
                     put('K', new Slot(UCBlocks.KNOWLEDGE_CROP.get()));
                     put('0', new Slot(Blocks.BEACON));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('C', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.UP)));
                     put('N', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.NORTH)));
                     put('S', new Slot(UCBlocks.WEATHERFLESIA.get().defaultBlockState().setValue(Weatherflesia.RAFFLESIA, EnumDirectional.SOUTH)));
@@ -147,12 +147,12 @@ public class MultiblockProvider extends RecipeProvider {
                         "CRRRC"
                 },
                 new Point(2, 2),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('R', new Slot(UCBlocks.RUINEDBRICKS.get()));
                     put('C', new Slot(UCBlocks.RUINEDBRICKSCARVED.get()));
                     put('0', new Slot(Blocks.EMERALD_BLOCK));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('R', new Slot(UCBlocks.RUINEDBRICKS.get()));
                     put('C', new Slot(UCBlocks.RUINEDBRICKSCARVED.get()));
                     put('P', new Slot(UCBlocks.CROP_PORTAL.get()));
@@ -172,11 +172,11 @@ public class MultiblockProvider extends RecipeProvider {
                         "   "
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('0', new Slot(Blocks.MELON));
                     put('I', new Slot(Blocks.IRON_BARS));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('L', new Slot(UCBlocks.LIGNATOR.get()));
                 }}
         ));
@@ -194,12 +194,12 @@ public class MultiblockProvider extends RecipeProvider {
                         "   "
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('D', new Slot(UCBlocks.DEVILSNARE_CROP.get()));
                     put('0', new Slot(UCBlocks.DEVILSNARE_CROP.get()));
                     put('W', new Slot(UCBlocks.WEEPINGBELLS_CROP.get()));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('E', new Slot(UCBlocks.EXEDO.get()));
                 }}
         ));
@@ -217,12 +217,12 @@ public class MultiblockProvider extends RecipeProvider {
                         "   "
                 },
                 new Point(1, 1),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('D', new Slot(UCBlocks.INDUSTRIA_CROP.get()));
                     put('M', new Slot(UCBlocks.MARYJANE_CROP.get()));
                     put('0', new Slot(UCBlocks.MARYJANE_CROP.get()));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('C', new Slot(UCBlocks.COCITO.get()));
                 }}
         ));
@@ -244,14 +244,37 @@ public class MultiblockProvider extends RecipeProvider {
                         "P   P"
                 },
                 new Point(2, 2),
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('P', new Slot(Blocks.STONE_PRESSURE_PLATE));
                     put('0', new Slot(UCBlocks.PIXELSIUS_CROP.get()));
                     put('R', new Slot(Blocks.REDSTONE_WIRE));
                 }},
-                new HashMap<Character, Slot>() {{
+                new HashMap<>() {{
                     put('P', new Slot(Blocks.STONE_PRESSURE_PLATE));
                     put('I', new Slot(UCBlocks.ITERO.get()));
+                }}
+        ));
+        consumer.accept(create("sanalight",
+                UCItems.EMERADIC_DIAMOND.get(),
+                0,
+                new String[] {
+                        "GMG",
+                        "MBM",
+                        "GMG"
+                },
+                new String[] {
+                        "   ",
+                        " S ",
+                        "   "
+                },
+                new Point(1, 1),
+                new HashMap<>() {{
+                    put('G', new Slot(Blocks.TORCH));
+                    put('M', new Slot(Blocks.MOSS_CARPET));
+                    put('B', new Slot(Blocks.SWEET_BERRY_BUSH));
+                }},
+                new HashMap<>() {{
+                    put('S', new Slot(UCBlocks.SANALIGHT.get()));
                 }}
         ));
     }

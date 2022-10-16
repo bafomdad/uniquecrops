@@ -5,6 +5,7 @@ import com.bafomdad.uniquecrops.blocks.*;
 import com.bafomdad.uniquecrops.blocks.crops.*;
 import com.bafomdad.uniquecrops.blocks.supercrops.*;
 import com.bafomdad.uniquecrops.core.enums.EnumLily;
+import com.bafomdad.uniquecrops.items.base.ItemBlockUC;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.WaterLilyBlockItem;
@@ -44,7 +45,7 @@ public class UCBlocks {
     public static final RegistryObject<Block> DRIED_THATCH = register("driedthatch", () -> new Block(Properties.of(Material.DIRT).sound(SoundType.GRASS).strength(0.1F)));
     public static final RegistryObject<Block> EGG_BASKET = register("egg_basket", EggBasketBlock::new);
     public static final RegistryObject<Block> GOBLET = register("goblet", GobletBlock::new);
-    public static final RegistryObject<Block> HOURGLASS = register("hourglass", HourglassBlock::new);
+    public static final RegistryObject<Block> HOURGLASS = register("hourglass", HourglassBlock::new, true, true);
     public static final RegistryObject<Block> LILY_ENDER = registerLily("enderlily", () -> new BaseLilyBlock(EnumLily.ENDER));
     public static final RegistryObject<Block> LILY_ICE = registerLily("icelily", () -> new BaseLilyBlock(EnumLily.ICE));
     public static final RegistryObject<Block> LILY_JUNGLE = registerLily("junglelily", () -> new BaseLilyBlock(EnumLily.JUNGLE));
@@ -62,10 +63,10 @@ public class UCBlocks {
     public static final RegistryObject<Block> PRECISION_BLOCK = register("precision_block", () -> new Block(Properties.copy(Blocks.DIAMOND_BLOCK)));
     public static final RegistryObject<Block> RUINEDBRICKS = register("ruinedbricks", () -> new Block(Properties.copy(Blocks.STONE_BRICKS)));
     public static final RegistryObject<Block> RUINEDBRICKSCARVED = register("ruinedbrickscarved", () -> new Block(Properties.copy(Blocks.CHISELED_STONE_BRICKS)));
-    public static final RegistryObject<Block> RUINEDBRICKSRED = register("ruinedbricksred", () -> new Block(Properties.copy(Blocks.STONE_BRICKS)));
+    public static final RegistryObject<Block> RUINEDBRICKSRED = register("ruinedbricksred", () -> new RotatedPillarBlock(Properties.copy(Blocks.STONE_BRICKS)));
     public static final RegistryObject<Block> DREAMCATCHER = register("dreamcatcher", DreamcatcherBlock::new);
     public static final RegistryObject<Block> HARVEST_TRAP = register("harvest_trap", HarvestTrapBlock::new);
-    public static final RegistryObject<Block> CROP_PORTAL = register("crop_portal", CropPortalBlock::new, false);
+    public static final RegistryObject<Block> CROP_PORTAL = register("crop_portal", CropPortalBlock::new, false, false);
     public static final RegistryObject<Block> DEMO_CORD = register("demo_cord", DemoCordBlock::new);
     public static final RegistryObject<Block> TOTEMHEAD = register("totemhead", TotemheadBlock::new);
     public static final RegistryObject<Block> SUN_DIAL = register("sun_dial", SundialBlock::new);
@@ -128,13 +129,15 @@ public class UCBlocks {
     /**
      * SUPER CROPS
      */
-    public static final RegistryObject<Block> STALK = register("stalk", StalkBlock::new, false);
-    public static final RegistryObject<Block> EXEDO = register("exedo", Exedo::new, false);
-    public static final RegistryObject<Block> COCITO = register("cocito", Cocito::new, false);
-    public static final RegistryObject<Block> ITERO = register("itero", Itero::new, false);
-    public static final RegistryObject<Block> FASCINO = register("fascino", Fascino::new, false);
-    public static final RegistryObject<Block> WEATHERFLESIA = register("weatherflesia", Weatherflesia::new, false);
-    public static final RegistryObject<Block> LIGNATOR = register("lignator", Lignator::new, false);
+    public static final RegistryObject<Block> STALK = register("stalk", StalkBlock::new, false, false);
+    public static final RegistryObject<Block> EXEDO = register("exedo", Exedo::new, false, false);
+    public static final RegistryObject<Block> COCITO = register("cocito", Cocito::new, false, false);
+    public static final RegistryObject<Block> ITERO = register("itero", Itero::new, false, false);
+    public static final RegistryObject<Block> FASCINO = register("fascino", Fascino::new, false, false);
+    public static final RegistryObject<Block> WEATHERFLESIA = register("weatherflesia", Weatherflesia::new, false, false);
+    public static final RegistryObject<Block> LIGNATOR = register("lignator", Lignator::new, false, false);
+    public static final RegistryObject<Block> SANALIGHT = register("sanalight", Sanalight::new, false, false);
+    public static final RegistryObject<Block> FUNNY_LIGHT = register("funnylight", FunnyLightBlock::new, false, false);
 
     public static final RegistryObject<BaseCropsBlock> DUMMY_CROP = registerCrop("dummy", () -> new BaseCropsBlock(null, null));
 
@@ -153,15 +156,18 @@ public class UCBlocks {
 
     private static <B extends Block> RegistryObject<B> register(String name, Supplier<? extends B> supplier) {
 
-        return register(name, supplier, true);
+        return register(name, supplier, true, false);
     }
 
-    private static <B extends Block> RegistryObject<B> register(String name, Supplier<? extends B> supplier, boolean itemBlock) {
+    private static <B extends Block> RegistryObject<B> register(String name, Supplier<? extends B> supplier, boolean itemBlock, boolean custom) {
 
         RegistryObject<B> block = BLOCKS.register(name, supplier);
-        if (itemBlock)
-            UCItems.ITEMS.register(name, () -> new BlockItem(block.get(), UCItems.defaultBuilder()));
-
+        if (itemBlock) {
+            if (!custom)
+                UCItems.ITEMS.register(name, () -> new BlockItem(block.get(), UCItems.defaultBuilder()));
+            else
+                UCItems.ITEMS.register(name, () -> new ItemBlockUC(block.get()));
+        }
         return block;
     }
 }

@@ -1,0 +1,55 @@
+{
+  "type": "uniquecrops:multiblock",
+  "catalyst": {
+    "item": "uniquecrops:golden_bread",
+    "power": 0
+  },
+  "shape": [
+    "GMG",
+    "M0M",
+    "GMG"
+  ],
+  "shaperesult": [
+    "   ",
+    " S ",
+    "   "
+  ],
+  "origin": {
+    "x": 1,
+    "y": 1
+  },
+  "definition": {
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "0": {
+      "states": [
+        "minecraft:sweet_berry_bush[age-0]"
+      ]
+    },
+    "G": {
+      "states": [
+        "minecraft:torch"
+      ]
+    },
+    "M": {
+      "states": [
+        "minecraft:moss_carpet"
+      ]
+    }
+  },
+  "definitionresult": {
+    " ": {
+      "states": [
+        "minecraft:air"
+      ]
+    },
+    "S": {
+      "states": [
+        "uniquecrops:sanalight"
+      ]
+    }
+  }
+}

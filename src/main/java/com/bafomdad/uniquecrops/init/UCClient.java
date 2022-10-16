@@ -69,6 +69,7 @@ public class UCClient {
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.SUN_BLOCK.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.DEMO_CORD.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.ITERO.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(UCBlocks.SANALIGHT.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.FLYWOOD_TRAPDOOR.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.ROSEWOOD_TRAPDOOR.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(UCBlocks.DREAMCATCHER.get(), RenderType.cutout());
