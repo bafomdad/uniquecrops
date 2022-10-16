@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.items.base;
 import com.bafomdad.uniquecrops.UniqueCrops;
 import com.bafomdad.uniquecrops.core.NBTUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +43,12 @@ public abstract class ItemCurioUC extends ItemBaseUC implements ICurioItem {
 
     public boolean hasCurio(LivingEntity living) {
 
-        return CuriosApi.getCuriosHelper().findFirstCurio(living, this).isPresent();
+        return hasCurio(living, this);
+    }
+
+    public boolean hasCurio(LivingEntity living, Item item) {
+
+        return CuriosApi.getCuriosHelper().findFirstCurio(living, item).isPresent();
     }
 
     public UUID getCurioUUID(ItemStack stack) {
