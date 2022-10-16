@@ -4,7 +4,6 @@ import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.core.UCUtils;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemBaseUC;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,8 +18,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -67,15 +64,9 @@ public class PixelBrushItem extends ItemBaseUC {
         ResourceLocation biomeId = new ResourceLocation(ctx.getItemInHand().getTag().getString(UCStrings.TAG_BIOME));
         boolean flag = UCUtils.setBiome(biomeId, ctx.getLevel(), ctx.getClickedPos());
         if (!flag) return InteractionResult.PASS;
-        if (!ctx.getLevel().isClientSide()) {
+        if (!ctx.getLevel().isClientSide())
             ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), (player) -> {});
-            BlockPos offset = ctx.getClickedPos().relative(ctx.getClickedFace());
-            if (ctx.getLevel().isEmptyBlock(offset)) {
-                // make a temporary block change so the biome changes stay changed
-                ctx.getLevel().setBlockAndUpdate(offset, Blocks.LILY_PAD.defaultBlockState());
-                ctx.getLevel().setBlockAndUpdate(offset, Blocks.AIR.defaultBlockState());
-            }
-        }
+
         return InteractionResult.SUCCESS;
     }
 

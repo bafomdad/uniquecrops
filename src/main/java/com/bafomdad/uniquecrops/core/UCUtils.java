@@ -245,6 +245,9 @@ public class UCUtils {
                 section.getBiomes().set(x & 3, y & 3, z & 3, biome);
             }
         }
+        if (!chunkAt.isUnsaved())
+            chunkAt.setUnsaved(true);
+
         if (world instanceof ServerLevel) {
             PacketChangeBiome msg = new PacketChangeBiome(pos, biomeId);
             UCPacketHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> chunkAt), msg);

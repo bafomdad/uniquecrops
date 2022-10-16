@@ -23,7 +23,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
@@ -59,9 +58,7 @@ public class Knowledge extends BaseCropsBlock {
 
         AtomicInteger result = new AtomicInteger();
         Iterable<BlockPos> getBox = BlockPos.betweenClosed(pos.offset(-4, -2, -4), pos.offset(4, 2, 4));
-        Iterator it = getBox.iterator();
-        while (it.hasNext()) {
-            BlockPos posit = (BlockPos)it.next();
+        for (BlockPos posit : getBox) {
             BlockState loopState = world.getBlockState(posit);
             if (loopState.getBlock().getEnchantPowerBonus(loopState, world, posit) >= 1F) {
                 BlockEntity te = world.getBlockEntity(posit.above());
@@ -72,8 +69,6 @@ public class Knowledge extends BaseCropsBlock {
                             if (!book.isEmpty() && book.getItem() == Items.WRITTEN_BOOK) {
                                 CompoundTag tag = book.getTag();
                                 if (WrittenBookItem.makeSureTagIsValid(tag) && !NBTUtils.getBoolean(book, BOOKMARK, false) && WrittenBookItem.getGeneration(book) == 0) {
-
-//                                    int result = 0;
                                     ListTag tagList = tag.getList("pages", 8);
                                     for (int j = 0; j < tagList.size(); j++) {
                                         String str = tagList.getString(j);
