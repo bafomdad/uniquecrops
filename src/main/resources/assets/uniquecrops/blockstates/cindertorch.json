@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "uniquecrops:block/cindertorch" }
+    "facing=up": { "model" : "uniquecrops:block/cindertorch_top" },
+    "facing=down": { "model": "uniquecrops:block/cindertorch_bottom" },
+	"facing=north": { "model": "uniquecrops:block/cindertorch_side", "y": 180 },
+	"facing=south": { "model": "uniquecrops:block/cindertorch_side", "y": 0 },
+	"facing=east": { "model": "uniquecrops:block/cindertorch_side", "y": 270 },
+	"facing=west": { "model": "uniquecrops:block/cindertorch_side", "y": 90 }
   }
 }

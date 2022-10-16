@@ -1,5 +1,16 @@
 {
   "variants": {
-    "": { "model": "uniquecrops:block/ruinedbricksred" }
+    "axis=x": {
+      "model": "uniquecrops:block/ruinedbricksred",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "uniquecrops:block/ruinedbricksred"
+    },
+    "axis=z": {
+      "model": "uniquecrops:block/ruinedbricksred",
+      "x": 90
+    }
   }
 }
