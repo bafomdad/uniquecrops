@@ -51,7 +51,7 @@ public class HourglassBlock extends Block {
             searchAroundBlocks(world, pos, rand);
     }
 
-    private void searchAroundBlocks(Level world, BlockPos pos, Random rand) {
+    public static void searchAroundBlocks(Level world, BlockPos pos, Random rand) {
 
         List<BlockPos> toConvert = new ArrayList<>();
         for (BlockPos loopPos : BlockPos.betweenClosed(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE))) {
@@ -71,7 +71,7 @@ public class HourglassBlock extends Block {
         }
     }
 
-    private IHourglassRecipe findRecipe(Level world, BlockState state) {
+    private static IHourglassRecipe findRecipe(Level world, BlockState state) {
 
         for (Recipe<?> recipe : world.getRecipeManager().getRecipes()) {
             if (recipe instanceof IHourglassRecipe && ((IHourglassRecipe)recipe).matches(state))
@@ -80,7 +80,7 @@ public class HourglassBlock extends Block {
         return null;
     }
 
-    private void convertBlock(Level world, BlockPos pos, BlockState output) {
+    private static void convertBlock(Level world, BlockPos pos, BlockState output) {
 
         world.setBlock(pos, output, 2);
     }

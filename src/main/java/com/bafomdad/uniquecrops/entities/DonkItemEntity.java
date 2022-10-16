@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class DonkItemEntity extends ItemEntity {
 
-    private static Map<Item, Float> damageMap = new HashMap();
+    private static final Map<Item, Float> damageMap = new HashMap<>();
 
     static {
         damageMap.put(Blocks.ANVIL.asItem(), 8.0F);
@@ -25,6 +25,7 @@ public class DonkItemEntity extends ItemEntity {
         damageMap.put(Blocks.COBBLESTONE.asItem(), 2.5F);
     }
 
+    @SuppressWarnings("unused")
     public DonkItemEntity(EntityType<? extends ItemEntity> type, Level world) {
 
         super(EntityType.ITEM, world);
@@ -50,13 +51,12 @@ public class DonkItemEntity extends ItemEntity {
             return;
         }
         List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox());
-        for (int i = 0; i < list.size(); ++i) {
-            LivingEntity ent = list.get(i);
+        for (LivingEntity ent : list) {
             if (ent.isAlive()) {
                 if (damageMap.containsKey(this.getItem().getItem())) {
                     float damage = damageMap.get(this.getItem().getItem());
                     ent.hurt(DamageSource.GENERIC, damage);
-                    ent.knockback( (float)1 * 0.5F, (double) Mth.sin(this.yRotO * 0.017453292F), (double)(-Mth.cos(this.yRotO * 0.017453292F)));
+                    ent.knockback(0.5F, Mth.sin(this.yRotO * 0.017453292F), (-Mth.cos(this.yRotO * 0.017453292F)));
                 }
                 this.getPersistentData().remove("UC:canDonk");
                 double motionX = -this.getDeltaMovement().x / 4;
