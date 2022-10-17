@@ -21,7 +21,7 @@ public class MagnetItem extends ItemBaseUC implements IBookUpgradeable {
 
     public MagnetItem() {
 
-        super(UCItems.defaultBuilder().stacksTo(1));
+        super(UCItems.unstackable());
     }
 
     @Override

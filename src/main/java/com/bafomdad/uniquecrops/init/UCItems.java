@@ -120,6 +120,7 @@ public class UCItems {
     public static final RegistryObject<Item> PRECISION_HAMMER = register("precision_hammer", PrecisionHammerItem::new);
     public static final RegistryObject<Item> IMPACT_SHIELD = register("impact_shield", ImpactShieldItem::new);
     public static final RegistryObject<Item> BRASS_KNUCKLES = register("brass_knuckles", BrassKnucklesItem::new);
+    public static final RegistryObject<Item> ANCIENT_BOW = register("oldbow", OldBow::new);
 
     /**
      * EMBLEMS

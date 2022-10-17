@@ -1,6 +1,11 @@
 package com.bafomdad.uniquecrops.blocks;
 
 import com.bafomdad.uniquecrops.api.IHourglassRecipe;
+import com.bafomdad.uniquecrops.init.UCItems;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
@@ -8,6 +13,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -66,6 +72,15 @@ public class HourglassBlock extends Block {
                 IHourglassRecipe recipe = findRecipe(world, loopState);
                 if (recipe != null) {
                     convertBlock(world, loopPos, recipe.getOutput());
+                }
+            }
+        }
+        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE)));
+        for (ItemEntity item : items) {
+            if (item.isAlive() && !item.getItem().isEmpty() && item.getItem().is(Items.BOW)) {
+                ItemStack bow = item.getItem();
+                if (!bow.isEnchanted() && !bow.isDamaged()) {
+                    item.setItem(new ItemStack(UCItems.ANCIENT_BOW.get()));
                 }
             }
         }
