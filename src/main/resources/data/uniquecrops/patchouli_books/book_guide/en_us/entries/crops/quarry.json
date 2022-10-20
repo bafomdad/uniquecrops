@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_quarry",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedquarry",
     "category": "uniquecrops:seeds",
     "pages": [
         {

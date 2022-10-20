@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_dirigible",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seeddirigible",
     "category": "uniquecrops:seeds",
     "pages": [
         {

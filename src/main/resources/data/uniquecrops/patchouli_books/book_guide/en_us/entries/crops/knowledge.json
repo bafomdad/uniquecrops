@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_knowledge",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedknowledge",
     "category": "uniquecrops:seeds",
     "pages": [
         {

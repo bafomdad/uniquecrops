@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_succo",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedsucco",
     "category": "uniquecrops:seeds",
     "pages": [
         {

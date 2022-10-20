@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_wafflonia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedwafflonia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

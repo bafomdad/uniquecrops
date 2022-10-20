@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_feroxia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedferoxia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

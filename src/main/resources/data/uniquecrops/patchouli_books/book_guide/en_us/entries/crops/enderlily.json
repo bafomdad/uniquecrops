@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_enderlily",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedenderlily",
     "category": "uniquecrops:seeds",
     "pages": [
         {

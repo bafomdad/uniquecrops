@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_devilsnare",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seeddevilsnare",
     "category": "uniquecrops:seeds",
     "pages": [
         {

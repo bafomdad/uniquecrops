@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_magnes",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedmagnes",
     "category": "uniquecrops:seeds",
     "pages": [
         {

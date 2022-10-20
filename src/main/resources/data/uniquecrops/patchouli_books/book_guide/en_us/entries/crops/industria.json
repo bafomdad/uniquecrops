@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_industria",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedindustria",
     "category": "uniquecrops:seeds",
     "pages": [
         {

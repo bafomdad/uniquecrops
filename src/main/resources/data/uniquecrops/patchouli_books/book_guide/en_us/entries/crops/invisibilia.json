@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_invisibilia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedinvisibilia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

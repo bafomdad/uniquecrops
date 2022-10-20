@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_cobblonia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedcobblonia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

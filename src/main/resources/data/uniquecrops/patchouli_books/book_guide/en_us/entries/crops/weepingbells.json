@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_weepingbells",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedweepingbells",
     "category": "uniquecrops:seeds",
     "pages": [
         {

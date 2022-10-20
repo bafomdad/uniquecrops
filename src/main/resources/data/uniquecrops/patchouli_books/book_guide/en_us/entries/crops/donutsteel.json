@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_donutsteel",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seeddonutsteel",
     "category": "uniquecrops:seeds",
     "pages": [
         {

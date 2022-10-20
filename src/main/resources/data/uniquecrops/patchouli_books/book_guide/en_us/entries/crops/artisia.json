@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_artisia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedartisia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

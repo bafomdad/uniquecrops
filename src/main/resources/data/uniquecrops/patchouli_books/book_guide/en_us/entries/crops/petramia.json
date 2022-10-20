@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_petramia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedpetramia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

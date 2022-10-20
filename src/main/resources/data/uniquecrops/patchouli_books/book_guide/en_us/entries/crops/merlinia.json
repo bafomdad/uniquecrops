@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_merlinia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedmerlinia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

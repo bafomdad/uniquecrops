@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_eula",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedeula",
     "category": "uniquecrops:seeds",
     "pages": [
         {

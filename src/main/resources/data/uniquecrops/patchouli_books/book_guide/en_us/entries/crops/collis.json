@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_collis",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedcollis",
     "category": "uniquecrops:seeds",
     "pages": [
         {

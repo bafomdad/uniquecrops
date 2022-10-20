@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_maryjane",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedmaryjane",
     "category": "uniquecrops:seeds",
     "pages": [
         {

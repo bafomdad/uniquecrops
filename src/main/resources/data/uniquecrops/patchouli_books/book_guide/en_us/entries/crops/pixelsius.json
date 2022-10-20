@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_pixelsius",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedpixelsius",
     "category": "uniquecrops:seeds",
     "pages": [
         {

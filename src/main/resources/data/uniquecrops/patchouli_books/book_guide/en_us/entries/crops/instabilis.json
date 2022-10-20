@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_instabilis",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedinstabilis",
     "category": "uniquecrops:seeds",
     "pages": [
         {

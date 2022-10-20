@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_cinderbella",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedcinderbella",
     "category": "uniquecrops:seeds",
     "pages": [
         {

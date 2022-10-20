@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_dyeius",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seeddyeius",
     "category": "uniquecrops:seeds",
     "pages": [
         {

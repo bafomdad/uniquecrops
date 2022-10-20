@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_musica",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedmusica",
     "category": "uniquecrops:seeds",
     "pages": [
         {

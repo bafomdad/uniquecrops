@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_lacusia",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedlacusia",
     "category": "uniquecrops:seeds",
     "pages": [
         {

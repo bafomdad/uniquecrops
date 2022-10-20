@@ -1,6 +1,6 @@
 {
     "name": "block.uniquecrops.crop_millennium",
-    "icon": "minecraft:writable_book",
+    "icon": "uniquecrops:seedmillennium",
     "category": "uniquecrops:seeds",
     "pages": [
         {
