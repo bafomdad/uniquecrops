@@ -17,7 +17,7 @@ public class DiamondBunchItem extends ItemBaseUC {
 
     public DiamondBunchItem() {
 
-        super(UCItems.defaultBuilder().stacksTo(1));
+        super(UCItems.unstackable());
         MinecraftForge.EVENT_BUS.addListener(this::onItemToss);
     }
 

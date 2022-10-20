@@ -27,12 +27,6 @@ public class StaffPhantomItem extends StaffBatItem {
     }
 
     @Override
-    public boolean isFoil(ItemStack stack) {
-
-        return true;
-    }
-
-    @Override
     public List<? extends LivingEntity> getEntityToErase(Level world, BlockPos pos) {
 
         return world.getEntitiesOfClass(Phantom.class, new AABB(pos.offset(-15, -15, -15), pos.offset(15, 15, 15)));

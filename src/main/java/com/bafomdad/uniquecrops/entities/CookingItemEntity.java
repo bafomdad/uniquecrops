@@ -2,10 +2,8 @@ package com.bafomdad.uniquecrops.entities;
 
 import com.bafomdad.uniquecrops.core.enums.EnumParticle;
 import com.bafomdad.uniquecrops.init.UCItems;
-import com.bafomdad.uniquecrops.init.UCRecipes;
 import com.bafomdad.uniquecrops.network.PacketUCEffect;
 import com.bafomdad.uniquecrops.network.UCPacketHandler;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.SimpleContainer;
@@ -41,7 +39,7 @@ public class CookingItemEntity extends ItemEntity {
     public void defineSynchedData() {
 
         super.defineSynchedData();
-        this.entityData.define(COOKING_TIME, Integer.valueOf(0));
+        this.entityData.define(COOKING_TIME, 0);
     }
 
     @Override
@@ -69,12 +67,12 @@ public class CookingItemEntity extends ItemEntity {
 
     public void setCookingTime(int time) {
 
-        this.entityData.set(COOKING_TIME, Integer.valueOf(time));
+        this.entityData.set(COOKING_TIME, time);
     }
 
     public int getCookingTime() {
 
-        return this.entityData.get(COOKING_TIME).intValue();
+        return this.entityData.get(COOKING_TIME);
     }
 
     private ItemStack getCookedItem() {

@@ -3,6 +3,7 @@ package com.bafomdad.uniquecrops.items;
 import com.bafomdad.uniquecrops.core.UCStrings;
 import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemBaseUC;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
@@ -38,7 +39,7 @@ public class EasyBadgeItem extends ItemBaseUC {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag whatisthis) {
 
-        list.add(new TranslatableComponent(UCStrings.TOOLTIP + "easybadge"));
+        list.add(new TranslatableComponent(UCStrings.TOOLTIP + "easybadge").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
@@ -49,14 +50,14 @@ public class EasyBadgeItem extends ItemBaseUC {
             BlockPos pos = entity.blockPosition();
             List<Monster> monsters = world.getEntitiesOfClass(Monster.class, new AABB(pos.offset(-RANGE, -RANGE, -RANGE), pos.offset(RANGE, RANGE, RANGE)));
             for (Monster ent: monsters) {
-                if (ent instanceof Skeleton)
-                    ((Skeleton)ent).goalSelector.getRunningGoals().filter(goal -> goal.getGoal() instanceof RangedBowAttackGoal)
+                if (ent instanceof Skeleton skele)
+                    skele.goalSelector.getRunningGoals().filter(goal -> goal.getGoal() instanceof RangedBowAttackGoal)
                             .findFirst().ifPresent(g -> {
                         ((RangedBowAttackGoal)g.getGoal()).setMinAttackInterval(100);
                     });
 
-                if (ent instanceof Creeper)
-                    ObfuscationReflectionHelper.setPrivateValue(Creeper.class, (Creeper)ent, 60, "field_82225_f");
+                if (ent instanceof Creeper creep)
+                    ObfuscationReflectionHelper.setPrivateValue(Creeper.class, creep, 60, "field_82225_f");
             }
         }
     }

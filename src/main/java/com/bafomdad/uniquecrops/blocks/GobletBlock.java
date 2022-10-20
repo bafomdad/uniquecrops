@@ -115,7 +115,7 @@ public class GobletBlock extends Block implements EntityBlock {
         return InteractionResult.PASS;
     }
 
-        @Override
+    @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 
         if (isFilled(state)) return;

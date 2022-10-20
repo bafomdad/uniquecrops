@@ -1,5 +1,6 @@
 package com.bafomdad.uniquecrops.items;
 
+import com.bafomdad.uniquecrops.init.UCItems;
 import com.bafomdad.uniquecrops.items.base.ItemBaseUC;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -10,10 +11,15 @@ import net.minecraft.world.level.Level;
 
 public class CinderleafItem extends ItemBaseUC {
 
+    public CinderleafItem() {
+
+        super(UCItems.defaultBuilder().fireResistant());
+    }
+
     @Override
     public boolean hasCustomEntity(ItemStack stack) {
 
-        return stack.getItem() == this;
+        return stack.is(this);
     }
 
     @Override
