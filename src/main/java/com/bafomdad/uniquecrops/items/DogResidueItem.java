@@ -30,7 +30,7 @@ public class DogResidueItem extends ItemBaseUC {
             }
             if (!world.isClientSide) {
                 if (canFill)
-                    player.sendMessage(new TextComponent("The rest of your inventory filled up setValue dog residue."), player.getUUID());
+                    player.sendMessage(new TextComponent("The rest of your inventory filled up with dog residue."), player.getUUID());
                 else
                     player.sendMessage(new TextComponent("You finished using it. An uneasy silence fills the room."), player.getUUID());
             }
